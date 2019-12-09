@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: 92%;
+  width: 90%;
   
   @media(min-width: ${desktopContentWidth}px) {
     width: ${desktopContentWidth}px;

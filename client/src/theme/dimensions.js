@@ -1,3 +1,4 @@
 export default {
-  desktopContentWidth: 992
+  desktopContentWidth: 992,
+  md: 768
 }

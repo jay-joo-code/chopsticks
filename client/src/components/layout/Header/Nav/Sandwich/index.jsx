@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import theme from 'src/theme';
 
 const Container = styled.div`
   
@@ -9,7 +8,7 @@ const Container = styled.div`
 const Bar = styled.div`
   width: 20px;
   border-bottom: 2.5px solid rgba(0, 0, 0, .6);
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 `
 
 const Sandwich = (props) => (
