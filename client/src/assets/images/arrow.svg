@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="6px" height="12px" viewBox="0 0 6 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
+    <title>Up Arrow</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01_Main_D" transform="translate(-1334.000000, -361.000000)" fill="#7A8680">
+            <g id="Group-14" transform="translate(76.000000, 187.000000)">
+                <g id="Group-6-Copy" transform="translate(1239.000000, 156.000000)">
+                    <polygon id="Up-Arrow" transform="translate(19.000000, 24.000000) scale(-1, 1) rotate(45.000000) translate(-19.000000, -24.000000) " points="15 20 23 28 15 28"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

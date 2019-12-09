@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="5px" height="8px" viewBox="0 0 5 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
+    <title>Path</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01_Main_D" transform="translate(-1009.000000, -631.000000)" fill="#BDB3AC" fill-rule="nonzero">
+            <g id="arrow-point-to-right" transform="translate(1009.000000, 631.000000)">
+                <path d="M4.39989961,4.39604114 L0.96002726,7.83580725 C0.741209829,8.05473092 0.386434872,8.05473092 0.167723671,7.83580725 C-0.0510052354,7.61707835 -0.0510052354,7.2623211 0.167723671,7.04360989 L3.21147963,3.99994246 L0.167812196,0.956381253 C-0.0509167098,0.737563821 -0.0509167098,0.38284198 0.167812196,0.164113074 C0.386541102,-0.0547043579 0.741298354,-0.0547043579 0.960115786,0.164113074 L4.39998813,3.6039323 C4.50935258,3.71334987 4.56397284,3.8566019 4.56397284,3.99992475 C4.56397284,4.14331842 4.50924635,4.28667668 4.39989961,4.39604114 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>

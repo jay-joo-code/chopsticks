@@ -2,38 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from 'src/components/pages/Home';
-import Stage from 'src/components/pages/Stage';
 import Header from 'src/components/layout/Header';
-import Create from 'src/components/pages/Create';
-import CreateQuestions from 'src/components/pages/CreateQuestions';
-import Saaji from 'src/components/pages/Saaji';
+import DynamicContainer from 'src/components/layout/DynamicContainer';
 
 const Container = styled.div`
+    display: flex;
+    flex-direction: column;
     width: 100%;
     overflow: hidden;
     min-height: 100vh;
     background-color: rgba(0, 0, 0, .05);
-    
-    @media (min-width: 768px) {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-`;
-
-const Content = styled.div`
-    width: 100%;
-
-    @media (min-width: 768px) {
-        width: 768px;
-    }
 `;
 
 const AppRouter = () => (
   <BrowserRouter>
     <Container>
       <Header />
-      <Content>
+      <DynamicContainer>
         <Switch>
           <Route path="/purchase/complete" component={Home} />
           <Route path="/purchase/finalise" component={Home} />
@@ -54,7 +39,7 @@ const AppRouter = () => (
           <Route path="/items" component={Home} />
           <Route exact path="/" component={Home} />
         </Switch>
-      </Content>
+      </DynamicContainer>
     </Container>
   </BrowserRouter>
 );
