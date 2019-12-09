@@ -1,0 +1,35 @@
+{
+  "name": "pollon",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "HTTPS=true && NODE_ENV=production && node app",
+    "dev": "NODE_ENV=development run-p api-dev client-dev",
+    "api-dev": "PORT=8081 nodemon app",
+    "client-dev": "cd client && npm run-script dev",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "lint": "eslint ./routes --fix"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "mongoose": "^5.7.7",
+    "morgan": "~1.9.1",
+    "nodemon": "^1.19.4",
+    "npm-run-all": "^4.1.5",
+    "socket.io": "^2.3.0"
+  },
+  "engines": {
+    "npm": "6.9.0",
+    "node": "10.16.3"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  }
+}
