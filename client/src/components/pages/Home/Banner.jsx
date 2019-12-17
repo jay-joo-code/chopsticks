@@ -12,20 +12,20 @@ const Container = styled.div`
 const Img = styled.img`
   width: 100%;
   height: auto;
-`
+`;
 
 const ImgMo = styled(Img)`
   @media(min-width: ${theme.desktopContentWidth}px) {
     display: none;
   }
-`
+`;
 
 const ImgBig = styled(Img)`
   display: none;
   @media(min-width: ${theme.desktopContentWidth}px) {
     display: block;
   }
-`
+`;
 
 const Banner = () => (
   <Container>

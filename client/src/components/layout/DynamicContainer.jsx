@@ -17,7 +17,7 @@ const Container = styled.div`
     width: ${desktopContentWidth}px;
     overflow: hidden;
   }
-`
+`;
 
 const DefaultComponent = (props) => (
   <Wrapper {...props}>

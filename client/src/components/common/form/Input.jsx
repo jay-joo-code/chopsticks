@@ -7,6 +7,10 @@ const StyledInput = styled.input`
   background-color: inherit;
   font-family: inherit;
   font-size: inherit;
+  margin: .5rem 0;
+  opacity: .8;
+  padding: .5rem .2rem;
+  min-width: 15rem;
 `;
 
 const Input = (props) => (

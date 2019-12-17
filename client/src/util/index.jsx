@@ -7,7 +7,7 @@ const Container = styled.div`
 
 const DefaultComponent = () => (
   <Container>
-    DefaultComponent
+      DefaultComponent
   </Container>
 );
 

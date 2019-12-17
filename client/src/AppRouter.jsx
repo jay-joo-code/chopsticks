@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from 'src/components/pages/Home';
+import Login from 'src/components/pages/Login';
+import Register from 'src/components/pages/Register';
 import Header from 'src/components/layout/Header';
 import DynamicContainer from 'src/components/layout/DynamicContainer';
 
@@ -29,8 +31,8 @@ const AppRouter = () => (
           <Route path="/profile/shop" component={Home} />
           <Route path="/profile/transactions" component={Home} />
           <Route path="/profile" component={Home} />
-          <Route path="/signup" component={Home} />
-          <Route path="/login" component={Home} />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
           <Route path="/cart" component={Home} />
           <Route path="/item/:id/delivery" component={Home} />
           <Route path="/item/:id/reviews" component={Home} />

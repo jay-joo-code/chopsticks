@@ -18,13 +18,11 @@ const NavOptionsCond = styled(NavOptions)`
   }
 `;
 
-const Nav = () => {
-  return (
-    <div>
-      <SandwichCond />
-      <NavOptionsCond />
-    </div>
-    )
-};
+const Nav = () => (
+  <div>
+    <SandwichCond />
+    <NavOptionsCond />
+  </div>
+);
 
 export default Nav;

@@ -10,7 +10,7 @@ const Container = styled(Link)`
 const StyledLogo = styled(LogoSVG)`
   height: 1em;
   width: 1em;
-`
+`;
 
 const Logo = () => (
   <Container to="/">

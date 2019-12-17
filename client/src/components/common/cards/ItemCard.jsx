@@ -16,12 +16,12 @@ const Container = styled.div`
 const ImageContainer = styled.div`
   border-radius: 10px;
   overflow: hidden;
-`
+`;
 
 const Img = styled.img`
   width: 100%;
   height: auto;
-`
+`;
 
 const Info = styled.div`
   display: flex;
@@ -33,27 +33,30 @@ const Info = styled.div`
   @media(min-width: ${theme.desktopContentWidth}px) {
     font-size: 1rem;
   }
-`
+`;
 
 const Name = styled.h3`
   font-weight: bold;
-  //color: ${props => props.theme.green};
+  //color: ${(props) => props.theme.green};
   opacity: .8;
-`
+`;
 
 const Price = styled.p`
   opacity: .8;
-`
+`;
 
 const ItemCard = (props) => (
-  <Link to={`/item/${props._id}`} >
+  <Link to={`/item/${props._id}`}>
     <Container>
       <ImageContainer>
         <Img src={props.img} />
       </ImageContainer>
       <Info>
         <Name>{props.name}</Name>
-        <Price>{props.price}원</Price>
+        <Price>
+          {props.price}
+원
+        </Price>
       </Info>
     </Container>
   </Link>

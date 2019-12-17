@@ -9,7 +9,7 @@ const Bar = styled.div`
   width: 20px;
   border-bottom: 2.5px solid rgba(0, 0, 0, .6);
   margin-bottom: 4px;
-`
+`;
 
 const Sandwich = (props) => (
   <Container {...props}>

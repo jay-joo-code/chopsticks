@@ -13,37 +13,35 @@ const testData = [{
   _id: '123',
   name: '푸른 빛 양초',
   price: '15000',
-  img: TestImg
+  img: TestImg,
 }, {
   _id: '456',
   name: '개나리 색 물결',
   price: '20000',
-  img: TestImg
+  img: TestImg,
 }, {
   _id: '456',
   name: '개나리 색 물결',
   price: '20000',
-  img: TestImg
+  img: TestImg,
 }, {
   _id: '456',
   name: '개나리 색 물결',
   price: '20000',
-  img: TestImg
+  img: TestImg,
 }, {
   _id: '456',
   name: '개나리 색 물결',
   price: '20000',
-  img: TestImg
-}]
+  img: TestImg,
+}];
 
-const ItemsList = () => {
-  return (
+const ItemsList = () => (
   <Container>
     {testData.map((item) => (
       <ItemCard id={item._id} {...item} />
     ))}
   </Container>
-  )
-};
+);
 
 export default ItemsList;

@@ -52,7 +52,11 @@ a {
 	color: inherit;
 }
 
-button:focus {
+input, button { 
+	border:none; 
+} 
+
+a:focus, button:focus {
 	outline:0;
 }
 
