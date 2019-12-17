@@ -1,3 +1,4 @@
 module.exports = {
-    dbUriDev: 'mongodb+srv://admin:w8d9rUdZfJrYbXK0@cluster0-jcnxc.mongodb.net/test?retryWrites=true&w=majority'
+    dbUriDev: 'mongodb+srv://chopsticks:1Xsy8coh0v2uNNpC@chopsticks-dev-qtlao.mongodb.net/test?retryWrites=true&w=majority',
+    DB_PWD: '1Xsy8coh0v2uNNpC'
 }
