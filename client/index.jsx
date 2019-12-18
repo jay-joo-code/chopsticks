@@ -5,10 +5,12 @@ const Container = styled.div`
 
 `;
 
-const DefaultComponent = () => (
-  <Container>
-      DefaultComponent
-  </Container>
-);
+const DefaultComponent = () => {
+  return (
+    <Container>
+        DefaultComponent
+    </Container>
+  )
+};
 
 export default DefaultComponent;

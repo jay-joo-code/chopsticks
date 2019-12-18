@@ -5,7 +5,11 @@ import FormikInput from 'src/components/common/form/FormikInput';
 import Button from 'src/components/common/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
+import log from 'src/util/log';
+
+import { useDispatch } from 'react-redux';
 
 const Container = styled.div`
 
@@ -24,6 +28,8 @@ const RegisterBtn = styled(Link)`
 `;
 
 const Login = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       password: '',
@@ -46,7 +52,25 @@ const Login = () => {
         .required('필수'),
     }),
     onSubmit: (values) => {
-      // TODO: HANDLE SUBMIT
+      axios.post('/api/user/create', values)
+        .then(() => {
+          axios.post('/api/user/login', values)
+            .then((res) => {
+              dispatch({
+                type: 'USER_SET',
+                payload: res.data,
+              });
+              window.alert('성공! 자동으로 로그인 됬습니다');
+              history.push('/');
+            })
+            .catch((e) => {
+              log('auto login failed', e);
+            });
+        })
+        .catch((e) => {
+          log('register failed', e);
+          window.alert('회원가입 실패. 다시 시도 해주세요');
+        });
     },
   });
 

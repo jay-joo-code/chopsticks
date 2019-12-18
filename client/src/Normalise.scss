@@ -56,7 +56,7 @@ input, button {
 	border:none; 
 } 
 
-a:focus, button:focus {
+a:focus, a:active, button:active, button:focus {
 	outline:0;
 }
 

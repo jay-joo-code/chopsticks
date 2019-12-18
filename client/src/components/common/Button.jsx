@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'src/theme';
+import { Link } from 'react-router-dom';
 
 const Button = (props) => {
-  const { inverted, children } = props;
+  const {
+    inverted, children, link, to,
+  } = props;
   const StyledButton = styled.button`
     width: 100%;
-    background-color: white;
-  `;
-
-  const Container = styled.div`
     background-color: ${inverted ? theme.green : 'white'};
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
@@ -22,11 +21,19 @@ const Button = (props) => {
     justify-content: center;
   `;
 
+  if (link) {
+    return (
+      <Link to={to}>
+        <StyledButton>
+          {children}
+        </StyledButton>
+      </Link>
+    );
+  }
+
   return (
     <StyledButton {...props}>
-      <Container>
-        {children}
-      </Container>
+      {children}
     </StyledButton>
   );
 };
