@@ -9,5 +9,6 @@ router.get('/', (req, res) => {
 });
 
 router.use('/poll', require('./pollRouter'));
+router.use('/user', require('./userRouter'));
 
 module.exports = router;

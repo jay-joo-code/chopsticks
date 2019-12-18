@@ -25,21 +25,19 @@ pollRouter.get('/:id', async (req, res) => {
 pollRouter.post('/create', async (req, res) => {
   try {
     const formattedQuestions = req.body.questions.map((question) => {
-      const formattedOptions = question.options.map((option) => {
-        return {
-          option,
-          votes: []
-        }
-      })
+      const formattedOptions = question.options.map((option) => ({
+        option,
+        votes: [],
+      }));
       return {
         ...question,
-        options: formattedOptions
-      }
-    })
-    
+        options: formattedOptions,
+      };
+    });
+
     const data = {
       ...req.body,
-      questions: formattedQuestions
+      questions: formattedQuestions,
     };
 
     const doc = new Poll(data);
