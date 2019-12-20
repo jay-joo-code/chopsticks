@@ -8,7 +8,7 @@
     "api-dev": "PORT=8081 nodemon app",
     "client-dev": "cd client && npm run-script dev",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
-    "lint": "eslint ./routes --fix"
+    "lint": "eslint ./routes --fix && cd client && npm run lint"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import DynamicContainer from 'src/components/layout/DynamicContainer';
 import Logo from './Logo';
 import Nav from './Nav';
+import ExtendedNav from './ExtendedNav';
 
 const Container = styled.div`
   display: flex;
@@ -11,12 +12,15 @@ const Container = styled.div`
 `;
 
 const Header = () => (
-  <DynamicContainer>
-    <Container>
-      <Logo />
-      <Nav />
-    </Container>
-  </DynamicContainer>
+  <div>
+    <DynamicContainer>
+      <Container>
+        <Logo />
+        <Nav />
+      </Container>
+    </DynamicContainer>
+    <ExtendedNav />
+  </div>
 );
 
 export default Header;

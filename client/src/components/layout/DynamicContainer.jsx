@@ -15,7 +15,6 @@ const Container = styled.div`
   
   @media(min-width: ${desktopContentWidth}px) {
     width: ${desktopContentWidth}px;
-    overflow: hidden;
   }
 `;
 

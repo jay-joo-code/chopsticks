@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import AuthPanel from 'src/components/layout/AuthPanel';
 import FormikInput from 'src/components/common/form/FormikInput';
@@ -27,9 +27,37 @@ const RegisterBtn = styled(Link)`
   margin-top: 2rem;
 `;
 
+const CheckboxContainer = styled.div`
+  font-size: .8rem;
+  opacity: .8;
+  display: flex;
+  align-items: center;
+`;
+
+const LinkWrapper = styled(Link)`
+  text-decoration: underline;
+`;
+
 const Login = () => {
+  // TERMS AGREEMENT LOGIC
+  const [privacy, setPrivacy] = useState(false);
+  const [use, setUse] = useState(false);
+
+  const agreeAll = (e) => {
+    setPrivacy(e.target.checked);
+    setUse(e.target.checked);
+  };
+  const agreePrivacy = () => {
+    setPrivacy(!privacy);
+  };
+  const agreeUse = () => {
+    setUse(!use);
+  };
+
   const history = useHistory();
   const dispatch = useDispatch();
+
+  // FORM
   const formik = useFormik({
     initialValues: {
       password: '',
@@ -52,25 +80,27 @@ const Login = () => {
         .required('필수'),
     }),
     onSubmit: (values) => {
-      axios.post('/api/user/create', values)
-        .then(() => {
-          axios.post('/api/user/login', values)
-            .then((res) => {
-              dispatch({
-                type: 'USER_SET',
-                payload: res.data,
+      if (use && privacy) {
+        axios.post('/api/user/create', values)
+          .then(() => {
+            axios.post('/api/user/login', values)
+              .then((res) => {
+                dispatch({
+                  type: 'USER_SET',
+                  payload: res.data,
+                });
+                window.alert('성공! 자동으로 로그인 됬습니다');
+                history.push('/');
+              })
+              .catch((e) => {
+                log('auto login failed', e);
               });
-              window.alert('성공! 자동으로 로그인 됬습니다');
-              history.push('/');
-            })
-            .catch((e) => {
-              log('auto login failed', e);
-            });
-        })
-        .catch((e) => {
-          log('register failed', e);
-          window.alert('회원가입 실패. 다시 시도 해주세요');
-        });
+          })
+          .catch((e) => {
+            log('register failed', e);
+            window.alert('회원가입 실패. 다시 시도 해주세요');
+          });
+      }
     },
   });
 
@@ -81,6 +111,19 @@ const Login = () => {
           <FormikInput name="email" placeholder="이메일" formik={formik} />
           <FormikInput name="password" type="password" placeholder="비밀번호" formik={formik} />
           <FormikInput name="confpwd" type="password" placeholder="비밀번호 확인" formik={formik} />
+          <CheckboxContainer>
+            <input type="checkbox" checked={use && privacy} onChange={agreeAll} />
+            {' '}
+모두 동의
+          </CheckboxContainer>
+          <CheckboxContainer>
+            <input type="checkbox" checked={use} onChange={agreeUse} />
+            <LinkWrapper to="/terms/use">이용약관 (필수)</LinkWrapper>
+          </CheckboxContainer>
+          <CheckboxContainer>
+            <input type="checkbox" checked={privacy} onChange={agreePrivacy} />
+            <LinkWrapper to="/terms/privacy">개인정보 취급방침 (필수)</LinkWrapper>
+          </CheckboxContainer>
           <Button type="submit" inverted>회원가입</Button>
         </form>
         <RegisterBtnContainer>

@@ -4,6 +4,12 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from 'src/components/pages/Home';
 import Login from 'src/components/pages/Login';
 import Register from 'src/components/pages/Register';
+import Profile from 'src/components/pages/profile/Profile';
+import Items from 'src/components/pages/profile/Items';
+import Transactions from 'src/components/pages/profile/Transactions';
+import Orders from 'src/components/pages/profile/Orders';
+import PrivacyTerms from 'src/components/pages/terms/PrivacyTerms';
+import TermsOfUse from 'src/components/pages/terms/TermsOfUse';
 import Header from 'src/components/layout/Header';
 import DynamicContainer from 'src/components/layout/DynamicContainer';
 
@@ -27,12 +33,14 @@ const AppRouter = () => (
           <Route path="/purchase/details" component={Home} />
           <Route path="/purchase/item" component={Home} />
           <Route path="/purchase/method" component={Home} />
-          <Route path="/profile/orders" component={Home} />
-          <Route path="/profile/shop" component={Home} />
-          <Route path="/profile/transactions" component={Home} />
-          <Route path="/profile" component={Home} />
+          <Route path="/profile/orders" component={Orders} />
+          <Route path="/profile/items" component={Items} />
+          <Route path="/profile/transactions" component={Transactions} />
+          <Route path="/profile" component={Profile} />
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
+          <Route path="/terms/use" component={TermsOfUse} />
+          <Route path="/terms/privacy" component={PrivacyTerms} />
           <Route path="/cart" component={Home} />
           <Route path="/item/:id/delivery" component={Home} />
           <Route path="/item/:id/reviews" component={Home} />
