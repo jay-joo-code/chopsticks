@@ -20,17 +20,17 @@ const testData = [{
   price: '20000',
   img: TestImg,
 }, {
-  _id: '456',
+  _id: '1',
   name: '개나리 색 물결',
   price: '20000',
   img: TestImg,
 }, {
-  _id: '456',
+  _id: '2',
   name: '개나리 색 물결',
   price: '20000',
   img: TestImg,
 }, {
-  _id: '456',
+  _id: '3',
   name: '개나리 색 물결',
   price: '20000',
   img: TestImg,
@@ -39,7 +39,7 @@ const testData = [{
 const ItemsList = () => (
   <Container>
     {testData.map((item) => (
-      <ItemCard id={item._id} {...item} />
+      <ItemCard key={item._id} {...item} />
     ))}
   </Container>
 );

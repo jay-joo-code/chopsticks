@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as LogoSVG } from 'src/assets/images/logo.svg';
 
 const Container = styled(Link)`
-  font-size: 6rem;
+  font-size: 5rem;
+  height: 1em;
 `;
 
 const StyledLogo = styled(LogoSVG)`

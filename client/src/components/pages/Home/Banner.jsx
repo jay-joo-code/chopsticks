@@ -7,11 +7,13 @@ import theme from 'src/theme';
 const Container = styled.div`
   overflow: hidden;
   border-radius: 10px;
+  margin-top: 1rem;
 `;
 
 const Img = styled.img`
   width: 100%;
-  height: auto;
+  height: auto
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
 `;
 
 const ImgMo = styled(Img)`

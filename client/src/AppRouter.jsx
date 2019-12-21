@@ -10,6 +10,10 @@ import Transactions from 'src/components/pages/profile/Transactions';
 import Orders from 'src/components/pages/profile/Orders';
 import PrivacyTerms from 'src/components/pages/terms/PrivacyTerms';
 import TermsOfUse from 'src/components/pages/terms/TermsOfUse';
+import ItemDetails from 'src/components/pages/item/ItemDetails';
+import ItemPolicies from 'src/components/pages/item/ItemPolicies';
+import ItemReviews from 'src/components/pages/item/ItemReviews';
+import Saaji from 'src/components/pages/Saaji';
 import Header from 'src/components/layout/Header';
 import DynamicContainer from 'src/components/layout/DynamicContainer';
 
@@ -42,11 +46,12 @@ const AppRouter = () => (
           <Route path="/terms/use" component={TermsOfUse} />
           <Route path="/terms/privacy" component={PrivacyTerms} />
           <Route path="/cart" component={Home} />
-          <Route path="/item/:id/delivery" component={Home} />
-          <Route path="/item/:id/reviews" component={Home} />
-          <Route path="/item/:id" component={Home} />
+          <Route path="/item/:id/policies" component={ItemPolicies} />
+          <Route path="/item/:id/reviews" component={ItemReviews} />
+          <Route path="/item/:id/details" component={ItemDetails} />
           <Route path="/items/:category" component={Home} />
           <Route path="/items" component={Home} />
+          <Route path="/saaji" component={Saaji} />
           <Route exact path="/" component={Home} />
         </Switch>
       </DynamicContainer>
