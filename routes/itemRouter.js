@@ -2,10 +2,10 @@ const itemRouter = require('express').Router();
 const Item = require('./../models/Item');
 const User = require('./../models/User');
 
-// GET ALL Items
+// GET ALL Items THAT MATCH QUERY FILTER
 itemRouter.get('/', async(req, res) => {
   try {
-    const result = await Item.find({});
+    const result = await Item.find(req.query);
     res.send(result);
   }
   catch (e) {

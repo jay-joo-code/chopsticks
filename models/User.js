@@ -15,18 +15,14 @@ var userSchema = Schema({
     default: false
   },
   name: {
-    type: String
+    type: String,
+    default: ''
+  },
+  displayImage: {
+    type: String,
+    default: ''
   },
   mobile: {
-    type: String
-  },
-  dob: {
-    type: Date
-  },
-  sex: {
-    type: String
-  },
-  logo: {
     type: String
   },
   password: { //only email provider case has password
@@ -36,24 +32,13 @@ var userSchema = Schema({
     type: String
   },
   cart: [{
-    id: {
-      type: String
-    },
-    quantity: {
-      type: Number
-    },
-    options: [{
-      category: String,
-      name: String,
-      price: Number
-    }]
+    type: Schema.Types.ObjectId,
+    ref: 'Item',
+    default: []
   }],
   createdAt: {
     type: Date,
     default: new Date()
-  },
-  updated_at: {
-    type: Date
   }
 });
 /*

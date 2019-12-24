@@ -13,16 +13,17 @@ var itemSchema = Schema({
     default: false,
     required: true
   },
-  env: {
-    type: String,
-    required: true,
-    default: 'dev'
-  },
   images: {
-    type: [String]
+    type: [String],
+    default: []
+  },
+  name: {
+    type: String,
+    default: ''
   },
   price: {
-    type: Number
+    type: Number,
+    default: 0
   },
   firstOrderOption: {
     type: Boolean
@@ -45,9 +46,6 @@ var itemSchema = Schema({
   createdAt: {
     type: Date,
     default: new Date()
-  },
-  updated_at: {
-    type: Date
   }
 });
 

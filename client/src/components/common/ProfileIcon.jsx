@@ -12,6 +12,9 @@ const Container = styled(Link)`
   
 `;
 
+// TODO: CONDITIONALLY RENDER DISPLAYIMAGE
+// TODO: LINK TO PROFILE OR USER
+
 const ProfileIcon = () => (
   <Container to="/profile">
     <User />
