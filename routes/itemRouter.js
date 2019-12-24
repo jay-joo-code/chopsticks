@@ -42,31 +42,11 @@ itemRouter.post('/create', async(req, res) => {
   }
 });
 
-/* CLIENT CREATE REQUEST */
-itemRouter.post('/client', async(req, res) => {
+// UPDATE Item
+itemRouter.put('/:id/update', async(req, res) => {
   try {
-    const generatedData = {
-      isReviewed: false,
-    };
-    const mergedData = { ...req.body, ...generatedData };
-    const doc = new Item(mergedData);
-    const result = await doc.save();
+    const result = await Item.findByIdAndUpdate(req.params.id, req.body);
     res.send(result);
-  }
-  catch (e) {
-    res.status(500).send(e);
-  }
-});
-
-/* INCREMENT PV */
-itemRouter.post('/:id/viewed', async(req, res) => {
-  try {
-    const doc = await Item.findById(req.params.id);
-    const newPv = [...doc.pv];
-    newPv.push(Date.now());
-    doc.set('pv', newPv);
-    const r = await doc.save();
-    res.send(r);
   }
   catch (e) {
     res.status(500).send(e);

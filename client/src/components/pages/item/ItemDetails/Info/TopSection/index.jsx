@@ -8,12 +8,18 @@ const Container = styled.div`
 
 `;
 
+const UserSection = styled.div`
+  padding: 1rem 0;
+`
+
 const TopSection = (props) => {
   return (
     <Container>
-        <ItemName name={props.name} />
+        <ItemName {...props} />
         <Metadata date={props.createdAt} />
-        <UserData {...props} />
+        <UserSection>
+          <UserData user={props.owner} />
+        </UserSection>
     </Container>
   )
 };

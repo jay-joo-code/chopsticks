@@ -13,7 +13,7 @@ const UserSection = () => {
   return (
     <Container>
       {(user)
-        ? <ProfileIcon />
+        ? <ProfileIcon user={user} />
         : <Button to="/login" link inverted>로그인</Button>}
     </Container>
   );

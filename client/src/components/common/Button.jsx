@@ -14,7 +14,6 @@ const Button = (props) => {
     box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
     color: ${inverted ? 'white' : theme.green};
     padding: .5rem 1.5rem;
-    margin: 1rem 0;
     cursor: pointer;
     display: flex;
     align-items: center;

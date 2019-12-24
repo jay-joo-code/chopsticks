@@ -25,6 +25,10 @@ var itemSchema = Schema({
     type: Number,
     default: 0
   },
+  deliveryCost: {
+    type: Number,
+    default: 0
+  },
   firstOrderOption: {
     type: Boolean
   },
