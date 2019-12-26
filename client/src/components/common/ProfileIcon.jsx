@@ -6,15 +6,16 @@ import { useSelector } from 'react-redux';
 
 const Container = styled(Link)`
   display: block;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
 `;
 
 const ProfileIcon = (props) => {
   const { user } = props;
-  const userId = useSelector((state) => state.user._id);
+  const reduxUser = useSelector((state) => state.user);
+  const userId = reduxUser ? reduxUser._id : null;
   const path = userId === user._id ? '/profile' : `/user/${user._id}`;
   
   return (

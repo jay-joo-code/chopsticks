@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import TestImg from 'src/assets/images/item/handmade.jpg';
 import ItemCard from 'src/components/common/cards/ItemCard';
+import axios from 'axios';
+import log from 'src/util/log';
 
 const Container = styled.div`
   padding: 2rem 0;
@@ -9,39 +10,24 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-const testData = [{
-  _id: '123',
-  name: '푸른 빛 양초',
-  price: '15000',
-  img: TestImg,
-}, {
-  _id: '456',
-  name: '개나리 색 물결',
-  price: '20000',
-  img: TestImg,
-}, {
-  _id: '1',
-  name: '개나리 색 물결',
-  price: '20000',
-  img: TestImg,
-}, {
-  _id: '2',
-  name: '개나리 색 물결',
-  price: '20000',
-  img: TestImg,
-}, {
-  _id: '3',
-  name: '개나리 색 물결',
-  price: '20000',
-  img: TestImg,
-}];
-
-const ItemsList = () => (
+const ItemsList = () => {
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    axios.get('/api/item')
+      .then((res) => {
+        setItems(res.data)
+      })
+      .catch((e) => {
+        log('ERROR fetching items at home', e);
+      })
+  }, [])
+  return (
   <Container>
-    {testData.map((item) => (
+    {items.map((item) => (
       <ItemCard key={item._id} {...item} />
     ))}
   </Container>
-);
+  )
+};
 
 export default ItemsList;

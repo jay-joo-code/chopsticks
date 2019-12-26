@@ -5,18 +5,21 @@ import Metadata from 'src/components/common/Metadata';
 import UserData from 'src/components/common/UserData';
 
 const Container = styled.div`
-
+  margin-bottom: 4rem;
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    margin-bottom: 0;
+  }
 `;
 
 const UserSection = styled.div`
-  padding: 1rem 0;
+  padding: .5rem 0;
 `
 
 const TopSection = (props) => {
   return (
     <Container>
         <ItemName {...props} />
-        <Metadata date={props.createdAt} />
         <UserSection>
           <UserData user={props.owner} />
         </UserSection>

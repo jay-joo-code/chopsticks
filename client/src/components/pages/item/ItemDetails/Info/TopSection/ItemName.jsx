@@ -9,15 +9,15 @@ const Container = styled.div`
 `;
 
 const ItemName = (props) => {
-  const userId = useSelector((state) => state.user._id);
-  const editable = props.owner ? userId === props.owner._id : false;
-  
   return (
     <Container>
-      {editable
-        ? <DynamicInput name='name' init={props.name} updateUrl={`/api/item/${props._id}/update`} />
-        : <p>{props.name}</p> 
-      }
+      <DynamicInput 
+        name='name' 
+        init={props.name} 
+        updateUrl={`/api/item/${props._id}/update`} 
+        owner={props.owner} 
+        placeholder='작품 이름'
+      />
     </Container>
   )
 };

@@ -7,10 +7,10 @@ const Container = styled.div`
 
 `;
 
-const BottomSection = () => {
+const BottomSection = (props) => {
   return (
     <Container>
-        <Price />
+        <Price {...props} />
         <Purchase />
     </Container>
   )

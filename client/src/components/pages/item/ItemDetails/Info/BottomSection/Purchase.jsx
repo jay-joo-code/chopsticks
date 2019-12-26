@@ -5,8 +5,6 @@ import { ReactComponent as Cart } from 'src/assets/svgs/cart.svg';
 
 const Container = styled.div`
   display: flex;
-  overflow: hidden;
-  max-width: inherit;
 `;
 
 const ButtonContainer = styled.div`

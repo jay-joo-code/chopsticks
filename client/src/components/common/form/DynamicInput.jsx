@@ -3,27 +3,38 @@ import styled from 'styled-components';
 // import { debounce } from 'throttle-debounce';
 import axios from 'axios';
 import log from 'src/util/log';
+import { useSelector } from 'react-redux';
 
 const StyledDynamicInput = styled.input `
-  border: none;
-  background-color: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  color: inherit;
-  box-sizing: border-box;
-  width: 100%
-`;
+    border: none;
+    background-color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: inherit;
+    
+    &:focus {
+      border-bottom: 1px solid grey;
+    }
+  `;
 
 const DynamicInput = (props) => {
-  const { name, init, updateUrl } = props;
+  const { name, init, updateUrl, owner, parentHandleChange } = props;
   const [value, setValue] = useState(init);
+  const user = useSelector((state) => state.user);
+  const userId = user ? user._id : null;
+  const isOwner = owner ? userId === owner._id : false;
+  
   const handleChange = (e) => {
-    log('handleChange')
+    if (parentHandleChange) {
+      parentHandleChange(e);
+    }
     setValue(e.target.value);
   }
-  
+
   const update = () => {
-    log('update')
     let data = {};
     data[name] = value;
     axios.put(updateUrl, data)
@@ -35,14 +46,18 @@ const DynamicInput = (props) => {
       })
   }
 
-  // const debouncedUpdate = debounce(3000, update);
-  
   useEffect(() => {
-    update();
+    setValue(init);
+  }, [init])
+
+  useEffect(() => {
+    if (isOwner) {
+      update();
+    }
   }, [value])
-  
+
   return (
-    <StyledDynamicInput value={value} onChange={handleChange} />
+      <StyledDynamicInput value={value} onChange={handleChange} disabled={!isOwner} {...props} />
   )
 };
 
