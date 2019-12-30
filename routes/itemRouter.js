@@ -53,5 +53,16 @@ itemRouter.put('/:id/update', async(req, res) => {
   }
 });
 
+// DELETE Item
+itemRouter.delete('/:id/delete', async(req, res) => {
+  try {
+    const result = await Item.findByIdAndDelete(req.params.id);
+    res.send(result);
+  }
+  catch (e) {
+    res.status(500).send(e);
+  }
+});
+
 
 module.exports = itemRouter;

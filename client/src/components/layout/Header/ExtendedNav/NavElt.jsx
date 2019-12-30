@@ -17,6 +17,7 @@ const NavElt = (props) => {
     color: ${color};
     opacity: ${opacity};
     overflow: visible;
+    display: ${props.hide ? 'none' : 'inline'};
   `;
 
   return (

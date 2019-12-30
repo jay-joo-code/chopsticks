@@ -10,7 +10,7 @@ const Container = styled.div`
   justify-content: space-between;
   
   @media(min-width: ${props => props.theme.desktopContentWidth}px) {
-    padding: 0 0 0 1rem;
+    padding: 0 0 0 2rem;
   }
 `;
 

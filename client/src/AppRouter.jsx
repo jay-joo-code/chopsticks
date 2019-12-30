@@ -13,6 +13,7 @@ import TermsOfUse from 'src/components/pages/terms/TermsOfUse';
 import ItemDetails from 'src/components/pages/item/ItemDetails';
 import ItemPolicies from 'src/components/pages/item/ItemPolicies';
 import ItemReviews from 'src/components/pages/item/ItemReviews';
+import ItemAdmin from 'src/components/pages/item/ItemAdmin';
 import Saaji from 'src/components/pages/Saaji';
 import Header from 'src/components/layout/Header';
 import DynamicContainer from 'src/components/layout/DynamicContainer';
@@ -46,6 +47,7 @@ const AppRouter = () => (
           <Route path="/terms/use" component={TermsOfUse} />
           <Route path="/terms/privacy" component={PrivacyTerms} />
           <Route path="/cart" component={Home} />
+          <Route path="/item/:id/admin" component={ItemAdmin} />
           <Route path="/item/:id/policies" component={ItemPolicies} />
           <Route path="/item/:id/reviews" component={ItemReviews} />
           <Route path="/item/:id/details" component={ItemDetails} />

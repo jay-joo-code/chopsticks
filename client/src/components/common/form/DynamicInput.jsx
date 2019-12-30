@@ -3,7 +3,7 @@ import styled from 'styled-components';
 // import { debounce } from 'throttle-debounce';
 import axios from 'axios';
 import log from 'src/util/log';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
 
 const StyledDynamicInput = styled.input `
     border: none;
@@ -14,9 +14,10 @@ const StyledDynamicInput = styled.input `
     box-sizing: border-box;
     width: 100%;
     text-align: inherit;
+    border-bottom: 1px solid grey;
     
-    &:focus {
-      border-bottom: 1px solid grey;
+    &:disabled {
+      border-bottom: none;
     }
   `;
 
@@ -26,7 +27,7 @@ const DynamicInput = (props) => {
   const user = useSelector((state) => state.user);
   const userId = user ? user._id : null;
   const isOwner = owner ? userId === owner._id : false;
-  
+
   const handleChange = (e) => {
     if (parentHandleChange) {
       parentHandleChange(e);
@@ -57,7 +58,7 @@ const DynamicInput = (props) => {
   }, [value])
 
   return (
-      <StyledDynamicInput value={value} onChange={handleChange} disabled={!isOwner} {...props} />
+    <StyledDynamicInput value={value} onChange={handleChange} disabled={!isOwner} {...props} />
   )
 };
 

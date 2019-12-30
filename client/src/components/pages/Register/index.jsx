@@ -38,6 +38,10 @@ const LinkWrapper = styled(Link)`
   text-decoration: underline;
 `;
 
+const CheckboxSection = styled.div`
+  padding: 1rem 0;
+`
+
 const Login = () => {
   // TERMS AGREEMENT LOGIC
   const [privacy, setPrivacy] = useState(false);
@@ -111,19 +115,21 @@ const Login = () => {
           <FormikInput name="email" placeholder="이메일" formik={formik} />
           <FormikInput name="password" type="password" placeholder="비밀번호" formik={formik} />
           <FormikInput name="confpwd" type="password" placeholder="비밀번호 확인" formik={formik} />
-          <CheckboxContainer>
-            <input type="checkbox" checked={use && privacy} onChange={agreeAll} />
-            {' '}
-모두 동의
-          </CheckboxContainer>
-          <CheckboxContainer>
-            <input type="checkbox" checked={use} onChange={agreeUse} />
-            <LinkWrapper to="/terms/use">이용약관 (필수)</LinkWrapper>
-          </CheckboxContainer>
-          <CheckboxContainer>
-            <input type="checkbox" checked={privacy} onChange={agreePrivacy} />
-            <LinkWrapper to="/terms/privacy">개인정보 취급방침 (필수)</LinkWrapper>
-          </CheckboxContainer>
+          <CheckboxSection>
+            <CheckboxContainer>
+              <input type="checkbox" checked={use && privacy} onChange={agreeAll} />
+              {' '}
+  모두 동의
+            </CheckboxContainer>
+            <CheckboxContainer>
+              <input type="checkbox" checked={use} onChange={agreeUse} />
+              <LinkWrapper to="/terms/use">이용약관 (필수)</LinkWrapper>
+            </CheckboxContainer>
+            <CheckboxContainer>
+              <input type="checkbox" checked={privacy} onChange={agreePrivacy} />
+              <LinkWrapper to="/terms/privacy">개인정보 취급방침 (필수)</LinkWrapper>
+            </CheckboxContainer>
+          </CheckboxSection>
           <Button type="submit" inverted>회원가입</Button>
         </form>
         <RegisterBtnContainer>

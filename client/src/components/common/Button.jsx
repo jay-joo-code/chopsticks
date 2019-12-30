@@ -5,14 +5,16 @@ import { Link } from 'react-router-dom';
 
 const Button = (props) => {
   const {
-    inverted, children, link, to,
+    inverted, children, link, to, danger
   } = props;
+  
+  const color = danger ? theme.red : theme.green;
   const StyledButton = styled.button`
     width: 100%;
-    background-color: ${inverted ? theme.green : 'white'};
+    background-color: ${inverted ? color : 'white'};
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
-    color: ${inverted ? 'white' : theme.green};
+    color: ${inverted ? 'white' : color};
     padding: .5rem 1.5rem;
     cursor: pointer;
     display: flex;

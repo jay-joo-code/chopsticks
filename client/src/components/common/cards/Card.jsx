@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'src/theme';
-import { Link } from 'react-router-dom';
 import dimensions from './dimensions';
 
 const Container = styled.div`

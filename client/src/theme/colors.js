@@ -6,4 +6,4 @@ export default {
   red: '#d9534f',
 };
 
-const greenOrigin = '5cb85c'
+const greenOrigin = '5cb85c';
