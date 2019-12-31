@@ -6,12 +6,10 @@ const Container = styled.div`
 
 `;
 
-const AdminContent = (props) => {
-  return (
-    <Container>
-      <DeleteItem {...props} />
-    </Container>
-  )
-};
+const AdminContent = (props) => (
+  <Container>
+    <DeleteItem {...props} />
+  </Container>
+);
 
 export default AdminContent;

@@ -5,12 +5,10 @@ const Container = styled.div`
 
 `;
 
-const ItemReviews = () => {
-  return (
-    <Container>
+const ItemReviews = () => (
+  <Container>
         ItemReviews
-    </Container>
-  )
-};
+  </Container>
+);
 
 export default ItemReviews;

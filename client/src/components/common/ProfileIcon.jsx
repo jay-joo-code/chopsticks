@@ -17,12 +17,12 @@ const ProfileIcon = (props) => {
   const reduxUser = useSelector((state) => state.user);
   const userId = reduxUser ? reduxUser._id : null;
   const path = userId === user._id ? '/profile' : `/user/${user._id}`;
-  
+
   return (
     <Container to={path}>
       <User />
     </Container>
-  )
+  );
 };
 
 export default ProfileIcon;

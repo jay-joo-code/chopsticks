@@ -14,19 +14,19 @@ const DeleteItem = (props) => {
   const handleDelete = () => {
     const itemId = props._id;
     axios.delete(`/api/item/${itemId}/delete`)
-      .then((res) => {
-        alert(`상품이 성공적으로 삭제됬습니다`);
+      .then(() => {
+        alert('상품이 성공적으로 삭제됬습니다');
         history.push('/profile/items');
       })
       .catch((e) => {
-        log(`ERROR deleting item`)
-      })
-  }
+        log('ERROR deleting item', e);
+      });
+  };
   return (
     <Container>
-        <Button onClick={handleDelete} danger inverted>상품 삭제</Button>
+      <Button onClick={handleDelete} danger inverted>상품 삭제</Button>
     </Container>
-  )
+  );
 };
 
 export default DeleteItem;

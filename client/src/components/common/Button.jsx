@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 
 const Button = (props) => {
   const {
-    inverted, children, link, to, danger
+    inverted, children, link, to, danger,
   } = props;
-  
+
   const color = danger ? theme.red : theme.green;
   const StyledButton = styled.button`
     width: 100%;

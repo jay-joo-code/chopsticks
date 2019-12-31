@@ -10,9 +10,9 @@ import Itemcard from 'src/components/common/cards/ItemCard';
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-`
+`;
 
-const Items = (props) => {
+const Items = () => {
   const [items, setItems] = useState([]);
   const userId = useSelector((state) => state.user._id);
   useEffect(() => {
@@ -22,11 +22,11 @@ const Items = (props) => {
       })
       .catch((e) => {
         log('ERROR fetching self items', e);
-      })
-  }, [userId])
-  
+      });
+  }, [userId]);
+
   return (
-    <TitledPage title='상품'>
+    <TitledPage title="상품">
       <Container>
         <NewCard />
         {items.map((item) => (
@@ -34,7 +34,7 @@ const Items = (props) => {
         ))}
       </Container>
     </TitledPage>
-  )
+  );
 };
 
 export default Items;

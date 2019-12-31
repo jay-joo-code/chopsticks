@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);  
   background-color: white;
-`
+`;
 
 const ImageContainer = styled.div`
   overflow: hidden;
@@ -62,7 +62,10 @@ const ItemCard = (props) => (
         </ImageContainer>
         <Info>
           <Name>{props.name}</Name>
-          <Price>{props.price}원</Price>
+          <Price>
+            {props.price}
+원
+          </Price>
         </Info>
       </Wrapper>
     </Container>

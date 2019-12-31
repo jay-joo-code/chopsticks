@@ -9,17 +9,15 @@ const Container = styled.div`
 
 const ButtonContainer = styled.div`
   margin: 0 1rem 0 0;
-`
+`;
 
-const Purchase = () => {
-  return (
-    <Container>
-      <ButtonContainer>
-        <Button><Cart /></Button>
-      </ButtonContainer>
-      <Button inverted>구매</Button>
-    </Container>
-  )
-};
+const Purchase = () => (
+  <Container>
+    <ButtonContainer>
+      <Button><Cart /></Button>
+    </ButtonContainer>
+    <Button inverted>구매</Button>
+  </Container>
+);
 
 export default Purchase;

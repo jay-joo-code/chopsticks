@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from 'src/theme';
 
@@ -20,21 +20,21 @@ const Container = styled.div`
 
 const Img = styled.img`
 
-`
+`;
 
 const Image = (props) => {
   const [src, setSrc] = useState();
   if (props.images && props.images.length !== 0) {
     setSrc(props.images[0]);
   }
-  
+
   // TODO: CONDITIONALLY SET src
-  
+
   return (
     <Container>
-        <Img src={null} />
+      <Img src={null} />
     </Container>
-  )
+  );
 };
 
 export default Image;

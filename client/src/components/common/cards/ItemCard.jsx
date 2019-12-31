@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'src/theme';
+import { useHistory } from 'react-router-dom';
 import Card from './Card';
 import dimensions from './dimensions';
-import { useHistory } from 'react-router-dom';
-import log from 'src/util/log';
 
 const ImageContainer = styled.div`
   overflow: hidden;
@@ -41,7 +40,7 @@ const ItemCard = (props) => {
   const history = useHistory();
   const handleClick = () => {
     history.push(`/item/${props._id}/details`);
-  }
+  };
   return (
     <Card onClick={handleClick} {...props}>
       <ImageContainer>
@@ -49,10 +48,13 @@ const ItemCard = (props) => {
       </ImageContainer>
       <Info>
         <Name>{props.name}</Name>
-        <Price>{props.price}원</Price>
+        <Price>
+          {props.price}
+원
+        </Price>
       </Info>
     </Card>
-  )
+  );
 };
 
 export default ItemCard;

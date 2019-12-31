@@ -40,7 +40,7 @@ const LinkWrapper = styled(Link)`
 
 const CheckboxSection = styled.div`
   padding: 1rem 0;
-`
+`;
 
 const Login = () => {
   // TERMS AGREEMENT LOGIC

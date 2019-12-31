@@ -9,13 +9,11 @@ const Container = styled.div`
   position: relative
 `;
 
-const CartIcon = () => {
-  return (
-    <Container>
-      <Notification text='2' />
-      <CartSVG />
-    </Container>
-  )
-};
+const CartIcon = () => (
+  <Container>
+    <Notification text="2" />
+    <CartSVG />
+  </Container>
+);
 
 export default CartIcon;

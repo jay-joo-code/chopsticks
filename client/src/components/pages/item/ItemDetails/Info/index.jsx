@@ -9,18 +9,16 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   
-  @media(min-width: ${props => props.theme.desktopContentWidth}px) {
+  @media(min-width: ${(props) => props.theme.desktopContentWidth}px) {
     padding: 0 0 0 2rem;
   }
 `;
 
-const Info = (props) => {
-  return (
-    <Container>
-        <TopSection {...props} />
-        <BottomSection {...props} />
-    </Container>
-  )
-};
+const Info = (props) => (
+  <Container>
+    <TopSection {...props} />
+    <BottomSection {...props} />
+  </Container>
+);
 
 export default Info;

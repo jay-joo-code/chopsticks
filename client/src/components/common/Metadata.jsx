@@ -9,7 +9,7 @@ const Container = styled.div`
 
 const StyledDate = styled.p`
   
-`
+`;
 
 const Metadata = ({ date }) => {
   const formattedDate = date ? date.split('T')[0] : '';
@@ -17,7 +17,7 @@ const Metadata = ({ date }) => {
     <Container>
       <StyledDate>{formattedDate}</StyledDate>
     </Container>
-  )
+  );
 };
 
 export default Metadata;

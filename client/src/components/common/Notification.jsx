@@ -18,12 +18,10 @@ const Container = styled.span`
   display: block;
 `;
 
-const Notification = (props) => {
-  return (
-    <Container>
-        {props.text}
-    </Container>
-  )
-};
+const Notification = (props) => (
+  <Container>
+    {props.text}
+  </Container>
+);
 
 export default Notification;

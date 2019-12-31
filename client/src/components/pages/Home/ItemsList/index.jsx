@@ -15,19 +15,19 @@ const ItemsList = () => {
   useEffect(() => {
     axios.get('/api/item')
       .then((res) => {
-        setItems(res.data)
+        setItems(res.data);
       })
       .catch((e) => {
         log('ERROR fetching items at home', e);
-      })
-  }, [])
+      });
+  }, []);
   return (
-  <Container>
-    {items.map((item) => (
-      <ItemCard key={item._id} {...item} />
-    ))}
-  </Container>
-  )
+    <Container>
+      {items.map((item) => (
+        <ItemCard key={item._id} {...item} />
+      ))}
+    </Container>
+  );
 };
 
 export default ItemsList;

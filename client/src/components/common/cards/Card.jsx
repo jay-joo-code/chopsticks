@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   cursor: pointer;
-`
+`;
 
 const Card = (props) => (
   <Container key={props._id}>
