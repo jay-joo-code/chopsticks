@@ -11,6 +11,7 @@ const Container = styled.div`
   
   @media(min-width: ${(props) => props.theme.desktopContentWidth}px) {
     padding: 0 0 0 2rem;
+    flex-grow: 2;
   }
 `;
 

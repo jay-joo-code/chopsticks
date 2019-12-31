@@ -8,8 +8,8 @@ const Container = styled.div`
   width: 100%;
   
   @media(min-width: ${theme.desktopContentWidth}px) {
-    width: 313px;
-    padding: 1rem .5rem;
+    width: 284px;
+    padding: 1rem 8px;
   }
 `;
 
