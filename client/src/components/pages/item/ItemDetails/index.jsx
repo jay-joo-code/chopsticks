@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ItemPage from 'src/components/layout/ItemPage';
 import useCurrentItem from 'src/util/hooks/useCurrentItem';
@@ -11,13 +11,14 @@ const Container = styled.div`
 `;
 
 const ItemDetails = () => {
-  const item = useCurrentItem();
-
+  const [version, setVersion] = useState(0);
+  const item = useCurrentItem(version);
+  
   return (
     <ItemPage>
       <Container>
-        <Image {...item} />
-        <Info {...item} />
+        <Image {...item} version={version} setVersion={setVersion} />
+        <Info {...item} version={version} setVersion={setVersion}  />
       </Container>
     </ItemPage>
   );

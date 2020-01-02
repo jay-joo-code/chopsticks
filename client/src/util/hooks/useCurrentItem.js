@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import log from 'src/util/log';
 
-const useCurrentItem = () => {
+const useCurrentItem = (version) => {
   const [item, setItem] = useState({});
   const { pathname } = useLocation();
   const [itemId, setItemId] = useState();
@@ -15,13 +15,14 @@ const useCurrentItem = () => {
     if (pathname.split('/')[1] === 'item' && itemId) {
       axios.get(`/api/item/${itemId}`)
       .then((res) => {
+        log('fetched items');
         setItem(res.data);
       })
       .catch((e) => {
         log('ERROR fetching item', e);
       })
     }
-  }, [itemId])
+  }, [itemId, version])
   
   return item;
 }

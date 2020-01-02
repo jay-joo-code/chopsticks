@@ -18,7 +18,7 @@ const Info = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 .7rem;
+  padding: .7rem;
   flex-grow: 1;
   font-size: 1.3rem;
   
@@ -44,7 +44,7 @@ const ItemCard = (props) => {
   return (
     <Card onClick={handleClick} {...props}>
       <ImageContainer>
-        <Img src={props.img} />
+        <Img src={props.images[0]} />
       </ImageContainer>
       <Info>
         <Name>{props.name}</Name>

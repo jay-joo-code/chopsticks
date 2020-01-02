@@ -7,7 +7,8 @@ import log from 'src/util/log';
 import Card from './Card';
 
 const Container = styled.div`
-  height: 100%;
+  height: 0;
+  padding-bottom: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
