@@ -15,7 +15,7 @@ const rotation = keyframes`
   100% {
     transform: rotateY(3600deg);
   }
-`
+`;
 
 const Animation = styled.div`
   display: inline-block;
@@ -27,17 +27,15 @@ const Animation = styled.div`
     height: 1rem;
     margin: 8px;
     border-radius: 50%;
-    background: ${props => props.theme.green};
+    background: ${(props) => props.theme.green};
     animation: ${rotation} 5s ease-in-out infinite;
   }
 `;
 
-const Loading = () => {
-  return (
-    <Animation>
-      <div />
-    </Animation>
-  )
-};
+const Loading = () => (
+  <Animation>
+    <div />
+  </Animation>
+);
 
 export default Loading;

@@ -18,6 +18,12 @@ import Saaji from 'src/components/pages/Saaji';
 import Header from 'src/components/layout/Header';
 import DynamicContainer from 'src/components/layout/DynamicContainer';
 
+import Shop from 'src/components/pages/Shop';
+import ShopIntro from 'src/components/pages/Shop/Intro';
+import ShopApply from 'src/components/pages/Shop/Apply';
+import ShopApplyComplete from 'src/components/pages/Shop/Apply/Complete';
+import ShopApplyPending from 'src/components/pages/Shop/Apply/Pending';
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -52,6 +58,11 @@ const AppRouter = () => (
           <Route path="/item/:id/reviews" component={ItemReviews} />
           <Route path="/item/:id/details" component={ItemDetails} />
           <Route path="/items/:category" component={Home} />
+          <Route path="/shop/apply/pending" component={ShopApplyPending} />
+          <Route path="/shop/apply/complete" component={ShopApplyComplete} />
+          <Route path="/shop/apply" component={ShopApply} />
+          <Route path="/shop/intro" component={ShopIntro} />
+          <Route path="/shop" component={Shop} />
           <Route path="/items" component={Home} />
           <Route path="/saaji" component={Saaji} />
           <Route exact path="/" component={Home} />

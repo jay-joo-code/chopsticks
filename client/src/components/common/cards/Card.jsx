@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'src/theme';
-import dimensions from './dimensions';
 import log from 'src/util/log';
+import dimensions from './dimensions';
 
 const CARD_CONTENT_WIDTH = 284;
 const PADDING_WIDTH = Math.floor((theme.CARD_WIDTH - CARD_CONTENT_WIDTH) / 2);

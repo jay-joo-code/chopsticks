@@ -8,16 +8,13 @@ const Container = styled.div`
 
 `;
 
-const ImageUpload = (props) => {
-  
-  return (
-    <Popup display={props.display} handleClosePopup={props.handleClosePopup}>
-      <Container>
-        <UploadSection {...props}/>
-        <ImageList {...props} />
-      </Container>
-    </Popup>
-  )
-};
+const ImageUpload = (props) => (
+  <Popup display={props.display} handleClosePopup={props.handleClosePopup}>
+    <Container>
+      <UploadSection {...props} />
+      <ImageList {...props} />
+    </Container>
+  </Popup>
+);
 
 export default ImageUpload;

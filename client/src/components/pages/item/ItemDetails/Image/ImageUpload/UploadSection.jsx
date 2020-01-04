@@ -21,7 +21,9 @@ const Input = styled.input`
 `;
 
 const UploadSection = (props) => {
-  const { itemId, images, version, setVersion } = props;
+  const {
+    itemId, images, version, setVersion,
+  } = props;
   const [loading, setLoading] = useState(false);
   const handleFileChange = (e) => {
     setLoading(true);
@@ -29,31 +31,30 @@ const UploadSection = (props) => {
     uploadFile(file, `/items/${itemId}`)
       .then((url) => {
         // UPDATE DB
-        let newImages = [...images];
+        const newImages = [...images];
         newImages.push(url);
         axios.put(`/api/item/${itemId}/update`, { images: newImages })
           .then((res) => {
             setVersion(version + 1);
             setLoading(false);
-          })
+          });
       })
       .catch((e) => {
         setLoading(false);
         log('ERROR upload', e);
-      })
+      });
   };
-  
+
   return (
     <Container>
       <UploadGroup>
         <Input type="file" onChange={handleFileChange} />
         {loading
           ? <Loading />
-          : <div />
-        }
+          : <div />}
       </UploadGroup>
     </Container>
-    )
+  );
 };
 
 export default UploadSection;

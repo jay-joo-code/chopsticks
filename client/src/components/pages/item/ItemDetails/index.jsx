@@ -13,12 +13,12 @@ const Container = styled.div`
 const ItemDetails = () => {
   const [version, setVersion] = useState(0);
   const item = useCurrentItem(version);
-  
+
   return (
     <ItemPage>
       <Container>
         <Image {...item} version={version} setVersion={setVersion} />
-        <Info {...item} version={version} setVersion={setVersion}  />
+        <Info {...item} version={version} setVersion={setVersion} />
       </Container>
     </ItemPage>
   );

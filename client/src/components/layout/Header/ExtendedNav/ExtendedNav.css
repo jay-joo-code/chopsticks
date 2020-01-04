@@ -1,0 +1,45 @@
+.gnb {
+  z-index:1;
+  width:100%;
+  overflow-x: scroll auto;
+  white-space: nowrap;
+  padding: 1rem 0;
+}
+
+.gnb ul {
+  display: flex;
+}
+
+.gnb li {
+  margin: 0 1rem;
+  display: inline-block;
+}
+
+.gnb li a {
+  font-size: 1rem;
+  font-weight: bold;
+  color: black;
+  opacity: .7;
+}
+
+.gnb .on a {
+  color: #66c088;
+  opacity: 1;
+}
+
+@media screen and (min-width: 1200px) {
+  .gnb {
+    display: flex;
+    justify-content: center;
+    }
+
+    .gnb li {
+        margin: 0 3rem;
+        display: inline-block;
+    }
+
+    .gnb8 li {
+        margin: 0px 2.2%;
+        display: inline-block;
+    }
+}

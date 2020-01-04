@@ -9,16 +9,14 @@ const ImgContainer = styled.div`
 const Img = styled.img`
   width: 100%;
   height: auto;
-`
+`;
 
-const ImageItem = (props) => {
-  return (
-    <Card>
-      <ImgContainer>
-        <Img src={props.src} />
-      </ImgContainer>
-    </Card>
-  )
-};
+const ImageItem = (props) => (
+  <Card>
+    <ImgContainer>
+      <Img src={props.src} />
+    </ImgContainer>
+  </Card>
+);
 
 export default ImageItem;

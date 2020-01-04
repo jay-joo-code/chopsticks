@@ -10,7 +10,7 @@ var userSchema = Schema({
     lowercase: true,
     unique: true
   },
-  email_verified: {
+  emailVerified: {
     type: Boolean,
     default: false
   },
@@ -39,6 +39,19 @@ var userSchema = Schema({
   createdAt: {
     type: Date,
     default: new Date()
+  },
+  shop: {
+    title: String,
+    category: [String],
+    intro: String,
+    accepted: {
+      type: Boolean,
+      default: false
+    },
+    applied: {
+      type: Boolean,
+      default: false
+    }
   }
 });
 /*

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import theme from 'src/theme';
-import ImageUpload from './ImageUpload';
 import useIsOwner from 'src/util/hooks/useIsOwner';
 import log from 'src/util/log';
+import ImageUpload from './ImageUpload';
 
 const IMAGE_WIDTH = Math.floor(theme.desktopContentWidth / 5 * 3);
 
 const Container = styled.div`
-  cursor: ${props => props.isOwner ? 'pointer' : 'default'};
+  cursor: ${(props) => (props.isOwner ? 'pointer' : 'default')};
   width: 100%;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
@@ -30,13 +30,13 @@ const ImagePlaceholder = styled.div`
     padding-bottom: 0;
     overflow: hidden;
   }
-`
+`;
 
 const ImageContainer = styled(ImagePlaceholder)`
   padding-bottom: 0;
   height: auto;
   overflow: hidden;
-`
+`;
 
 const Img = styled.img`
   width: 100%;
@@ -57,37 +57,38 @@ const Image = (props) => {
     if (hasImages) {
       setSrc(images[0]);
     }
-  }, [images])
-  
+  }, [images]);
+
   // IMAGE UPLOAD POPUP
   const [displayPopup, setDisplayPopup] = useState(false);
   const isOwner = useIsOwner();
   const handleClick = () => {
     if (isOwner) {
-      setDisplayPopup(true)
+      setDisplayPopup(true);
     }
-  }
+  };
   const handleClosePopup = () => {
     setDisplayPopup(false);
-  }
+  };
 
   // TODO: CONDITIONALLY SET src
   return (
-    <Container isOwner={isOwner} >
-      <ImageUpload 
-        display={displayPopup} 
-        handleClosePopup={handleClosePopup} 
+    <Container isOwner={isOwner}>
+      <ImageUpload
+        display={displayPopup}
+        handleClosePopup={handleClosePopup}
         images={images}
         itemId={props._id}
         version={props.version}
         setVersion={props.setVersion}
       />
       {hasImages
-        ? (<ImageContainer onClick={handleClick}>
+        ? (
+          <ImageContainer onClick={handleClick}>
             <Img src={src} />
-          </ImageContainer>)
-        : <ImagePlaceholder />
-      }
+          </ImageContainer>
+        )
+        : <ImagePlaceholder />}
     </Container>
   );
 };

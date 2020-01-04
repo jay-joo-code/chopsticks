@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import UserSection from './UserSection';
+import User from './User';
 import CartIcon from './CartIcon';
+import ShopIcon from './ShopIcon';
 
 const Container = styled.div`
   display: flex;
@@ -11,7 +12,8 @@ const Container = styled.div`
 const NavCond = () => (
   <Container>
     <CartIcon />
-    <UserSection />
+    <User />
+    <ShopIcon />
   </Container>
 );
 

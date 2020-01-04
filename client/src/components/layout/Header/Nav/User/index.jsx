@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import ProfileIcon from 'src/components/common/ProfileIcon';
 
 const Container = styled.div`
-
+  margin-right: .5rem;
 `;
 
 const UserSection = () => {
