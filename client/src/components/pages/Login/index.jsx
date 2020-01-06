@@ -50,7 +50,7 @@ const Login = () => {
             type: 'USER_SET',
             payload: res.data,
           });
-          history.push('/');
+          history.goBack();
         })
         .catch((e) => {
           log('login failed', e);

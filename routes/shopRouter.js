@@ -12,12 +12,47 @@ shopRouter.get('/check-title', async (req, res) => {
     }
   }
   catch (e) {
-    
+    res.status(500).send(e);
+  }
+})
+
+shopRouter.get('/', async (req, res) => {
+  try {
+    const all = await User.find({});
+    const docs = all.filter((doc) => doc.shop.applied);
+    res.send(docs);
+  }
+  catch (e) {
+    res.status(500).send(e);
+  }
+})
+
+shopRouter.put('/:id/update', async (req, res) => {
+  try {
+    const result = await User.findByIdAndUpdate(req.params.id, req.body);
+    res.send(result);
+  }
+  catch (e) {
+    res.status(500).send(e);
   }
 })
 
 shopRouter.post('/apply', async (req, res) => {
-  
+  try {
+    const data = {
+      mobile: req.body.mobile,
+      shop: {
+        title: req.body.title,
+        intro: req.body.intro,
+        applied: true
+      }
+    }
+    const result = await User.findByIdAndUpdate(req.body.id, data);
+    res.send(result);
+  }
+  catch (e) {
+    res.status(500).send(e);
+  }
 })
 
 module.exports = shopRouter;

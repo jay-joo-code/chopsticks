@@ -9,6 +9,7 @@ import OutlinedTextarea from 'src/components/common/form/OutlinedTextarea';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import log from 'src/util/log';
+import { useHistory } from 'react-router-dom';
 
 const Form = styled.form`
 
@@ -27,12 +28,14 @@ const BtnCont = styled.div`
 
 const AppForm = () => {
   const user = useSelector((state) => state.user);
+  const history = useHistory();
   const [titleVerif, setTitleVerif] = useState(false);
   const formik = useFormik({
     initialValues: {
+      id: user._id,
       title: '',
       email: user.email,
-      mobile: '',
+      mobile: user.mobile || '',
       intro: ''
     },
     validationSchema: Yup.object({
@@ -53,7 +56,13 @@ const AppForm = () => {
         setFieldError('title', '중복 확인해주세요')
       }
       else {
-        log('submit', values)
+        axios.post('/api/shop/apply', values)
+          .then((res) => {
+            history.push('/shop/apply/pending');
+          })
+          .catch((e) => {
+            log('ERROR submit apply shop form', e);
+          })
       }
     },
   });

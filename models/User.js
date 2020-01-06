@@ -23,7 +23,8 @@ var userSchema = Schema({
     default: ''
   },
   mobile: {
-    type: String
+    type: String,
+    default: ''
   },
   password: { //only email provider case has password
     type: String
