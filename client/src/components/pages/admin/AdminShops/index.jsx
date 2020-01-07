@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import log from 'src/util/log';
+import styled from 'styled-components';
+
+const Title = styled.h3`
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: ${props => props.theme.green};
+`
 
 const AdminShops = () => {
   const [version, setVersion] = useState(0);
@@ -46,7 +53,7 @@ const AdminShops = () => {
     <div className="container-fluid">
       <div className="page-header">
         <div className="page-title">
-          <h3>Shop Applications</h3>
+          <Title>Shop Applications</Title>
         </div>
       </div>
       <div className="tableContainer">
@@ -90,7 +97,7 @@ const AdminShops = () => {
                 </button>
               </td>
               <td>
-                {user.createdAt}
+                {user.shop.createdAt}
               </td>
             </tr>
           ))}
@@ -99,7 +106,7 @@ const AdminShops = () => {
       </div>
       <div className="page-header">
         <div className="page-title">
-          <h3>Shops</h3>
+          <Title>Active Shops</Title>
         </div>
       </div>
       <div className="tableContainer">
@@ -143,7 +150,7 @@ const AdminShops = () => {
                 </button>
               </td>
               <td>
-                {user.createdAt}
+                {user.shop.createdAt}
               </td>
             </tr>
           ))}

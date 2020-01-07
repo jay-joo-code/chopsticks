@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AuthPanel from 'src/components/layout/AuthPanel';
 import FormikInput from 'src/components/common/form/FormikInput';
@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import log from 'src/util/log';
+import { useSelector } from 'react-redux';
 
 import { useDispatch } from 'react-redux';
 
@@ -42,7 +43,16 @@ const CheckboxSection = styled.div`
   padding: 1rem 0;
 `;
 
-const Login = () => {
+const Register = () => {
+  // REDIRECT IF LOGGED IN
+  const history = useHistory();
+  const user = useSelector((state) => state.user);
+  useEffect(() => {
+    if (user) {
+      history.push('/')
+    }
+  }, [])
+  
   // TERMS AGREEMENT LOGIC
   const [privacy, setPrivacy] = useState(false);
   const [use, setUse] = useState(false);
@@ -58,7 +68,6 @@ const Login = () => {
     setUse(!use);
   };
 
-  const history = useHistory();
   const dispatch = useDispatch();
 
   // FORM
@@ -140,4 +149,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

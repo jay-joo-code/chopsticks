@@ -3,7 +3,7 @@ const User = require('./../models/User');
 
 shopRouter.get('/check-title', async (req, res) => {
   try {
-    const sameTitle = await User.find({ shop: { title: req.query.title }});
+    const sameTitle = await User.find({ "shop.title": req.query.title });
     if (sameTitle.length === 0) {
       res.send(true)
     }
@@ -44,7 +44,8 @@ shopRouter.post('/apply', async (req, res) => {
       shop: {
         title: req.body.title,
         intro: req.body.intro,
-        applied: true
+        applied: true,
+        createdAt: new Date()
       }
     }
     const result = await User.findByIdAndUpdate(req.body.id, data);

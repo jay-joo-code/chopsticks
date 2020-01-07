@@ -63,17 +63,17 @@ const AppRouter = () => (
           <Route path="/item/:id/policies" component={ItemPolicies} />
           <Route path="/item/:id/reviews" component={ItemReviews} />
           <Route path="/item/:id/details" component={ItemDetails} />
-          <Route path="/items/:category" component={Home} />
+          <Route path="/items/category" component={Home} />
           
           <Route path="/shop/apply/pending" component={ShopApplyPending} />
           <Route path="/shop/apply/complete" component={ShopApplyComplete} />
           <Route path="/shop/apply" component={ShopApply} />
           <Route path="/shop/intro" component={ShopIntro} />
+          <Route path="/shop/items" component={Items} />
           <Route path="/shop" component={Shop} />
           
           <Route path="/admin/shops" component={AdminShops} />
           
-          <Route path="/items" component={Home} />
           <Route path="/saaji" component={Saaji} />
           <Route exact path="/" component={Home} />
         </Switch>

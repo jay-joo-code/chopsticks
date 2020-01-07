@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import RedButton from 'src/components/common/buttons/RedButton';
-
+import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import { useSelector } from 'react-redux';
 import log from 'src/util/log';
 import styled from 'styled-components';
@@ -14,6 +14,27 @@ const ButtonContainer = styled.div`
 const Intro = () => {
   const history = useHistory();
   const user = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
+  
+  useEffect(() => {
+    if (user) {
+      fetchSelfAndStore(user._id)
+        .then(() => {
+          setLoading(false);
+          if (user.shop.applied && !user.shop.accepted) {
+            history.push('/shop/apply/pending');
+          }
+          else if (user.shop.applied && user.shop.accepted) {
+            history.push('/shop')
+          }
+        })
+        .catch((e) => {
+          setLoading(false);
+          log('ERROR store routing')
+        })
+    }
+  }, [])
+  
   const handleApplicationAttempt = () => {
     log('click');
     if (!user) {
@@ -22,6 +43,9 @@ const Intro = () => {
       history.push('/shop/apply');
     }
   };
+  
+  if (loading) return <div />;
+  
   return (
     <div id="container">
       <div className="shop_op">

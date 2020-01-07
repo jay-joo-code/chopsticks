@@ -25,6 +25,10 @@ var itemSchema = Schema({
     type: Number,
     default: 0
   },
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: 'Category'
+  },
   deliveryCost: {
     type: Number,
     default: 0

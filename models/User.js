@@ -52,7 +52,8 @@ var userSchema = Schema({
     applied: {
       type: Boolean,
       default: false
-    }
+    },
+    createdAt: Date
   }
 });
 /*
