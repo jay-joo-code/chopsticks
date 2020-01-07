@@ -11,24 +11,23 @@ const ExtendedNav = () => {
   useEffect(() => {
     const pathArray = pathname.split('/');
     if (pathArray[1] === 'shop' && pathArray[2] === 'admin') {
-      setNav(adminNav)
+      setNav(adminNav);
     } else if (pathArray[1] === 'profile') {
-      setNav(profileNav)
+      setNav(profileNav);
+    } else {
+      setNav(categoryNav);
     }
-    else {
-      setNav(categoryNav)
-    }
-  }, [pathname])
-  
+  }, [pathname]);
+
   return (
-  <nav className="gnb">
-    <ul>
-      {nav.map((elt) => (
-        <NavElt key={elt.name} {...elt} />
-      ))}
-    </ul>
-  </nav>
-  )
+    <nav className="gnb">
+      <ul>
+        {nav.map((elt) => (
+          <NavElt key={elt.name} {...elt} />
+        ))}
+      </ul>
+    </nav>
+  );
 };
 
 export default ExtendedNav;

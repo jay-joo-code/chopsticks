@@ -50,7 +50,7 @@ const Login = () => {
             type: 'USER_SET',
             payload: res.data,
           });
-          
+
           history.goBack();
         })
         .catch((e) => {

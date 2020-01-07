@@ -6,49 +6,49 @@ import styled from 'styled-components';
 const Title = styled.h3`
   font-size: 1.5rem;
   font-weight: bold;
-  color: ${props => props.theme.green};
-`
+  color: ${(props) => props.theme.green};
+`;
 
 const AdminShops = () => {
   const [version, setVersion] = useState(0);
   const [disabledShops, setDisabledShops] = useState([]);
   const [activeShops, setActiveShops] = useState([]);
-  
+
   useEffect(() => {
     axios.get('/api/shop')
       .then((res) => {
         const allShops = res.data;
-        let activeShops = [];
+        const activeShops = [];
         const disabledShops = allShops.filter((user) => {
           if (user.shop.accepted) activeShops.push(user);
           return !user.shop.accepted;
-        })
-        log(disabledShops)
-        log(activeShops)
+        });
+        log(disabledShops);
+        log(activeShops);
         setDisabledShops(disabledShops);
         setActiveShops(activeShops);
       })
       .catch((e) => {
-        log(`ERROR fetch shops admin`);
-      })
-  }, [version])
-  
+        log('ERROR fetch shops admin');
+      });
+  }, [version]);
+
   const setShopState = (id, shopData, state) => {
     const data = {
       shop: {
         ...shopData,
-        accepted: state
-      }
-    }
+        accepted: state,
+      },
+    };
     axios.put(`/api/shop/${id}/update`, data)
       .then((res) => {
         setVersion(version + 1);
       })
       .catch((e) => {
         log('ERROR accept shop', e);
-      })
-  }
-  
+      });
+  };
+
   return (
     <div className="container-fluid">
       <div className="page-header">
@@ -70,37 +70,37 @@ const AdminShops = () => {
             </tr>
           </thead>
           <tbody>
-          {disabledShops.map((user, i) => (
-            <tr>
-              <td width="5%">
-                {i + 1}
-              </td>
-              <td>
-                {user._id}
-              </td>
-              <td>
-                {user.shop.title}
-              </td>
-              <td>
-                {user.email}
-              </td>
-              <td>
-                {user.mobile}
-              </td>
-              <td>
-                <button 
-                  type='button' 
-                  className="btn btn-default btn-xs"
-                  onClick={() => setShopState(user._id, user.shop, true)}
-                >
+            {disabledShops.map((user, i) => (
+              <tr>
+                <td width="5%">
+                  {i + 1}
+                </td>
+                <td>
+                  {user._id}
+                </td>
+                <td>
+                  {user.shop.title}
+                </td>
+                <td>
+                  {user.email}
+                </td>
+                <td>
+                  {user.mobile}
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    className="btn btn-default btn-xs"
+                    onClick={() => setShopState(user._id, user.shop, true)}
+                  >
                   Accept
-                </button>
-              </td>
-              <td>
-                {user.shop.createdAt}
-              </td>
-            </tr>
-          ))}
+                  </button>
+                </td>
+                <td>
+                  {user.shop.createdAt}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -123,42 +123,42 @@ const AdminShops = () => {
             </tr>
           </thead>
           <tbody>
-          {activeShops.map((user, i) => (
-            <tr>
-              <td width="5%">
-                {i + 1}
-              </td>
-              <td>
-                {user._id}
-              </td>
-              <td>
-                {user.shop.title}
-              </td>
-              <td>
-                {user.email}
-              </td>
-              <td>
-                {user.mobile}
-              </td>
-              <td>
-                <button 
-                  type='button' 
-                  className="btn btn-default btn-xs"
-                  onClick={() => setShopState(user._id, user.shop, false)}
-                >
+            {activeShops.map((user, i) => (
+              <tr>
+                <td width="5%">
+                  {i + 1}
+                </td>
+                <td>
+                  {user._id}
+                </td>
+                <td>
+                  {user.shop.title}
+                </td>
+                <td>
+                  {user.email}
+                </td>
+                <td>
+                  {user.mobile}
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    className="btn btn-default btn-xs"
+                    onClick={() => setShopState(user._id, user.shop, false)}
+                  >
                   Disable
-                </button>
-              </td>
-              <td>
-                {user.shop.createdAt}
-              </td>
-            </tr>
-          ))}
+                  </button>
+                </td>
+                <td>
+                  {user.shop.createdAt}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-  </div>
-  )
+    </div>
+  );
 };
 
 export default AdminShops;

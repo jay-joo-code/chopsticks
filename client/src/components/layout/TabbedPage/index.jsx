@@ -8,16 +8,16 @@ const Container = styled.div`
 
 const Content = styled.div`
   
-`
+`;
 
 const TabbedPage = (props) => {
   const { pages } = props;
   const [index, setIndex] = useState(0);
-  
+
   return (
     <Container>
-      <Tab 
-        pages={pages} 
+      <Tab
+        pages={pages}
         index={index}
         setIndex={setIndex}
       />
@@ -25,7 +25,7 @@ const TabbedPage = (props) => {
         {pages[index].component}
       </Content>
     </Container>
-  )
+  );
 };
 
 export default TabbedPage;

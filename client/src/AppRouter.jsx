@@ -48,26 +48,26 @@ const AppRouter = () => (
           <Route path="/purchase/details" component={Home} />
           <Route path="/purchase/item" component={Home} />
           <Route path="/purchase/method" component={Home} />
-          
+
           <Route path="/profile/orders" component={Orders} />
           <Route path="/profile" component={Profile} />
-          
+
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
-          
+
           <Route path="/terms/use" component={TermsOfUse} />
           <Route path="/terms/privacy" component={PrivacyTerms} />
-          
+
           <Route path="/cart" component={Home} />
-          
+
           <Route path="/item/:id/admin" component={ItemAdmin} />
           <Route path="/item/:id/policies" component={ItemPolicies} />
           <Route path="/item/:id/reviews" component={ItemReviews} />
           <Route path="/item/:id/details" component={ItemDetails} />
           <Route path="/item/:id" component={ItemPub} />
-          
+
           <Route path="/items/category/:category" component={Home} />
-          
+
           <Route path="/shop/apply/pending" component={ShopApplyPending} />
           <Route path="/shop/apply/complete" component={ShopApplyComplete} />
           <Route path="/shop/apply" component={ShopApply} />
@@ -75,9 +75,9 @@ const AppRouter = () => (
           <Route path="/shop/admin/items" component={Items} />
           <Route path="/shop/admin/orders" component={Items} />
           <Route path="/shop" component={Shop} />
-          
+
           <Route path="/admin/shops" component={AdminShops} />
-          
+
           <Route path="/saaji" component={Saaji} />
           <Route exact path="/" component={Home} />
         </Switch>

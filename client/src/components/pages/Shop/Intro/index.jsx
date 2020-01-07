@@ -15,7 +15,7 @@ const Intro = () => {
   const history = useHistory();
   const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
-  
+
   useEffect(() => {
     if (user) {
       fetchSelfAndStore(user._id)
@@ -23,18 +23,17 @@ const Intro = () => {
           setLoading(false);
           if (user.shop.applied && !user.shop.accepted) {
             history.push('/shop/apply/pending');
-          }
-          else if (user.shop.applied && user.shop.accepted) {
-            history.push('/shop')
+          } else if (user.shop.applied && user.shop.accepted) {
+            history.push('/shop');
           }
         })
         .catch((e) => {
           setLoading(false);
-          log('ERROR store routing')
-        })
+          log('ERROR store routing');
+        });
     }
-  }, [])
-  
+  }, []);
+
   const handleApplicationAttempt = () => {
     log('click');
     if (!user) {
@@ -43,9 +42,9 @@ const Intro = () => {
       history.push('/shop/apply');
     }
   };
-  
+
   if (loading) return <div />;
-  
+
   return (
     <div id="container">
       <div className="shop_op">

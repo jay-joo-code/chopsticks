@@ -8,8 +8,8 @@ import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import log from 'src/util/log';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const Container = styled.div`
 
@@ -48,10 +48,10 @@ const Register = () => {
   const user = useSelector((state) => state.user);
   useEffect(() => {
     if (user) {
-      history.push('/')
+      history.push('/');
     }
-  }, [])
-  
+  }, []);
+
   // TERMS AGREEMENT LOGIC
   const [privacy, setPrivacy] = useState(false);
   const [use, setUse] = useState(false);

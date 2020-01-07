@@ -15,19 +15,19 @@ const ItemPub = () => {
   const policiesComp = <Policies />;
   const pages = [{
     name: '상품',
-    component: productComp
-  },{
+    component: productComp,
+  }, {
     name: '리뷰',
-    component: reviewsComp
-  },{
+    component: reviewsComp,
+  }, {
     name: '배송/정책',
-    component: policiesComp
-  }]
+    component: policiesComp,
+  }];
   return (
     <Container>
       <TabbedPage pages={pages} />
     </Container>
-  )
+  );
 };
 
 export default ItemPub;

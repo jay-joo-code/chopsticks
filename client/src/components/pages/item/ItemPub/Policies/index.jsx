@@ -5,12 +5,10 @@ const Container = styled.div`
 
 `;
 
-const Policies = () => {
-  return (
-    <Container>
+const Policies = () => (
+  <Container>
         Policies
-    </Container>
-  )
-};
+  </Container>
+);
 
 export default Policies;

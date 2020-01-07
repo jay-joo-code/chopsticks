@@ -8,11 +8,11 @@ const Container = styled.div`
 
 const Label = styled.label`
   margin-bottom: .5rem;
-`
+`;
 
 const InputArea = styled.div`
   display: flex;
-`
+`;
 
 const Textarea = styled.textarea`
   width: 100%;
@@ -21,12 +21,12 @@ const Textarea = styled.textarea`
   background-color: #ffffff;
   padding: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
-  border: ${props => props.hasError ? 'solid 1px #de6362' : 'none'};
-`
+  border: ${(props) => (props.hasError ? 'solid 1px #de6362' : 'none')};
+`;
 
 const ButtonContainer = styled.div`
   margin-left: 1rem;
-`
+`;
 
 const ErrorMsg = styled.div`
   font-size: .8rem;
@@ -34,16 +34,18 @@ const ErrorMsg = styled.div`
 `;
 
 const FormikInput = (props) => {
-  const { formik, name, label, sideButton } = props;
+  const {
+    formik, name, label, sideButton,
+  } = props;
   const hasError = formik.touched[name] && formik.errors[name];
   return (
     <Container>
       <Label htmlFor={name}>{label}</Label>
       <InputArea>
-        <Textarea 
-          type='text'
-          {...props} 
-          {...formik.getFieldProps(name)} 
+        <Textarea
+          type="text"
+          {...props}
+          {...formik.getFieldProps(name)}
           hasError={hasError}
         />
         {sideButton && (

@@ -11,23 +11,20 @@ const Shop = () => {
   useEffect(() => {
     if (!user) {
       history.push('/shop/intro');
-    }
-    else {
+    } else {
       fetchSelfAndStore(user._id)
         .then(() => {
           if (!user.shop.applied) {
             history.push('/shop/intro');
-          }
-          else if (user.shop.applied && !user.shop.accepted) {
+          } else if (user.shop.applied && !user.shop.accepted) {
             history.push('/shop/apply/pending');
-          }
-          else {
-            history.push('/shop/admin/items')
+          } else {
+            history.push('/shop/admin/items');
           }
         })
         .catch((e) => {
-          log('ERROR store routing')
-        })
+          log('ERROR store routing');
+        });
     }
   }, []);
 
