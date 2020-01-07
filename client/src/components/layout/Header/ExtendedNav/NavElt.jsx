@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 const NavElt = (props) => {
-  const condClass = props.on ? 'on' : '';
+  const { name, path } = props;
+  const location = useLocation();
+  const condClass = location.pathname + location.search === path ? 'on' : '';
   
   return (
     <li className={condClass}>
-      <Link to={props.path}>{props.text}</Link>
+      <Link to={path}>{name}</Link>
     </li>
   )
 };

@@ -1,32 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { adminNav, profileNav, categoryNav } from './routes';
+import NavElt from './NavElt';
 import './ExtendedNav.css';
 
-const ExtendedNav = () => (
+const ExtendedNav = () => {
+  const { pathname } = useLocation();
+  const [nav, setNav] = useState([]);
+  // DIFF IN PROFILE, SHOP
+  useEffect(() => {
+    const pathArray = pathname.split('/');
+    if (pathArray[1] === 'shop' && pathArray[2] === 'admin') {
+      setNav(adminNav)
+    } else if (pathArray[1] === 'profile') {
+      setNav(profileNav)
+    }
+    else {
+      setNav(categoryNav)
+    }
+  }, [pathname])
+  
+  return (
   <nav className="gnb">
     <ul>
-      <li className="on">
-        <a href="/category">Accessories</a>
-      </li>
-      <li>
-        <a href="/category">Stationery</a>
-      </li>
-      <li>
-        <a href="/category">Home & Living</a>
-      </li>
-      <li>
-        <a href="/category">Bags</a>
-      </li>
-      <li>
-        <a href="/category">Clothing</a>
-      </li>
-      <li>
-        <a href="/category">Skin & Hair</a>
-      </li>
-      <li>
-        <a href="/category">Watches</a>
-      </li>
+      {nav.map((elt) => (
+        <NavElt key={elt.name} {...elt} />
+      ))}
     </ul>
   </nav>
-);
+  )
+};
 
 export default ExtendedNav;
