@@ -2,8 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import Select from 'src/components/common/form/Select';
 import RedButton from 'src/components/common/buttons/RedButton';
+import theme from 'src/theme';
+
+const DyncCont = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  display: inline-block;
+  
+  @media (min-width: ${theme.desktopContentWidth}px) {
+    position: static;
+    background-color: inherit;
+    display: block;
+    width: auto;
+  }
+`
 
 const Container = styled.div`
+  padding: 2rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,6 +53,7 @@ const BuyButton = styled(RedButton)`
 `
 
 const Purchase = () => (
+  <DyncCont>
   <Container>
     <Name>
         Pressed flowers frame
@@ -55,6 +74,7 @@ const Purchase = () => (
         <BuyButton green rounded>장바구니에 담기</BuyButton>
     </BuySect>
   </Container>
+  </DyncCont>
 );
 
 export default Purchase;

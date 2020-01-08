@@ -4,10 +4,22 @@ import placeholder from 'src/assets/images/placeholders/ph1.jpg';
 import theme from 'src/theme';
 
 const Container = styled.div`
-  padding: 2rem 1rem 2rem 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
+    width: auto;
+    display: block;
     max-width: 20%;
+  }
+`
+
+const Wrapper = styled.div`
+  padding: 2rem 0;
+  
+  @media (min-width: ${theme.desktopContentWidth}px) {
+    margin: 0 1rem 0 0;
   }
 `;
 
@@ -47,6 +59,7 @@ const Intro = styled.p`
 
 const Owner = () => (
   <Container>
+  <Wrapper>
           <ImgContainer>
             <ImgWrapper>
               <Img src={placeholder} />
@@ -54,6 +67,7 @@ const Owner = () => (
           </ImgContainer>
           <Name>@ymh0902</Name>
           <Intro>Wooden toys, eco-friendly finishes & unique design!</Intro>
+  </Wrapper>
   </Container>
 );
 
