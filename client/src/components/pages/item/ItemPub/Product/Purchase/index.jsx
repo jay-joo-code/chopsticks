@@ -53,8 +53,9 @@ const BuyButton = styled(RedButton)`
 `;
 
 const Purchase = ({ item }) => {
-  const price = item.price && item.price.toLocaleString('en');
-
+  const price = item && item.price && item.price.toLocaleString('en');
+  if (!item) return <div />;
+  
   return (
     <DyncCont>
       <Container>

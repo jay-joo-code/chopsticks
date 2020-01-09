@@ -1,45 +1,40 @@
 import React from 'react';
 import styled from 'styled-components';
+import ErrMsg from 'src/components/common/form/ErrMsg';
+import Label from 'src/components/common/form/Label';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const Label = styled.label`
-  margin-bottom: .5rem;
-`;
-
 const InputArea = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const Input = styled.input`
   border-radius: 8px;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
   height: 3rem;
   line-height: 3rem;
-  padding-left: 20px;
+  padding: 0 .5rem 0 1rem;
   flex-grow: 2;
   border: ${(props) => (props.hasError ? 'solid 1px #de6362' : 'none')};
+  text-align: ${props => props.right ? 'right' : ''};
 `;
 
 const ButtonContainer = styled.div`
   margin-left: 1rem;
 `;
 
-const ErrorMsg = styled.div`
-  font-size: .8rem;
-  color: #de6362;
-  margin-top: .5rem;
-`;
-
-const FormikInput = (props) => {
+const OutlinedInput = (props) => {
   const {
     formik, name, label, sideButton, type,
   } = props;
-  const hasError = formik.touched[name] && formik.errors[name];
+  const hasError = formik ? formik.touched[name] && formik.errors[name] : false;
+  const formikProps = formik ? formik.getFieldProps(name) : [];
   return (
     <Container>
       <Label htmlFor={name}>{label}</Label>
@@ -47,7 +42,7 @@ const FormikInput = (props) => {
         <Input
           type={type || 'text'}
           {...props}
-          {...formik.getFieldProps(name)}
+          {...formikProps}
           hasError={hasError}
         />
         {sideButton && (
@@ -57,10 +52,10 @@ const FormikInput = (props) => {
         )}
       </InputArea>
       {hasError
-        ? <ErrorMsg>{formik.errors[name]}</ErrorMsg>
+        ? <ErrMsg>{formik.errors[name]}</ErrMsg>
         : null}
     </Container>
   );
 };
 
-export default FormikInput;
+export default OutlinedInput;

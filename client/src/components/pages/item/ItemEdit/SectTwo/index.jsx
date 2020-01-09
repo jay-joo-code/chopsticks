@@ -1,97 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
 import SectCont from './../SectCont';
+import Option from './Option';
+import NewOption from './NewOption';
 
-const Container = styled.div`
+const AddSect = styled.div`
 
 `;
 
-const SectTwo = ({ formik }) => {
+const ViewSect = styled.div`
+
+`
+
+const SectTwo = ({ formik, options, setOptions }) => {
   return (
     <SectCont>
-        
-                    <p class="tlt">
-                        Option
-                    </p>
-                    <div class="cont">
-                        <span><div class="input_box"><input class="input_st2 input_sz2_01" value="Color" /> <a href="#"
-                                                                                                             class="closed">closed</a></div><button
-                                class="a_plus">+</button></span>
-                        <span class="mn">
-                            <button class="btn_st_15">Options</button>
-                            <select class="sel_box sel_box_09">
-                                <option>+</option>
-                                <option>+</option>
-                                <option>+</option>
-                                <option>+</option>
-                            </select>
-                            <button class="btn_st_16">Price</button>
-                        </span>
-                        <div class="option_box">
-                            <div class="box">
-                                <p class="tlt">Red</p>
-                                <span class="price">+20,000</span>
-                                <a href="#" class="closed">closed</a>
-                            </div>
-                            <div class="box">
-                                <p class="tlt">Red</p>
-                                <span class="price">+20,000</span>
-                                <a href="#" class="closed">closed</a>
-                            </div>
-                            <div class="box pc">
-                                <p class="tlt">Red</p>
-                                <span class="price">+20,000</span>
-                                <a href="#" class="closed">closed</a>
-                            </div>
-                            <div class="box pc">
-                                <p class="tlt">Red</p>
-                                <span class="price">+20,000</span>
-                                <a href="#" class="closed">closed</a>
-                            </div>
-                            <div class="box pc">
-                                <p class="tlt">Red</p>
-                                <span class="price">+20,000</span>
-                                <a href="#" class="closed">closed</a>
-                            </div>
-                            <div class="box pc">
-                                <p class="tlt">Red</p>
-                                <span class="price">+20,000</span>
-                                <a href="#" class="closed">closed</a>
-                            </div>
-                            <div class="box pc">
-                                <p class="tlt">Red</p>
-                                <span class="price">+20,000</span>
-                                <a href="#" class="closed">closed</a>
-                            </div>
-                            <div class="box pc">
-                                <p class="tlt">Red</p>
-                                <span class="price">+20,000</span>
-                                <a href="#" class="closed">closed</a>
-                            </div>
-                            <div class="box pc">
-                                <p class="tlt">Red</p>
-                                <span class="price">+20,000</span>
-                                <a href="#" class="closed">closed</a>
-                            </div>
-                            <div class="box pc">
-                                <p class="tlt">Red</p>
-                                <span class="price">+20,000</span>
-                                <a href="#" class="closed">closed</a>
-                            </div>
-                            <div class="box pc">
-                                <p class="tlt">Red</p>
-                                <span class="price">+20,000</span>
-                                <a href="#" class="closed">closed</a>
-                            </div>
-                            <div class="box pc">
-                                <p class="tlt">Red</p>
-                                <span class="price">+20,000</span>
-                                <a href="#" class="closed">closed</a>
-                            </div>
-                        </div>
-                    </div>
-                    <button href="#" class="add_option">Add Option</button>
-                
+      <AddSect>
+        <NewOption
+          options={options}
+          setOptions={setOptions}
+        />
+      </AddSect>
+      <ViewSect>
+      {options.map((option, i) => (
+        <Option key={i} option={option} />
+      ))}
+      </ViewSect>
     </SectCont>
   )
 };

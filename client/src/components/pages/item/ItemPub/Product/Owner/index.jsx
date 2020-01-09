@@ -58,7 +58,7 @@ const Intro = styled.p`
 `;
 
 const Owner = ({ item }) => {
-  const email = item.owner ? item.owner.email : '';
+  const email = item && item.owner ? item.owner.email : '';
   const id = email.split('@')[0];
 
   return (
@@ -73,7 +73,7 @@ const Owner = ({ item }) => {
 @
           {id}
         </Name>
-        <Intro>{item.owner && item.owner.shop.intro}</Intro>
+        <Intro>{item && item.owner && item.owner.shop.intro}</Intro>
       </Wrapper>
     </Container>
   );

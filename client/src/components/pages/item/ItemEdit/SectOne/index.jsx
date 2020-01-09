@@ -3,8 +3,19 @@ import styled from 'styled-components';
 import SectCont from './../SectCont';
 import InputCont from './../InputCont';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
+import OutlinedTextarea from 'src/components/common/form/OutlinedTextarea';
+import useCategories from 'src/util/hooks/useCategories';
+import Select from 'src/components/common/form/Select';
+
+const SideText = styled.p`
+  font-size: 1.2rem;
+`
 
 const SectOne = ({ formik }) => {
+  const cat = useCategories();
+  const priceSide = <SideText>원</SideText>;
+  const stockSide = <SideText>개</SideText>;
+  
   return (
     <SectCont>
       <InputCont>
@@ -14,53 +25,42 @@ const SectOne = ({ formik }) => {
           formik={formik}
         />
       </InputCont>
-                    <li>
-                        <p class="tlt">
-                            Category *
-                        </p>
-                        <div class="cont">
-                            <div class="sel_box sel_box_08">candle in Container Candles</div>
-                            <div class="sel_option pc">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="lc">
-                        <p class="tlt">
-                            Contents *
-                        </p>
-                        <div class="cont">
-                            <textarea class="txtr3"></textarea>
-                        </div>
-                    </li>
       <InputCont>
+      <Select
+        name='category'
+        label='카테고리 *'
+        formik={formik}
+      >
+        {cat.map((opt, i) => (
+          <option key={i}>{opt.korean}</option>
+        ))}
+      </Select>
+      </InputCont>
+      <InputCont>
+        <OutlinedTextarea
+          name='content'
+          label='제품 설명 *'
+          formik={formik}
+        />
+      </InputCont>
+      <InputCont width={20}>
         <OutlinedInput
           name="price"
           label="가격 *"
           formik={formik}
+          sideButton={priceSide}
+          right
         />
       </InputCont>
-      <InputCont>
+      <InputCont width={20}>
         <OutlinedInput
           name="stock"
           label="재고 *"
           formik={formik}
+          sideButton={stockSide}
+          right
         />
       </InputCont>
-                    
-                    
-                        <p class="tlt">
-                            Quantity
-                        </p>
-                        <div class="cont">
-                            <input class="input_st input_sz_06" />
-                            <div class="checks">
-                                <input id="set" type="checkbox" />
-                                <label for="set">
-                                    주문 후 제작
-                                </label>
-                            </div>
-                        </div>
-                    
     </SectCont>
   )
 };

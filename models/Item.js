@@ -37,17 +37,14 @@ var itemSchema = Schema({
     type: String,
     default: ''
   },
-  contents: String,
+  content: String,
   desc: [{
-    src: String,
-    text: String,
+    value: String,
+    isImage: Boolean,
   }],
   options: [{
     name: String,
-    priceChange: {
-      type: Number,
-      default: 0
-    }
+    priceChange: Number
   }],
   deliveryCost: {
     type: Number,

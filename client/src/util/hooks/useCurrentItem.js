@@ -4,7 +4,7 @@ import axios from 'axios';
 import log from 'src/util/log';
 
 const useCurrentItem = (version) => {
-  const [item, setItem] = useState({});
+  const [item, setItem] = useState();
   const { pathname } = useLocation();
   const [itemId, setItemId] = useState();
   useEffect(() => {
