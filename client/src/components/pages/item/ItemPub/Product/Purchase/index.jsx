@@ -18,7 +18,7 @@ const DyncCont = styled.div`
     display: block;
     width: auto;
   }
-`
+`;
 
 const Container = styled.div`
   padding: 2rem 0;
@@ -33,48 +33,45 @@ const Name = styled.div`
   color: #000;
   opacity: .8;
   
-`
+`;
 
 const Price = styled.div`
 font-size: 3rem;
         font-weight: bold;
-        color: ${props => props.theme.green};
+        color: ${(props) => props.theme.green};
   margin: 2rem 0;
-`
+`;
 
 const BuySect = styled.div`
   margin: 1rem 0;
   display: flex;
   flex-direction: column;
-`
+`;
 
 const BuyButton = styled(RedButton)`
   margin: .5rem 0;
-`
+`;
 
-const Purchase = () => (
-  <DyncCont>
-  <Container>
-    <Name>
-        Pressed flowers frame
-    </Name>
-    <Price>
-        $12.00
-    </Price>
-    <p class="option">
+const Purchase = ({ item }) => {
+  const price = item.price && item.price.toLocaleString('en');
+
+  return (
+    <DyncCont>
+      <Container>
+        <Name>{item.name}</Name>
+        <Price>{price}원</Price>
         <Select>
-            <option>Select Option</option>
-            <option>Select Option</option>
-            <option>Select Option</option>
-            <option>Select Option</option>
+          {item.options && item.options.map((opt, i) => (
+            <option key={i}>{opt.name}</option>
+          ))}
         </Select>
-    </p>
-    <BuySect>
-        <BuyButton white rounded>즉시 구매</BuyButton>
-        <BuyButton green rounded>장바구니에 담기</BuyButton>
-    </BuySect>
-  </Container>
-  </DyncCont>
-);
+        <BuySect>
+          <BuyButton white rounded>즉시 구매</BuyButton>
+          <BuyButton green rounded>장바구니에 담기</BuyButton>
+        </BuySect>
+      </Container>
+    </DyncCont>
+  );
+};
 
 export default Purchase;

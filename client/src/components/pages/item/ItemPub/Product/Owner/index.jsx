@@ -11,9 +11,9 @@ const Container = styled.div`
   @media (min-width: ${theme.desktopContentWidth}px) {
     width: auto;
     display: block;
-    max-width: 20%;
+    width: 20%;
   }
-`
+`;
 
 const Wrapper = styled.div`
   padding: 2rem 0;
@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 const ImgContainer = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
 const ImgWrapper = styled.div`
   width: 4rem;
@@ -38,11 +38,11 @@ const ImgWrapper = styled.div`
     width: 8rem;
     height: 8rem;
   }
-`
+`;
 
 const Img = styled.img`
   height: 100%;
-`
+`;
 
 const Name = styled.p`
   font-size: 1rem;
@@ -50,25 +50,33 @@ const Name = styled.p`
   color: #de6362;
   text-align: center;
   margin: 1rem 0;
-`
+`;
 
 const Intro = styled.p`
   opacity: .8;
   text-align: center;
-`
+`;
 
-const Owner = () => (
-  <Container>
-  <Wrapper>
-          <ImgContainer>
-            <ImgWrapper>
-              <Img src={placeholder} />
-            </ImgWrapper>
-          </ImgContainer>
-          <Name>@ymh0902</Name>
-          <Intro>Wooden toys, eco-friendly finishes & unique design!</Intro>
-  </Wrapper>
-  </Container>
-);
+const Owner = ({ item }) => {
+  const email = item.owner ? item.owner.email : '';
+  const id = email.split('@')[0];
+
+  return (
+    <Container>
+      <Wrapper>
+        <ImgContainer>
+          <ImgWrapper>
+            <Img src={placeholder} />
+          </ImgWrapper>
+        </ImgContainer>
+        <Name>
+@
+          {id}
+        </Name>
+        <Intro>{item.owner && item.owner.shop.intro}</Intro>
+      </Wrapper>
+    </Container>
+  );
+};
 
 export default Owner;

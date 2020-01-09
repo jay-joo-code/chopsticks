@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import selectIcon from 'src/assets/images/ui/select.png';
 
-const Container = styled.select `
+const Container = styled.select`
   color: #7a8680;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -13,12 +13,10 @@ const Container = styled.select `
   padding: .6rem 3rem .6rem 1rem;
 `;
 
-const Select = (props) => {
-  return (
-    <Container {...props}>
-      {props.children}
-    </Container>
-  )
-};
+const Select = (props) => (
+  <Container {...props}>
+    {props.children}
+  </Container>
+);
 
 export default Select;

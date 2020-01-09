@@ -10,7 +10,7 @@ var itemSchema = Schema({
   },
   display: {
     type: Boolean,
-    default: false,
+    default: true,
     required: true
   },
   images: {
@@ -25,31 +25,49 @@ var itemSchema = Schema({
     type: Number,
     default: 0
   },
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: 'Category'
+  madeOnOrder: {
+    type: Boolean,
+    default: false
   },
+  stock: {
+    type: Number,
+    default: 0
+  },
+  category: {
+    type: String,
+    default: ''
+  },
+  contents: String,
+  desc: [{
+    src: String,
+    text: String,
+  }],
+  options: [{
+    name: String,
+    priceChange: {
+      type: Number,
+      default: 0
+    }
+  }],
   deliveryCost: {
     type: Number,
     default: 0
   },
-  firstOrderOption: {
-    type: Boolean
+  processingMin: {
+    type: Number,
+    default: 0
   },
-  processing_min: {
-    type: Number
+  processingMax: {
+    type: Number,
+    default: 0
   },
-  processing_max: {
-    type: Number
+  deliveryMin: {
+    type: Number,
+    default: 0
   },
-  shipping_min: {
-    type: Number
-  },
-  shipping_max: {
-    type: Number
-  },
-  shipping_price: {
-    type: Number
+  deliveryMax: {
+    type: Number,
+    default: 0
   },
   createdAt: {
     type: Date,

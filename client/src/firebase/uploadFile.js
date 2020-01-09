@@ -1,12 +1,13 @@
 import firebase from 'src/firebase';
-import log from 'src/util/log';
+import axios from 'axios';
 
 // REJECT: Upload error
 // RESOLVE: Img download url
 const uploadFile = (file, directory) => new Promise((resolve, reject) => {
   const storage = firebase.storage();
   const storageRef = storage.ref();
-  const uploadTask = storageRef.child(`${directory}/${file.name}`).put(file);
+  const path = `${directory}/${file.name}`;
+  const uploadTask = storageRef.child(path).put(file);
   uploadTask.on('state_changed',
     (snapshot) => {},
     (e) => {
@@ -14,8 +15,16 @@ const uploadFile = (file, directory) => new Promise((resolve, reject) => {
     },
     () => {
       // UPLOAD SUCCESS
-      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        resolve(downloadURL);
+      uploadTask.snapshot.ref.getDownloadURL().then((src) => {
+        // STORE METADATA IN DB
+        const data = {
+          name: file.name,
+          src,
+          path
+        }
+        axios.post('/api/file/create', data)
+          .then(() => resolve(src))
+          .catch((e) => reject(e))
       });
     });
 });

@@ -6,16 +6,12 @@ import Login from 'src/components/pages/Login';
 import Register from 'src/components/pages/Register';
 import Profile from 'src/components/pages/profile/Profile';
 import Items from 'src/components/pages/profile/Items';
-import Transactions from 'src/components/pages/profile/Transactions';
 import Orders from 'src/components/pages/profile/Orders';
 import PrivacyTerms from 'src/components/pages/terms/PrivacyTerms';
 import TermsOfUse from 'src/components/pages/terms/TermsOfUse';
 
-import ItemDetails from 'src/components/pages/item/ItemDetails';
-import ItemPolicies from 'src/components/pages/item/ItemPolicies';
-import ItemReviews from 'src/components/pages/item/ItemReviews';
-import ItemAdmin from 'src/components/pages/item/ItemAdmin';
 import ItemPub from 'src/components/pages/item/ItemPub';
+import ItemEdit from 'src/components/pages/item/ItemEdit';
 
 import AdminShops from 'src/components/pages/admin/AdminShops';
 import Saaji from 'src/components/pages/Saaji';
@@ -60,10 +56,7 @@ const AppRouter = () => (
 
           <Route path="/cart" component={Home} />
 
-          <Route path="/item/:id/admin" component={ItemAdmin} />
-          <Route path="/item/:id/policies" component={ItemPolicies} />
-          <Route path="/item/:id/reviews" component={ItemReviews} />
-          <Route path="/item/:id/details" component={ItemDetails} />
+          <Route path="/item/:id/edit" component={ItemEdit} />
           <Route path="/item/:id" component={ItemPub} />
 
           <Route path="/items/category/:category" component={Home} />
