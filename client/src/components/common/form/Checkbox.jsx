@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import ErrMsg from 'src/components/common/form/ErrMsg';
 import Label from 'src/components/common/form/Label';
-import SideText from 'src/components/common/form/SideText';
 
 const Container = styled.div`
   display: flex;
@@ -14,44 +13,36 @@ const InputArea = styled.div`
   align-items: center;
 `;
 
+const CheckboxLabel = styled(Label)`
+  margin: 4px 0 0 .5rem;
+`
+
 const Input = styled.input`
-  border-radius: 8px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
-  height: 3rem;
-  line-height: 3rem;
-  padding: 0 .5rem 0 1rem;
-  flex-grow: 2;
-  border: ${(props) => (props.hasError ? 'solid 1px #de6362' : 'none')};
-  text-align: ${props => props.right ? 'right' : ''};
+ margin: 0;
 `;
 
 const ButtonContainer = styled.div`
   margin-left: 1rem;
 `;
 
-const OutlinedInput = (props) => {
+const Checkbox = (props) => {
   const {
-    formik, name, label, sideButton, type, sideText
+    formik, name, label, sideButton
   } = props;
   const hasError = formik ? formik.touched[name] && formik.errors[name] : false;
   const formikProps = formik ? formik.getFieldProps(name) : [];
   
   return (
     <Container>
-      <Label htmlFor={name}>{label}</Label>
       <InputArea>
         <Input
-          type={type || 'text'}
+          type='checkbox'
+          checked={formik.values[name]}
           {...props}
           {...formikProps}
           hasError={hasError}
         />
-        {sideText && (
-          <SideText>
-            {sideText}
-          </SideText>
-        )}
+        <CheckboxLabel htmlFor={name}>{label}</CheckboxLabel>
         {sideButton && (
           <ButtonContainer>
             {sideButton}
@@ -65,4 +56,4 @@ const OutlinedInput = (props) => {
   );
 };
 
-export default OutlinedInput;
+export default Checkbox;

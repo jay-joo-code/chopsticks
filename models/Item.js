@@ -17,6 +17,10 @@ var itemSchema = Schema({
     type: [String],
     default: []
   },
+  primaryImageIndex: {
+    type: Number,
+    default: 0
+  },
   name: {
     type: String,
     default: ''

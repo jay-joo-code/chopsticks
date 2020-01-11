@@ -15,7 +15,6 @@ const useCurrentItem = (version) => {
     if (pathname.split('/')[1] === 'item' && itemId) {
       axios.get(`/api/item/${itemId}`)
       .then((res) => {
-        log('fetched items');
         setItem(res.data);
       })
       .catch((e) => {

@@ -16,10 +16,11 @@ const Container = styled.span`
   right: 0px;
   top: 0px;
   display: block;
+  cursor: pointer;
 `;
 
 const Notification = (props) => (
-  <Container>
+  <Container {...props}>
     {props.text}
   </Container>
 );

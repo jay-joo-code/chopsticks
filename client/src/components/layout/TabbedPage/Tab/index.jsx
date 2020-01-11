@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   border-radius: 10px;
   overflow: hidden;
   display: flex;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
 `;
 
 const Tab = (props) => {

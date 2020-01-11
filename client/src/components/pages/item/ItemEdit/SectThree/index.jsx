@@ -4,6 +4,7 @@ import InputCont from './../InputCont';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import styled from 'styled-components';
 import Label from 'src/components/common/form/Label';
+import SideText from 'src/components/common/form/SideText';
 
 const InlineCont = styled.div`
   display: flex;
@@ -15,6 +16,7 @@ const Duration = styled.p`
 `
 
 const SectThree = ({ formik }) => {
+  const deliveryCostLabel = <SideText></SideText>
   return (
     <SectCont>
     <InputCont>
@@ -44,6 +46,15 @@ const SectThree = ({ formik }) => {
           formik={formik}
         />
     </InlineCont>
+    </InputCont>
+    <InputCont width={20}>
+      <OutlinedInput
+        name="deliveryCost"
+        label="배송 비용"
+        formik={formik}
+        sideText='원'
+        right
+      />
     </InputCont>
     </SectCont>
   )

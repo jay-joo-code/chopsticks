@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'src/theme';
+import log from 'src/util/log';
 
 const Container = styled.div`
   padding: 1rem 2rem;
   font-size: 1rem;
   text-align: center;
-  background: ${(props) => (props.on ? '#e8faf1' : '#fff')};
-  color: ${(props) => (props.on ? '#000' : '#7a8680')};
-  box-shadow: ${(props) => (props.on ? '0 8px 8px 0 rgba(78, 194, 136, 0.2)' : 'none')};
+  background-color: ${props => props.on ? props.theme.greenLight : '#fff'};
+  color: ${props => props.on ? '#000' : '#7a8680'};
+  //box-shadow: ${props => props.on ? '0 8px 8px 0 rgba(78, 194, 136, 0.2)' : 'none'};
   cursor: pointer;
   
   @media (min-wdith: ${theme.desktopContentWidth}px) {
@@ -17,6 +18,7 @@ const Container = styled.div`
 `;
 
 const Tab = (props) => {
+  log(props.on);
   const { page } = props;
   return (
     <Container {...props}>
