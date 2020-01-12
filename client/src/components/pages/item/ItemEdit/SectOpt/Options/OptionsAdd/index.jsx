@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import OutlinedButton from 'src/components/common/buttons/OutlinedButton';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
-import log from 'src/util/log';
 
 const Container = styled.div`
   display: flex;

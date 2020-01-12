@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import placeholder from 'src/assets/images/placeholders/ph2.jpg';
 
 const Container = styled.div`
   flex-grow: 4;

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import log from 'src/util/log';
 
 const Container = styled.div`
   display: flex;
