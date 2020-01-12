@@ -23,7 +23,7 @@ const Input = styled.input`
   padding: 0 .5rem 0 1rem;
   flex-grow: 2;
   border: ${(props) => (props.hasError ? 'solid 1px #de6362' : 'none')};
-  text-align: ${props => props.right ? 'right' : ''};
+  text-align: ${(props) => (props.right ? 'right' : '')};
 `;
 
 const ButtonContainer = styled.div`
@@ -32,11 +32,11 @@ const ButtonContainer = styled.div`
 
 const OutlinedInput = (props) => {
   const {
-    formik, name, label, sideButton, type, sideText
+    formik, name, label, sideButton, type, sideText,
   } = props;
   const hasError = formik ? formik.touched[name] && formik.errors[name] : false;
   const formikProps = formik ? formik.getFieldProps(name) : [];
-  
+
   return (
     <Container>
       <Label htmlFor={name}>{label}</Label>

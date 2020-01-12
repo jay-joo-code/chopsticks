@@ -7,12 +7,10 @@ const Container = styled.div`
   margin-top: .5rem;
 `;
 
-const ErrMsg = (props) => {
-  return (
-    <Container {...props}>
-      {props.children}
-    </Container>
-  )
-};
+const ErrMsg = (props) => (
+  <Container {...props}>
+    {props.children}
+  </Container>
+);
 
 export default ErrMsg;

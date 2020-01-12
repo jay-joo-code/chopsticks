@@ -5,7 +5,7 @@ import Home from 'src/components/pages/Home';
 import Login from 'src/components/pages/Login';
 import Register from 'src/components/pages/Register';
 import Profile from 'src/components/pages/profile/Profile';
-import Items from 'src/components/pages/profile/Items';
+import Items from 'src/components/pages/Shop/Items';
 import Orders from 'src/components/pages/profile/Orders';
 import PrivacyTerms from 'src/components/pages/terms/PrivacyTerms';
 import TermsOfUse from 'src/components/pages/terms/TermsOfUse';

@@ -1,33 +1,20 @@
 import React from 'react';
-import styled from 'styled-components';
-import SectCont from './../SectCont';
-import Option from './Option';
-import NewOption from './NewOption';
+import SectCont from '../SectCont';
+import Options from './Options'
+import Label from 'src/components/common/form/Label';
 
-const AddSect = styled.div`
-
-`;
-
-const ViewSect = styled.div`
-
-`
-
-const SectTwo = ({ formik, options, setOptions }) => {
-  return (
-    <SectCont>
-      <AddSect>
-        <NewOption
-          options={options}
-          setOptions={setOptions}
-        />
-      </AddSect>
-      <ViewSect>
-      {options.map((option, i) => (
-        <Option key={i} option={option} />
-      ))}
-      </ViewSect>
-    </SectCont>
-  )
-};
+const SectTwo = ({ formik }) => (
+  <SectCont>
+    <Label>옵션</Label>
+    <Options
+      formik={formik}
+      name="options"
+    />
+    <Options
+      formik={formik}
+      name="optionsTwo"
+    />
+  </SectCont>
+);
 
 export default SectTwo;

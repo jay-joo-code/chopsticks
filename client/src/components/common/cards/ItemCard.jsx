@@ -37,9 +37,11 @@ const Price = styled.p`\
 `;
 
 const ItemCard = (props) => {
+  const { onClickPath } = props;
   const history = useHistory();
+  const path = onClickPath || `/item/${props._id}`;
   const handleClick = () => {
-    history.push(`/item/${props._id}`);
+    history.push(path);
   };
   return (
     <Card onClick={handleClick} {...props}>

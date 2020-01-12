@@ -5,12 +5,10 @@ const Container = styled.p`
   margin-left: 1rem;
 `;
 
-const SideText = ({ children, ...rest }) => {
-  return (
-    <Container {...rest}>
-      {children}
-    </Container>
-  )
-};
+const SideText = ({ children, ...rest }) => (
+  <Container {...rest}>
+    {children}
+  </Container>
+);
 
 export default SideText;

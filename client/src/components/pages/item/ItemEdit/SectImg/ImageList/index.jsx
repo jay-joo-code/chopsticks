@@ -8,15 +8,12 @@ const Container = styled.div`
   padding: 2rem 0;
 `;
 
-const ImageList = ({ formik }) => {
-  return (
-    <Container>
-      {formik.values.images.map((src, i) => (
-        <ListElt key={src} src={src} i={i} formik={formik} />
-      ))
-      }
-    </Container>
-  )
-};
+const ImageList = ({ formik }) => (
+  <Container>
+    {formik.values.images.map((src, i) => (
+      <ListElt key={src} src={src} i={i} formik={formik} />
+    ))}
+  </Container>
+);
 
 export default ImageList;

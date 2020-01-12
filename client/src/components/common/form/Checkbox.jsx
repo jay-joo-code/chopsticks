@@ -15,7 +15,7 @@ const InputArea = styled.div`
 
 const CheckboxLabel = styled(Label)`
   margin: 4px 0 0 .5rem;
-`
+`;
 
 const Input = styled.input`
  margin: 0;
@@ -27,16 +27,16 @@ const ButtonContainer = styled.div`
 
 const Checkbox = (props) => {
   const {
-    formik, name, label, sideButton
+    formik, name, label, sideButton,
   } = props;
   const hasError = formik ? formik.touched[name] && formik.errors[name] : false;
   const formikProps = formik ? formik.getFieldProps(name) : [];
-  
+
   return (
     <Container>
       <InputArea>
         <Input
-          type='checkbox'
+          type="checkbox"
           checked={formik.values[name]}
           {...props}
           {...formikProps}

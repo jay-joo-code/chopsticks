@@ -13,30 +13,29 @@ const Container = styled.div`
 const FileUpload = ({ path, setSrc }) => {
   const [loading, setLoading] = useState(false);
   const handleUpload = (e) => {
-    setLoading(true)
+    setLoading(true);
     const file = e.target.files[0];
     uploadFile(file, path)
       .then((url) => {
-        setLoading(false)
+        setLoading(false);
         setSrc(url);
       })
       .catch((e) => {
-        setLoading(false)
-        log('ERROR upload file')
-      })
-  }
+        setLoading(false);
+        log('ERROR upload file');
+      });
+  };
   return (
     <Container>
-      <input 
-        type='file'
+      <input
+        type="file"
         onChange={handleUpload}
       />
-      {loading 
+      {loading
         ? <Loading />
-        : <div />
-      }
+        : <div />}
     </Container>
-  )
+  );
 };
 
 export default FileUpload;

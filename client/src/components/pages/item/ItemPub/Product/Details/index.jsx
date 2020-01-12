@@ -4,31 +4,24 @@ import placeholder from 'src/assets/images/placeholders/ph2.jpg';
 
 const Container = styled.div`
   flex-grow: 4;
+  display: flex;
+  justify-content: center;
 `;
 
-const Details = () => (
-  <Container>
-    <div className="detail_content">
-      <div className="video">
-        <img src={placeholder} />
+const Details = ({ item }) => {
+  const primarySrc = item.images[item.primaryImageIndex];
+  return (
+    <Container>
+      <div className="detail_content">
+        <div className="video">
+          <img src={primarySrc} />
+        </div>
+        <div className="img_txt">
+          <p className="txt">{item.content}</p>
+        </div>
       </div>
-      <div className="img_txt">
-        <p className="img">
-          <img src={placeholder} />
-        </p>
-        <p className="txt">
-                            I love it !, just a comment, in the photo the necklace had 3 colors, black, gold and white,
-                            however the necklace I received was only black with gold. Anyway, it's beautiful!
-        </p>
-        <p className="img">
-          <img src={placeholder} />
-        </p>
-        <p className="img">
-          <img src={placeholder} />
-        </p>
-      </div>
-    </div>
-  </Container>
-);
+    </Container>
+  );
+};
 
 export default Details;

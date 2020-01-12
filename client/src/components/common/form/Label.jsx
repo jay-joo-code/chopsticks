@@ -5,12 +5,10 @@ const Container = styled.label`
   margin-bottom: .5rem;
 `;
 
-const Label = (props) => {
-  return (
-    <Container {...props}>
-      {props.children}
-    </Container>
-  )
-};
+const Label = (props) => (
+  <Container {...props}>
+    {props.children}
+  </Container>
+);
 
 export default Label;

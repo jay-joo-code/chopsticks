@@ -26,7 +26,7 @@ const ItemCard = () => {
     };
     axios.post('/api/item/create', data)
       .then((res) => {
-        history.push(`/item/${res.data._id}/details`);
+        history.push(`/item/${res.data._id}/edit`);
       })
       .catch((e) => {
         log('ERROR failed to create item', e);

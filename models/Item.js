@@ -50,6 +50,10 @@ var itemSchema = Schema({
     name: String,
     priceChange: Number
   }],
+  optionsTwo: [{
+    name: String,
+    priceChange: Number
+  }],
   deliveryCost: {
     type: Number,
     default: 0

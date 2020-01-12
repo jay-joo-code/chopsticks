@@ -17,6 +17,7 @@ const Wrapper = styled.div`
 const Product = () => {
   const item = useCurrentItem();
 
+  if (!item) return <div />;
   return (
     <Container>
       <Wrapper>

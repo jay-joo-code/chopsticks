@@ -8,7 +8,7 @@ const useIsOwner = () => {
   const user = useSelector((state) => state.user);
   const userId = user ? user._id : null;
   useEffect(() => {
-    setIsOwner(item.owner ? userId === item.owner._id : false);
+    setIsOwner(item && item.owner ? userId === item.owner._id : false);
   }, [item, user, userId])
   return isOwner;
 }

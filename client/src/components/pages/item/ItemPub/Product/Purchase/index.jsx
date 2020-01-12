@@ -55,12 +55,15 @@ const BuyButton = styled(RedButton)`
 const Purchase = ({ item }) => {
   const price = item && item.price && item.price.toLocaleString('en');
   if (!item) return <div />;
-  
+
   return (
     <DyncCont>
       <Container>
         <Name>{item.name}</Name>
-        <Price>{price}원</Price>
+        <Price>
+          {price}
+원
+        </Price>
         <Select>
           {item.options && item.options.map((opt, i) => (
             <option key={i}>{opt.name}</option>

@@ -6,12 +6,10 @@ const Container = styled.div`
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
-const SectCont = (props) => {
-  return (
-    <Container {...props}>
-        {props.children}
-    </Container>
-  )
-};
+const SectCont = (props) => (
+  <Container {...props}>
+    {props.children}
+  </Container>
+);
 
 export default SectCont;
