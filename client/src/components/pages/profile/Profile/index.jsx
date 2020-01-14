@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from 'src/components/common/Button';
-import logout from 'src/util/logout';
+import logout from 'src/util/auth/logout';
 import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`

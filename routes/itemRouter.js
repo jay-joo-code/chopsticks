@@ -5,7 +5,7 @@ const User = require('./../models/User');
 // GET ALL Items THAT MATCH QUERY FILTER
 itemRouter.get('/', async (req, res) => {
   try {
-    const result = await Item.find(req.query);
+    const result = await Item.find(req.query).populate('owner');
     res.send(result);
   } catch (e) {
     res.status(500).send(e);

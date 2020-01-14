@@ -149,18 +149,6 @@ echo 216.58.192.42 doc-0g-2k-apps-viewer.googleusercontent.com>>hosts
 echo 216.58.192.42 doc-0c-7o-docs.googleusercontent.com>>hosts
 echo 216.58.192.42 www-ritzmove-opensocial.googleusercontent.com>>hosts
 
-rem google drive download
-for %%A in (a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9) do (
-  for %%B in (a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9) do (
-    for %%C in (a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9) do (
-      for %%D in (a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9) do (
-        216.58.192.42 doc-%A%%B%-%C%%D%-docs.googleusercontent.com>>hosts
-        216.58.192.42 doc-%A%%B%-%C%%D%-drive-data-export.googleusercontent.com>>hosts
-  ) 
-  )
-  )
-)
-
 rem google upload
 echo 216.58.192.42 upload.docs.google.com>>hosts
 echo 216.58.192.42 googleusercontent.com>>hosts

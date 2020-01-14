@@ -24,7 +24,7 @@ const ItemsList = () => {
   return (
     <Container>
       {items.map((item) => (
-        <ItemCard key={item._id} {...item} />
+        <ItemCard key={item._id} item={item} />
       ))}
     </Container>
   );

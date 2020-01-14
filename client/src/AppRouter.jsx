@@ -10,6 +10,8 @@ import Orders from 'src/components/pages/profile/Orders';
 import PrivacyTerms from 'src/components/pages/terms/PrivacyTerms';
 import TermsOfUse from 'src/components/pages/terms/TermsOfUse';
 
+import Browse from 'src/components/pages/Browse';
+
 import ItemPub from 'src/components/pages/item/ItemPub';
 import ItemEdit from 'src/components/pages/item/ItemEdit';
 
@@ -59,7 +61,7 @@ const AppRouter = () => (
           <Route path="/item/:id/edit" component={ItemEdit} />
           <Route path="/item/:id" component={ItemPub} />
 
-          <Route path="/items/category/:category" component={Home} />
+          <Route path="/browse" component={Browse} />
 
           <Route path="/shop/apply/pending" component={ShopApplyPending} />
           <Route path="/shop/apply/complete" component={ShopApplyComplete} />
