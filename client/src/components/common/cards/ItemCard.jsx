@@ -46,7 +46,7 @@ const ItemCard = (props) => {
   return (
     <Card onClick={handleClick} {...props}>
       <ImageContainer>
-        <Img src={props.images[0]} />
+        <Img src={props.images[props.primaryImageIndex]} />
       </ImageContainer>
       <Info>
         <Name>{props.name}</Name>
