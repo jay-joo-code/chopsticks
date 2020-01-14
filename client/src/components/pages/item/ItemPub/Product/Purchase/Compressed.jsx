@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import log from 'src/util/log';
 import RedButton from 'src/components/common/buttons/RedButton';
-import theme from 'src/theme';
 
 const DyncCont = styled.div`
   position: fixed;
@@ -21,7 +19,7 @@ const Container = styled.div`
 
 const SideCont = styled.div`
   margin: 1rem;
-`
+`;
 
 const Name = styled.div`
   font-size: 1.2rem;
@@ -46,13 +44,16 @@ const Compressed = ({ item, expanded, setExpanded }) => {
   if (!item) return <div />;
   const handleClick = () => {
     setExpanded(!expanded);
-  }
+  };
   return (
     <DyncCont>
       <Container>
         <SideCont>
-        <Name>{item.name}</Name>
-        <Price>{price}원</Price>
+          <Name>{item.name}</Name>
+          <Price>
+            {price}
+원
+          </Price>
         </SideCont>
         <SideCont>
           <BuyButton green rounded onClick={handleClick}>구매 정보</BuyButton>

@@ -12,36 +12,39 @@ const Container = styled.div`
 
 const TextCont = styled.div`
   margin: 0 1rem;
-`
+`;
 
 const RightCont = styled.div`
   display: flex;
-`
+`;
 
 const Delete = styled.div`
   padding: 0 .5rem;
   cursor: pointer;
-`
+`;
 
-const Option = ({ option, index, formik, name }) => {
+const Option = ({
+  option, index, formik, name,
+}) => {
   const handleDelete = () => {
-    let newOptions = formik.values[name];
+    const newOptions = formik.values[name];
     newOptions.splice(index, 1);
     formik.setFieldValue(name, newOptions);
-  }
+  };
   return (
-  <Container>
-  <TextCont>
-    {option.name}
-  </TextCont>
-  <RightCont>
-    <TextCont>
-    +{option.priceChange}
-    </TextCont>
-    <Delete onClick={handleDelete}>X</Delete>
-  </RightCont>
-  </Container>
-  )
+    <Container>
+      <TextCont>
+        {option.name}
+      </TextCont>
+      <RightCont>
+        <TextCont>
+    +
+          {option.priceChange}
+        </TextCont>
+        <Delete onClick={handleDelete}>X</Delete>
+      </RightCont>
+    </Container>
+  );
 };
 
 export default Option;

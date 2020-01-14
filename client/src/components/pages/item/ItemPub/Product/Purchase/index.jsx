@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Select from 'src/components/common/form/Select';
 import RedButton from 'src/components/common/buttons/RedButton';
 import theme from 'src/theme';
-import Compressed from './Compressed';
 import log from 'src/util/log';
+import Compressed from './Compressed';
 
 const DyncCont = styled.div`
   position: fixed;
@@ -61,18 +61,18 @@ const CloseBtn = styled.div`
   margin-top: 1rem;
   text-decoration: underline;
   cursor: pointer;
-`
+`;
 
 const Purchase = ({ item }) => {
   const [expanded, setExpanded] = useState(false);
   const price = item && item.price && item.price.toLocaleString('en');
-  const isDesktop = window.innerWidth >= theme.desktopContentWidth
+  const isDesktop = window.innerWidth >= theme.desktopContentWidth;
   const handleClick = () => {
     setExpanded(!expanded);
-  }
-  
+  };
+
   if (!item) return <div />;
-  else if (!isDesktop && !expanded) {
+  if (!isDesktop && !expanded) {
     return <Compressed item={item} expanded={expanded} setExpanded={setExpanded} />;
   }
 
@@ -86,18 +86,30 @@ const Purchase = ({ item }) => {
         </Price>
         <Select>
           {item.options && item.options.map((opt, i) => (
-            <option key={i}>{opt.name}</option>
+            <option key={i}>
+              {opt.name}
+              {' '}
+(+
+              {opt.priceChange}
+)
+            </option>
           ))}
         </Select>
         <Select>
           {item.optionsTwo && item.optionsTwo.map((opt, i) => (
-            <option key={i}>{opt.name}</option>
+            <option key={i}>
+              {opt.name}
+              {' '}
+(+
+              {opt.priceChange}
+)
+            </option>
           ))}
         </Select>
         <BuySect>
           <BuyButton white rounded>즉시 구매</BuyButton>
           <BuyButton green rounded>장바구니에 담기</BuyButton>
-          <CloseBtn onClick={handleClick}>축소</CloseBtn>
+          {!isDesktop && <CloseBtn onClick={handleClick}>축소</CloseBtn>}
         </BuySect>
       </Container>
     </DyncCont>

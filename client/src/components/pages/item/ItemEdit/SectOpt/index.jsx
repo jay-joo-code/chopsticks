@@ -1,7 +1,7 @@
 import React from 'react';
-import SectCont from '../SectCont';
-import Options from './Options'
 import Label from 'src/components/common/form/Label';
+import SectCont from '../SectCont';
+import Options from './Options';
 
 const SectTwo = ({ formik }) => (
   <SectCont>
