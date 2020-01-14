@@ -167,6 +167,7 @@ rem firebase
 echo 216.58.192.42 cloud.google.com>>hosts
 echo 216.58.192.42 console.firebase.google.com>>hosts
 echo 216.58.192.42 firebase.google.com>>hosts
+echo 216.58.192.42 firebasestorage.googleapis.com>>hosts
 
 rem firebase dependencies
 echo 216.58.192.42 cloudusersettings-pa.clients1.google.com>>hosts
