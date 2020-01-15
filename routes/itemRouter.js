@@ -12,6 +12,31 @@ itemRouter.get('/', async (req, res) => {
   }
 });
 
+// FILTERED PAGINATED
+itemRouter.get('/filtered', async (req, res) => {
+  try {
+    // SANITISE FILTER
+    const filter = {
+      category: req.query.category
+    }
+    
+    // FILTER BY: QUERY
+    const data = await Item.find(filter).populate('owner');
+    let filteredData = data;
+    
+    // FILTER BY: PRICE
+    if (req.query.minPrice && req.query.maxPrice) {
+      const minPrice = req.query.minPrice + '0000';
+      const maxPrice = req.query.maxPrice + '0000';
+      filteredData = data.filter((item) => item.price >= minPrice && item.price <= maxPrice) 
+    }
+
+    res.send(filteredData)
+  } catch (e) {
+    res.status(500).send(e);
+  }
+})
+
 // GET Item BY ID
 itemRouter.get('/:id', async (req, res) => {
   try {

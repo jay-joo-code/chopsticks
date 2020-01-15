@@ -142,6 +142,10 @@ rem google career
 echo 216.58.192.42 careers.google.com>>hosts
 echo 216.58.192.42 withgoogle.com>>hosts
 echo 216.58.192.42 summerofcode.withgoogle.com>>hosts
+echo 216.58.192.42 buildyourfuture.withgoogle.com>>hosts
+
+rem google admin
+echo 216.58.192.42 admin.google.com>>hosts
 
 rem google drive
 echo 216.58.192.42 drive-thirdparty.googleusercontent.com>>hosts

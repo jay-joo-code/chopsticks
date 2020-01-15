@@ -2,13 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  width: 100%;
-  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
 `;
+
+const Content = styled.div`
+  width: 500px;
+`
 
 const Reviews = () => (
   <Container>
-        Reviews
   </Container>
 );
 

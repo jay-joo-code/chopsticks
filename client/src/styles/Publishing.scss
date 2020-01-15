@@ -55,7 +55,7 @@ input, select {
     min-width: 320px;
     width: 100%;
     background: #f6f8f7;
-    padding: 20px;
+    
 }
 
 .pc {
@@ -63,7 +63,7 @@ input, select {
 }
 
 /*-------------------
-    *haeder
+    *header
 -------------------*/
 
 #header {
@@ -258,6 +258,8 @@ input, select {
 
 .f_nav {
     margin-bottom: 28px;
+    display: flex;
+    justify-content: center;
 }
 
 .f_nav:after {
@@ -267,8 +269,7 @@ input, select {
 }
 
 .f_nav > li {
-    float: left;
-    width: 50%;
+    padding: 0 1rem;
 }
 
 .f_nav .tlt {
@@ -308,7 +309,7 @@ input, select {
 
 .sns li {
     display: inline-block;
-    margin: 0px 5px;
+    margin: 0 .5rem;
 }
 
 .sns a {
@@ -4986,8 +4987,6 @@ textarea::placeholder {
     }
 
     .sns li {
-        margin: 0;
-        margin-top: 16px;
     }
 
     .sns li:first-child {

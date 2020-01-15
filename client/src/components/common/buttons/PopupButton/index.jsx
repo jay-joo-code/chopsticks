@@ -8,18 +8,18 @@ const Container = styled.div`
   position: relative;
 `;
 
-const PopupButton = ({ popupContent, btnText }) => {
-  const [showBtn, setShowBtn] = useState(false);
-  const handleClick = () => setShowBtn(!showBtn);
+const PopupButton = ({ popupContent, btnText, label, active, setActive }) => {
+  const handleClick = () => setActive(!active);
   
   return (
     <Container>
       <Btn
         onClick={handleClick} 
+        active={active}
       >
         {btnText}
       </Btn>
-      {showBtn && <Popup content={popupContent} />}
+      {active && <Popup content={popupContent} label={label} />}
     </Container>
   )
 };

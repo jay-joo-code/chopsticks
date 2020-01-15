@@ -11,6 +11,7 @@
     "lint": "eslint ./routes --fix && cd client && npm run lint"
   },
   "dependencies": {
+    "@material-ui/core": "^4.8.3",
     "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
@@ -28,6 +29,7 @@
     "npm-run-all": "^4.1.5",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "qs": "^6.9.1",
     "socket.io": "^2.3.0",
     "throttle-debounce": "^2.1.0"
   },

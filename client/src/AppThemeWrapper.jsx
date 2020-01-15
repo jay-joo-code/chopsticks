@@ -1,6 +1,5 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-// import AppRouter from 'src/AppRouter';
 import 'src/styles/Normalise.scss';
 import 'src/styles/Publishing.scss';
 import theme from 'src/theme';

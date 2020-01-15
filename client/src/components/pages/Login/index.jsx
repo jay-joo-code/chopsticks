@@ -10,7 +10,6 @@ import axios from 'axios';
 import log from 'src/util/log';
 import { useDispatch } from 'react-redux';
 
-
 const Container = styled.div`
 
 `;
@@ -58,6 +57,10 @@ const Login = () => {
         });
     },
   });
+  
+  const handleClick = () => {
+    log('click')
+  }
 
   return (
     <AuthPanel title="로그인">
@@ -65,7 +68,7 @@ const Login = () => {
         <form onSubmit={formik.handleSubmit}>
           <FormikInput name="email" placeholder="이메일" formik={formik} />
           <FormikInput name="password" type="password" placeholder="비밀번호" formik={formik} />
-          <Button type="submit" inverted>로그인</Button>
+          <Button onClick={handleClick} type="submit" inverted>로그인</Button>
         </form>
         <RegisterBtnContainer>
           <RegisterBtn to="/register">회원가입</RegisterBtn>

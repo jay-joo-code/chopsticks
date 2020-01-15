@@ -11,7 +11,7 @@ const Cont = styled.div`
   position: relative;
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
-  margin: 0 .5rem;
+  margin: .5rem;
 `
 
 const Stars = styled.div`

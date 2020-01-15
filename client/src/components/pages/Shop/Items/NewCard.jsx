@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'src/theme';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import log from 'src/util/log';
 
 const Container = styled.div`
   margin: 0 1rem 0 0;
@@ -15,15 +19,29 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+  cursor: pointer;
   font-size: 3rem;
   font-weight: bold;
   opacity: .8;
 `
 
 const NewCard = () => {
+  const userId = useSelector((state) => state.user._id);
+  const history = useHistory();
+  const handleClick = () => {
+    const data = {
+      owner: userId,
+    };
+    axios.post('/api/item/create', data)
+      .then((res) => {
+        history.push(`/item/${res.data._id}/edit`);
+      })
+      .catch((e) => {
+        log('ERROR failed to create item', e);
+      });
+  };
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <Wrapper>
         +
       </Wrapper>

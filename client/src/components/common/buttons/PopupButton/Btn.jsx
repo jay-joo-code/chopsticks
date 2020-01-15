@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import theme from 'src/theme';
 
 const Container = styled.div`
   cursor: pointer;
   text-align: center;
-  border: 1px solid rgb(176, 176, 176);
+  border: 1px solid ${props => props.active ? theme.green : 'rgb(176, 176, 176)'};
   outline: currentcolor none medium;
-  margin: 0px;
+  margin: 0 .2rem;
   background-color: rgb(255, 255, 255);
   border-radius: 30px;
-  color: rgb(34, 34, 34);
+  color: ${props => props.active ? theme.green : 'black'};
   position: relative;
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  line-height: 2rem;
+  padding: .5rem 1rem;
+  font-size: .6rem;
 `;
 
-const Btn = ({ children, ...rest}) => {
+const Btn = ({ children, active, ...rest}) => {
+  const [highlight, setHighlight] = useState(false);
+  useEffect(() => {
+    if (active) setHighlight(true);
+  }, [active])
   return (
-    <Container {...rest}>
+    <Container {...rest} active={highlight}>
       {children}
     </Container>
   )

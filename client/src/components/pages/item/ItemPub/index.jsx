@@ -6,7 +6,6 @@ import Reviews from './Reviews';
 import Policies from './Policies';
 
 const Container = styled.div`
-
 `;
 
 const ItemPub = () => {

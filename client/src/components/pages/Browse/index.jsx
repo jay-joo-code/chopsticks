@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import Filters from './Filters';
+import ItemsList from './ItemsList';
 
 const Container = styled.div`
 
@@ -8,7 +10,8 @@ const Container = styled.div`
 const Browse = () => {
   return (
     <Container>
-        Browse
+      <Filters />
+      <ItemsList />
     </Container>
   )
 };

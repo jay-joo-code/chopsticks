@@ -17,7 +17,9 @@ import ItemEdit from 'src/components/pages/item/ItemEdit';
 
 import AdminShops from 'src/components/pages/admin/AdminShops';
 import Saaji from 'src/components/pages/Saaji';
+
 import Header from 'src/components/layout/Header';
+import Footer from 'src/components/layout/Footer';
 import DynamicContainer from 'src/components/layout/DynamicContainer';
 
 import Shop from 'src/components/pages/Shop';
@@ -77,6 +79,7 @@ const AppRouter = () => (
           <Route exact path="/" component={Home} />
         </Switch>
       </DynamicContainer>
+      <Footer />
     </Container>
   </BrowserRouter>
 );

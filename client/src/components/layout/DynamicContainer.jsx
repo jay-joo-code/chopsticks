@@ -12,13 +12,14 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
   width: 90%;
+  max-width: 90%;
   
   @media(min-width: ${desktopContentWidth}px) {
     width: ${desktopContentWidth}px;
   }
 `;
 
-const DefaultComponent = (props) => (
+const DynamicContainer = (props) => (
   <Wrapper {...props}>
     <Container>
       {props.children}
@@ -26,4 +27,4 @@ const DefaultComponent = (props) => (
   </Wrapper>
 );
 
-export default DefaultComponent;
+export default DynamicContainer;
