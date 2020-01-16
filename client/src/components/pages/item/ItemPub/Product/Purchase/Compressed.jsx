@@ -9,6 +9,7 @@ const DyncCont = styled.div`
   right: 0;
   background-color: white;
   display: inline-block;
+  z-index: 30;
 `;
 
 const Container = styled.div`

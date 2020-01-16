@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import ItemCard from 'src/components/common/cards/ItemCard';
 import axios from 'axios';
 import log from 'src/util/log';
+import ItemsList from 'src/components/layout/ItemsList';
 
 const Container = styled.div`
   padding: 2rem 0;
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
 `;
 
-const ItemsList = () => {
+const ItemsListComp = () => {
   const [items, setItems] = useState([]);
   useEffect(() => {
     axios.get('/api/item')
@@ -23,11 +24,9 @@ const ItemsList = () => {
   }, []);
   return (
     <Container>
-      {items.map((item) => (
-        <ItemCard key={item._id} item={item} />
-      ))}
+      <ItemsList items={items} />
     </Container>
   );
 };
 
-export default ItemsList;
+export default ItemsListComp;

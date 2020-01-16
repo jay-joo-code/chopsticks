@@ -10,7 +10,7 @@ var itemSchema = Schema({
   },
   display: {
     type: Boolean,
-    default: true,
+    default: false,
     required: true
   },
   images: {
@@ -42,10 +42,7 @@ var itemSchema = Schema({
     default: ''
   },
   content: String,
-  desc: [{
-    value: String,
-    isImage: Boolean,
-  }],
+  intro: String,
   options: [{
     name: String,
     priceChange: Number

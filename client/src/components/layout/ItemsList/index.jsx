@@ -14,10 +14,11 @@ const Wrapper = styled.div`
 `
 
 const ItemsList = ({ items }) => {
+  const displayItems = items.filter((item) => item.display);
   return (
     <Container>
     <Wrapper>
-      {items.map((item) => (
+      {displayItems.map((item) => (
         <ItemCard key={item._id} item={item} />
       ))}
     </Wrapper>

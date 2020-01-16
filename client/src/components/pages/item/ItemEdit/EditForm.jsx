@@ -11,6 +11,7 @@ import SectOne from './SectOne';
 import SectOpt from './SectOpt';
 import SectThree from './SectThree';
 import SectImg from './SectImg';
+import SectIntro from './SectIntro';
 
 
 const Container = styled.div`
@@ -45,6 +46,7 @@ const ItemEdit = ({ item }) => {
       images: item.images,
       primaryImageIndex: item.primaryImageIndex,
       content: item.content,
+      intro: item.intro,
       price: item.price,
       stock: item.stock,
       options: item.options,
@@ -66,6 +68,8 @@ const ItemEdit = ({ item }) => {
       category: Yup.string()
         .required('필수'),
       content: Yup.string()
+        .required('필수'),
+      intro: Yup.string()
         .required('필수'),
       price: Yup.number()
         .typeError('숫자만 기입해주세요')
@@ -107,7 +111,8 @@ const ItemEdit = ({ item }) => {
       <Title>상품 등록</Title>
       <Form onSubmit={formik.handleSubmit}>
         <SectOne formik={formik} />
-        <SectImg formik={formik} />
+        <SectIntro formik={formik} _id={item._id}/>
+        <SectImg formik={formik} _id={item._id} />
         <SectOpt formik={formik} />
         <SectThree formik={formik} />
         <BtnCont>

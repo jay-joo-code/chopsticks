@@ -15,15 +15,16 @@ const DyncCont = styled.div`
   display: inline-block;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
-    position: static;
     background-color: inherit;
     display: block;
     width: auto;
     cursor: default;
+    position: static;
   }
 `;
-
 const Container = styled.div`
+  position: sticky;
+  top: 0;
   padding: 2rem 0;
   display: flex;
   flex-direction: column;
@@ -78,6 +79,7 @@ const Purchase = ({ item }) => {
 
   return (
     <DyncCont>
+    
       <Container>
         <Name>{item.name}</Name>
         <Price>
@@ -112,6 +114,7 @@ const Purchase = ({ item }) => {
           {!isDesktop && <CloseBtn onClick={handleClick}>축소</CloseBtn>}
         </BuySect>
       </Container>
+    
     </DyncCont>
   );
 };

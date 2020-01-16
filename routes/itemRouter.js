@@ -65,7 +65,8 @@ itemRouter.post('/create', async (req, res) => {
 // UPDATE Item
 itemRouter.put('/:id/update', async (req, res) => {
   try {
-    const result = await Item.findByIdAndUpdate(req.params.id, req.body);
+    const data = Object.assign({ display: true }, req.body);
+    const result = await Item.findByIdAndUpdate(req.params.id, data);
     res.send(result);
   } catch (e) {
     res.status(500).send(e);

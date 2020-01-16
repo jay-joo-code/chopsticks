@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Intro from './Intro';
 
 const Container = styled.div`
   flex-grow: 4;
@@ -18,6 +19,7 @@ const Details = ({ item }) => {
         <div className="img_txt">
           <p className="txt">{item.content}</p>
         </div>
+        <Intro item={item} />
       </div>
     </Container>
   );

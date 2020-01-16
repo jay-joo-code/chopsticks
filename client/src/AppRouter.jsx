@@ -32,7 +32,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    overflow: hidden;
     min-height: 100vh;
     background-color: rgba(0, 0, 0, .05);
 `;
