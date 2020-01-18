@@ -40,6 +40,10 @@ const Name = styled.div`
   
 `;
 
+const SelectCont = styled.div`
+  margin: .5rem 0;
+`
+
 const Price = styled.div`
   font-size: 3rem;
   font-weight: bold;
@@ -87,6 +91,7 @@ const Purchase = ({ item }) => {
           {price}
 원
         </Price>
+        <SelectCont>
         <Select>
           {item.options && item.options.map((opt, i) => (
             <option key={i}>
@@ -98,6 +103,8 @@ const Purchase = ({ item }) => {
             </option>
           ))}
         </Select>
+        </SelectCont>
+        <SelectCont>
         <Select>
           {item.optionsTwo && item.optionsTwo.map((opt, i) => (
             <option key={i}>
@@ -109,6 +116,7 @@ const Purchase = ({ item }) => {
             </option>
           ))}
         </Select>
+        </SelectCont>
         <BuySect>
           <BuyButton white rounded>즉시 구매</BuyButton>
           <BuyButton green rounded>장바구니에 담기</BuyButton>

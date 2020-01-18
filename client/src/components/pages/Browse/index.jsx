@@ -23,7 +23,7 @@ const Browse = () => {
       }
       updateQuery(newQuery, location, history);
     }
-  }, [])
+  }, [location])
   return (
     <Container>
       <Toolbar />
