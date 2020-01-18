@@ -23,7 +23,6 @@ var itemSchema = Schema({
   },
   name: {
     type: String,
-    default: ''
   },
   price: {
     type: Number,
@@ -40,6 +39,9 @@ var itemSchema = Schema({
   category: {
     type: String,
     default: ''
+  },
+  style: {
+    type: String
   },
   content: String,
   intro: String,

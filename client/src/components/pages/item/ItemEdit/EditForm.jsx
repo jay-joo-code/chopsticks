@@ -43,6 +43,7 @@ const ItemEdit = ({ item }) => {
     initialValues: {
       name: item.name,
       category: item.category,
+      style: item.style,
       images: item.images,
       primaryImageIndex: item.primaryImageIndex,
       content: item.content,
@@ -66,6 +67,8 @@ const ItemEdit = ({ item }) => {
         .max(8, '최대 8장')
         .required('최소 1장 필수'),
       category: Yup.string()
+        .required('필수'),
+      style: Yup.string()
         .required('필수'),
       content: Yup.string()
         .required('필수'),

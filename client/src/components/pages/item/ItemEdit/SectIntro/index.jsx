@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import SectCont from './../SectCont';
-import log from 'src/util/log';
+import ErrMsg from 'src/components/common/form/ErrMsg';
 import { Editor } from '@tinymce/tinymce-react'; 
 import uploadFile from 'src/firebase/uploadFile';
 import Label from 'src/components/common/form/Label';
@@ -51,6 +51,11 @@ const SectIntro = ({ formik, _id }) => {
         }}
         onChange={handleEditorChange}
       />
+      {formik.errors.intro && formik.touched.intro && (
+        <ErrMsg>{formik.errors.intro}</ErrMsg>
+      )
+        
+      }
     </Container>
     </SectCont>
   )
