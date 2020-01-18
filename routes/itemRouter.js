@@ -1,27 +1,36 @@
 const itemRouter = require('express').Router();
 const Item = require('./../models/Item');
 const User = require('./../models/User');
+const sort = require('./../util/sort');
 
-// GET ALL Items THAT MATCH QUERY FILTER
+// GET ITEMS: FILTERED SORTED PAGINATED
 itemRouter.get('/', async (req, res) => {
   try {
-    const result = await Item.find(req.query).populate('owner');
-    res.send(result);
-  } catch (e) {
-    res.status(500).send(e);
-  }
-});
-
-// FILTERED PAGINATED
-itemRouter.get('/filtered', async (req, res) => {
-  try {
-    // SANITISE FILTER
+    // CREATE FILTER: CATEGORY, OWNER
+    const { category, owner } = req.query;
+    const categoryFilter = category ? { category, } : {};
+    const ownerFilter = owner ? { owner, } : {};
+    
     const filter = {
-      category: req.query.category
+      display: true,
+      ...categoryFilter,
+      ...ownerFilter
     }
     
-    // FILTER BY: QUERY
-    const data = await Item.find(filter).populate('owner');
+    // QUERY WITH FILTER DEFINED ABOVE
+    // PAGINATION IF REQUESTED
+    let result;
+    const { page, limit } = req.query;
+    if (page && limit) {
+      const options = {
+        populate: 'owner',
+        page,
+        limit,
+      }
+      result = await Item.paginate(filter, options);
+    }
+    else result = await Item.find(filter).populate('owner');
+    const data = result.docs;
     let filteredData = data;
     
     // FILTER BY: PRICE
@@ -30,12 +39,31 @@ itemRouter.get('/filtered', async (req, res) => {
       const maxPrice = req.query.maxPrice + '0000';
       filteredData = data.filter((item) => item.price >= minPrice && item.price <= maxPrice) 
     }
+    
+    // SORT
+    let sortedData = filteredData;
+    const sortCode = req.query.sort;
+    if (sortCode === 'recent') sortedData = sort.sortRecent(filteredData);
+    else if (sortCode === 'priceLow') sortedData = sort.sortPriceLow(filteredData);
+    else if (sortCode === 'priceHigh') sortedData = sort.sortPriceHigh(filteredData);
+    
+    const mergedData = Object.assign({}, result, { docs: sortedData })
+    res.send(mergedData)
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+});
 
-    res.send(filteredData)
+// GET ALL ITEMS OWNED BY USER WITH USERID
+itemRouter.get('/owner/:id', async (req, res) => {
+  try {
+    const result = await Item.find({ owner: req.params.id }).populate('owner');
+    res.send(result);
   } catch (e) {
     res.status(500).send(e);
   }
-})
+});
 
 // GET Item BY ID
 itemRouter.get('/:id', async (req, res) => {
@@ -65,8 +93,7 @@ itemRouter.post('/create', async (req, res) => {
 // UPDATE Item
 itemRouter.put('/:id/update', async (req, res) => {
   try {
-    const data = Object.assign({ display: true }, req.body);
-    const result = await Item.findByIdAndUpdate(req.params.id, data);
+    const result = await Item.findByIdAndUpdate(req.params.id, req.body);
     res.send(result);
   } catch (e) {
     res.status(500).send(e);

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import ItemCard from 'src/components/common/cards/ItemCard';
 
 const Container = styled.div`
-  padding: 2rem 0;
   display: flex;
   justify-content: center;
   width: 100%;

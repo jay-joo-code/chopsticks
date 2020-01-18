@@ -1,7 +1,7 @@
 // get an instance of mongoose and mongoose.Schema
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var mongoosePaginate = require('mongoose-paginate');
+var mongoosePaginate = require('mongoose-paginate-v2');
 const bcrypt = require('bcrypt');
 
 var userSchema = Schema({

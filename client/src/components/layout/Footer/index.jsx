@@ -10,7 +10,6 @@ const Container = styled.div`
 `;
 
 const Title = styled.p`
-  text-align: center;
   font-size: 12px;
   font-weight: 600;
   color: #44423f;

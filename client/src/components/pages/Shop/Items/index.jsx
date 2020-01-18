@@ -18,7 +18,7 @@ const Items = () => {
   const [items, setItems] = useState([]);
   const userId = useSelector((state) => state.user._id);
   useEffect(() => {
-    axios.get(`/api/item?owner=${userId}`)
+    axios.get(`/api/item/owner/${userId}`)
       .then((res) => {
         setItems(res.data);
       })

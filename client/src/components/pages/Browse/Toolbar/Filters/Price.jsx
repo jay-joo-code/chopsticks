@@ -6,6 +6,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import log from 'src/util/log';
 import qs from 'qs';
 import RedButton from 'src/components/common/buttons/RedButton';
+import updateQuery from 'src/util/path/updateQuery';
 
 const Container = styled.div`
   display: inline-block;
@@ -31,14 +32,13 @@ const Price = () => {
     setValue(newValue);
   };
   const handleSearch = () => {
-    const query = qs.parse(location.search.split('?')[1]);
-    query.minPrice = value[0];
-    query.maxPrice = value[1];
-    const queryStr = qs.stringify(query);
-    const newPath = `${location.pathname}?${queryStr}`;
+    const query = {
+      minPrice: value[0],
+      maxPrice: value[1]
+    }
+    updateQuery(query, location, history);
     setActive(false);
     setBtnText(`${value[0]}만원 ~ ${value[1]}만원`)
-    history.push(newPath);
   }
   const [active, setActive] = useState(false);
   const [btnText, setBtnText] = useState('가격');

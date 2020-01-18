@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import SectCont from './../SectCont';
 import log from 'src/util/log';
@@ -25,6 +25,7 @@ const SectIntro = ({ formik, _id }) => {
       failure(e)
     }
   }
+  const dynamicWidth = window.innerWidth < 620 ? window.innerWidth : 620;
   return (
     <SectCont>
     <Container>
@@ -34,7 +35,7 @@ const SectIntro = ({ formik, _id }) => {
         initialValue={formik.values.intro}
         init={{
           height: 700,
-          width: 620,
+          width: dynamicWidth,
           menubar: false,
           plugins: [
             'advlist autolink lists link image', 

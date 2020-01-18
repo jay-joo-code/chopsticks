@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Select from 'src/components/common/form/Select';
+import updateQuery from 'src/util/path/updateQuery';
+import getQuery from 'src/util/path/getQuery';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const Container = styled.div`
 
@@ -34,10 +37,18 @@ const SortBy = () => {
     code: 'priceHigh'
   }];
   
-  const handleChange = (e) => setSortCode(e.target.value);
+  const history = useHistory();
+  const location = useLocation();
+  const handleChange = (e) => {
+    const value = e.target.value;
+    const query = { sort: value };
+    updateQuery(query, location, history);
+  }
+  
   useEffect(() => {
-    
-  }, [sortCode])
+    const query = getQuery(location);
+    setSortCode(query.sort);
+  }, [location])
   
   return (
     <Container>

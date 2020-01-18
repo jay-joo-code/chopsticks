@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import log from 'src/util/log';
 import ItemsList from 'src/components/layout/ItemsList';
+import PageNav from 'src/components/layout/PageNav';
 
 const Container = styled.div`
 
@@ -12,19 +13,27 @@ const Container = styled.div`
 const ItemsListComp = () => {
   const { search } = useLocation();
   const [items, setItems] = useState([]);
+  const [metadata, setMetadata] = useState({});
   useEffect(() => {
-    log('search change', search)
-    axios.get(`/api/item/filtered${search}`)
+    axios.get(`/api/item${search}`)
       .then((res) => {
-        setItems(res.data);
+        setMetadata({
+          page: res.data.page,
+          totalPages: res.data.totalPages 
+        })
+        setItems(res.data.docs);
       })
       .catch((e) => {
         log(`ERROR fetch filtered items`, e);
       })
   }, [search])
+  
+  if (!items || !metadata) return <div />;
+  
   return (
     <Container>
       <ItemsList items={items} />
+      <PageNav metadata={metadata} />
     </Container>
   )
 };

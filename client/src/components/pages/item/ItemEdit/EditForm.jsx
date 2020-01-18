@@ -94,7 +94,11 @@ const ItemEdit = ({ item }) => {
         .required('필수'),
     }),
     onSubmit: (values, { setFieldError }) => {
-      axios.put(`/api/item/${item._id}/update`, values)
+      const mergedValues = {
+        ...values,
+        display: true
+      }
+      axios.put(`/api/item/${item._id}/update`, mergedValues)
         .then(() => {
           history.push(`/item/${item._id}`);
         })
