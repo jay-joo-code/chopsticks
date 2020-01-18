@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import AuthPanel from 'src/components/layout/AuthPanel';
 import FormikInput from 'src/components/common/form/FormikInput';
-import Button from 'src/components/common/Button';
+import Button from 'src/components/common/buttons/RedButton';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import log from 'src/util/log';
 import { useDispatch } from 'react-redux';
+import ErrMsg from 'src/components/common/form/ErrMsg';
 
 const Container = styled.div`
 
 `;
+
+const BtnCont = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+`
 
 const RegisterBtnContainer = styled.div`
   width: 100%;
@@ -29,6 +37,7 @@ const RegisterBtn = styled(Link)`
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [errmsg, setErrmsg] = useState('')
   const formik = useFormik({
     initialValues: {
       password: '',
@@ -49,18 +58,14 @@ const Login = () => {
             type: 'USER_SET',
             payload: res.data,
           });
-
-          history.goBack();
+          history.push('/');
         })
         .catch((e) => {
-          log('login failed', e);
+          log('ERROR login failed', e);
+          setErrmsg('로그인 실패')
         });
     },
   });
-  
-  const handleClick = () => {
-    log('click')
-  }
 
   return (
     <AuthPanel title="로그인">
@@ -68,7 +73,10 @@ const Login = () => {
         <form onSubmit={formik.handleSubmit}>
           <FormikInput name="email" placeholder="이메일" formik={formik} />
           <FormikInput name="password" type="password" placeholder="비밀번호" formik={formik} />
-          <Button onClick={handleClick} type="submit" inverted>로그인</Button>
+          <BtnCont>
+            <Button type="submit" green>로그인</Button>
+            {errmsg && (<ErrMsg>{errmsg}</ErrMsg>)}
+          </BtnCont>
         </form>
         <RegisterBtnContainer>
           <RegisterBtn to="/register">회원가입</RegisterBtn>
