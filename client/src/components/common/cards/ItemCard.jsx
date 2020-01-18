@@ -5,13 +5,17 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as Star } from 'src/assets/svgs/star.svg';
 
 const Cont = styled.div`
-  width: ${theme.CARD_WIDTH}px;
+  width: 100%;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
-  margin: .5rem;
+  margin: 1rem .5rem;
+  
+  @media (min-width: ${theme.desktopContentWidth}px) {
+    width: ${theme.CARD_WIDTH}px;
+  }
 `
 
 const Stars = styled.div`

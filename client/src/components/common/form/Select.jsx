@@ -19,6 +19,7 @@ const StyledSelect = styled.select`
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
   padding: .6rem 3rem .6rem 1rem;
+  cursor: pointer;
 `;
 
 const Select = ({
@@ -29,7 +30,7 @@ const Select = ({
 
   return (
     <Container>
-      <Label htmlFor={name}>{label}</Label>
+      {label && (<Label htmlFor={name}>{label}</Label>)}
       <StyledSelect
         name={name}
         hasError={hasError}

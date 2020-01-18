@@ -6,11 +6,15 @@ const Container = styled.div`
   padding: 2rem 0;
   display: flex;
   justify-content: center;
+  width: 100%;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `
 
 const ItemsList = ({ items }) => {

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Price from './Price';
 
 const Container = styled.div`
-  margin-top: 2rem;
 `;
 
 const Filters = () => {
