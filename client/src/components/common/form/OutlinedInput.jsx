@@ -16,6 +16,7 @@ const InputArea = styled.div`
 
 const Input = styled.input`
   border-radius: 8px;
+  font-size: 16px;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
   height: 3rem;

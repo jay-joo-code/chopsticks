@@ -10,6 +10,7 @@ import axios from 'axios';
 import log from 'src/util/log';
 import { useDispatch } from 'react-redux';
 import ErrMsg from 'src/components/common/form/ErrMsg';
+import OutlinedInput from 'src/components/common/form/OutlinedInput';
 
 const Container = styled.div`
 
@@ -20,6 +21,10 @@ const BtnCont = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 1rem 0;
+`
+
+const StyledInput = styled(OutlinedInput)`
+  background-color: rgba(0, 0, 0, .1)
 `
 
 const RegisterBtnContainer = styled.div`
@@ -71,8 +76,8 @@ const Login = () => {
     <AuthPanel title="로그인">
       <Container>
         <form onSubmit={formik.handleSubmit}>
-          <FormikInput name="email" placeholder="이메일" formik={formik} />
-          <FormikInput name="password" type="password" placeholder="비밀번호" formik={formik} />
+          <StyledInput name="email" placeholder="이메일" formik={formik} />
+          <StyledInput name="password" type="password" placeholder="비밀번호" formik={formik} />
           <BtnCont>
             <Button type="submit" green>로그인</Button>
             {errmsg && (<ErrMsg>{errmsg}</ErrMsg>)}
