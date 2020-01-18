@@ -13,6 +13,7 @@ const DyncCont = styled.div`
   right: 0;
   background-color: white;
   display: inline-block;
+  z-index: 20;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     background-color: inherit;

@@ -7,9 +7,14 @@ import { useHistory } from 'react-router-dom';
 import log from 'src/util/log';
 
 const Container = styled.div`
-  margin: 0 1rem 0 0;
   height: ${theme.CARD_WIDTH}px;
-  width: ${theme.CARD_WIDTH}px;
+  width: 100%;
+  margin: 1rem .5rem;
+  
+  @media (min-width: ${theme.desktopContentWidth}px) {
+    width: ${theme.CARD_WIDTH}px;
+    height: auto;
+  }
 `;
 
 const Wrapper = styled.div`

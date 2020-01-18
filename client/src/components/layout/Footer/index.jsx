@@ -9,6 +9,14 @@ const Container = styled.div`
 
 `;
 
+const Title = styled.p`
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #44423f;
+  margin-bottom: 12px;
+`
+
 const Footer = () => {
   const categories = useCategories();
   return (
@@ -20,7 +28,7 @@ const Footer = () => {
             </a>
             <ul class="f_nav">
                 <li>
-                    <p class="tlt">카테고리</p>
+                    <Title class="tlt">카테고리</Title>
                     <ul class="in_list">
                       {categories.map((cat) => (
                         <li><Link to={`/browse?category=${cat.name}`}>{cat.korean}</Link></li>
@@ -28,7 +36,7 @@ const Footer = () => {
                     </ul>
                 </li>
                 <li>
-                    <p class="tlt">HELP / INFO</p>
+                    <Title class="tlt">HELP / INFO</Title>
                     <ul class="in_list">
                         <li><Link to='/terms/use'>Terms & conditions</Link></li>
                         <li><Link to='/terms/privacy'>Privacy & cookie policy</Link></li>
@@ -36,7 +44,7 @@ const Footer = () => {
                 </li>
             </ul>
             <div class="sns">
-                <p class="tlt">Follow Us</p>
+                <Title class="tlt">Follow Us</Title>
                 <ul>
                     <li><a href="" target='_blank'><Facebook /></a></li>
                     <li><a href="https://www.instagram.com/chopsticks.market/" target='_blank'><Instagram /></a></li>
