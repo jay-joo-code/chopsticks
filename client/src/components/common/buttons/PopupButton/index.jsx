@@ -8,20 +8,22 @@ const Container = styled.div`
   position: relative;
 `;
 
-const PopupButton = ({ popupContent, btnText, label, active, setActive }) => {
+const PopupButton = ({
+  popupContent, btnText, label, active, setActive,
+}) => {
   const handleClick = () => setActive(!active);
-  
+
   return (
     <Container>
       <Btn
-        onClick={handleClick} 
+        onClick={handleClick}
         active={active}
       >
         {btnText}
       </Btn>
       {active && <Popup content={popupContent} label={label} />}
     </Container>
-  )
+  );
 };
 
 export default PopupButton;

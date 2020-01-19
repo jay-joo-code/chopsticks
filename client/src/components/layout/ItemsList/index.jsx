@@ -13,17 +13,17 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   align-items: center;
   width: 100%;
-`
+`;
 
 const ItemsList = ({ items }) => {
   const displayItems = items.filter((item) => item.display);
   return (
     <Container>
-    <Wrapper>
-      {displayItems.map((item) => (
-        <ItemCard key={item._id} item={item} />
-      ))}
-    </Wrapper>
+      <Wrapper>
+        {displayItems.map((item) => (
+          <ItemCard key={item._id} item={item} />
+        ))}
+      </Wrapper>
     </Container>
   );
 };

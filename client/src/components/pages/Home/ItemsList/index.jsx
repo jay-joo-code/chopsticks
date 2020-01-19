@@ -21,14 +21,14 @@ const TitleSect = styled.div`
   align-items: center;
   width: 100%;
   padding: 0 1rem;
-`
+`;
 
 const Title = styled.h3`
   font-size: 1.5rem;
   font-weight: 600;
   color: #82ab96;
   margin: 0;
-`
+`;
 
 const ItemsListComp = () => {
   const [items, setItems] = useState([]);
@@ -45,15 +45,15 @@ const ItemsListComp = () => {
     <Container>
       <TitleSect>
         <Title>인기 상품</Title>
-        <Link to='/browse'>
-        <RedButton green>더보기</RedButton>
+        <Link to="/browse">
+          <RedButton green>더보기</RedButton>
         </Link>
       </TitleSect>
       <ItemsList items={items} />
       <TitleSect>
         <Title>최신 상품</Title>
-        <Link to='/browse'>
-        <RedButton green>더보기</RedButton>
+        <Link to="/browse">
+          <RedButton green>더보기</RedButton>
         </Link>
       </TitleSect>
       <ItemsList items={items} />

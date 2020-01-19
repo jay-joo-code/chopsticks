@@ -27,8 +27,8 @@ const SectOne = ({ formik }) => {
           label="카테고리 *"
           formik={formik}
         >
-          {cat.map((opt, i) => (
-            <option key={i} value={opt.name}>{opt.korean}</option>
+          {cat.map((opt) => (
+            <option key={opt.name} value={opt.name}>{opt.korean}</option>
           ))}
         </Select>
       </InputCont>
@@ -38,7 +38,7 @@ const SectOne = ({ formik }) => {
           label="분류 *"
           formik={formik}
         >
-          {styles.map((opt, i) => (
+          {styles.map((opt) => (
             <option key={opt} value={opt}>{opt}</option>
           ))}
         </Select>

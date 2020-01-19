@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Select from 'src/components/common/form/Select';
 import RedButton from 'src/components/common/buttons/RedButton';
 import theme from 'src/theme';
-import log from 'src/util/log';
 import Compressed from './Compressed';
 
 const DyncCont = styled.div`
@@ -42,7 +41,7 @@ const Name = styled.div`
 
 const SelectCont = styled.div`
   margin: .5rem 0;
-`
+`;
 
 const Price = styled.div`
   font-size: 3rem;
@@ -84,7 +83,7 @@ const Purchase = ({ item }) => {
 
   return (
     <DyncCont>
-    
+
       <Container>
         <Name>{item.name}</Name>
         <Price>
@@ -92,30 +91,30 @@ const Purchase = ({ item }) => {
 원
         </Price>
         <SelectCont>
-        <Select>
-          {item.options && item.options.map((opt, i) => (
-            <option key={i}>
-              {opt.name}
-              {' '}
+          <Select>
+            {item.options && item.options.map((opt, i) => (
+              <option key={opt.name}>
+                {opt.name}
+                {' '}
 (+
-              {opt.priceChange}
+                {opt.priceChange}
 )
-            </option>
-          ))}
-        </Select>
+              </option>
+            ))}
+          </Select>
         </SelectCont>
         <SelectCont>
-        <Select>
-          {item.optionsTwo && item.optionsTwo.map((opt, i) => (
-            <option key={i}>
-              {opt.name}
-              {' '}
+          <Select>
+            {item.optionsTwo && item.optionsTwo.map((opt, i) => (
+              <option key={opt.name}>
+                {opt.name}
+                {' '}
 (+
-              {opt.priceChange}
+                {opt.priceChange}
 )
-            </option>
-          ))}
-        </Select>
+              </option>
+            ))}
+          </Select>
         </SelectCont>
         <BuySect>
           <BuyButton white rounded>즉시 구매</BuyButton>
@@ -123,7 +122,7 @@ const Purchase = ({ item }) => {
           {!isDesktop && <CloseBtn onClick={handleClick}>축소</CloseBtn>}
         </BuySect>
       </Container>
-    
+
     </DyncCont>
   );
 };

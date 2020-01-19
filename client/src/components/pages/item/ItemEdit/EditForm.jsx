@@ -99,8 +99,8 @@ const ItemEdit = ({ item }) => {
     onSubmit: (values, { setFieldError }) => {
       const mergedValues = {
         ...values,
-        display: true
-      }
+        display: true,
+      };
       axios.put(`/api/item/${item._id}/update`, mergedValues)
         .then(() => {
           history.push(`/item/${item._id}`);
@@ -118,7 +118,7 @@ const ItemEdit = ({ item }) => {
       <Title>상품 등록</Title>
       <Form onSubmit={formik.handleSubmit}>
         <SectOne formik={formik} />
-        <SectIntro formik={formik} _id={item._id}/>
+        <SectIntro formik={formik} _id={item._id} />
         <SectImg formik={formik} _id={item._id} />
         <SectOpt formik={formik} />
         <SectThree formik={formik} />

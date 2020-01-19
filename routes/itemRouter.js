@@ -8,17 +8,17 @@ itemRouter.get('/', async (req, res) => {
   try {
     // CREATE FILTER: CATEGORY, OWNER, SEARCH
     const { category, owner, search } = req.query;
-    const categoryFilter = category ? { category, } : {};
-    const ownerFilter = owner ? { owner, } : {};
-    const searchFilter = search ? { name: { '$regex': search }} : {};
+    const categoryFilter = category ? { category } : {};
+    const ownerFilter = owner ? { owner } : {};
+    const searchFilter = search ? { name: { $regex: search } } : {};
     console.log(search);
     const filter = {
       display: true,
       ...categoryFilter,
       ...ownerFilter,
-      ...searchFilter
-    }
-    
+      ...searchFilter,
+    };
+
     // QUERY WITH FILTER DEFINED ABOVE
     // PAGINATION IF REQUESTED
     let result;
@@ -28,29 +28,28 @@ itemRouter.get('/', async (req, res) => {
         populate: 'owner',
         page,
         limit,
-      }
+      };
       result = await Item.paginate(filter, options);
-    }
-    else result = await Item.find(filter).populate('owner');
+    } else result = await Item.find(filter).populate('owner');
     const data = result.docs;
     let filteredData = data;
-    
+
     // FILTER BY: PRICE
     if (req.query.minPrice && req.query.maxPrice) {
-      const minPrice = req.query.minPrice + '0000';
-      const maxPrice = req.query.maxPrice + '0000';
-      filteredData = data.filter((item) => item.price >= minPrice && item.price <= maxPrice) 
+      const minPrice = `${req.query.minPrice}0000`;
+      const maxPrice = `${req.query.maxPrice}0000`;
+      filteredData = data.filter((item) => item.price >= minPrice && item.price <= maxPrice);
     }
-    
+
     // SORT
     let sortedData = filteredData;
     const sortCode = req.query.sort;
     if (sortCode === 'recent') sortedData = sort.sortRecent(filteredData);
     else if (sortCode === 'priceLow') sortedData = sort.sortPriceLow(filteredData);
     else if (sortCode === 'priceHigh') sortedData = sort.sortPriceHigh(filteredData);
-    
-    const mergedData = Object.assign({}, result, { docs: sortedData })
-    res.send(mergedData)
+
+    const mergedData = { ...result, docs: sortedData };
+    res.send(mergedData);
   } catch (e) {
     console.log(e);
     res.status(500).send(e);

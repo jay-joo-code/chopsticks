@@ -23,16 +23,14 @@ const Container = styled.div`
 
 const Label = styled.div`
   font-weight: bold;
-  color: ${props => props.theme.green};
-`
+  color: ${(props) => props.theme.green};
+`;
 
-const Popup = ({ content, label, ...rest }) => {
-  return (
-    <Container {...rest}>
-      <Label>{label}</Label>
-      {content}
-    </Container>
-  )
-};
+const Popup = ({ content, label, ...rest }) => (
+  <Container {...rest}>
+    <Label>{label}</Label>
+    {content}
+  </Container>
+);
 
 export default Popup;

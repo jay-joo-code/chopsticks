@@ -28,7 +28,7 @@ const Wrapper = styled.div`
   font-size: 3rem;
   font-weight: bold;
   opacity: .8;
-`
+`;
 
 const NewCard = () => {
   const userId = useSelector((state) => state.user._id);
@@ -51,7 +51,7 @@ const NewCard = () => {
         +
       </Wrapper>
     </Container>
-  )
+  );
 };
 
 export default NewCard;

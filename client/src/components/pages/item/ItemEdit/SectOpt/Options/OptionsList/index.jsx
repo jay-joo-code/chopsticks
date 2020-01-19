@@ -20,7 +20,7 @@ const OptionsList = ({ formik, name }) => {
       <List>
         {elts && elts.map((option, i) => (
           <OptionElt
-            key={i}
+            key={option.name}
             index={i}
             option={option}
             formik={formik}

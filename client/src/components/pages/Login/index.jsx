@@ -21,11 +21,11 @@ const BtnCont = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 1rem 0;
-`
+`;
 
 const StyledInput = styled(OutlinedInput)`
   background-color: rgba(0, 0, 0, .1)
-`
+`;
 
 const RegisterBtnContainer = styled.div`
   width: 100%;
@@ -42,7 +42,7 @@ const RegisterBtn = styled(Link)`
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [errmsg, setErrmsg] = useState('')
+  const [errmsg, setErrmsg] = useState('');
   const formik = useFormik({
     initialValues: {
       password: '',
@@ -67,7 +67,7 @@ const Login = () => {
         })
         .catch((e) => {
           log('ERROR login failed', e);
-          setErrmsg('로그인 실패')
+          setErrmsg('로그인 실패');
         });
     },
   });

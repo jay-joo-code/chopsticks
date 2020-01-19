@@ -10,6 +10,10 @@ const Container = styled.div`
 
 `;
 
+const NavCont = styled.div`
+  margin-top: 2rem;
+`;
+
 const ItemsListComp = () => {
   const { search } = useLocation();
   const [items, setItems] = useState([]);
@@ -19,23 +23,25 @@ const ItemsListComp = () => {
       .then((res) => {
         setMetadata({
           page: res.data.page,
-          totalPages: res.data.totalPages 
-        })
+          totalPages: res.data.totalPages,
+        });
         setItems(res.data.docs);
       })
       .catch((e) => {
-        log(`ERROR fetch filtered items`, e);
-      })
-  }, [search])
-  
+        log('ERROR fetch filtered items', e);
+      });
+  }, [search]);
+
   if (!items || !metadata) return <div />;
-  
+
   return (
     <Container>
       <ItemsList items={items} />
-      <PageNav metadata={metadata} />
+      <NavCont>
+        <PageNav metadata={metadata} />
+      </NavCont>
     </Container>
-  )
+  );
 };
 
 export default ItemsListComp;

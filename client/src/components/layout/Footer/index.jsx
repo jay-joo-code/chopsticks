@@ -14,45 +14,45 @@ const Title = styled.p`
   font-weight: 600;
   color: #44423f;
   margin-bottom: 12px;
-`
+`;
 
 const Footer = () => {
   const categories = useCategories();
   return (
     <Container>
-        <footer id="footer">
+      <footer id="footer">
         <div id="footerin">
-            <a href="/" class="logo pc">
+          <a href="/" className="logo pc">
                 chopsticks
-            </a>
-            <ul class="f_nav">
-                <li>
-                    <Title class="tlt">카테고리</Title>
-                    <ul class="in_list">
-                      {categories.map((cat) => (
-                        <li><Link to={`/browse?category=${cat.name}`}>{cat.korean}</Link></li>
-                      ))}
-                    </ul>
-                </li>
-                <li>
-                    <Title class="tlt">HELP / INFO</Title>
-                    <ul class="in_list">
-                        <li><Link to='/terms/use'>Terms & conditions</Link></li>
-                        <li><Link to='/terms/privacy'>Privacy & cookie policy</Link></li>
-                    </ul>
-                </li>
+          </a>
+          <ul className="f_nav">
+            <li>
+              <Title class="tlt">카테고리</Title>
+              <ul className="in_list">
+                {categories.map((cat) => (
+                  <li><Link to={`/browse?category=${cat.name}`}>{cat.korean}</Link></li>
+                ))}
+              </ul>
+            </li>
+            <li>
+              <Title class="tlt">HELP / INFO</Title>
+              <ul className="in_list">
+                <li><Link to="/terms/use">Terms & conditions</Link></li>
+                <li><Link to="/terms/privacy">Privacy & cookie policy</Link></li>
+              </ul>
+            </li>
+          </ul>
+          <div className="sns">
+            <Title class="tlt">Follow Us</Title>
+            <ul>
+              <li><a href="" target="_blank"><Facebook /></a></li>
+              <li><a href="https://www.instagram.com/chopsticks.market/" target="_blank"><Instagram /></a></li>
             </ul>
-            <div class="sns">
-                <Title class="tlt">Follow Us</Title>
-                <ul>
-                    <li><a href="" target='_blank'><Facebook /></a></li>
-                    <li><a href="https://www.instagram.com/chopsticks.market/" target='_blank'><Instagram /></a></li>
-                </ul>
-            </div>
+          </div>
         </div>
-    </footer>
+      </footer>
     </Container>
-  )
+  );
 };
 
 export default Footer;

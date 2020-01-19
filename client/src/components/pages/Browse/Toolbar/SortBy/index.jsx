@@ -12,44 +12,44 @@ const Container = styled.div`
 const CustomSelect = styled(Select)`
   font-size: .7rem;
   overflow: visible;
-`
+`;
 
 const SortBy = () => {
   const [sortCode, setSortCode] = useState('');
   const sortList = [{
     text: '정렬',
-    code: ''
+    code: '',
   },
   {
     text: '인기순',
-    code: 'popular'
+    code: 'popular',
   },
   {
     text: '최신순',
-    code: 'recent'
+    code: 'recent',
   },
   {
     text: '가격 (낮은순)',
-    code: 'priceLow'
+    code: 'priceLow',
   },
   {
     text: '가격 (높은순)',
-    code: 'priceHigh'
+    code: 'priceHigh',
   }];
-  
+
   const history = useHistory();
   const location = useLocation();
   const handleChange = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
     const query = { sort: value };
     updateQuery(query, location, history);
-  }
-  
+  };
+
   useEffect(() => {
     const query = getQuery(location);
     setSortCode(query.sort);
-  }, [location])
-  
+  }, [location]);
+
   return (
     <Container>
       <CustomSelect value={sortCode} onChange={handleChange}>
@@ -58,7 +58,7 @@ const SortBy = () => {
         ))}
       </CustomSelect>
     </Container>
-  )
+  );
 };
 
 export default SortBy;

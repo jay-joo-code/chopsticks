@@ -13,7 +13,7 @@ const Form = styled.form`
   position: relative;
   display: flex;
   align-items: center;
-`
+`;
 
 const StyledIcon = styled(Icon)`
   position: absolute;
@@ -21,26 +21,26 @@ const StyledIcon = styled(Icon)`
   top: 1.5rem;
   height: 1rem;
   width: 1rem;
-`
+`;
 
 const SearchBox = () => {
   const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
     const query = e.target[0].value;
-    history.push(`/browse?search=${query}`)
-  }
+    history.push(`/browse?search=${query}`);
+  };
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        <OutlinedInput 
+        <OutlinedInput
           type="text"
-          placeholder="검색" 
+          placeholder="검색"
         />
-        <button type='submit'><StyledIcon /></button>
+        <button type="submit"><StyledIcon /></button>
       </Form>
     </Container>
-  )
+  );
 };
 
 export default SearchBox;

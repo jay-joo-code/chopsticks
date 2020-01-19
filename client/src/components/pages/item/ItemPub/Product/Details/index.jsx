@@ -14,7 +14,7 @@ const Details = ({ item }) => {
     <Container>
       <div className="detail_content">
         <div className="video">
-          <img src={primarySrc} />
+          <img src={primarySrc} alt="item primary image" />
         </div>
         <div className="img_txt">
           <p className="txt">{item.content}</p>

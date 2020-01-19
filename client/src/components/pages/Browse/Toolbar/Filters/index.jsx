@@ -1,16 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import Price from './Price';
+import PriceFilter from './PriceFilter';
 
 const Container = styled.div`
 `;
 
-const Filters = () => {
-  return (
-    <Container>
-      <Price />
-    </Container>
-  )
-};
+const Filters = () => (
+  <Container>
+    <PriceFilter />
+  </Container>
+);
 
 export default Filters;

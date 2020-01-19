@@ -6,12 +6,10 @@ const Container = styled.div`
 
 `;
 
-const Intro = ({ item }) => {
-  return (
-    <Container>
-      <div dangerouslySetInnerHTML={{__html: item.intro}} />
-    </Container>
-  )
-};
+const Intro = ({ item }) => (
+  <Container>
+    <div dangerouslySetInnerHTML={{ __html: item.intro }} />
+  </Container>
+);
 
 export default Intro;

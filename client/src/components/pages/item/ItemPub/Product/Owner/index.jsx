@@ -57,7 +57,7 @@ const TextCont = styled.div`
     display: block;
     margin: 0;
   }
-`
+`;
 
 const Name = styled.p`
   font-size: 1rem;
@@ -91,8 +91,11 @@ const Owner = ({ item }) => {
           </ImgWrapper>
         </ImgContainer>
         <TextCont>
-        <Name>@{id}</Name>
-        <Intro>{item && item.owner && item.owner.shop.intro}</Intro>
+          <Name>
+@
+            {id}
+          </Name>
+          <Intro>{item && item.owner && item.owner.shop.intro}</Intro>
         </TextCont>
       </Wrapper>
     </Container>

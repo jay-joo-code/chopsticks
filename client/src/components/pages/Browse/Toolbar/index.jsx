@@ -12,13 +12,11 @@ const Container = styled.div`
   padding: 0 1rem;
 `;
 
-const Toolbar = () => {
-  return (
-    <Container>
-      <Filters />
-      <SortBy />
-    </Container>
-  )
-};
+const Toolbar = () => (
+  <Container>
+    <Filters />
+    <SortBy />
+  </Container>
+);
 
 export default Toolbar;

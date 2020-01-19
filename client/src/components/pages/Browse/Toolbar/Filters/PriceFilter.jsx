@@ -16,12 +16,12 @@ const ContentContainer = styled.div`
   width: 250px;
   max-width: 100%;
   padding-top: 2rem;
-`
+`;
 
 const BtnCont = styled.div`
   display: flex;
   justify-content: flex-end;
-`
+`;
 
 const Price = () => {
   const location = useLocation();
@@ -34,12 +34,12 @@ const Price = () => {
   const handleSearch = () => {
     const query = {
       minPrice: value[0],
-      maxPrice: value[1]
-    }
+      maxPrice: value[1],
+    };
     updateQuery(query, location, history);
     setActive(false);
-    setBtnText(`${value[0]}만원 ~ ${value[1]}만원`)
-  }
+    setBtnText(`${value[0]}만원 ~ ${value[1]}만원`);
+  };
   const [active, setActive] = useState(false);
   const [btnText, setBtnText] = useState('가격');
   const content = (
@@ -52,22 +52,22 @@ const Price = () => {
         aria-labelledby="range-slider"
       />
       <BtnCont>
-      <RedButton green onClick={handleSearch}>적용</RedButton>
+        <RedButton green onClick={handleSearch}>적용</RedButton>
       </BtnCont>
     </ContentContainer>
-    )
-  
+  );
+
   return (
     <Container>
-      <PopupButton 
+      <PopupButton
         btnText={btnText}
-        label='가격 (만원)'
+        label="가격 (만원)"
         popupContent={content}
         active={active}
         setActive={setActive}
       />
     </Container>
-  )
+  );
 };
 
 export default Price;

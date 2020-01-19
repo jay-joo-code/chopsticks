@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import NewCard from './NewCard';
 import TitledPage from 'src/components/layout/TitledPage';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import log from 'src/util/log';
 import Itemcard from 'src/components/common/cards/ItemCard';
+import NewCard from './NewCard';
 
 const Container = styled.div`
   display: flex;
