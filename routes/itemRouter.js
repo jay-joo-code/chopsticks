@@ -6,15 +6,17 @@ const sort = require('./../util/sort');
 // GET ITEMS: FILTERED SORTED PAGINATED
 itemRouter.get('/', async (req, res) => {
   try {
-    // CREATE FILTER: CATEGORY, OWNER
-    const { category, owner } = req.query;
+    // CREATE FILTER: CATEGORY, OWNER, SEARCH
+    const { category, owner, search } = req.query;
     const categoryFilter = category ? { category, } : {};
     const ownerFilter = owner ? { owner, } : {};
-    
+    const searchFilter = search ? { name: { '$regex': search }} : {};
+    console.log(search);
     const filter = {
       display: true,
       ...categoryFilter,
-      ...ownerFilter
+      ...ownerFilter,
+      ...searchFilter
     }
     
     // QUERY WITH FILTER DEFINED ABOVE

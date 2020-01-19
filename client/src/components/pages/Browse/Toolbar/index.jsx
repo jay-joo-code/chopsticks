@@ -8,7 +8,8 @@ const Container = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2rem;
+  margin: 2rem 0;
+  padding: 0 1rem;
 `;
 
 const Toolbar = () => {

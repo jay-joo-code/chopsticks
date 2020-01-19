@@ -3,8 +3,10 @@ import { useLocation, Link } from 'react-router-dom';
 
 const NavElt = (props) => {
   const { name, path } = props;
-  const location = useLocation();
-  const condClass = location.pathname + location.search === path ? 'on' : '';
+  const { pathname, search } = useLocation();
+  const url = pathname + search;
+  const isOn = url.includes(path);
+  const condClass = isOn ? 'on' : '';
 
   return (
     <li className={condClass}>

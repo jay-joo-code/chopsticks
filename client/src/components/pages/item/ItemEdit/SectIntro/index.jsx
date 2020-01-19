@@ -30,6 +30,7 @@ const SectIntro = ({ formik, _id }) => {
     <SectCont>
     <Container>
       <Label>상품 스토리</Label>
+      <p>* Heading 1 만 스타일이 적용 됩니다</p>
         <Editor
         apiKey="hx67eymwnlq0vtdniv7pbbnfdip57g2vcuqtwmqyugszg4f1"
         initialValue={formik.values.intro}

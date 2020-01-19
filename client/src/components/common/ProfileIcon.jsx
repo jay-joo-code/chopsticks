@@ -16,7 +16,7 @@ const ProfileIcon = (props) => {
   const { user } = props;
   const reduxUser = useSelector((state) => state.user);
   const userId = reduxUser ? reduxUser._id : null;
-  const path = userId === user._id ? '/profile' : `/user/${user._id}`;
+  const path = userId === user._id ? '/profile/details' : `/user/${user._id}`;
 
   return (
     <Container to={path}>

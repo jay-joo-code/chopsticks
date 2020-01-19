@@ -49,7 +49,7 @@ const AppRouter = () => (
           <Route path="/purchase/method" component={Home} />
 
           <Route path="/profile/orders" component={Orders} />
-          <Route path="/profile" component={Profile} />
+          <Route path="/profile/details" component={Profile} />
 
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />

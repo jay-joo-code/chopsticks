@@ -8,7 +8,7 @@ const adminNav = [{
 
 const profileNav = [{
     name: '프로필',
-    path: '/profile',
+    path: '/profile/details',
   },
   {
     name: '주문내역',
