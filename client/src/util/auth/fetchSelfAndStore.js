@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import store from 'src/redux/store';
 import axios from 'axios';
 import log from 'src/util/log';

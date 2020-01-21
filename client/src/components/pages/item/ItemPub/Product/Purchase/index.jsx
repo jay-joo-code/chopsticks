@@ -4,6 +4,7 @@ import Select from 'src/components/common/form/Select';
 import RedButton from 'src/components/common/buttons/RedButton';
 import theme from 'src/theme';
 import Compressed from './Compressed';
+import log from 'src/util/log';
 
 const DyncCont = styled.div`
   position: fixed;
@@ -75,25 +76,42 @@ const Purchase = ({ item }) => {
   const handleClick = () => {
     setExpanded(!expanded);
   };
+  
+  const [optOne, setOptOne] = useState(0);
+  const [optTwo, setOptTwo] = useState(0);
+  const handleOptOneChange = (e) => setOptOne(e.target.value);
+  const handleOptTwoChange = (e) => setOptTwo(e.target.value);
+  const handleAddToCart = () => {
+    
+    const values = {
+      item: item._id,
+      optionsIndex: [Number(optOne), Number(optTwo)],
+      quantity: 1
+    }
+    log(values);
+  }
 
   if (!item) return <div />;
-  if (!isDesktop && !expanded) {
-    return <Compressed item={item} expanded={expanded} setExpanded={setExpanded} />;
-  }
+  if (!isDesktop && !expanded) return (
+    <Compressed 
+      item={item} 
+      expanded={expanded} 
+      setExpanded={setExpanded} 
+    />
+  )
 
   return (
     <DyncCont>
-
       <Container>
         <Name>{item.name}</Name>
-        <Price>
-          {price}
-원
-        </Price>
+        <Price>{price}원</Price>
         <SelectCont>
-          <Select>
+          <Select
+            value={optOne}
+            onChange={handleOptOneChange}
+          >
             {item.options && item.options.map((opt, i) => (
-              <option key={opt.name}>
+              <option key={opt.name} value={i}>
                 {opt.name}
                 {' '}
 (+
@@ -104,9 +122,12 @@ const Purchase = ({ item }) => {
           </Select>
         </SelectCont>
         <SelectCont>
-          <Select>
+          <Select
+            value={optTwo}
+            onChange={handleOptTwoChange}
+          >
             {item.optionsTwo && item.optionsTwo.map((opt, i) => (
-              <option key={opt.name}>
+              <option key={opt.name} value={i}>
                 {opt.name}
                 {' '}
 (+
@@ -118,11 +139,10 @@ const Purchase = ({ item }) => {
         </SelectCont>
         <BuySect>
           <BuyButton white rounded>즉시 구매</BuyButton>
-          <BuyButton green rounded>장바구니에 담기</BuyButton>
+          <BuyButton onClick={handleAddToCart} green rounded>장바구니에 담기</BuyButton>
           {!isDesktop && <CloseBtn onClick={handleClick}>축소</CloseBtn>}
         </BuySect>
       </Container>
-
     </DyncCont>
   );
 };

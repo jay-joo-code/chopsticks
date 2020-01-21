@@ -1,16 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const Container = styled.div`
-
-`;
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import CartUI from './CartUI';
+import CartEmpty from './CartEmpty';
 
 const Cart = () => {
-  return (
-    <Container>
-        Cart
-    </Container>
-  )
+  const history = useHistory();
+  const user = useSelector((state) => state.user);
+  if (!user) history.push('/login');
+  else if (!user.cart.length) return <CartEmpty />;
+  return <CartUI />;
 };
 
 export default Cart;

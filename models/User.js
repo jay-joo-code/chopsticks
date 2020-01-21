@@ -37,9 +37,17 @@ var userSchema = Schema({
       item: {
         type: Schema.Types.ObjectId,
         ref: 'Item',
+        required: true
       },
-      optionsIndex: {
-        type: [Number]
+      optionsIndex: { // array of indexes that represent selected options
+        type: [Number],
+        default: [],
+        required: true
+      },
+      quantity: {
+        type: Number,
+        default: 1,
+        required: true
       }
     }],
     default: []
