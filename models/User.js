@@ -32,11 +32,18 @@ var userSchema = Schema({
   provider: { //email, google, facebook
     type: String
   },
-  cart: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Item',
+  cart: {
+    type: [{
+      item: {
+        type: Schema.Types.ObjectId,
+        ref: 'Item',
+      },
+      optionsIndex: {
+        type: [Number]
+      }
+    }],
     default: []
-  }],
+  },
   createdAt: {
     type: Date,
     default: new Date()

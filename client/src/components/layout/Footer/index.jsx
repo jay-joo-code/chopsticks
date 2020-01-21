@@ -27,15 +27,15 @@ const Footer = () => {
           </a>
           <ul className="f_nav">
             <li>
-              <Title class="tlt">카테고리</Title>
+              <Title className="tlt">카테고리</Title>
               <ul className="in_list">
                 {categories.map((cat) => (
-                  <li><Link to={`/browse?category=${cat.name}`}>{cat.korean}</Link></li>
+                  <li key={cat.name}><Link to={`/browse?category=${cat.name}`}>{cat.korean}</Link></li>
                 ))}
               </ul>
             </li>
             <li>
-              <Title class="tlt">HELP / INFO</Title>
+              <Title className="tlt">HELP / INFO</Title>
               <ul className="in_list">
                 <li><Link to="/terms/use">Terms & conditions</Link></li>
                 <li><Link to="/terms/privacy">Privacy & cookie policy</Link></li>
@@ -43,7 +43,7 @@ const Footer = () => {
             </li>
           </ul>
           <div className="sns">
-            <Title class="tlt">Follow Us</Title>
+            <Title className="tlt">Follow Us</Title>
             <ul>
               <li><a href="" target="_blank"><Facebook /></a></li>
               <li><a href="https://www.instagram.com/chopsticks.market/" target="_blank"><Instagram /></a></li>
