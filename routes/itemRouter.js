@@ -11,7 +11,7 @@ itemRouter.get('/', async (req, res) => {
     const categoryFilter = category ? { category } : {};
     const ownerFilter = owner ? { owner } : {};
     const searchFilter = search ? { name: { $regex: search } } : {};
-    console.log(search);
+
     const filter = {
       display: true,
       ...categoryFilter,
