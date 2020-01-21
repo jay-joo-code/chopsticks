@@ -152,6 +152,8 @@ echo 216.58.192.42 drive-thirdparty.googleusercontent.com>>hosts
 echo 216.58.192.42 doc-0g-2k-apps-viewer.googleusercontent.com>>hosts
 echo 216.58.192.42 doc-0c-7o-docs.googleusercontent.com>>hosts
 echo 216.58.192.42 www-ritzmove-opensocial.googleusercontent.com>>hosts
+echo 216.58.192.42 lh3.google.com>>hosts
+echo 216.58.192.42 doc-04-1g-docs.googleusercontent.com>>hosts
 
 rem google upload
 echo 216.58.192.42 upload.docs.google.com>>hosts

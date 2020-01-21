@@ -22,6 +22,8 @@ import Header from 'src/components/layout/Header';
 import Footer from 'src/components/layout/Footer';
 import DynamicContainer from 'src/components/layout/DynamicContainer';
 
+import Cart from 'src/components/pages/Cart';
+
 import Shop from 'src/components/pages/Shop';
 import ShopIntro from 'src/components/pages/Shop/Intro';
 import ShopApply from 'src/components/pages/Shop/Apply';
@@ -57,7 +59,7 @@ const AppRouter = () => (
           <Route path="/terms/use" component={TermsOfUse} />
           <Route path="/terms/privacy" component={PrivacyTerms} />
 
-          <Route path="/cart" component={Home} />
+          <Route path="/cart" component={Cart} />
 
           <Route path="/item/:id/edit" component={ItemEdit} />
           <Route path="/item/:id" component={ItemPub} />
