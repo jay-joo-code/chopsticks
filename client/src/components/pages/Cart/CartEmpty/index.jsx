@@ -22,7 +22,7 @@ const CartEmpty = () => {
     <Container>
       <Title>카트에 담긴 상품이 없습니다</Title>
       <BodyCont>
-        <Body>새로운 디자인 상품을 찾아보아요</Body>
+        <Body>새로운 디자인 상품을 찾아보세요</Body>
       </BodyCont>
       <Link to='/'>
         <RedButton green>홈으로 돌아가기</RedButton>

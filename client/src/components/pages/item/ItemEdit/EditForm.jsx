@@ -4,7 +4,6 @@ import RedButton from 'src/components/common/buttons/RedButton';
 import log from 'src/util/log';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import SectOne from './SectOne';
@@ -12,7 +11,6 @@ import SectOpt from './SectOpt';
 import SectThree from './SectThree';
 import SectImg from './SectImg';
 import SectIntro from './SectIntro';
-
 
 const Container = styled.div`
   padding: 3rem 0;

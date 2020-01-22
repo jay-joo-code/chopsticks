@@ -5,6 +5,10 @@ import RedButton from 'src/components/common/buttons/RedButton';
 import theme from 'src/theme';
 import Compressed from './Compressed';
 import log from 'src/util/log';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 
 const DyncCont = styled.div`
   position: fixed;
@@ -69,6 +73,12 @@ const CloseBtn = styled.div`
   cursor: pointer;
 `;
 
+const CartAlert = styled.p`
+  font-size: .8rem;
+  opacity: .8;
+  text-align: center;
+`
+
 const Purchase = ({ item }) => {
   const [expanded, setExpanded] = useState(false);
   const price = item && item.price && item.price.toLocaleString('en');
@@ -79,16 +89,26 @@ const Purchase = ({ item }) => {
   
   const [optOne, setOptOne] = useState(0);
   const [optTwo, setOptTwo] = useState(0);
+  const [itemToCart, setItemToCart] = useState(false);
   const handleOptOneChange = (e) => setOptOne(e.target.value);
   const handleOptTwoChange = (e) => setOptTwo(e.target.value);
+  const user = useSelector((state) => state.user);
+  const history = useHistory();
   const handleAddToCart = () => {
-    
-    const values = {
+    if (!user) history.push('/login');
+    const cartObj = {
       item: item._id,
       optionsIndex: [Number(optOne), Number(optTwo)],
       quantity: 1
     }
-    log(values);
+    axios.post(`/api/user/${user._id}/cart/add`, { cartObj })
+      .then((res) =>{
+        setItemToCart(true);
+        fetchSelfAndStore(user._id);
+      })
+      .catch((e) => {
+        log(`ERROR add item to cart`)
+      })
   }
 
   if (!item) return <div />;
@@ -105,22 +125,25 @@ const Purchase = ({ item }) => {
       <Container>
         <Name>{item.name}</Name>
         <Price>{price}원</Price>
-        <SelectCont>
-          <Select
-            value={optOne}
-            onChange={handleOptOneChange}
-          >
-            {item.options && item.options.map((opt, i) => (
-              <option key={opt.name} value={i}>
-                {opt.name}
-                {' '}
-(+
-                {opt.priceChange}
-)
-              </option>
-            ))}
-          </Select>
-        </SelectCont>
+        {item.options.length > 0 && (
+          <SelectCont>
+            <Select
+              value={optOne}
+              onChange={handleOptOneChange}
+            >
+              {item.options && item.options.map((opt, i) => (
+                <option key={opt.name} value={i}>
+                  {opt.name}
+                  {' '}
+  (+
+                  {opt.priceChange}
+  )
+                </option>
+              ))}
+            </Select>
+          </SelectCont>
+        )}
+        {item.optionsTwo.length > 0 && (
         <SelectCont>
           <Select
             value={optTwo}
@@ -137,9 +160,11 @@ const Purchase = ({ item }) => {
             ))}
           </Select>
         </SelectCont>
+        )}
         <BuySect>
           <BuyButton white rounded>즉시 구매</BuyButton>
           <BuyButton onClick={handleAddToCart} green rounded>장바구니에 담기</BuyButton>
+          {itemToCart && <CartAlert>카트에 담겼습니다</CartAlert>}
           {!isDesktop && <CloseBtn onClick={handleClick}>축소</CloseBtn>}
         </BuySect>
       </Container>
