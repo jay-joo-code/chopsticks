@@ -2,6 +2,18 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import RedButton from 'src/components/common/buttons/RedButton';
 import log from 'src/util/log';
+import theme from 'src/theme';
+import getTotalPrice from 'src/util/calculation/getTotalPrice';
+import cartTransaction from 'src/util/bootpay/cartTransaction';
+import { useSelector } from 'react-redux';
+
+const CondDisplay = styled.div`
+  display: none;
+  
+  @media (min-width: ${theme.desktopContentWidth}px) {
+    display: block;
+  }
+`
 
 const Container = styled.div`
   display: flex;
@@ -13,7 +25,7 @@ const Container = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
   min-width: 300px;
   position: sticky;
-  top: 0;
+  top: 20px;
 `;
 
 const Title = styled.h3`
@@ -50,15 +62,21 @@ const Checkout = ({ cart }) => {
   useEffect(() => {
     let priceAccum = 0, deliveryAccum = 0;
     cart.map((cartObj) => {
-      priceAccum += cartObj.item.price * cartObj.quantity;
+      priceAccum += getTotalPrice(cartObj);
       deliveryAccum += cartObj.item.deliveryCost;
     })
     setTotalPrice(priceAccum);
     setTotalDelivery(deliveryAccum);
   }, [cart])
   
+  const user = useSelector((state) => state.user);
+  const initTransaction = () => {
+    if (!user || !user._id) return;
+    cartTransaction(user._id);
+  }
   
   return (
+    <CondDisplay>
     <Container>
       <Title>주문정보</Title>
       <PriceCont>
@@ -77,8 +95,9 @@ const Checkout = ({ cart }) => {
           <p>{`${(totalPrice + totalDelivery).toLocaleString()}원`}</p>
         </Row>
       </TotalCont>
-      <RedButton green>결제하기</RedButton>
+      <RedButton onClick={initTransaction} green>결제하기</RedButton>
     </Container>
+    </CondDisplay>
   )
 };
 

@@ -29,8 +29,12 @@ userRouter.get('/', async (req, res) => {
 // GET User BY ID
 userRouter.get('/:id', async (req, res) => {
   try {
-    const result = await User.findById(req.params.id).populate('cart.item');
-    console.log('get user by id', result);
+    const result = await User.findById(req.params.id).populate({
+      path: 'cart.item',
+      populate: {
+        path: 'owner'
+      }
+    });
     res.send(result);
   } catch (e) {
     res.status(500).send(e);
@@ -62,7 +66,9 @@ userRouter.post('/:id/cart/add', async (req, res) => {
     const { cartObj } = req.body;
     let user = await User.findById(req.params.id);
     const existingObj = user.cart.filter((obj) => {
-      return obj.item.toString() === cartObj.item
+      const isSameItem = obj.item.toString() === cartObj.item;
+      const hasSameOptions = obj.optionsIndex === cartObj.optionsIndex;
+      return isSameItem && hasSameOptions;
     });
     
     const hasCartObj = existingObj.length > 0;
@@ -88,19 +94,40 @@ userRouter.post('/:id/cart/add', async (req, res) => {
   }
 })
 
-/* CLIENT CREATE REQUEST */
-userRouter.post('/client', async (req, res) => {
+// UPDATE OR DELETE EXISTING CARTOBJ
+userRouter.put('/:id/cart/:operation/cartobj', async (req, res) => {
   try {
-    const generatedData = {
-      isReviewed: false,
-    };
-    const mergedData = { ...req.body, ...generatedData };
-    const doc = new User(mergedData);
-    const result = await doc.save();
+    const { cartObj, removeIds } = req.body;
+    const { id, operation } = req.params;
+    const user = await User.findById(id);
+    
+    let newCart;
+    if (operation === 'update') {
+      newCart = user.cart.map((existingCartObj) => {
+        const isTargetCartObj = existingCartObj._id.toString() === cartObj._id.toString();
+        if (isTargetCartObj) {
+          return cartObj;
+        } 
+        return existingCartObj;
+      })
+    } else if (operation === 'delete') {
+      newCart = user.cart.filter((existingCartObj) => {
+        const isTargetCartObj = existingCartObj._id.toString() === cartObj._id.toString();
+        return !isTargetCartObj;
+      })
+    } else if (operation === 'delete-many') {
+      newCart = user.cart.filter((existingCartObj) => {
+        const isTargetCartObj = removeIds.includes(existingCartObj._id.toString());
+        return !isTargetCartObj;
+      })
+    }
+    
+    user.cart = newCart;
+    const result = await user.save();
     res.send(result);
   } catch (e) {
     res.status(500).send(e);
   }
-});
+})
 
 module.exports = userRouter;

@@ -2,25 +2,33 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Toolbar from './Toolbar';
 import List from './List';
+import theme from 'src/theme';
 
 const Container = styled.div`
   width: 100%;
-  padding: 0 2rem;
+  @media (min-width: ${theme.desktopContentWidth}px) {
+    padding: 0 2rem; 
+  }
 `;
 
 const CartList = ({ cart }) => {
-  const [selectedIndex, setSelectedIndex] = useState(Array(cart.length).fill(1));
+  const [selectedItemId, setSelectedItemId] = useState([]);
+  useEffect(() => {
+    const selectedInit = cart.map((cartObj) => cartObj._id)
+    setSelectedItemId(selectedInit);
+  }, [])
   
   return (
     <Container>
       <Toolbar  
-        selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
+        cart={cart}
+        selectedItemId={selectedItemId}
+        setSelectedItemId={setSelectedItemId}
       />
       <List 
         cart={cart} 
-        selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
+        selectedItemId={selectedItemId}
+        setSelectedItemId={setSelectedItemId}
       />
     </Container>
   )

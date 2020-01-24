@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import AuthPanel from 'src/components/layout/AuthPanel';
-import FormikInput from 'src/components/common/form/FormikInput';
 import Button from 'src/components/common/buttons/RedButton';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -11,6 +10,7 @@ import log from 'src/util/log';
 import { useDispatch } from 'react-redux';
 import ErrMsg from 'src/components/common/form/ErrMsg';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
+import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 
 const Container = styled.div`
 
@@ -59,10 +59,7 @@ const Login = () => {
     onSubmit: (values) => {
       axios.post('/api/user/login', values)
         .then((res) => {
-          dispatch({
-            type: 'USER_SET',
-            payload: res.data,
-          });
+          fetchSelfAndStore(res.data._id);
           history.push('/');
         })
         .catch((e) => {

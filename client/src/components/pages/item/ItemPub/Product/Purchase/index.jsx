@@ -133,11 +133,7 @@ const Purchase = ({ item }) => {
             >
               {item.options && item.options.map((opt, i) => (
                 <option key={opt.name} value={i}>
-                  {opt.name}
-                  {' '}
-  (+
-                  {opt.priceChange}
-  )
+                  {`${opt.name} (+${opt.priceChange || 0})`}
                 </option>
               ))}
             </Select>
@@ -151,11 +147,7 @@ const Purchase = ({ item }) => {
           >
             {item.optionsTwo && item.optionsTwo.map((opt, i) => (
               <option key={opt.name} value={i}>
-                {opt.name}
-                {' '}
-(+
-                {opt.priceChange}
-)
+                {`${opt.name} (+${opt.priceChange || 0})`}
               </option>
             ))}
           </Select>

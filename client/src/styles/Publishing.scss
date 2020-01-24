@@ -1730,12 +1730,6 @@ textarea::placeholder {
     border-bottom: 0px;
 }
 
-.cart_product:after {
-    display: block;
-    clear: both;
-    content: "";
-}
-
 .cart_product .img {
     width: 80px;
     height: 80px;
@@ -1786,12 +1780,6 @@ textarea::placeholder {
 
 .cart_product .ps {
     font-size: 10px;
-}
-
-.cart_product .ps:after {
-    display: block;
-    clear: both;
-    content: "";
 }
 
 .cart_product .ps li {

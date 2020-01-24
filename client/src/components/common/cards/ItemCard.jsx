@@ -70,7 +70,7 @@ const Name = styled.p`
 const Owner = styled.p`
   letter-spacing: 0.36px;
   text-align: center;
-  color: #de6362;
+  color: ${props => props.theme.red};
   margin: 1rem 0;
   font-weight: 600;
 `;
