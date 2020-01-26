@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import CartList from './CartList';
 import Checkout from './Checkout';
+import theme from 'src/theme';
 
 const Container = styled.div`
   display: flex;

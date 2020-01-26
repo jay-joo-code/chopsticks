@@ -6,12 +6,21 @@ import useIsMobile from 'src/util/hooks/useIsMobile';
 import Logo from './Logo';
 import Nav from './Nav';
 import ExtendedNav from './ExtendedNav';
+import theme from 'src/theme';
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
+
+const DyncCont = styled.div`
+  display: none;
+  
+  @media (min-width: ${theme.desktopContentWidth}px) {
+    display: block;
+  }
+`
 
 const LeftCont = styled.div`
   display: flex;
@@ -26,7 +35,9 @@ const Header = () => {
         <Container>
           <LeftCont>
             <Logo />
-            {!isMobile && <SearchBox />}
+            <DyncCont>
+              <SearchBox />
+            </DyncCont>
           </LeftCont>
           <Nav />
         </Container>

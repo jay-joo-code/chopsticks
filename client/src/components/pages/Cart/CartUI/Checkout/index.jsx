@@ -6,12 +6,21 @@ import theme from 'src/theme';
 import getTotalPrice from 'src/util/calculation/getTotalPrice';
 import cartTransaction from 'src/util/bootpay/cartTransaction';
 import { useSelector } from 'react-redux';
+import FixedBottomPanel from 'src/components/layout/FixedBottomPanel';
 
-const CondDisplay = styled.div`
+const DesktopDisplay = styled.div`
   display: none;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     display: block;
+  }
+`
+
+const MobileDisplay = styled.div`
+  display: block;
+  
+  @media (min-width: ${theme.desktopContentWidth}px) {
+    display: none;
   }
 `
 
@@ -75,29 +84,40 @@ const Checkout = ({ cart }) => {
     cartTransaction(user._id);
   }
   
+  const mobileBuyBtn = <RedButton green rounded onClick={initTransaction}>결제하기</RedButton>
+  
   return (
-    <CondDisplay>
-    <Container>
-      <Title>주문정보</Title>
-      <PriceCont>
-        <Row>
-          <Type>상품금액</Type>
-          <p>{`${totalPrice.toLocaleString()}원`}</p>
-        </Row>
-        <Row>
-          <Type>배송비</Type>
-          <p>{`${totalDelivery.toLocaleString()}원`}</p>
-        </Row>
-      </PriceCont>
-      <TotalCont>
-        <Row>
-          <Type>총 결제 금액</Type>
-          <p>{`${(totalPrice + totalDelivery).toLocaleString()}원`}</p>
-        </Row>
-      </TotalCont>
-      <RedButton onClick={initTransaction} green>결제하기</RedButton>
-    </Container>
-    </CondDisplay>
+    <div>
+    <MobileDisplay>
+      <FixedBottomPanel
+        text={`카트 상품 (${cart.length})`}
+        supportText={`${totalPrice.toLocaleString()}원`}
+        button={mobileBuyBtn}
+      />
+    </MobileDisplay>
+    <DesktopDisplay>
+      <Container>
+        <Title>주문정보</Title>
+        <PriceCont>
+          <Row>
+            <Type>상품금액</Type>
+            <p>{`${totalPrice.toLocaleString()}원`}</p>
+          </Row>
+          <Row>
+            <Type>배송비</Type>
+            <p>{`${totalDelivery.toLocaleString()}원`}</p>
+          </Row>
+        </PriceCont>
+        <TotalCont>
+          <Row>
+            <Type>총 결제 금액</Type>
+            <p>{`${(totalPrice + totalDelivery).toLocaleString()}원`}</p>
+          </Row>
+        </TotalCont>
+        <RedButton onClick={initTransaction} green>결제하기</RedButton>
+      </Container>
+    </DesktopDisplay>
+    </div>
   )
 };
 
