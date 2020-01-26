@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import RedButton from 'src/components/common/buttons/RedButton';
 import log from 'src/util/log';
@@ -11,6 +11,7 @@ import SectOpt from './SectOpt';
 import SectThree from './SectThree';
 import SectImg from './SectImg';
 import SectIntro from './SectIntro';
+import ErrMsg from 'src/components/common/form/ErrMsg';
 
 const Container = styled.div`
   padding: 3rem 0;
@@ -108,6 +109,11 @@ const ItemEdit = ({ item }) => {
         });
     },
   });
+  
+  const [hasErrors, setHasErrors] = useState(false);
+  useEffect(() => {
+    setHasErrors(Object.keys(formik.errors).length > 0)
+  }, [formik.errors])
 
   if (item === {} || !formik) return <div />;
 
@@ -122,6 +128,9 @@ const ItemEdit = ({ item }) => {
         <SectThree formik={formik} />
         <BtnCont>
           <RedButton type="submit">저장</RedButton>
+          {hasErrors && (
+            <ErrMsg>에러가 있습니다</ErrMsg> 
+          )}
         </BtnCont>
       </Form>
     </Container>

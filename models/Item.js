@@ -13,6 +13,11 @@ var itemSchema = Schema({
     default: false,
     required: true
   },
+  display: {
+    type: Boolean,
+    default: false,
+    required: true
+  },
   images: {
     type: [String],
     default: []
