@@ -130,4 +130,80 @@ userRouter.put('/:id/cart/:operation/cartobj', async (req, res) => {
   }
 })
 
+userRouter.put('/:id/delivery-info/add', async (req, res) => {
+  try {
+    const { option } = req.body;
+    const { id } = req.params;
+    const user = await User.findById(id);
+    
+    if (user.deliveryInfo) {
+      const newOptions = [...user.deliveryInfo.options];
+      newOptions.push(option);
+      user.deliveryInfo.options = newOptions;
+    } else {
+      const initData = {
+        defaultIndex: 0,
+        options: [option]
+      }
+      user.deliveryInfo = initData;
+    }
+    
+    const result = await user.save();
+    res.send(result);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+})
+
+userRouter.put('/:id/delivery-info/delete/:index', async (req, res) => {
+  try {
+    const { id, index } = req.params;
+    const user = await User.findById(id);
+    
+    if (user.deliveryInfo) {
+      const { options, defaultIndex } = user.deliveryInfo;
+      const newOptions = [...options];
+      newOptions.splice(index, 1);
+      if (defaultIndex === Number(index)) {
+        user.deliveryInfo.defaultIndex = 0;
+      }
+      user.deliveryInfo.options = newOptions;
+    } else {
+      const initData = {
+        defaultIndex: 0,
+        options: []
+      }
+      user.deliveryInfo = initData;
+    }
+    
+    const result = await user.save();
+    res.send(result);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+})
+
+userRouter.put('/:id/delivery-info/default-index/update', async (req, res) => {
+  try {
+    const { defaultIndex } = req.body;
+    const { id } = req.params;
+    const user = await User.findById(id);
+    
+    if (user.deliveryInfo) {
+      user.deliveryInfo.defaultIndex = defaultIndex;
+    } else {
+      const initData = {
+        defaultIndex: defaultIndex,
+        options: []
+      }
+      user.deliveryInfo = initData;
+    }
+    
+    const result = await user.save();
+    res.send(result);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+})
+
 module.exports = userRouter;

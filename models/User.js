@@ -69,6 +69,21 @@ var userSchema = Schema({
       default: false
     },
     createdAt: Date
+  },
+  deliveryInfo: {
+    defaultIndex: {
+      type: Number,
+      default: 0
+    },
+    options: {
+      type: [{
+        recipient: String,
+        address: String,
+        addressDetail: String,
+        mobile: String
+      }],
+      default: []
+    }
   }
 });
 /*
