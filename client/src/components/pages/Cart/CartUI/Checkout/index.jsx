@@ -22,7 +22,7 @@ const InnerCont = styled.div`
   width: 100%;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
-    width: 50%;
+    width: 30%;
   }
 `
 

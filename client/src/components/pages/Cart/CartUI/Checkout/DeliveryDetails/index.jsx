@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import RedButton from 'src/components/common/buttons/RedButton';
 import DeliveryDetailCard from 'src/components/common/cards/DeliveryDetailCard';
 import DeliveryPopup from './DeliveryPopup';
-import log from 'src/util/log';
 
 const Container = styled.div`
   width: 100%;
@@ -35,7 +34,6 @@ const DeliveryDetails = () => {
   }
   const handleClosePopup = () => {
     setDisplayPopup(0)
-    log('handle close')
   }
   const user = useSelector((state) => state.user);
   const hasDeliveryDetails = user.deliveryInfo && user.deliveryInfo.options.length;

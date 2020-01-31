@@ -7,6 +7,7 @@ import getTotalPrice from 'src/util/calculation/getTotalPrice';
 import cartTransaction from 'src/util/bootpay/cartTransaction';
 import { useSelector } from 'react-redux';
 import FixedBottomPanel from 'src/components/layout/FixedBottomPanel';
+import { useHistory } from 'react-router-dom';
 
 const DesktopDisplay = styled.div`
   display: none;
@@ -79,10 +80,17 @@ const OrderDetails = ({ cart, expanded, setExpanded }) => {
   }, [cart])
   
   const user = useSelector((state) => state.user);
-  const hasDeliveryDetails = user.deliveryInfo && user.deliveryInfo.options.length
+  const hasDeliveryDetails = user.deliveryInfo && user.deliveryInfo.options.length;
+  const history = useHistory();
   const initTransaction = () => {
     if (!user || !user._id) return;
-    cartTransaction(user._id);
+    cartTransaction(user._id)
+      .then((res) => {
+        history.push('/profile/orders')
+      })
+      .catch((e) => {
+        log(`ERROR cartTransaction at OrderDetails`, e);
+      })
   }
   const attemptTransaction = () => {
     if (!expanded) setExpanded(true);
