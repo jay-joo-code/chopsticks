@@ -1,24 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import ListElt from './ListElt';
-import log from 'src/util/log';
-
-const Container = styled.div`
-
-`;
+import React from 'react';
+import ItemListElt from 'src/components/common/cards/ItemListElt';
 
 const List = ({ cart, selectedItemId, setSelectedItemId }) => {
   return (
-    <Container>
+    <div>
       {cart.map((cartObj) => (
-        <ListElt 
+        <ItemListElt 
           key={cartObj._id} 
           cartObj={cartObj} 
           selectedItemId={selectedItemId}
           setSelectedItemId={setSelectedItemId}
         />
       ))}
-    </Container>
+    </div>
   )
 };
 

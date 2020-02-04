@@ -96,6 +96,7 @@ const Purchase = ({ item }) => {
   const history = useHistory();
   const handleAddToCart = () => {
     if (!user) history.push('/login');
+    else {
     const cartObj = {
       item: item._id,
       optionsIndex: [Number(optOne), Number(optTwo)],
@@ -109,6 +110,7 @@ const Purchase = ({ item }) => {
       .catch((e) => {
         log(`ERROR add item to cart`)
       })
+    }
   }
 
   if (!item) return <div />;

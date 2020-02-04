@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import log from 'src/util/log';
-import axios from 'axios';
+import api from 'src/util/api';
 import { useSelector } from 'react-redux';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import theme from 'src/theme';
@@ -98,7 +98,7 @@ const Muted = styled.p`
   margin: 0 .1rem .4rem 0;
 `
 
-const ItemInfo = ({ cartObj }) => {
+const ItemInfo = ({ cartObj, order, setV, v }) => {
   const user = useSelector((state) => state.user);
   const { item, quantity, optionsIndex } = cartObj;
   const ownerId = item.owner.email.split('@')[0];
@@ -108,7 +108,7 @@ const ItemInfo = ({ cartObj }) => {
   
   const handleQtyChange = (e) => {
     const data = Object.assign({}, cartObj, { quantity: e.target.value });
-    axios.put(`/api/user/${user._id}/cart/update/cartobj`, { cartObj: data })
+    api.put(`/user/${user._id}/cart/update/cartobj`, { cartObj: data })
       .then((res) => {
         fetchSelfAndStore(user._id);
       })
@@ -117,14 +117,24 @@ const ItemInfo = ({ cartObj }) => {
       })
   }
   
-  const handleRemove = () => {
-    axios.put(`/api/user/${user._id}/cart/delete/cartobj`, { cartObj })
-      .then((res) => {
-        fetchSelfAndStore(user._id);
-      })
-      .catch((e) => {
-        log(`ERROR delete cartobj from cart`, e)
-      })
+  const handleRemove = async () => {
+    if (order) {
+      try {
+        const rid = order.bootpay.receipt_id;
+        await api.post(`/order/${rid}/cancel`)
+      } catch (e) {
+        
+      }
+      setV(v + 1)
+    } else {
+      api.put(`/user/${user._id}/cart/delete/cartobj`, { cartObj })
+        .then((res) => {
+          fetchSelfAndStore(user._id);
+        })
+        .catch((e) => {
+          log(`ERROR delete cartobj from cart`, e)
+        })
+    }
   }
   
   return (
@@ -138,6 +148,7 @@ const ItemInfo = ({ cartObj }) => {
         </div>
         <div>
           <Cross onClick={handleRemove}>X</Cross>
+          <p>{order && order.state}</p>
         </div>
       </Top>
       <Bottom>

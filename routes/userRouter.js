@@ -32,8 +32,8 @@ userRouter.get('/:id', async (req, res) => {
     const result = await User.findById(req.params.id).populate({
       path: 'cart.item',
       populate: {
-        path: 'owner'
-      }
+        path: 'owner',
+      },
     });
     res.send(result);
   } catch (e) {
@@ -64,13 +64,13 @@ userRouter.post('/create', async (req, res) => {
 userRouter.post('/:id/cart/add', async (req, res) => {
   try {
     const { cartObj } = req.body;
-    let user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id);
     const existingObj = user.cart.filter((obj) => {
       const isSameItem = obj.item.toString() === cartObj.item;
       const hasSameOptions = obj.optionsIndex === cartObj.optionsIndex;
       return isSameItem && hasSameOptions;
     });
-    
+
     const hasCartObj = existingObj.length > 0;
     let newCart;
     if (!hasCartObj) {
@@ -84,7 +84,7 @@ userRouter.post('/:id/cart/add', async (req, res) => {
           obj.quantity += 1;
         }
         return obj;
-      })
+      });
     }
     user.cart = newCart;
     await user.save();
@@ -92,7 +92,7 @@ userRouter.post('/:id/cart/add', async (req, res) => {
   } catch (e) {
     res.status(500).send(e);
   }
-})
+});
 
 // UPDATE OR DELETE EXISTING CARTOBJ
 userRouter.put('/:id/cart/:operation/cartobj', async (req, res) => {
@@ -100,42 +100,42 @@ userRouter.put('/:id/cart/:operation/cartobj', async (req, res) => {
     const { cartObj, removeIds } = req.body;
     const { id, operation } = req.params;
     const user = await User.findById(id);
-    
+
     let newCart;
     if (operation === 'update') {
       newCart = user.cart.map((existingCartObj) => {
         const isTargetCartObj = existingCartObj._id.toString() === cartObj._id.toString();
         if (isTargetCartObj) {
           return cartObj;
-        } 
+        }
         return existingCartObj;
-      })
+      });
     } else if (operation === 'delete') {
       newCart = user.cart.filter((existingCartObj) => {
         const isTargetCartObj = existingCartObj._id.toString() === cartObj._id.toString();
         return !isTargetCartObj;
-      })
+      });
     } else if (operation === 'delete-many') {
       newCart = user.cart.filter((existingCartObj) => {
         const isTargetCartObj = removeIds.includes(existingCartObj._id.toString());
         return !isTargetCartObj;
-      })
+      });
     }
-    
+
     user.cart = newCart;
     const result = await user.save();
     res.send(result);
   } catch (e) {
     res.status(500).send(e);
   }
-})
+});
 
 userRouter.put('/:id/delivery-info/add', async (req, res) => {
   try {
     const { option } = req.body;
     const { id } = req.params;
     const user = await User.findById(id);
-    
+
     if (user.deliveryInfo) {
       const newOptions = [...user.deliveryInfo.options];
       newOptions.push(option);
@@ -143,23 +143,23 @@ userRouter.put('/:id/delivery-info/add', async (req, res) => {
     } else {
       const initData = {
         defaultIndex: 0,
-        options: [option]
-      }
+        options: [option],
+      };
       user.deliveryInfo = initData;
     }
-    
+
     const result = await user.save();
     res.send(result);
   } catch (e) {
     res.status(500).send(e);
   }
-})
+});
 
 userRouter.put('/:id/delivery-info/delete/:index', async (req, res) => {
   try {
     const { id, index } = req.params;
     const user = await User.findById(id);
-    
+
     if (user.deliveryInfo) {
       const { options, defaultIndex } = user.deliveryInfo;
       const newOptions = [...options];
@@ -171,39 +171,39 @@ userRouter.put('/:id/delivery-info/delete/:index', async (req, res) => {
     } else {
       const initData = {
         defaultIndex: 0,
-        options: []
-      }
+        options: [],
+      };
       user.deliveryInfo = initData;
     }
-    
+
     const result = await user.save();
     res.send(result);
   } catch (e) {
     res.status(500).send(e);
   }
-})
+});
 
 userRouter.put('/:id/delivery-info/default-index/update', async (req, res) => {
   try {
     const { defaultIndex } = req.body;
     const { id } = req.params;
     const user = await User.findById(id);
-    
+
     if (user.deliveryInfo) {
       user.deliveryInfo.defaultIndex = defaultIndex;
     } else {
       const initData = {
-        defaultIndex: defaultIndex,
-        options: []
-      }
+        defaultIndex,
+        options: [],
+      };
       user.deliveryInfo = initData;
     }
-    
+
     const result = await user.save();
     res.send(result);
   } catch (e) {
     res.status(500).send(e);
   }
-})
+});
 
 module.exports = userRouter;

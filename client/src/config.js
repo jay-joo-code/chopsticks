@@ -1,3 +1,4 @@
 export default {
-  BASE: '/api'
+  BASE: '/api',
+  BASE_PROD: ''
 }

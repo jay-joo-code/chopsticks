@@ -54,7 +54,7 @@ const InfoCont = styled.div`
   flex-grow: 2;
 `
 
-const ListElt = ({ cartObj, selectedItemId, setSelectedItemId }) => {
+const ListElt = ({ cartObj, selectedItemId, setSelectedItemId, order, setV, v }) => {
   const { item } = cartObj;
   const isSelected = selectedItemId.includes(cartObj._id);
   const handleChange = (e) => {
@@ -86,7 +86,12 @@ const ListElt = ({ cartObj, selectedItemId, setSelectedItemId }) => {
         </Link>
       </ImgCont>
       <InfoCont>
-        <ItemInfo cartObj={cartObj} />
+        <ItemInfo 
+          cartObj={cartObj} 
+          order={order}
+          setV={setV}
+          v={v}
+        />
       </InfoCont>
       
     </Container>
