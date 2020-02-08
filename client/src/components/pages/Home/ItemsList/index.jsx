@@ -30,6 +30,12 @@ const Title = styled.h3`
   margin: 0;
 `;
 
+const Btn = styled(RedButton)`
+  padding: .5rem 1rem;
+  border-radius: 15px;
+  font-size: .8rem;
+`
+
 const ItemsListComp = () => {
   const [items, setItems] = useState([]);
   useEffect(() => {
@@ -46,14 +52,14 @@ const ItemsListComp = () => {
       <TitleSect>
         <Title>인기 상품</Title>
         <Link to="/browse">
-          <RedButton green>더보기</RedButton>
+          <Btn green>더보기</Btn>
         </Link>
       </TitleSect>
       <ItemsList items={items} />
       <TitleSect>
         <Title>최신 상품</Title>
         <Link to="/browse">
-          <RedButton green>더보기</RedButton>
+          <Btn green>더보기</Btn>
         </Link>
       </TitleSect>
       <ItemsList items={items} />

@@ -11,6 +11,7 @@ const Cart = () => {
   useEffect(() => {
     if (user) fetchSelfAndStore(user._id);
   }, [])
+  
   if (!user) {
     history.push('/login');
     return <div />;

@@ -48,24 +48,6 @@ transactionRouter.post('/:rid/process', async (req, res) => {
 
     res.send({ orders });
   } catch (e) {
-    console.log(e);
-    res.status(500).send(e);
-  }
-});
-
-transactionRouter.post('/:rid/cancel', async (req, res) => {
-  try {
-
-  } catch (e) {
-    res.status(500).send(e);
-  }
-});
-
-transactionRouter.post('/listener', async (req, res) => {
-  try {
-    console.log('BOOTPAY LISTENER', req.body);
-    res.send('OK');
-  } catch (e) {
     res.status(500).send(e);
   }
 });

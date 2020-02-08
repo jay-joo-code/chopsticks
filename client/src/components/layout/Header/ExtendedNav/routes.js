@@ -17,22 +17,22 @@ const profileNav = [{
 ];
 
 const categoryNav = [{
-    name: '홈&리빙',
+    name: '홈데코',
     path: '/browse?category=living'
   }, {
-    name: '주방',
+    name: '주방 / 욕실',
     path: '/browse?category=kitchen'
   },
   {
-    name: '패션&악세서리',
-    path: '/browse?category=fashion'
+    name: '가구',
+    path: '/browse?category=furniture'
   },
   {
     name: '테크',
     path: '/browse?category=tech'
   },
   {
-    name: 'Limited',
+    name: 'One & Only',
     path: '/browse?category=limited'
   },
 ]

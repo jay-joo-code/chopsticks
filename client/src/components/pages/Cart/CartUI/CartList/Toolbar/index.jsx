@@ -68,7 +68,7 @@ const Toolbar = ({ cart, selectedItemId, setSelectedItemId }) => {
         <input 
           type='checkbox' 
           onChange={handleChange}
-          checked={allSelected}
+          checked={allSelected || false}
         />
         <Label>전체선택</Label>
       </CheckboxCont>

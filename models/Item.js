@@ -45,7 +45,7 @@ var itemSchema = Schema({
     type: String,
     default: ''
   },
-  style: {
+  style: { // crafted || original
     type: String
   },
   content: String,

@@ -2,22 +2,22 @@ import React, { useState, useEffect } from 'react';
 
 const useCategories = () => {
   const tempCat = [{
-    korean: '홈&리빙',
+    korean: '홈데코',
     name: 'living'
   }, {
-    korean: '주방',
+    korean: '주방 / 욕실',
     name: 'kitchen'
   },
   {
-    korean: '패션&악세서리',
-    name: 'fashion'
+    korean: '가구',
+    name: 'furniture'
   },
   {
     korean: '테크',
     name: 'tech'
   },
   {
-    korean: 'Limited',
+    korean: 'One & Only',
     name: 'limited'
   }];
   

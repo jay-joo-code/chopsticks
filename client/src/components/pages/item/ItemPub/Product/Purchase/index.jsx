@@ -29,7 +29,7 @@ const DyncCont = styled.div`
 `;
 const Container = styled.div`
   position: sticky;
-  top: 0;
+  top: 2rem;
   padding: 2rem 0;
   display: flex;
   flex-direction: column;

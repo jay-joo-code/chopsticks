@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import ItemInfo from './ItemInfo';
 import theme from 'src/theme';
 import { Link } from 'react-router-dom';
+import log from 'src/util/log';
+import api from 'src/util/api';
+import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   width: 100%;
@@ -68,6 +72,20 @@ const ListElt = ({ cartObj, selectedItemId, setSelectedItemId, order, setV, v })
       setSelectedItemId(newSelected);
     }
   }
+  
+  // remove self from cart if item has been delete from db
+  const user = useSelector((state) => state.user);
+  useEffect(() => {
+    if (!item) {
+      api.put(`/user/${user._id}/cart/delete/cartobj`, { cartObj })
+        .then((res) => {
+          fetchSelfAndStore(user._id);
+        })
+        .catch((e) => {
+          log(`ERROR delete cartobj from cart`, e)
+        }) 
+    }
+  }, [])
   
   return (
     <Container>

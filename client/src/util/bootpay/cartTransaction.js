@@ -72,13 +72,6 @@ const cartTransaction = (userId) => {
           reject(e);
         })
         .cancel((data) => {
-          if (process.env.NODE_ENV === 'development') {
-            axios.post(`/api/transaction/${data.receipt_id}/process`, { transaction })
-              .then((res) => {
-                resolve(res);
-              })
-              .catch((e) => reject(e))
-          }
           reject(data);
         })
         .confirm((data) => {
