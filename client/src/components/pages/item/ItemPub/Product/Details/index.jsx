@@ -9,12 +9,11 @@ const Container = styled.div`
 `;
 
 const Details = ({ item }) => {
-  const primarySrc = item.images[item.primaryImageIndex];
   return (
     <Container>
       <div className="detail_content">
         <div className="video">
-          <img src={primarySrc} alt="item primary image" />
+          <img src={item.image} alt="item primary image" />
         </div>
         <div className="img_txt">
           <p className="txt">{item.content}</p>

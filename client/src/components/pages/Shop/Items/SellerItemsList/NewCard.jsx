@@ -13,7 +13,7 @@ const Container = styled.div`
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     width: ${theme.CARD_WIDTH}px;
-    height: auto;
+    height: ${theme.CARD_HEIGHT}px;
   }
 `;
 

@@ -43,8 +43,7 @@ const ItemEdit = ({ item }) => {
       name: item.name,
       category: item.category,
       style: item.style,
-      images: item.images,
-      primaryImageIndex: item.primaryImageIndex,
+      image: item.image,
       content: item.content,
       intro: item.intro,
       price: item.price,
@@ -61,10 +60,8 @@ const ItemEdit = ({ item }) => {
     validationSchema: Yup.object({
       name: Yup.string()
         .required('필수'),
-      images: Yup.array()
-        .of(Yup.string())
-        .max(8, '최대 8장')
-        .required('최소 1장 필수'),
+      image: Yup.string()
+        .required('필수'),
       category: Yup.string()
         .required('필수'),
       style: Yup.string()
@@ -98,7 +95,7 @@ const ItemEdit = ({ item }) => {
     onSubmit: (values, { setFieldError }) => {
       const mergedValues = {
         ...values,
-        display: true,
+        created: true
       };
       axios.put(`/api/item/${item._id}/update`, mergedValues)
         .then(() => {
@@ -129,7 +126,7 @@ const ItemEdit = ({ item }) => {
         <BtnCont>
           <RedButton type="submit">저장</RedButton>
           {hasErrors && (
-            <ErrMsg>에러가 있습니다</ErrMsg> 
+            <ErrMsg>입력하신 항목에 오류가 있습니다</ErrMsg> 
           )}
         </BtnCont>
       </Form>

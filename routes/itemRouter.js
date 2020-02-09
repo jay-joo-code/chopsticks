@@ -79,9 +79,8 @@ itemRouter.get('/:id', async (req, res) => {
 // CREATE Item
 itemRouter.post('/create', async (req, res) => {
   try {
-    // CHECK OWNER ID EXISTS
-    await User.findById(req.body.owner);
-    // SAVE DOCUMENT
+    const owner = await User.findById(req.body.owner);
+    if (!owner) throw new Error('owner is not a valid user');
     const doc = new Item(req.body);
     const result = await doc.save();
     res.send(result);

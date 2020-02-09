@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import uploadFile from 'src/firebase/uploadFile';
 import log from 'src/util/log';
-import axios from 'axios';
 import Loading from 'src/components/common/Loading';
 
 const Container = styled.div`

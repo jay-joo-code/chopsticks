@@ -13,19 +13,12 @@ var itemSchema = Schema({
     default: false,
     required: true
   },
-  display: {
+  created: {
     type: Boolean,
     default: false,
     required: true
   },
-  images: {
-    type: [String],
-    default: []
-  },
-  primaryImageIndex: {
-    type: Number,
-    default: 0
-  },
+  image: String,
   name: {
     type: String,
   },

@@ -3,7 +3,7 @@ import FileUpload from 'src/components/common/form/FileUpload';
 import ErrMsg from 'src/components/common/form/ErrMsg';
 import Label from 'src/components/common/form/Label';
 import styled from 'styled-components';
-import ImageList from './ImageList';
+import ImgDisplay from './ImgDisplay';
 import SectCont from '../SectCont';
 
 const LabelCont = styled.div`
@@ -14,9 +14,7 @@ const SectImg = ({ formik, _id }) => {
   const [src, setSrc] = useState();
   useEffect(() => {
     if (src && src.length > 0) {
-      const newImages = [...formik.values.images];
-      newImages.push(src);
-      formik.setFieldValue('images', newImages);
+      formik.setFieldValue('image', src);
     }
   }, [src]);
   return (
@@ -28,10 +26,10 @@ const SectImg = ({ formik, _id }) => {
         path={`/items/${_id}`}
         setSrc={setSrc}
       />
-      {formik.errors.images && formik.touched.images
-        ? <ErrMsg>{formik.errors.images}</ErrMsg>
+      {formik.errors.image && formik.touched.image
+        ? <ErrMsg>{formik.errors.image}</ErrMsg>
         : <div />}
-      <ImageList formik={formik} />
+      <ImgDisplay src={formik.values.image} />
     </SectCont>
   );
 };

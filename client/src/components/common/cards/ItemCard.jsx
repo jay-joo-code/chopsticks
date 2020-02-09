@@ -4,17 +4,14 @@ import theme from 'src/theme';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Star } from 'src/assets/svgs/star.svg';
 
-const CARD_WIDTH = 280;
-const CARD_HEIGHT = 350;
-
 const Cont = styled.div`
   width: 100%;
   overflow: hidden;
   position: relative;
-  margin: 1rem .5rem;
+  margin: 1rem .5rem 0 .5rem;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
-    width: ${CARD_WIDTH}px;
+    width: ${theme.CARD_WIDTH}px;
   }
 `;
 
@@ -62,7 +59,7 @@ const ImgSect = styled.div`
 const Img = styled.img`
   object-fit: cover;
   width: 100%;
-  height: ${CARD_HEIGHT}px;
+  height: ${theme.CARD_HEIGHT}px;
 `;
 
 const TextSect = styled.div`
@@ -96,7 +93,7 @@ const Price = styled.p`
 
 const ItemCard = ({ onClickPath, item, ...rest }) => {
   const path = onClickPath || `/item/${item._id}`;
-  const src = item.images[item.primaryImageIndex];
+  const src = item.image;
   const ownerId = item.owner.email.split('@')[0];
   const styledPrice = item.price.toLocaleString();
   
