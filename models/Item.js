@@ -73,7 +73,7 @@ var itemSchema = Schema({
   },
   createdAt: {
     type: Date,
-    default: new Date()
+    default: new Date
   }
 });
 

@@ -26,7 +26,7 @@ var transactionSchema = Schema({
   },
   createdAt: {
     type: Date,
-    default: new Date()
+    default: new Date
   }
 });
 

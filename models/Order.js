@@ -32,7 +32,7 @@ var orderSchema = Schema({
   },
   createdAt: {
     type: Date,
-    default: new Date()
+    default: new Date
   }
 });
 

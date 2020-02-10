@@ -2,6 +2,7 @@ const transactionRouter = require('express').Router();
 const BootpayRest = require('bootpay-rest-client');
 const config = require('./../config');
 const Transaction = require('./../models/Transaction');
+const TransactionError = require('./../models/TransactionError');
 const Order = require('./../models/Order');
 const User = require('./../models/User');
 
@@ -48,6 +49,7 @@ transactionRouter.post('/:rid/process', async (req, res) => {
 
     res.send({ orders });
   } catch (e) {
+    await new TransactionError({ error: e.toString()}).save();
     res.status(500).send(e);
   }
 });

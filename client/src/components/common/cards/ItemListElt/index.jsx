@@ -100,7 +100,7 @@ const ListElt = ({ cartObj, selectedItemId, setSelectedItemId, order, setV, v })
       </CondDisplay>
       <ImgCont>
         <Link to={`/item/${item._id}`}>
-          <Img src={item.images[item.primaryImageIndex]} />
+          <Img src={item.image} />
         </Link>
       </ImgCont>
       <InfoCont>

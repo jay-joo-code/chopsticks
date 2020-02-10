@@ -27,13 +27,11 @@ orderRouter.post('/:rid/cancel', async (req, res) => {
     const order = orders.filter((order) => {
       return order.bootpay.receipt_id === rid
     })[0]
-    console.log(order);
     
     // bootpay
     const token = await BootpayRest.getAccessToken()
   	if (token.status !== 200) throw new Error('access token failed')
 		const cancelRes = await BootpayRest.cancel(rid, order.cartObj.price, order.deliv.recipient, '결제 취소')
-		console.log(cancelRes);
 		if (cancelRes.status !== 200) {
 		  const newState = cancelRes.code === -13002 ? 'canceled' : 'error';
 		  order.state = newState;
@@ -49,7 +47,6 @@ orderRouter.post('/:rid/cancel', async (req, res) => {
 		res.send(dbRes);
   } catch (e) {
     res.status(500).send(e);
-    console.log(e);
   }
 })
 

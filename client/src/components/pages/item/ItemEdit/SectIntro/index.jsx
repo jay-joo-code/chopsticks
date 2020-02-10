@@ -49,6 +49,7 @@ const SectIntro = ({ formik, _id }) => {
             alignleft aligncenter alignright | \
             bullist numlist | image',
             images_upload_handler: handleEditorImageUpload,
+            file_picker_types: 'image',
           }}
           onChange={handleEditorChange}
         />
