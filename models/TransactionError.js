@@ -3,7 +3,10 @@ var Schema = mongoose.Schema;
 var mongoosePaginate = require('mongoose-paginate-v2');
 
 var transactionErrorSchema = Schema({
-  error: String,
+  error: {
+    message: String,
+    data: Object
+  },
   createdAt: {
     type: Date,
     default: new Date

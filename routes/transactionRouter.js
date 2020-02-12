@@ -49,7 +49,12 @@ transactionRouter.post('/:rid/process', async (req, res) => {
 
     res.send({ orders });
   } catch (e) {
-    await new TransactionError({ error: e.toString()}).save();
+    const errData = {
+      message: e.toString(),
+      data: e.errors
+    }
+    console.log(errData);
+    await new TransactionError(errData).save();
     res.status(500).send(e);
   }
 });
