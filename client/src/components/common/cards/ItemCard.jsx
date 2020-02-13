@@ -21,7 +21,7 @@ const StyleArea = styled.div`
   left: .5rem;
   border-radius: 30px;
   font-size: 1rem;
-  color: ${props => props.theme.red};
+  color: ${(props) => props.theme.red};
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -76,13 +76,13 @@ const Row = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-`
+`;
 
 const Name = styled.p`
 `;
 
 const Owner = styled.p`
-  color: ${props => props.theme.red};
+  color: ${(props) => props.theme.red};
   opacity: .9;
   font-size: .8rem;
 `;
@@ -96,7 +96,7 @@ const ItemCard = ({ onClickPath, item, ...rest }) => {
   const src = item.image;
   const ownerId = item.owner.email.split('@')[0];
   const styledPrice = item.price.toLocaleString();
-  
+
   return (
     <Cont>
       <Link to={path}>

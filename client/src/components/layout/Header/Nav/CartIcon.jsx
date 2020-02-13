@@ -15,13 +15,13 @@ const CartIcon = () => {
   const user = useSelector((state) => state.user);
   const cartItemsCount = user && user.cart ? user.cart.length : 0;
   return (
-  <Container>
-  <Link to='/cart'>
-    <Notification text={cartItemsCount} />
-    <CartSVG />
-  </Link>
-  </Container>
-  )
+    <Container>
+      <Link to="/cart">
+        <Notification text={cartItemsCount} />
+        <CartSVG />
+      </Link>
+    </Container>
+  );
 };
 
 export default CartIcon;

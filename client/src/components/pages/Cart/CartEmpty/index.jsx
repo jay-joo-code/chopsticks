@@ -15,20 +15,18 @@ const Container = styled.div`
 
 const BodyCont = styled.div`
   margin: 1rem 0 2rem 0;
-`
+`;
 
-const CartEmpty = () => {
-  return (
-    <Container>
-      <Title>카트에 담긴 상품이 없습니다</Title>
-      <BodyCont>
-        <Body>새로운 디자인 상품을 찾아보세요</Body>
-      </BodyCont>
-      <Link to='/'>
-        <RedButton green>홈으로 돌아가기</RedButton>
-      </Link>
-    </Container>
-  )
-};
+const CartEmpty = () => (
+  <Container>
+    <Title>카트에 담긴 상품이 없습니다</Title>
+    <BodyCont>
+      <Body>새로운 디자인 상품을 찾아보세요</Body>
+    </BodyCont>
+    <Link to="/">
+      <RedButton green>홈으로 돌아가기</RedButton>
+    </Link>
+  </Container>
+);
 
 export default CartEmpty;

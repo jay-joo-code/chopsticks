@@ -8,7 +8,7 @@ const Container = styled.div`
 
 const Intro = ({ item }) => (
   <Container>
-    <div className='intro'>
+    <div className="intro">
       <div dangerouslySetInnerHTML={{ __html: item.intro }} />
     </div>
   </Container>

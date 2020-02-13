@@ -68,6 +68,12 @@ var userSchema = Schema({
       type: Boolean,
       default: false
     },
+    image: String,
+    policies: {
+      delivery: String,
+      refund: String,
+      etc: String
+    },
     createdAt: Date
   },
   deliveryInfo: {

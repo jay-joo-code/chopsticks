@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Title from 'src/components/common/fonts/Title';
-import DeliveryDetails from './DeliveryDetails';
 import theme from 'src/theme';
+import DeliveryDetails from './DeliveryDetails';
 
 const Container = styled.div`
   width: 100%;
@@ -16,7 +16,7 @@ const Inner = styled.div`
   border-radius: 10px;
   padding: 1rem;
   display: flex;
-`
+`;
 
 const InnerCont = styled.div`
   width: 100%;
@@ -24,19 +24,17 @@ const InnerCont = styled.div`
   @media (min-width: ${theme.desktopContentWidth}px) {
     width: 30%;
   }
-`
+`;
 
-const Checkout = () => {
-  return (
-    <Container>
-      <Title>결제</Title>
-      <Inner>
-        <InnerCont>
-          <DeliveryDetails />
-        </InnerCont>
-      </Inner>
-    </Container>
-  )
-};
+const Checkout = () => (
+  <Container>
+    <Title>결제</Title>
+    <Inner>
+      <InnerCont>
+        <DeliveryDetails />
+      </InnerCont>
+    </Inner>
+  </Container>
+);
 
 export default Checkout;

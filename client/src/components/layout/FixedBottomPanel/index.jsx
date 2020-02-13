@@ -35,10 +35,9 @@ const Price = styled.div`
   color: ${(props) => props.theme.green};
 `;
 
-const FixedBottomPanel = ({ text, supportText, button}) => {
-  return (
-    <Container>
-        <DyncCont>
+const FixedBottomPanel = ({ text, supportText, button }) => (
+  <Container>
+    <DyncCont>
       <Container>
         <SideCont>
           <Name>{text}</Name>
@@ -49,8 +48,7 @@ const FixedBottomPanel = ({ text, supportText, button}) => {
         </SideCont>
       </Container>
     </DyncCont>
-    </Container>
-  )
-};
+  </Container>
+);
 
 export default FixedBottomPanel;

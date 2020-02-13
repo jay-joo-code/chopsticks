@@ -13,7 +13,7 @@ const CondDisplay = styled.div`
   @media (min-width: ${theme.desktopContentWidth}px) {
     display: block;
   }
-`
+`;
 
 const Container = styled.div`
   display: flex;
@@ -25,30 +25,30 @@ const Container = styled.div`
 const CheckboxCont = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 const Label = styled.label`
   margin-left: .5rem;
   opacity: .8;
-`
+`;
 
 const Toolbar = ({ cart, selectedItemId, setSelectedItemId }) => {
   const [allSelected, setAllSelected] = useState();
   const handleChange = (e) => {
-    if(e.target.checked) {
-      // SET ALL CARTOBJ AS CHECKED 
-      setSelectedItemId(cart.map((cartObj) => cartObj._id))
+    if (e.target.checked) {
+      // SET ALL CARTOBJ AS CHECKED
+      setSelectedItemId(cart.map((cartObj) => cartObj._id));
     } else {
       // SET ALL AS UNCHECKED
-      setSelectedItemId([])
+      setSelectedItemId([]);
     }
-  }
+  };
   useEffect(() => {
     let accum = true;
     cart.map((cartObj) => accum = accum && selectedItemId.includes(cartObj._id));
     setAllSelected(accum);
-  }, [cart, selectedItemId])
-  
+  }, [cart, selectedItemId]);
+
   const user = useSelector((state) => state.user);
   const removeSelected = () => {
     const url = `/api/user/${user._id}/cart/delete-many/cartobj`;
@@ -57,25 +57,25 @@ const Toolbar = ({ cart, selectedItemId, setSelectedItemId }) => {
         fetchSelfAndStore(user._id);
       })
       .catch((e) => {
-        log(`ERROR remove selected from cart`)
-      })
-  }
-  
+        log('ERROR remove selected from cart');
+      });
+  };
+
   return (
     <CondDisplay>
-    <Container>
-      <CheckboxCont>
-        <input 
-          type='checkbox' 
-          onChange={handleChange}
-          checked={allSelected || false}
-        />
-        <Label>전체선택</Label>
-      </CheckboxCont>
-      <RedButton onClick={removeSelected}>선택삭제</RedButton>
-    </Container>
+      <Container>
+        <CheckboxCont>
+          <input
+            type="checkbox"
+            onChange={handleChange}
+            checked={allSelected || false}
+          />
+          <Label>전체선택</Label>
+        </CheckboxCont>
+        <RedButton onClick={removeSelected}>선택삭제</RedButton>
+      </Container>
     </CondDisplay>
-  )
+  );
 };
 
 export default Toolbar;

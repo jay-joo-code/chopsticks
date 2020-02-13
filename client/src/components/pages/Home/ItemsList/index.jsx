@@ -34,7 +34,7 @@ const Btn = styled(RedButton)`
   padding: .5rem 1rem;
   border-radius: 15px;
   font-size: .8rem;
-`
+`;
 
 const ItemsListComp = () => {
   const [items, setItems] = useState([]);

@@ -60,6 +60,16 @@ userRouter.post('/create', async (req, res) => {
   }
 });
 
+// update User by _id
+userRouter.put('/:id/update', async (req, res) => {
+  try {
+    const result = await User.findByIdAndUpdate(req.params.id, req.body);
+    res.send(result);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
 // ADD ITEM TO CART
 userRouter.post('/:id/cart/add', async (req, res) => {
   try {
@@ -80,10 +90,11 @@ userRouter.post('/:id/cart/add', async (req, res) => {
     } else {
       // INCREMENT QUANTITY OF EXISTING CARTOBJ
       newCart = user.cart.map((obj) => {
+        const newObj = { ...obj };
         if (obj.item.toString() === cartObj.item) {
-          obj.quantity += 1;
+          newObj.quantity += 1;
         }
-        return obj;
+        return newObj;
       });
     }
     user.cart = newCart;

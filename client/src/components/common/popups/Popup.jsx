@@ -44,12 +44,12 @@ const Content = styled.div`
 
 `;
 
-const Popup = ({ display, handleClosePopup, children}) => {
+const Popup = ({ display, handleClosePopup, children }) => {
   const handleContainerClick = (e) => {
     e.stopPropagation();
-  }
+  };
   return (
-    <Overlay 
+    <Overlay
       display={display}
       onClick={handleClosePopup}
     >
@@ -62,7 +62,7 @@ const Popup = ({ display, handleClosePopup, children}) => {
         </Content>
       </Container>
     </Overlay>
-  )
+  );
 };
 
 export default Popup;

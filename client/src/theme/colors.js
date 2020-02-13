@@ -6,4 +6,6 @@ export default {
   blue: '#0275d8',
   orange: '#f0ad4e',
   red: '#de6362',
+  primary: '#66c088',
+  danger: '#de6362' // red
 };

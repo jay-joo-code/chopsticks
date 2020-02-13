@@ -10,8 +10,7 @@ const Content = styled.div`
   
 `;
 
-const TabbedPage = (props) => {
-  const { pages } = props;
+const TabbedPage = ({ pages }) => {
   const [index, setIndex] = useState(0);
 
   return (

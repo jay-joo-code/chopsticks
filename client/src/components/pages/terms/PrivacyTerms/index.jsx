@@ -12,7 +12,7 @@ const Container = styled.div`
 const Content = styled.p`
   opacity: .9;
   margin-top: 2rem;
-`
+`;
 
 const PrivacyTerms = () => (
   <Container>

@@ -9,9 +9,9 @@ const Compressed = ({ item, expanded, setExpanded }) => {
   const handleClick = () => {
     setExpanded(!expanded);
   };
-  
-  const buyBtn = <RedButton green rounded onClick={handleClick}>구매 정보</RedButton>
-  
+
+  const buyBtn = <RedButton green rounded onClick={handleClick}>구매 정보</RedButton>;
+
   return (
     <FixedBottomPanel
       text={item.name}

@@ -51,8 +51,8 @@ transactionRouter.post('/:rid/process', async (req, res) => {
   } catch (e) {
     const errData = {
       message: e.toString(),
-      data: e.errors
-    }
+      data: e.errors,
+    };
     console.log(errData);
     await new TransactionError(errData).save();
     res.status(500).send(e);

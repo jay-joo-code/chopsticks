@@ -4,6 +4,9 @@ const adminNav = [{
 },{
   name: '주문',
   path: '/shop/admin/orders'
+},{
+  name: '설정',
+  path: '/shop/admin/settings'
 }]
 
 const profileNav = [{

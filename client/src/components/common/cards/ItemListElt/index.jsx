@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import ItemInfo from './ItemInfo';
 import theme from 'src/theme';
 import { Link } from 'react-router-dom';
 import log from 'src/util/log';
 import api from 'src/util/api';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import { useSelector } from 'react-redux';
+import ItemInfo from './ItemInfo';
 
 const Container = styled.div`
   width: 100%;
@@ -30,12 +30,12 @@ const CondDisplay = styled.div`
     display: flex;
     align-items: center;
   }
-`
+`;
 
 const CheckboxCont = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 const ImgCont = styled.div`
   position: relative;
@@ -43,7 +43,7 @@ const ImgCont = styled.div`
   width: 150px;
   overflow: hidden;
   margin: 0 1rem;
-`
+`;
 
 const Img = styled.img`
   position: absolute;
@@ -52,27 +52,28 @@ const Img = styled.img`
   height: 100%;
   width: auto;
   transform: translate(-50%,-50%);
-`
+`;
 
 const InfoCont = styled.div`
   flex-grow: 2;
-`
+`;
 
-const ListElt = ({ cartObj, selectedItemId, setSelectedItemId, order, setV, v }) => {
+const ListElt = ({
+  cartObj, selectedItemId, setSelectedItemId, order, setV, v,
+}) => {
   const { item } = cartObj;
   const isSelected = selectedItemId.includes(cartObj._id);
   const handleChange = (e) => {
     if (e.target.checked) {
       const newSelected = [cartObj._id, ...selectedItemId];
       setSelectedItemId(newSelected);
-    }
-    else {
-      let newSelected = [...selectedItemId];
+    } else {
+      const newSelected = [...selectedItemId];
       newSelected.splice(newSelected.indexOf(cartObj._id), 1);
       setSelectedItemId(newSelected);
     }
-  }
-  
+  };
+
   // remove self from cart if item has been delete from db
   const user = useSelector((state) => state.user);
   useEffect(() => {
@@ -82,17 +83,17 @@ const ListElt = ({ cartObj, selectedItemId, setSelectedItemId, order, setV, v })
           fetchSelfAndStore(user._id);
         })
         .catch((e) => {
-          log(`ERROR delete cartobj from cart`, e)
-        }) 
+          log('ERROR delete cartobj from cart', e);
+        });
     }
-  }, [])
-  
+  }, []);
+
   return (
     <Container>
       <CondDisplay>
         <CheckboxCont>
-          <input 
-            type='checkbox' 
+          <input
+            type="checkbox"
             onChange={handleChange}
             checked={isSelected}
           />
@@ -104,16 +105,16 @@ const ListElt = ({ cartObj, selectedItemId, setSelectedItemId, order, setV, v })
         </Link>
       </ImgCont>
       <InfoCont>
-        <ItemInfo 
-          cartObj={cartObj} 
+        <ItemInfo
+          cartObj={cartObj}
           order={order}
           setV={setV}
           v={v}
         />
       </InfoCont>
-      
+
     </Container>
-  )
+  );
 };
 
 export default ListElt;

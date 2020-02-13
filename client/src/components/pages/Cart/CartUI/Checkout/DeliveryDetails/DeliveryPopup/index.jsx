@@ -8,8 +8,8 @@ import DeliveryForm from './DeliveryForm';
 const DeliveryPopup = ({ display, user, handleClosePopup }) => {
   const initData = {
     defaultIndex: 0,
-    options: []
-  }
+    options: [],
+  };
   const deliveryInfo = user.deliveryInfo || initData;
   const { options, defaultIndex } = deliveryInfo;
   const [view, setView] = useState('list');
@@ -19,19 +19,21 @@ const DeliveryPopup = ({ display, user, handleClosePopup }) => {
       handleClosePopup={handleClosePopup}
     >
       {view === 'list' && (
-      <List 
+      <List
         options={options}
         defaultIndex={defaultIndex}
         setView={setView}
         user={user}
-      />)}
+      />
+      )}
       {view === 'form' && (
-      <DeliveryForm 
+      <DeliveryForm
         setView={setView}
         user={user}
-      />)}
+      />
+      )}
     </Popup>
-  )
+  );
 };
 
 export default DeliveryPopup;

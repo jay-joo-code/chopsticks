@@ -17,29 +17,27 @@ const Orders = () => {
       // fetch orders
       api.get(`/order/buyer/${user._id}`)
         .then((res) => setOrders(res.data))
-        .catch((e) => {})
+        .catch((e) => {});
     }
-  }, [v])
-  
-  const [selectedItemId, setSelectedItemId] = useState([])
-  
+  }, [v]);
+
+  const [selectedItemId, setSelectedItemId] = useState([]);
+
   return (
-  <Container>
-    {orders.map((order) => (
-      <ItemListElt
-        key={order._id}
-        cartObj={order.cartObj}
-        selectedItemId={selectedItemId}
-        setSelectedItemId={setSelectedItemId}
-        order={order}
-        setV={setV}
-        v={v}
-      />
-    ))
-      
-    }
-  </Container>
-  )
+    <Container>
+      {orders.map((order) => (
+        <ItemListElt
+          key={order._id}
+          cartObj={order.cartObj}
+          selectedItemId={selectedItemId}
+          setSelectedItemId={setSelectedItemId}
+          order={order}
+          setV={setV}
+          v={v}
+        />
+      ))}
+    </Container>
+  );
 };
 
 export default Orders;

@@ -27,7 +27,7 @@ const Items = () => {
   return (
     <TitledPage title="상품">
       <Container>
-        <SellerItemsList 
+        <SellerItemsList
           items={items}
           v={v}
           setV={setV}

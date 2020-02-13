@@ -6,12 +6,12 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import ErrMsg from 'src/components/common/form/ErrMsg';
 import SectOne from './SectOne';
 import SectOpt from './SectOpt';
 import SectThree from './SectThree';
 import SectImg from './SectImg';
 import SectIntro from './SectIntro';
-import ErrMsg from 'src/components/common/form/ErrMsg';
 
 const Container = styled.div`
   padding: 3rem 0;
@@ -95,7 +95,7 @@ const ItemEdit = ({ item }) => {
     onSubmit: (values, { setFieldError }) => {
       const mergedValues = {
         ...values,
-        created: true
+        created: true,
       };
       axios.put(`/api/item/${item._id}/update`, mergedValues)
         .then(() => {
@@ -106,11 +106,11 @@ const ItemEdit = ({ item }) => {
         });
     },
   });
-  
+
   const [hasErrors, setHasErrors] = useState(false);
   useEffect(() => {
-    setHasErrors(Object.keys(formik.errors).length > 0)
-  }, [formik.errors])
+    setHasErrors(Object.keys(formik.errors).length > 0);
+  }, [formik.errors]);
 
   if (item === {} || !formik) return <div />;
 
@@ -126,7 +126,7 @@ const ItemEdit = ({ item }) => {
         <BtnCont>
           <RedButton type="submit">저장</RedButton>
           {hasErrors && (
-            <ErrMsg>입력하신 항목에 오류가 있습니다</ErrMsg> 
+            <ErrMsg>입력하신 항목에 오류가 있습니다</ErrMsg>
           )}
         </BtnCont>
       </Form>

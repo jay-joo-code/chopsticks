@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import Select from 'src/components/common/form/Select';
 import RedButton from 'src/components/common/buttons/RedButton';
 import theme from 'src/theme';
-import Compressed from './Compressed';
 import log from 'src/util/log';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
+import Compressed from './Compressed';
 
 const DyncCont = styled.div`
   position: fixed;
@@ -77,7 +77,7 @@ const CartAlert = styled.p`
   font-size: .8rem;
   opacity: .8;
   text-align: center;
-`
+`;
 
 const Purchase = ({ item }) => {
   const [expanded, setExpanded] = useState(false);
@@ -86,7 +86,7 @@ const Purchase = ({ item }) => {
   const handleClick = () => {
     setExpanded(!expanded);
   };
-  
+
   const [optOne, setOptOne] = useState(0);
   const [optTwo, setOptTwo] = useState(0);
   const [itemToCart, setItemToCart] = useState(false);
@@ -97,36 +97,41 @@ const Purchase = ({ item }) => {
   const handleAddToCart = () => {
     if (!user) history.push('/login');
     else {
-    const cartObj = {
-      item: item._id,
-      optionsIndex: [Number(optOne), Number(optTwo)],
-      quantity: 1
+      const cartObj = {
+        item: item._id,
+        optionsIndex: [Number(optOne), Number(optTwo)],
+        quantity: 1,
+      };
+      axios.post(`/api/user/${user._id}/cart/add`, { cartObj })
+        .then((res) => {
+          setItemToCart(true);
+          fetchSelfAndStore(user._id);
+        })
+        .catch((e) => {
+          log('ERROR add item to cart');
+        });
     }
-    axios.post(`/api/user/${user._id}/cart/add`, { cartObj })
-      .then((res) =>{
-        setItemToCart(true);
-        fetchSelfAndStore(user._id);
-      })
-      .catch((e) => {
-        log(`ERROR add item to cart`)
-      })
-    }
-  }
+  };
 
   if (!item) return <div />;
-  if (!isDesktop && !expanded) return (
-    <Compressed 
-      item={item} 
-      expanded={expanded} 
-      setExpanded={setExpanded} 
-    />
-  )
+  if (!isDesktop && !expanded) {
+    return (
+      <Compressed
+        item={item}
+        expanded={expanded}
+        setExpanded={setExpanded}
+      />
+    );
+  }
 
   return (
     <DyncCont>
       <Container>
         <Name>{item.name}</Name>
-        <Price>{price}원</Price>
+        <Price>
+          {price}
+원
+        </Price>
         {item.options.length > 0 && (
           <SelectCont>
             <Select

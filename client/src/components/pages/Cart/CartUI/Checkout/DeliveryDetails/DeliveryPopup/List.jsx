@@ -17,28 +17,30 @@ const List = styled.div`
   min-width: 10rem;
 `;
 
-const ListComp = ({ options, defaultIndex, setView, user }) => {
+const ListComp = ({
+  options, defaultIndex, setView, user,
+}) => {
   const viewToForm = () => {
-    setView('form')
-  }
-  
+    setView('form');
+  };
+
   const handleCardClick = (i) => {
-    const data = { defaultIndex: i }
+    const data = { defaultIndex: i };
     axios.put(`/api/user/${user._id}/delivery-info/default-index/update`, data)
       .then(() => fetchSelfAndStore(user._id))
       .catch((e) => {
-        log(`ERROR update defaultIndex`, e);
-      })
-  }
-  
+        log('ERROR update defaultIndex', e);
+      });
+  };
+
   const handleCardDelete = (i) => {
     axios.put(`/api/user/${user._id}/delivery-info/delete/${i}`)
       .then(() => fetchSelfAndStore(user._id))
       .catch((e) => {
-        log(`ERROR update defaultIndex`, e);
-      })
-  }
-  
+        log('ERROR update defaultIndex', e);
+      });
+  };
+
   return (
     <Container>
       <p>배송지 선택</p>
@@ -59,7 +61,7 @@ const ListComp = ({ options, defaultIndex, setView, user }) => {
       </List>
       <RedButton green rounded onClick={viewToForm}>배송지 추가</RedButton>
     </Container>
-  )
+  );
 };
 
 export default ListComp;

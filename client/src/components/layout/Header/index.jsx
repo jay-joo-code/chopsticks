@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import DynamicContainer from 'src/components/layout/DynamicContainer';
 import SearchBox from 'src/components/common/form/SearchBox';
 import useIsMobile from 'src/util/hooks/useIsMobile';
+import theme from 'src/theme';
 import Logo from './Logo';
 import Nav from './Nav';
 import ExtendedNav from './ExtendedNav';
-import theme from 'src/theme';
 
 const Container = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const DyncCont = styled.div`
   @media (min-width: ${theme.desktopContentWidth}px) {
     display: block;
   }
-`
+`;
 
 const LeftCont = styled.div`
   display: flex;
