@@ -16,7 +16,7 @@ const Container = styled.div`
   margin-top: 4rem;
   
   @media(min-width: ${props => props.theme.desktopContentWidth}px) {
-    width: 60%;
+    width: 40%;
   }
 `;
 
@@ -24,7 +24,7 @@ const CardInner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem 0;
   font-weight: bold;
 `
 
@@ -34,7 +34,7 @@ const MonthSection = styled.div`
 `
 
 const Arrow = styled.button`
-  margin: 0 .5rem;
+  padding: 0 .5rem;
   opacity: .6;
   background: inherit;
 `
@@ -46,7 +46,7 @@ const Month = styled.p`
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: .5rem 1rem;
+  padding: .5rem;
   width: 100%;
   color: ${props => props.primary ? props.theme.primary : ''};
 `
@@ -59,6 +59,8 @@ const HrLine = styled.div`
 
 const Label = styled.p`
   opacity: .8;
+  font-size: ${props => props.sm ? '.7rem' : ''};
+  margin-bottom: ${props => props.sm ? '1rem' : ''};
 `
 
 const Value = styled.p`
@@ -107,6 +109,7 @@ const Transactions = ({ orders, monthIndex, setMonthIndex }) => {
               <Value>{`${total}원`}</Value>
             </Row>
             <HrLine />
+            <Label sm>총 매출에서 거래별 수수료, 카드수수료 등을 제외한 실 수령 금액</Label>
             <Row primary>
               <Label>정산 금액</Label>
               <Value>{`${total}원`}</Value>
