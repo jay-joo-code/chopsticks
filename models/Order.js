@@ -25,7 +25,7 @@ var orderSchema = Schema({
     ref: 'User',
     required: true
   },
-  state: { // pending delivering delivered canceled error
+  state: { // pending delivering complete canceled error
     type: String,
     required: true,
     default: 'pending'

@@ -5,6 +5,12 @@ const adminNav = [{
   name: '주문',
   path: '/shop/admin/orders'
 },{
+  name: '매출 / 정산',
+  path: '/shop/admin/transactions'
+},{
+  name: '메세지',
+  path: '/shop/admin/messages'
+},{
   name: '설정',
   path: '/shop/admin/settings'
 }]

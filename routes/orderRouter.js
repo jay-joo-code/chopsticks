@@ -10,10 +10,17 @@ orderRouter.get('/:usertype/:uid', async (req, res) => {
   try {
     // :usertype is buyer OR seller
     const { usertype, uid } = req.params;
+    const { monthIndex } = req.query;
     const filter = {};
     filter[usertype] = uid;
     const results = await Order.find(filter).populate('seller');
-    const reversedRes = results.reverse(); // sort recent
+    const filtered = results.filter((doc) => {
+      if (monthIndex) {
+        return new Date(doc.createdAt).getMonth() === Number(monthIndex) 
+      }
+      return true;
+    })
+    const reversedRes = filtered.reverse(); // sort recent
     res.send(reversedRes);
   } catch (e) {
     res.status(500).send(e);

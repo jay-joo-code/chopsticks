@@ -29,6 +29,7 @@ import ShopIntro from 'src/components/pages/Shop/Intro';
 import ShopApply from 'src/components/pages/Shop/Apply';
 import ShopApplyComplete from 'src/components/pages/Shop/Apply/Complete';
 import ShopApplyPending from 'src/components/pages/Shop/Apply/Pending';
+import ShopTransactions from 'src/components/pages/Shop/Transactions';
 import ShopSettings from 'src/components/pages/Shop/Settings';
 
 const Container = styled.div`
@@ -73,6 +74,8 @@ const AppRouter = () => (
           <Route path="/shop/intro" component={ShopIntro} />
           <Route path="/shop/admin/items" component={Items} />
           <Route path="/shop/admin/orders" component={Items} />
+          <Route path="/shop/admin/transactions" component={ShopTransactions} />
+          <Route path="/shop/admin/messages" component={ShopSettings} />
           <Route path="/shop/admin/settings" component={ShopSettings} />
           <Route path="/shop" component={Shop} />
 
