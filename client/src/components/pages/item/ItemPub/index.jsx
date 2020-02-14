@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import TabbedPage from 'src/components/layout/TabbedPage';
 import Product from './Product';
@@ -12,6 +12,7 @@ const ItemPub = () => {
   const productComp = <Product />;
   const reviewsComp = <Reviews />;
   const policiesComp = <Policies />;
+  
   const pages = [{
     name: '상품',
     component: productComp,
@@ -24,7 +25,9 @@ const ItemPub = () => {
   }];
   return (
     <Container>
-      <TabbedPage pages={pages} />
+      <TabbedPage 
+        pages={pages} 
+      />
     </Container>
   );
 };

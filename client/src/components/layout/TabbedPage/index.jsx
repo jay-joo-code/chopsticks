@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Tab from './Tab';
 
@@ -10,9 +10,9 @@ const Content = styled.div`
   
 `;
 
-const TabbedPage = ({ pages }) => {
+const TabbedPage = ({ key, pages }) => {
   const [index, setIndex] = useState(0);
-
+  
   return (
     <Container>
       <Tab
