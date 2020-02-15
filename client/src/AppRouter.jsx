@@ -31,6 +31,7 @@ import ShopApplyComplete from 'src/components/pages/Shop/Apply/Complete';
 import ShopApplyPending from 'src/components/pages/Shop/Apply/Pending';
 import ShopTransactions from 'src/components/pages/Shop/Transactions';
 import ShopSettings from 'src/components/pages/Shop/Settings';
+import ShopOrders from 'src/components/pages/Shop/Orders';
 
 const Container = styled.div`
     display: flex;
@@ -73,7 +74,7 @@ const AppRouter = () => (
           <Route path="/shop/apply" component={ShopApply} />
           <Route path="/shop/intro" component={ShopIntro} />
           <Route path="/shop/admin/items" component={Items} />
-          <Route path="/shop/admin/orders" component={Items} />
+          <Route path="/shop/admin/orders" component={ShopOrders} />
           <Route path="/shop/admin/transactions" component={ShopTransactions} />
           <Route path="/shop/admin/messages" component={ShopSettings} />
           <Route path="/shop/admin/settings" component={ShopSettings} />

@@ -20,7 +20,7 @@ orderRouter.get('/:usertype/:uid', async (req, res) => {
         condition = new Date(doc.createdAt).getMonth() === Number(monthIndex) && condition;
       }
       if (state) {
-        condition = doc.state === 'complete' && condition;
+        condition = doc.state === state && condition;
       }
       return condition;
     })
