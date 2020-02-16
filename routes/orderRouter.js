@@ -10,18 +10,21 @@ orderRouter.get('/:usertype/:uid', async (req, res) => {
   try {
     // :usertype is buyer OR seller
     const { usertype, uid } = req.params;
-    const { monthIndex, state } = req.query;
+    const { monthIndex, state, seen } = req.query;
     const filter = {};
     filter[usertype] = uid;
     const results = await Order.find(filter).populate('seller');
     const filtered = results.filter((doc) => {
       let condition = true;
+      // filter by monthIndex, state, seen
       if (monthIndex) {
         condition = new Date(doc.createdAt).getMonth() === Number(monthIndex) && condition;
       }
-      if (state) {
-        condition = doc.state === state && condition;
-      }
+      if (state) condition = doc.state === state && condition;
+      if (seen !== undefined) {
+        const boolSeen = seen === 'true' ? true : false;
+        condition = doc.seen === boolSeen && condition
+      };
       return condition;
     })
     const reversedRes = filtered.reverse(); // sort recent
@@ -44,20 +47,28 @@ orderRouter.post('/:rid/cancel', async (req, res) => {
     if (cancelRes.status !== 200) {
       const newState = cancelRes.code === -13002 ? 'canceled' : 'error';
       order.state = newState;
-      await order.save();
-      throw new Error('failed cancel transaction, order state set to error');
+      const result = await order.save();
+      res.send(result);
+    } else {
+      // DB
+      order.state = 'canceled';
+      order.bootpay = cancelRes.data;
+      const dbRes = await order.save();
+      res.send(dbRes);
     }
-
-    // DB
-    order.state = 'canceled';
-    order.bootpay = cancelRes.data;
-    const dbRes = await order.save();
-
-    res.send(dbRes);
   } catch (e) {
     res.status(500).send(e);
   }
 });
+
+orderRouter.put(`/:id/update`, async (req, res) => {
+  try {
+    const result = await Order.findByIdAndUpdate(req.params.id, req.body);
+    res.send(result);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+})
 
 
 module.exports = orderRouter;

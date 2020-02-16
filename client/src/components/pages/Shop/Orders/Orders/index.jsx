@@ -10,10 +10,10 @@ const Container = styled.div`
 const Orders = ({ user }) => {
   const pages = [{
     name: '새주문',
-    component: <DynOrderPage user={user} state='new' />
+    component: <DynOrderPage user={user} state='pending' seen='false' />
   },{
     name: '배송전',
-    component: <DynOrderPage user={user} state='pending' />
+    component: <DynOrderPage user={user} state='pending' seen='true' />
   },{
     name: '배송중',
     component: <DynOrderPage user={user} state='delivering' />

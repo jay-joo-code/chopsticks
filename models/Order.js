@@ -25,10 +25,15 @@ var orderSchema = Schema({
     ref: 'User',
     required: true
   },
-  state: { // new pending delivering complete exchanged refunded canceled cancelConfirmed error
+  state: { // pending delivering complete exchanged refunded canceled error
     type: String,
     required: true,
-    default: 'new'
+    default: 'pending'
+  },
+  seen: {
+    type: Boolean,
+    required: true,
+    default: false
   },
   createdAt: {
     type: Date,
