@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import OrderPopup from './OrderPopup';
+
+const Wrapper = styled.div`
+  
+`
 
 const Container = styled.div`
   display: flex;
@@ -12,6 +17,7 @@ const Container = styled.div`
   background: white;
   margin: .5rem 0 0 0;
   position: relative;
+  cursor: pointer;
   
   @media (min-width: ${props => props.theme.desktopContentWidth}px) {
     flex-direction: row;
@@ -67,7 +73,8 @@ const Img = styled.img`
 
 const DotContainer = styled.button`
   padding: 0 1rem;
-  background: inherit
+  background: inherit;
+  z-index: 20;
   
   @media (min-width: ${props => props.theme.desktopContentWidth}px) {
     padding: 0;
@@ -103,7 +110,11 @@ const MenuOpt = styled.button`
 const OrderListCardUICustom = ({ order, colWidths, imgSrc, name, orderDesc, date, btn, handleCancel, selected, setSelected }) => {
   // menu
   const [showMenu, setShowMenu] = useState(false);
-  const toggleMenu = () => setShowMenu(!showMenu);
+  const toggleMenu = (e) => {
+    e.stopPropagation();
+    setShowMenu(!showMenu)
+  };
+  const canCancel = order.state === 'pending' || order.state === 'delivering';
   
   const menu = (
     <DotContainer
@@ -132,16 +143,33 @@ const OrderListCardUICustom = ({ order, colWidths, imgSrc, name, orderDesc, date
     }
   }
   
+  // details popup
+  const [showPopup, setShowPopup] = useState(0);
+  const openPopup = (e) => {
+    setShowPopup(1);
+  };
+  const closePopup = () => setShowPopup(0);
+  
   return (
-    <Container>
+    <Wrapper 
+    >
+    <OrderPopup 
+      showPopup={showPopup}
+      setShowPopup={setShowPopup}
+      order={order}
+    />
+    <Container
+      onClick={openPopup}
+      type='button'
+    >
       <DisplayGroup>
-      <Col width={colWidths[0]}>
-        <input 
-          type="checkbox" 
-          checked={selected.includes(order._id) ? 1 : 0}
-          onChange={handleCheckboxChange}
-        />
-      </Col>
+        <Col width={colWidths[0]}>
+          <input 
+            type="checkbox" 
+            checked={selected.includes(order._id) ? 1 : 0}
+            onChange={handleCheckboxChange}
+          />
+        </Col>
       <Col width={colWidths[1]}>
         <Text size='sm'>{order.bootpay.receipt_id}</Text>
         <Text>{order.deliv.recipient}</Text>
@@ -183,16 +211,17 @@ const OrderListCardUICustom = ({ order, colWidths, imgSrc, name, orderDesc, date
       </Col>
       {showMenu && (
         <Menu>
-          <MenuOpt 
+          {canCancel && (<MenuOpt 
             type='button'
             onClick={handleCancel}
-          >취소</MenuOpt>
+          >취소</MenuOpt>)}
           <MenuOpt 
             type='button'
           >주문내역</MenuOpt>
         </Menu>
       )}
     </Container>
+  </Wrapper>
   )
 };
 

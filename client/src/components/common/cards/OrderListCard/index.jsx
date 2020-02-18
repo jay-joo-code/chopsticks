@@ -19,12 +19,14 @@ const OrderListCardIndex = ({ order, colWidths, v, setV, selected, setSelected }
   const date = new Date(order.createdAt).toLocaleDateString('ko-KR');
   
   // btn click handlers
-  const setSeen = () => {
+  const setSeen = (e) => {
+    e.stopPropagation();
     api.put(`/order/${order._id}/update`, { seen: !order.seen })
       .then(() => setV(v + 1))
       .catch((e) => log(`ERROR OrderListCardIndex setSeen`, e))
   }
-  const updateState = () => {
+  const updateState = (e) => {
+    e.stopPropagation();
     let state = order.state === 'pending' ? 'delivering' : 'complete';
     api.put(`/order/${order._id}/update`, { state, seen: false })
       .then(() => setV(v + 1))

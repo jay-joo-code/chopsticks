@@ -77,8 +77,6 @@ const DynOrderPageIndex = ({ user, state, seen }) => {
       api.get(`/order/seller/${user._id}?state=${state}${seenQuery}`)
         .then((res) => {
           setOrders(res.data);
-          const newSelected = res.data.map((doc) => doc._id);
-          setSelected(newSelected);
         })
         .catch((e) => log(`ERROR fetching orders at DynOrderPageIndex`, e))
     }
