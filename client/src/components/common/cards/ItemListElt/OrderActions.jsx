@@ -17,34 +17,38 @@ const OrderActions = ({ order, setV, v }) => {
   // popup logic
   const [show, setShow] = useState();
   const [action, setAction] = useState();
-  
+
   // order action handling
   const actions = orderStateToActions(order.state);
   const handleBadgeClick = (action) => {
     setAction(action);
     setShow(true);
-  }
-  
+  };
+
   if (!actions) {
     return <div />;
   }
-  
+
   return (
     <Container>
       <Badge
-        color='secondary'
-        size='sm'
-        borderRadius='none'
-      >{orderStateToString(order.state)}</Badge>
+        color="secondary"
+        size="sm"
+        borderRadius="none"
+      >
+        {orderStateToString(order.state)}
+      </Badge>
       {actions.map((action) => (
         <Badge
-          color='primary'
-          size='sm'
-          borderRadius='none'
-          type='button'
+          color="primary"
+          size="sm"
+          borderRadius="none"
+          type="button"
           inverted
           onClick={() => handleBadgeClick(action)}
-        >{action}</Badge>
+        >
+          {action}
+        </Badge>
       ))}
       <ActionPopup
         show={show}
@@ -56,7 +60,7 @@ const OrderActions = ({ order, setV, v }) => {
         order={order}
       />
     </Container>
-  )
+  );
 };
 
 export default OrderActions;

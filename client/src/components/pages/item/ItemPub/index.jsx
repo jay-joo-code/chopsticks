@@ -12,7 +12,7 @@ const ItemPub = () => {
   const productComp = <Product />;
   const reviewsComp = <Reviews />;
   const policiesComp = <Policies />;
-  
+
   const pages = [{
     name: '상품',
     component: productComp,
@@ -25,8 +25,8 @@ const ItemPub = () => {
   }];
   return (
     <Container>
-      <TabbedPage 
-        pages={pages} 
+      <TabbedPage
+        pages={pages}
       />
     </Container>
   );

@@ -11,29 +11,26 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   margin: 4rem 0 2rem 0;
-`
+`;
 
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
-`
+`;
 
 const RowTitle = styled.h3`
   font-size: 1.2rem;
-`
+`;
 
-const Policies = ({ user }) => {
-  
-  return (
-    <Container>
-      <Header>
-        <Title>배송 / 정책</Title>
-      </Header>
-      <PoliciesForm 
-        user={user}
-      />
-    </Container>
-  )
-};
+const Policies = ({ user }) => (
+  <Container>
+    <Header>
+      <Title>배송 / 정책</Title>
+    </Header>
+    <PoliciesForm
+      user={user}
+    />
+  </Container>
+);
 
 export default Policies;

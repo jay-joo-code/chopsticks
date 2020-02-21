@@ -7,10 +7,10 @@ const Container = styled.div`
   padding: 1rem 0;
   max-width: 100%;
   
-  @media (min-width: ${props => props.theme.DESKTOP_WIDTH}px) {
+  @media (min-width: ${(props) => props.theme.DESKTOP_WIDTH}px) {
     padding: 4rem;
   }
-`
+`;
 
 const OrderDetails = styled.div`
   margin: 4rem 0;
@@ -20,34 +20,33 @@ const Row = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: ${props => props.font ? props.font : ''};
+  font-weight: ${(props) => (props.font ? props.font : '')};
   margin: .5rem 0;
   
   & > p {
     min-width: 40px;
     
-    @media (min-width: ${props => props.theme.DESKTOP_WIDTH}px) {
+    @media (min-width: ${(props) => props.theme.DESKTOP_WIDTH}px) {
       min-width: 100px;
     }
   }
-` 
+`;
 
 const HL = styled.div`
   width: 100%;
   border-bottom: 1px solid grey;
   margin: 1rem 0;
-`
+`;
 
 const OrderPopup = ({ showPopup, setShowPopup, order }) => {
-  const openPopup = () => setShowPopup(1);
   const closePopup = () => setShowPopup(0);
   const { options, optionsTwo } = order.cartObj.item;
   const { quantity, price, priceNoDeliv } = order.cartObj;
   const idx = order.cartObj.optionsIndex;
-  let opts = `${(options[idx[0]] || '')} ${(optionsTwo[idx[1]] || '')}`.trim() || '없음';
-  
+  const opts = `${(options[idx[0]] || '')} ${(optionsTwo[idx[1]] || '')}`.trim() || '없음';
+
   return (
-      <Popup
+    <Popup
       display={showPopup}
       handleClosePopup={closePopup}
     >
@@ -56,7 +55,7 @@ const OrderPopup = ({ showPopup, setShowPopup, order }) => {
           {...order.deliv}
         />
         <OrderDetails>
-          <Row font='bold'>
+          <Row font="bold">
             <div>
               <p>주문정보</p>
             </div>
@@ -96,7 +95,7 @@ const OrderPopup = ({ showPopup, setShowPopup, order }) => {
         </OrderDetails>
       </Container>
     </Popup>
-  )
+  );
 };
 
 export default OrderPopup;

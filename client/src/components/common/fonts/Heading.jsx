@@ -7,7 +7,7 @@ const StyledHeading = styled.h2`
   font-weight: bold;
 `;
 
-const Heading = ({ children, ...rest}) => (
+const Heading = ({ children, ...rest }) => (
   <StyledHeading {...rest}>
     {children}
   </StyledHeading>

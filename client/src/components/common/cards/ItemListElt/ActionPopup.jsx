@@ -22,7 +22,7 @@ const PopupContent = styled.div`
   & > * {
     margin: 1rem 0;
   }
-`
+`;
 
 const NewOrderState = styled.div`
   display: flex;
@@ -31,45 +31,45 @@ const NewOrderState = styled.div`
   & > * {
     margin: 0 .5rem;
   }
-`
+`;
 
-const ActionPopup = ({ order, show, setShow, action, rid, setV, v }) => {
+const ActionPopup = ({
+  order, show, setShow, action, rid, setV, v,
+}) => {
   // state
   const [msg, setMsg] = useState('');
   const [newOrderState, setNewOrderState] = useState();
   const [err, setErr] = useState();
-  
+
   // action handlers
   const handleClosePopup = () => {
     setShow(false);
-  }
+  };
   const handleOrderStateChange = (newState) => {
     const dynNewState = newState || newOrderState;
     api.post(`/order/${order._id}/state-change/${dynNewState}`, { stateMsg: msg })
       .then((res) => setV(v + 1))
-      .catch((e) => log(`ERROR ActionSection handleOrderStateChange`, e))
-  }
+      .catch((e) => log('ERROR ActionSection handleOrderStateChange', e));
+  };
   const handleReview = () => {
-    
-  }
+    // TODO: update item obj with review
+  };
   const handleAction = () => {
     // reset popup
-    setErr('')
+    setErr('');
     setShow(false);
-    setMsg('')
-    
+    setMsg('');
+
     // function call depending on action
     if (action === '환불/교환 문의') {
       if (newOrderState === 'refundPending' || newOrderState === 'exchangePending') {
         handleOrderStateChange();
-      }
-      else setErr('환불, 교환 둘중 하나를 골라주세요')
-    }
-    else if (action === '취소문의') {
+      } else setErr('환불, 교환 둘중 하나를 골라주세요');
+    } else if (action === '취소문의') {
       handleOrderStateChange('cancelPending');
     }
-  }
-  
+  };
+
   return (
     <Container>
       <Popup
@@ -81,17 +81,21 @@ const ActionPopup = ({ order, show, setShow, action, rid, setV, v }) => {
           {action === '환불/교환 문의' && (
             <NewOrderState>
               <Badge
-                color='primary'
-                type='button'
+                color="primary"
+                type="button"
                 onClick={() => setNewOrderState('refundPending')}
                 inverted={newOrderState === 'refundPending'}
-              >환불</Badge>
+              >
+환불
+              </Badge>
               <Badge
-                type='button'
-                color='primary'
+                type="button"
+                color="primary"
                 onClick={() => setNewOrderState('exchangePending')}
                 inverted={newOrderState === 'exchangePending'}
-              >교환</Badge>
+              >
+교환
+              </Badge>
             </NewOrderState>
           )}
           <OutlinedTextarea
@@ -99,15 +103,17 @@ const ActionPopup = ({ order, show, setShow, action, rid, setV, v }) => {
             setValue={setMsg}
           />
           <Btn
-            color='primary'
+            color="primary"
             inverted
             onClick={handleAction}
-          >저장</Btn>
+          >
+저장
+          </Btn>
           {err && <ErrMsg>{err}</ErrMsg>}
         </PopupContent>
       </Popup>
     </Container>
-  )
+  );
 };
 
 export default ActionPopup;

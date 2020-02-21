@@ -124,7 +124,7 @@ const ItemInfo = ({
           </Link>
           <Owner>{`@${ownerId}`}</Owner>
         </div>
-        <ActionsSection 
+        <ActionsSection
           order={order}
           user={user}
           setV={setV}
@@ -140,14 +140,15 @@ const ItemInfo = ({
         <PriceCalc>
           <QtyCont>
             <Muted>수량</Muted>
-            {order 
+            {order
               ? <p>{quantity}</p>
-              : (<QtyInput
+              : (
+                <QtyInput
                   type="number"
                   value={quantity}
                   onChange={handleQtyChange}
-                />)
-            }
+                />
+              )}
           </QtyCont>
           <PriceCont>
             <Muted>{`배송비: ${item.deliveryCost}원`}</Muted>

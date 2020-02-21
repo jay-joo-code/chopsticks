@@ -46,21 +46,21 @@ const PoliciesForm = ({ user }) => {
       etc: Yup.string()
         .required('필수'),
     }),
-    onSubmit: values => {
-      const updatedShop = Object.assign({}, user.shop, { policies: values });
-      const updatedUser = Object.assign({}, user, { shop: updatedShop });
+    onSubmit: (values) => {
+      const updatedShop = { ...user.shop, policies: values };
+      const updatedUser = { ...user, shop: updatedShop };
       api.put(`/user/${user._id}/update`, updatedUser)
         .then((res) => {
           fetchSelfAndStore(user._id);
           setShowAlert(true);
         })
-        .catch((e) => log(`ERROR update shop policies`))
+        .catch((e) => log('ERROR update shop policies'));
     },
   });
-  
+
   // alert after success
   const [showAlert, setShowAlert] = useState(false);
-  
+
   return (
     <Form onSubmit={formik.handleSubmit}>
       <InputContainer>
@@ -93,10 +93,10 @@ const PoliciesForm = ({ user }) => {
       <Alert
         show={showAlert}
         setShow={setShowAlert}
-        msg='저장되었습니다'
+        msg="저장되었습니다"
       />
     </Form>
-  )
+  );
 };
 
 export default PoliciesForm;

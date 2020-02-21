@@ -19,7 +19,7 @@ const orderStateToActions = (state) => {
   const actionsMap = {
     'pending': ['취소문의'],
     'delivering': ['배송추적', '환불/교환 문의'],
-    'complete': ['배송추적', '환불/교환 문의'],
+    'complete': ['배송추적', '환불/교환 문의', '리뷰쓰기'],
     'exchangePending': [],
     'exchanged': [],
     'refundPending': [],

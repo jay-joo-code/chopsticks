@@ -9,7 +9,9 @@ const Cross = styled.p`
   cursor: pointer;
 `;
 
-const ActionSection = ({ order, setV, v, user, cartObj, }) => {
+const ActionSection = ({
+  order, setV, v, user, cartObj,
+}) => {
   // cart logic
   const handleRemove = () => {
     api.put(`/user/${user._id}/cart/delete/cartobj`, { cartObj })
@@ -20,7 +22,7 @@ const ActionSection = ({ order, setV, v, user, cartObj, }) => {
         log('ERROR delete cartobj from cart', e);
       });
   };
-  
+
   if (!order) return <Cross onClick={handleRemove}>X</Cross>;
   return (
     <OrderActions
@@ -28,7 +30,7 @@ const ActionSection = ({ order, setV, v, user, cartObj, }) => {
       setV={setV}
       v={v}
     />
-    )
+  );
 };
 
 export default ActionSection;

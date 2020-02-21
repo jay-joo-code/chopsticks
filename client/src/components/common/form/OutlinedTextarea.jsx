@@ -33,29 +33,30 @@ const ErrorMsg = styled.div`
   color: #de6362;
 `;
 
-const OutlinedTextarea = ({ formik, name, label, sideButton, value, setValue, ...rest }) => {
-  
+const OutlinedTextarea = ({
+  formik, name, label, sideButton, value, setValue, ...rest
+}) => {
   // non formik props
   const handleChange = (e) => {
     setValue(e.target.value);
-  }
+  };
   const nonFormikProps = {
     value,
-    onChange: handleChange
-  }
+    onChange: handleChange,
+  };
   let dynProps = nonFormikProps;
-  
+
   // formik props
   let hasError;
   if (formik) {
     hasError = formik.touched[name] && formik.errors[name];
     const formikProps = {
       ...formik.getFieldProps(name),
-      hasError
-    }
-    dynProps = formikProps
+      hasError,
+    };
+    dynProps = formikProps;
   }
-  
+
   return (
     <Container>
       <Label htmlFor={name}>{label}</Label>

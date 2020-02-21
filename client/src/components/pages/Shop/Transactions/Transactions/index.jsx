@@ -6,7 +6,7 @@ import Card from 'src/components/common/cards/Card';
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
 const Container = styled.div`
   width: 100%;
@@ -15,7 +15,7 @@ const Container = styled.div`
   align-items: center;
   margin-top: 4rem;
   
-  @media(min-width: ${props => props.theme.desktopContentWidth}px) {
+  @media(min-width: ${(props) => props.theme.desktopContentWidth}px) {
     width: 40%;
   }
 `;
@@ -26,46 +26,46 @@ const CardInner = styled.div`
   align-items: center;
   padding: 1rem 0;
   font-weight: bold;
-`
+`;
 
 const MonthSection = styled.div`
   margin-bottom: 2rem;
   display: flex;
-`
+`;
 
 const Arrow = styled.button`
   padding: 0 .5rem;
   opacity: .6;
   background: inherit;
-`
+`;
 
 const Month = styled.p`
   font-weight: bold;
-`
+`;
 
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
   padding: .5rem;
   width: 100%;
-  color: ${props => props.primary ? props.theme.primary : ''};
-`
+  color: ${(props) => (props.primary ? props.theme.primary : '')};
+`;
 
 const HrLine = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, .2);
   margin: 1rem 0;
   width: 100%;
-`
+`;
 
 const Label = styled.p`
   opacity: .8;
-  font-size: ${props => props.sm ? '.7rem' : ''};
-  margin-bottom: ${props => props.sm ? '1rem' : ''};
-`
+  font-size: ${(props) => (props.sm ? '.7rem' : '')};
+  margin-bottom: ${(props) => (props.sm ? '1rem' : '')};
+`;
 
 const Value = styled.p`
   
-`
+`;
 
 const Transactions = ({ orders, monthIndex, setMonthIndex }) => {
   const [count, setCount] = useState();
@@ -74,15 +74,15 @@ const Transactions = ({ orders, monthIndex, setMonthIndex }) => {
     setCount(orders.length);
     const updatedTotal = orders.reduce((acc, cur) => acc + Number(cur.cartObj.price), 0);
     const totalStr = updatedTotal.toLocaleString();
-    setTotal(totalStr)
-  }, [orders])
+    setTotal(totalStr);
+  }, [orders]);
   const changeMonth = (val) => {
     let newIndex = monthIndex + val;
     if (newIndex < 0) newIndex = 0;
     if (newIndex > 11) newIndex = 11;
     setMonthIndex(newIndex);
   };
-  
+
   return (
     <Wrapper>
       <Container>
@@ -90,15 +90,19 @@ const Transactions = ({ orders, monthIndex, setMonthIndex }) => {
         <Card>
           <CardInner>
             <MonthSection>
-              <Arrow 
-                type='button'
+              <Arrow
+                type="button"
                 onClick={() => changeMonth(-1)}
-              >{`<`}</Arrow>
+              >
+                {'<'}
+              </Arrow>
               <Month>{`${monthIndex + 1}월`}</Month>
-              <Arrow 
-                type='button'
+              <Arrow
+                type="button"
                 onClick={() => changeMonth(1)}
-              >{`>`}</Arrow>
+              >
+                {'>'}
+              </Arrow>
             </MonthSection>
             <Row>
               <Label>완료된 주문건</Label>
@@ -118,7 +122,7 @@ const Transactions = ({ orders, monthIndex, setMonthIndex }) => {
         </Card>
       </Container>
     </Wrapper>
-  )
+  );
 };
 
 export default Transactions;

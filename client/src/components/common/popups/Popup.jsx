@@ -19,7 +19,7 @@ const Overlay = styled.div`
 
 const Container = styled.div`
   z-index: 60;
-  background-color: rgba(255, 255, 255, .85);
+  background-color: rgba(230, 230, 230, 1);
   padding: 2rem;
   margin: 2rem;
   border-radius: 5px;

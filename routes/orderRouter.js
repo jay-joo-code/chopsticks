@@ -11,12 +11,12 @@ orderRouter.get('/:usertype/:uid', async (req, res) => {
     // :usertype is buyer OR seller
     const { usertype, uid } = req.params;
     const { monthIndex, state, seen } = req.query;
-    
+
     // filter by user
     const filter = {};
     filter[usertype] = uid;
     const results = await Order.find(filter).populate('seller');
-    
+
     // filter by monthIndex, state, seen
     const filtered = results.filter((doc) => {
       let condition = true;
@@ -25,21 +25,26 @@ orderRouter.get('/:usertype/:uid', async (req, res) => {
       }
       if (state) {
         let newCondition = doc.state === state;
+
+        // also filter pending states
         if (state === 'canceled') {
-          // also filter for cancelPending
           newCondition = doc.state === 'cancelPending' || newCondition;
+        } else if (state === 'exchanged') {
+          newCondition = doc.state === 'exchangePending' || newCondition;
+        } else if (state === 'refunded') {
+          newCondition = doc.state === 'refundPending' || newCondition;
         }
-        condition = newCondition && condition
-      };
+        condition = newCondition && condition;
+      }
       if (seen !== undefined) {
-        const boolSeen = seen === 'true' ? true : false;
-        condition = doc.seen === boolSeen && condition
-      };
+        const boolSeen = seen === 'true';
+        condition = doc.seen === boolSeen && condition;
+      }
       return condition;
-    })
-    
+    });
+
     // sort recent
-    const reversedRes = filtered.reverse(); 
+    const reversedRes = filtered.reverse();
     res.send(reversedRes);
   } catch (e) {
     res.status(500).send(e);
@@ -50,13 +55,14 @@ orderRouter.post('/:id/cancel', async (req, res) => {
   try {
     const { id } = req.params;
     const order = await Order.findById(id);
-    const rid =  order.bootpay.receipt_id;
+    const rid = order.bootpay.receipt_id;
 
     // bootpay cancel
     const token = await BootpayRest.getAccessToken();
     if (token.status !== 200) throw new Error('access token failed');
-    const cancelRes = await BootpayRest.cancel(rid, order.cartObj.price, order.deliv.recipient, order.stateMsg);
-    
+    const prms = [rid, order.cartObj.price, order.deliv.recipient, order.stateMsg];
+    const cancelRes = await BootpayRest.cancel(...prms);
+
     // update db order state
     if (cancelRes.status !== 200) {
       const newState = cancelRes.code === -13002 ? 'canceled' : 'error';
@@ -78,12 +84,12 @@ orderRouter.post('/:id/state-change/:state', async (req, res) => {
   try {
     const { id, state } = req.params;
     const { stateMsg } = req.body;
-    
+
     const order = await Order.findById(id);
     order.state = state;
     if (stateMsg) order.stateMsg = stateMsg;
     const result = await order.save();
-    
+
     res.send(result);
   } catch (e) {
     res.status(500).send(e);
@@ -91,14 +97,14 @@ orderRouter.post('/:id/state-change/:state', async (req, res) => {
 });
 
 
-orderRouter.put(`/:id/update`, async (req, res) => {
+orderRouter.put('/:id/update', async (req, res) => {
   try {
     const result = await Order.findByIdAndUpdate(req.params.id, req.body);
     res.send(result);
   } catch (e) {
     res.status(500).send(e);
   }
-})
+});
 
 
 module.exports = orderRouter;

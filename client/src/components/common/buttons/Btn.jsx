@@ -10,10 +10,12 @@ const Button = styled.button`
   background-color: ${(props) => (props.color ? props.theme[props.color] : props.theme.primary)};
   color: white;
   font-size: 1rem;
-  opacity: ${props => props.disabled ? '.4' : ''};
+  opacity: ${(props) => (props.disabled ? '.4' : '')};
 `;
 
-const RedButton = ({ children, color, disabled, ...rest }) => (
+const RedButton = ({
+  children, color, disabled, ...rest
+}) => (
   <Button
     color={color}
     disabled={disabled}

@@ -12,7 +12,7 @@ const Content = styled.div`
 
 const TabbedPage = ({ key, pages }) => {
   const [index, setIndex] = useState(0);
-  
+
   return (
     <Container>
       <Tab
