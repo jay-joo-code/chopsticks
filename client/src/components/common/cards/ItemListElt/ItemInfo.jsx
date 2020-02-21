@@ -7,6 +7,7 @@ import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import theme from 'src/theme';
 import { Link } from 'react-router-dom';
 import getTotalPrice from 'src/util/calculation/getTotalPrice';
+import ActionsSection from './ActionsSection';
 
 const Container = styled.div`
   width: 100%;
@@ -19,7 +20,6 @@ const Container = styled.div`
 const Top = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 3rem;
 `;
 
 const Name = styled.div`
@@ -71,10 +71,6 @@ const QtyInput = styled.input`
   padding: 2px;
 `;
 
-const Cross = styled.p`
-  cursor: pointer;
-`;
-
 const OptElt = styled.p`
   margin-bottom: .5rem;
   opacity: .8;
@@ -119,26 +115,6 @@ const ItemInfo = ({
       });
   };
 
-  const handleRemove = async () => {
-    if (order) {
-      try {
-        const rid = order.bootpay.receipt_id;
-        await api.post(`/order/${rid}/cancel`);
-      } catch (e) {
-
-      }
-      setV(v + 1);
-    } else {
-      api.put(`/user/${user._id}/cart/delete/cartobj`, { cartObj })
-        .then((res) => {
-          fetchSelfAndStore(user._id);
-        })
-        .catch((e) => {
-          log('ERROR delete cartobj from cart', e);
-        });
-    }
-  };
-
   return (
     <Container>
       <Top>
@@ -148,10 +124,13 @@ const ItemInfo = ({
           </Link>
           <Owner>{`@${ownerId}`}</Owner>
         </div>
-        <div>
-          <Cross onClick={handleRemove}>X</Cross>
-          <p>{order && order.state}</p>
-        </div>
+        <ActionsSection 
+          order={order}
+          user={user}
+          setV={setV}
+          v={v}
+          cartObj={cartObj}
+        />
       </Top>
       <Bottom>
         <Options>
@@ -161,11 +140,14 @@ const ItemInfo = ({
         <PriceCalc>
           <QtyCont>
             <Muted>수량</Muted>
-            <QtyInput
-              type="number"
-              value={quantity}
-              onChange={handleQtyChange}
-            />
+            {order 
+              ? <p>{quantity}</p>
+              : (<QtyInput
+                  type="number"
+                  value={quantity}
+                  onChange={handleQtyChange}
+                />)
+            }
           </QtyCont>
           <PriceCont>
             <Muted>{`배송비: ${item.deliveryCost}원`}</Muted>

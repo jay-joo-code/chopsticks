@@ -102,13 +102,19 @@ const DynOrderPageIndex = ({ user, state, seen }) => {
   
   // click handlers
   const seenSelected = () => {
-    selected.map((id) => {
-      api.put(`/order/${id}/update`, { seen: true })
-        .then(() => setV(v + 1))
-        .catch((e) => log(`ERROR seenSelected`, e))
+    console.log('seeSelected')
+    selected.map(async (id) => {
+      try {
+        await api.post(`/order/${id}/cancel`)
+        await api.put(`/order/${id}/update`, { seen: true })  
+        setV(v + 1)
+      } catch (e) {
+        log(`ERROR seenSelected`, e)
+      }
     })
   }
   const updateStateSelected = () => {
+    console.log('updateStateSelected')
     const newState = state === 'pending' ? 'delivering' : 'complete';
     selected.map((id) => {
     api.put(`/order/${id}/update`, { state: newState, seen: false })

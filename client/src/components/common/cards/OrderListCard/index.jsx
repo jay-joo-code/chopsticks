@@ -19,11 +19,17 @@ const OrderListCardIndex = ({ order, colWidths, v, setV, selected, setSelected }
   const date = new Date(order.createdAt).toLocaleDateString('ko-KR');
   
   // btn click handlers
-  const setSeen = (e) => {
+  const setSeen = async (e) => {
     e.stopPropagation();
-    api.put(`/order/${order._id}/update`, { seen: !order.seen })
-      .then(() => setV(v + 1))
-      .catch((e) => log(`ERROR OrderListCardIndex setSeen`, e))
+    try {
+        if (order.state === 'cancelPending') {
+          await api.post(`/order/${order._id}/cancel`)
+        }
+        await api.put(`/order/${order._id}/update`, { seen: true })  
+        setV(v + 1)
+      } catch (e) {
+        log(`ERROR seenSelected`, e)
+      }
   }
   const updateState = (e) => {
     e.stopPropagation();
@@ -34,11 +40,13 @@ const OrderListCardIndex = ({ order, colWidths, v, setV, selected, setSelected }
   }
   
   // conditional btn rendering 
+  let seen = order.seen ? 1 : 0;
+  if (order.state === 'cancelPending') seen = 0;
   const seenBtn = (
     <SBtn 
       type='button'
       color='primary'
-      seen={order.seen ? 1 : 0}
+      seen={seen}
       onClick={setSeen}
     >확인</SBtn>
     )

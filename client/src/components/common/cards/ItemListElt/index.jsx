@@ -90,6 +90,7 @@ const ListElt = ({
 
   return (
     <Container>
+      {!order && (
       <CondDisplay>
         <CheckboxCont>
           <input
@@ -99,6 +100,7 @@ const ListElt = ({
           />
         </CheckboxCont>
       </CondDisplay>
+      )}
       <ImgCont>
         <Link to={`/item/${item._id}`}>
           <Img src={item.image} />

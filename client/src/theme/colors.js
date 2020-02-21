@@ -7,5 +7,6 @@ export default {
   orange: '#f0ad4e',
   red: '#de6362',
   primary: '#66c088',
+  secondary: '#de6362',
   danger: '#de6362' // red
 };

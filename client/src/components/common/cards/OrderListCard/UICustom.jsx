@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import OrderPopup from './OrderPopup';
@@ -148,7 +148,6 @@ const OrderListCardUICustom = ({ order, colWidths, imgSrc, name, orderDesc, date
   const openPopup = (e) => {
     setShowPopup(1);
   };
-  const closePopup = () => setShowPopup(0);
   
   return (
     <Wrapper 

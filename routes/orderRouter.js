@@ -11,46 +11,59 @@ orderRouter.get('/:usertype/:uid', async (req, res) => {
     // :usertype is buyer OR seller
     const { usertype, uid } = req.params;
     const { monthIndex, state, seen } = req.query;
+    
+    // filter by user
     const filter = {};
     filter[usertype] = uid;
     const results = await Order.find(filter).populate('seller');
+    
+    // filter by monthIndex, state, seen
     const filtered = results.filter((doc) => {
       let condition = true;
-      // filter by monthIndex, state, seen
       if (monthIndex) {
         condition = new Date(doc.createdAt).getMonth() === Number(monthIndex) && condition;
       }
-      if (state) condition = doc.state === state && condition;
+      if (state) {
+        let newCondition = doc.state === state;
+        if (state === 'canceled') {
+          // also filter for cancelPending
+          newCondition = doc.state === 'cancelPending' || newCondition;
+        }
+        condition = newCondition && condition
+      };
       if (seen !== undefined) {
         const boolSeen = seen === 'true' ? true : false;
         condition = doc.seen === boolSeen && condition
       };
       return condition;
     })
-    const reversedRes = filtered.reverse(); // sort recent
+    
+    // sort recent
+    const reversedRes = filtered.reverse(); 
     res.send(reversedRes);
   } catch (e) {
     res.status(500).send(e);
   }
 });
 
-orderRouter.post('/:rid/cancel', async (req, res) => {
+orderRouter.post('/:id/cancel', async (req, res) => {
   try {
-    const { rid } = req.params;
-    const orders = await Order.find({});
-    const order = orders.filter((order) => order.bootpay.receipt_id === rid)[0];
+    const { id } = req.params;
+    const order = await Order.findById(id);
+    const rid =  order.bootpay.receipt_id;
 
-    // bootpay
+    // bootpay cancel
     const token = await BootpayRest.getAccessToken();
     if (token.status !== 200) throw new Error('access token failed');
-    const cancelRes = await BootpayRest.cancel(rid, order.cartObj.price, order.deliv.recipient, '결제 취소');
+    const cancelRes = await BootpayRest.cancel(rid, order.cartObj.price, order.deliv.recipient, order.stateMsg);
+    
+    // update db order state
     if (cancelRes.status !== 200) {
       const newState = cancelRes.code === -13002 ? 'canceled' : 'error';
       order.state = newState;
       const result = await order.save();
       res.send(result);
     } else {
-      // DB
       order.state = 'canceled';
       order.bootpay = cancelRes.data;
       const dbRes = await order.save();
@@ -60,6 +73,23 @@ orderRouter.post('/:rid/cancel', async (req, res) => {
     res.status(500).send(e);
   }
 });
+
+orderRouter.post('/:id/state-change/:state', async (req, res) => {
+  try {
+    const { id, state } = req.params;
+    const { stateMsg } = req.body;
+    
+    const order = await Order.findById(id);
+    order.state = state;
+    if (stateMsg) order.stateMsg = stateMsg;
+    const result = await order.save();
+    
+    res.send(result);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
 
 orderRouter.put(`/:id/update`, async (req, res) => {
   try {

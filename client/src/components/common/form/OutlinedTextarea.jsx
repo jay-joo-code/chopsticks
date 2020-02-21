@@ -33,20 +33,37 @@ const ErrorMsg = styled.div`
   color: #de6362;
 `;
 
-const FormikInput = (props) => {
-  const {
-    formik, name, label, sideButton,
-  } = props;
-  const hasError = formik.touched[name] && formik.errors[name];
+const OutlinedTextarea = ({ formik, name, label, sideButton, value, setValue, ...rest }) => {
+  
+  // non formik props
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  }
+  const nonFormikProps = {
+    value,
+    onChange: handleChange
+  }
+  let dynProps = nonFormikProps;
+  
+  // formik props
+  let hasError;
+  if (formik) {
+    hasError = formik.touched[name] && formik.errors[name];
+    const formikProps = {
+      ...formik.getFieldProps(name),
+      hasError
+    }
+    dynProps = formikProps
+  }
+  
   return (
     <Container>
       <Label htmlFor={name}>{label}</Label>
       <InputArea>
         <Textarea
           type="text"
-          {...props}
-          {...formik.getFieldProps(name)}
-          hasError={hasError}
+          {...rest}
+          {...dynProps}
         />
         {sideButton && (
           <ButtonContainer>
@@ -54,11 +71,11 @@ const FormikInput = (props) => {
           </ButtonContainer>
         )}
       </InputArea>
-      {hasError
+      {formik && hasError
         ? <ErrorMsg>{formik.errors[name]}</ErrorMsg>
         : null}
     </Container>
   );
 };
 
-export default FormikInput;
+export default OutlinedTextarea;

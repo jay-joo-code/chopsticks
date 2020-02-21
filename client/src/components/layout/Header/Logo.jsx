@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ReactComponent as LogoSVG } from 'src/assets/images/logo.svg';
+import { ReactComponent as LogoSVG } from 'src/assets/svgs/logo.svg';
 
 const Container = styled(Link)`
   font-size: 5rem;
