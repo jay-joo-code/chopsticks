@@ -1,16 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import ErrMsgFont from 'src/components/common/fonts/ErrMsg';
 
-const Container = styled.div`
-  font-size: .8rem;
-  color: #de6362;
-  margin-top: .5rem;
-`;
-
-const ErrMsg = (props) => (
-  <Container {...props}>
-    {props.children}
-  </Container>
-);
+const ErrMsg = ({ children, ...rest }) => {
+  
+  return (
+  <ErrMsgFont {...rest}>
+    {children}
+  </ErrMsgFont>
+  )
+};
 
 export default ErrMsg;

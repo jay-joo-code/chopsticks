@@ -8,21 +8,26 @@ const SBtn = styled(Btn)`
   opacity: ${(props) => (props.seen ? '.5' : '')};
 `;
 
-const ActionBtn = ({ order, v, setV }) => {
-  // TODO: action handling for toolbar
-
+const ActionBtn = ({ order, v, setV, selectedOrders, state }) => {
   // handle click
   const handleClick = (e) => {
     e.stopPropagation();
     const isPending = order.state === 'pending' && order.seen;
     const isDelivering = order.state === 'delivering';
     const showStateChangeBtn = (isPending || isDelivering);
-
-    if (showStateChangeBtn) updateState();
-    else setSeen();
+    
+    if (selectedOrders) {
+      selectedOrders.map((order) => {
+        if (showStateChangeBtn) updateState(order);
+        else setSeen(order);
+      })
+    } else {
+      if (showStateChangeBtn) updateState(order);
+      else setSeen(order);
+    }
   };
 
-  const setSeen = async () => {
+  const setSeen = async (order) => {
     try {
       if (order.state === 'cancelPending') {
         await api.post(`/order/${order._id}/cancel`);
@@ -38,26 +43,31 @@ const ActionBtn = ({ order, v, setV }) => {
       log('ERROR seenSelected', e);
     }
   };
-  const updateState = () => {
+  const updateState = (order) => {
     const state = order.state === 'pending' ? 'delivering' : 'complete';
     api.put(`/order/${order._id}/update`, { state, seen: false })
       .then(() => setV(v + 1))
       .catch((e) => log('ERROR OrderListCardIndex updateState', e));
   };
-
-  // conditionally render text
+  
+  // text
   let text = '확인';
   const condBtnText = {
     pending: '발송완료',
     delivering: '배송완료',
   };
-  if (order.state === 'pending' || order.state === 'delivering') {
-    text = condBtnText[order.state];
+  if ((state === 'pending' && seen) || state === 'delivering') {
+    text = condBtnText[state];
   }
-
-  let seen = order.seen ? 1 : 0;
-  if (order.state === 'cancelPending') seen = 0;
-
+  
+  // seen
+  let seen = 0;
+  if (text === '확인') {
+    seen = !selectedOrders && order.seen ? 1 : 0;
+    const pendingStates = ['cancelPending', 'exchangePending', 'refundPending']
+    if (pendingStates.includes(order.state)) seen = 0;
+  }
+  
   return (
     <SBtn
       type="button"

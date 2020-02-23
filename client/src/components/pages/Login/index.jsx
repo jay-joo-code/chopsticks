@@ -23,10 +23,6 @@ const BtnCont = styled.div`
   margin: 1rem 0;
 `;
 
-const StyledInput = styled(OutlinedInput)`
-  background-color: rgba(0, 0, 0, .1)
-`;
-
 const RegisterBtnContainer = styled.div`
   width: 100%;
   display: flex;
@@ -73,8 +69,19 @@ const Login = () => {
     <AuthPanel title="로그인">
       <Container>
         <form onSubmit={formik.handleSubmit}>
-          <StyledInput name="email" placeholder="이메일" formik={formik} />
-          <StyledInput name="password" type="password" placeholder="비밀번호" formik={formik} />
+          <OutlinedInput 
+            name="email" 
+            placeholder="이메일" 
+            formik={formik} 
+            grey 
+          />
+          <OutlinedInput 
+            name="password" 
+            type="password" 
+            placeholder="비밀번호" 
+            formik={formik} 
+            grey
+          />
           <BtnCont>
             <Button type="submit" green>로그인</Button>
             {errmsg && (<ErrMsg>{errmsg}</ErrMsg>)}

@@ -43,6 +43,8 @@ const DynOrderPageIndex = ({ user, state, seen }) => {
           setSelected={setSelected}
           orders={orders}
           state={state}
+          v={v}
+          setV={setV}
         />
         <OrdersList
           orders={orders}

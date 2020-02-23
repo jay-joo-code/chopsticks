@@ -20,15 +20,22 @@ const ToolBarContainer = styled.div`
 `;
 
 const ToolBar = ({
-  btn, selected, setSelected, orders, state,
+  btn, selected, setSelected, orders, state, v, setV
 }) => {
   const [allSelected, setAllSelected] = useState(0);
+  const [selectedOrders, setSelectedOrders] = useState([])
 
   // whenever selected changes, check if all is selected
   useEffect(() => {
     if (selected.length === orders.length) setAllSelected(1);
     else setAllSelected(0);
   }, [selected, orders]);
+  
+  // when selected changes, apply changes to selectedOrders
+  useEffect(() => {
+    const filtered = orders.map((order) => selected.includes(order._id))
+    setSelectedOrders(filtered);
+  }, [selected])
 
   // handle toolbar checkbox click
   const handleCheckboxChange = (e) => {
