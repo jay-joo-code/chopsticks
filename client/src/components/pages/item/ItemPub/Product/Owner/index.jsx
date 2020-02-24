@@ -81,13 +81,14 @@ const Intro = styled.p`
 const Owner = ({ item }) => {
   const email = item && item.owner ? item.owner.email : '';
   const id = email.split('@')[0];
+  const src = item.owner.shop.image;
 
   return (
     <Container>
       <Wrapper>
         <ImgContainer>
           <ImgWrapper>
-            <Img src={placeholder} />
+            <Img src={src} />
           </ImgWrapper>
         </ImgContainer>
         <TextCont>
