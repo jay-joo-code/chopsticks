@@ -22,6 +22,12 @@ var userSchema = Schema({
     type: String,
     default: ''
   },
+  sex: {
+    type: String,
+  },
+  bday: {
+    type: Date
+  },
   mobile: {
     type: String,
     default: ''

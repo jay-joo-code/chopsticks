@@ -27,7 +27,7 @@ const Input = styled.input`
   border: ${(props) => (props.hasError ? 'solid 1px #de6362' : 'none')};
   text-align: ${(props) => (props.right ? 'right' : '')};
   width: 100%;
-  background: ${props => props.grey ? 'rgba(0, 0, 0, .03)' : ''};
+  background: ${props => props.grey ? 'rgba(0, 0, 0, .1)' : ''};
 `;
 
 const ButtonContainer = styled.div`

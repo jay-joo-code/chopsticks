@@ -22,6 +22,7 @@ const OrderActions = ({ order, setV, v }) => {
   const actions = orderStateToActions(order.state);
   const handleBadgeClick = (action) => {
     setAction(action);
+    if (action === '배송추적' || action === '리뷰쓰기') return;
     setShow(true);
   };
 

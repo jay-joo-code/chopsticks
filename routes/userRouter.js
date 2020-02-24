@@ -70,6 +70,18 @@ userRouter.put('/:id/update', async (req, res) => {
   }
 });
 
+// update pwd
+userRouter.put('/:id/update/pwd', passport.authenticate('local'), async (req, res) => {
+  try {
+    const { newPwd } = req.body;
+    const hash = bcrypt.hashSync(newPwd, SALT);
+    const result = await User.findByIdAndUpdate(req.params.id, { password: hash });
+    res.send(result);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
 // ADD ITEM TO CART
 userRouter.post('/:id/cart/add', async (req, res) => {
   try {

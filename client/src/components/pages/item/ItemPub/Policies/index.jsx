@@ -1,14 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
+import PoliciesPage from './PoliciesPage';
+import useCurrentItem from 'src/util/hooks/useCurrentItem';
 
-const Container = styled.div`
-
-`;
-
-const Policies = () => (
-  <Container>
-        Policies
-  </Container>
-);
+const Policies = () => {
+  const item = useCurrentItem();
+  if (!item) return <div />;
+  const policies = item.owner.shop.policies;
+  
+  return (
+  <PoliciesPage
+    policies={policies}
+  />
+  )
+};
 
 export default Policies;
