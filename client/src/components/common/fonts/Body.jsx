@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledBody = styled.h2`
+const StyledBody = styled.p`
   opacity: .8;
   font-size: 1rem;
 `;
