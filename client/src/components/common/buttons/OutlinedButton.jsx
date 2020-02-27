@@ -6,7 +6,8 @@ const Button = styled.button`
   border: solid 1px #a8a29b;
   background: none;
   color: #808d87;
-  padding: .8rem 1rem;
+  padding: .4rem .8rem;
+  font-size: .8rem;
 `;
 
 const OutlinedButton = (props) => (

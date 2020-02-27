@@ -92,10 +92,7 @@ const Owner = ({ item }) => {
           </ImgWrapper>
         </ImgContainer>
         <TextCont>
-          <Name>
-@
-            {id}
-          </Name>
+          <Name>{`@${item.owner.shop.title}`}</Name>
           <Intro>{item && item.owner && item.owner.shop.intro}</Intro>
         </TextCont>
       </Wrapper>

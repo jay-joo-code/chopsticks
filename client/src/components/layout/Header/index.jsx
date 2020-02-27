@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import DynamicContainer from 'src/components/layout/DynamicContainer';
 import SearchBox from 'src/components/common/form/SearchBox';
-import useIsMobile from 'src/util/hooks/useIsMobile';
 import theme from 'src/theme';
 import Logo from './Logo';
 import Nav from './Nav';
@@ -28,7 +27,6 @@ const LeftCont = styled.div`
 `;
 
 const Header = () => {
-  const isMobile = useIsMobile();
   return (
     <div>
       <DynamicContainer>

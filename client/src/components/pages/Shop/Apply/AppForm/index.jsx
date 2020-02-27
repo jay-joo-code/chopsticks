@@ -133,7 +133,6 @@ const AppForm = () => {
           </li>
         </ul>
       </div>
-      <p className="txt2">입점신청 후 1주일 안에 연락을 드립니다.</p>
       <BtnCont>
         <RedButton type="submit">입점 신청</RedButton>
       </BtnCont>

@@ -6,10 +6,13 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Container = styled.div`
-  padding: .5rem;
-  margin-right: .5rem;
-  position: relative
+  padding: .5rem .5rem 0 .5rem;
+  margin-bottom: .5rem;
+  position: relative;
 `;
+
+const IconContainer = styled.div`
+`
 
 const CartIcon = () => {
   const user = useSelector((state) => state.user);
@@ -18,7 +21,9 @@ const CartIcon = () => {
     <Container>
       <Link to="/cart">
         <Notification text={cartItemsCount} />
-        <CartSVG />
+        <IconContainer>
+          <CartSVG />
+        </IconContainer>
       </Link>
     </Container>
   );
