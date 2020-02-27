@@ -30,6 +30,8 @@ const AppForm = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const [titleVerif, setTitleVerif] = useState(false);
+  const firstThree = ['010', '011', '016', '017', '018', '019'];
+  const spec = ['!', '@', '#', '$', '%']
   const formik = useFormik({
     initialValues: {
       id: user._id,
@@ -40,13 +42,16 @@ const AppForm = () => {
     },
     validationSchema: Yup.object({
       title: Yup.string()
-        .max(16, '최대 16자')
-        .required('필수'),
+        .required('필수')
+        .matches(/^[\w가-힣.-]+$/, '특수문자는 .-_ 만 가능합니다'),
       email: Yup.string()
         .email('이메일 형식 오류')
         .required('필수'),
-      mobile: Yup.number()
-        .typeError('숫자만 기입해주세요')
+      mobile: Yup.string()
+        .min(10, '최소 10자')
+        .max(11, '최대 11자')
+        .matches(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g, '형식이 틀립니다')
+        .test('firstThree', '첫 3자는 010, 011,016, 017, 018, 019 중에 하나이여야 됩니다', v => v && firstThree.includes(v.substring(0, 3)))
         .required('필수'),
       intro: Yup.string()
         .required('필수'),
