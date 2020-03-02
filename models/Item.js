@@ -43,6 +43,15 @@ var itemSchema = Schema({
   },
   content: String,
   intro: String,
+  optGrps: {
+    type: [{
+      title: String,
+      opts: [{
+        name: String,
+        diff: Number
+      }]
+    }]
+  },
   options: [{
     name: String,
     priceChange: Number

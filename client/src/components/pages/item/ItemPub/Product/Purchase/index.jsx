@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import Compressed from './Compressed';
+import Alert from 'src/components/common/displays/Alert';
 
 const DyncCont = styled.div`
   position: fixed;
@@ -80,31 +81,48 @@ const CartAlert = styled.p`
 `;
 
 const Purchase = ({ item }) => {
+  // mobile 
   const [expanded, setExpanded] = useState(false);
   const price = item && item.price && item.price.toLocaleString('en');
   const isDesktop = window.innerWidth >= theme.desktopContentWidth;
   const handleClick = () => {
     setExpanded(!expanded);
   };
-
-  const [optOne, setOptOne] = useState(0);
-  const [optTwo, setOptTwo] = useState(0);
-  const [itemToCart, setItemToCart] = useState(false);
-  const handleOptOneChange = (e) => setOptOne(e.target.value);
-  const handleOptTwoChange = (e) => setOptTwo(e.target.value);
+  
+  // alert
+  const [showAlert, setShowAlert] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  
+  // opts
+  const [optionsIndex, setOptionsIndex] = useState(Array(item.optGrps.length));
+  const handleOptChange = (e, optGrpIndex) => {
+    const selectedIndex = e.target.value;
+    let newIndexArray = [...optionsIndex];
+    newIndexArray.splice(optGrpIndex, 1, selectedIndex);
+    setOptionsIndex(newIndexArray);
+  }
+  
+  // add to cart
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const handleAddToCart = () => {
+    // validation
     if (!user) history.push('/login');
+    else if (optionsIndex.includes(undefined)) {
+     setIsSuccess(false);
+     setShowAlert(true);
+    }
+    
     else {
       const cartObj = {
         item: item._id,
-        optionsIndex: [Number(optOne), Number(optTwo)],
+        optionsIndex,
         quantity: 1,
       };
       axios.post(`/api/user/${user._id}/cart/add`, { cartObj })
         .then((res) => {
-          setItemToCart(true);
+          setIsSuccess(true);
+          setShowAlert(true);
           fetchSelfAndStore(user._id);
         })
         .catch((e) => {
@@ -112,7 +130,8 @@ const Purchase = ({ item }) => {
         });
     }
   };
-
+  
+  // conditional rendering
   if (!item) return <div />;
   if (!isDesktop && !expanded) {
     return (
@@ -132,38 +151,34 @@ const Purchase = ({ item }) => {
           {price}
 원
         </Price>
-        {item.options.length > 0 && (
+        {item.optGrps.map((optGrp, optGrpIndex) => (
           <SelectCont>
             <Select
-              value={optOne}
-              onChange={handleOptOneChange}
+              value={optionsIndex[optGrpIndex] || ''}
+              onChange={(e) => handleOptChange(e, optGrpIndex)}
+              placeholder={optGrp.title}
             >
-              {item.options && item.options.map((opt, i) => (
+              {optGrp.opts.map((opt, i) => (
                 <option key={opt.name} value={i}>
-                  {`${opt.name} (+${opt.priceChange || 0})`}
+                  {`${opt.name} (+${opt.diff})`}
                 </option>
               ))}
             </Select>
           </SelectCont>
-        )}
-        {item.optionsTwo.length > 0 && (
-        <SelectCont>
-          <Select
-            value={optTwo}
-            onChange={handleOptTwoChange}
-          >
-            {item.optionsTwo && item.optionsTwo.map((opt, i) => (
-              <option key={opt.name} value={i}>
-                {`${opt.name} (+${opt.priceChange || 0})`}
-              </option>
-            ))}
-          </Select>
-        </SelectCont>
-        )}
+        ))}
         <BuySect>
           <BuyButton white rounded>즉시 구매</BuyButton>
           <BuyButton onClick={handleAddToCart} green rounded>장바구니에 담기</BuyButton>
-          {itemToCart && <CartAlert>카트에 담겼습니다</CartAlert>}
+          <Alert
+            show={showAlert}
+            color={isSuccess ? 'primary' : 'danger'}
+            setShow={setShowAlert}
+            msg={
+              isSuccess
+                ? '카트에 상품을 담았습니다'
+                : '옵션을 골라주세요'
+            }
+          />
           {!isDesktop && <CloseBtn onClick={handleClick}>축소</CloseBtn>}
         </BuySect>
       </Container>

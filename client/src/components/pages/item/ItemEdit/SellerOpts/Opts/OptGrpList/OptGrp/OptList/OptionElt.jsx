@@ -24,22 +24,22 @@ const Delete = styled.div`
 `;
 
 const Option = ({
-  option, index, formik, name,
+  opt, index, formik, grpIndex
 }) => {
   const handleDelete = () => {
-    const newOptions = formik.values[name];
-    newOptions.splice(index, 1);
-    formik.setFieldValue(name, newOptions);
+    const newOptGrps = [...formik.values.optGrps];
+    newOptGrps[grpIndex].opts.splice(index, 1);
+    formik.setFieldValue('optGrps', newOptGrps);
   };
+  
   return (
     <Container>
       <TextCont>
-        {option.name}
+        {opt.name}
       </TextCont>
       <RightCont>
         <TextCont>
-    +
-          {option.priceChange}
+          {`+${opt.diff}`}
         </TextCont>
         <Delete onClick={handleDelete}>X</Delete>
       </RightCont>

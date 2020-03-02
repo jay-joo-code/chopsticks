@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import selectIcon from 'src/assets/images/ui/select.png';
 import ErrMsg from 'src/components/common/form/ErrMsg';
-import Label from 'src/components/common/form/Label';
+import Label from 'src/components/common/fonts/Label';
 
 const Container = styled.div`
 
@@ -23,7 +23,7 @@ const StyledSelect = styled.select`
 `;
 
 const Select = ({
-  formik, name, children, label, ...rest
+  formik, name, children, label, placeholder, ...rest
 }) => {
   const hasError = formik ? formik.touched[name] && formik.errors[name] : false;
   const formikProps = formik ? formik.getFieldProps(name) : [];
@@ -37,6 +37,7 @@ const Select = ({
         {...formikProps}
         {...rest}
       >
+        <option value='' disabled>{placeholder || '선택'}</option>
         {children}
       </StyledSelect>
       {formik && hasError

@@ -1,8 +1,13 @@
 const getTotalPrice = (cartObj) => {
   const { item, quantity, optionsIndex } = cartObj;
-  const optOne = item.options.length > 0 && item.options[optionsIndex[0]];
-  const optTwo = item.optionsTwo.length > 0 && item.optionsTwo[optionsIndex[1]];
-  const totalPrice = (item.price + (optOne.priceChange || 0) + (optTwo.priceChange || 0)) * quantity;
+  if (!item.optGrps) return item.price * quantity;
+  
+  const optPrices = item.optGrps.map((optGrp, i) => {
+    return optGrp.opts[optionsIndex[i]].diff
+  })
+  const optPrice = optPrices.reduce((acc, cur) => acc + cur, 0);
+  const totalPrice = (item.price + optPrice) * quantity;
+  
   return totalPrice;
 }
 

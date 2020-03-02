@@ -12,19 +12,19 @@ const List = styled.div`
   padding: 1rem;
 `;
 
-const OptionsList = ({ formik, name }) => {
-  const elts = formik.values[name];
+const OptionsList = ({ opts, formik, grpIndex }) => {
+  
 
   return (
     <Container>
       <List>
-        {elts && elts.map((option, i) => (
+        {opts && opts.map((opt, i) => (
           <OptionElt
-            key={option.name}
+            key={opt.name}
             index={i}
-            option={option}
+            opt={opt}
             formik={formik}
-            name={name}
+            grpIndex={grpIndex}
           />
         ))}
       </List>

@@ -1,7 +1,7 @@
 import React from 'react';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import styled from 'styled-components';
-import Label from 'src/components/common/form/Label';
+import Label from 'src/components/common/fonts/Label';
 import InputCont from '../InputCont';
 import SectCont from '../SectCont';
 
@@ -22,11 +22,13 @@ const SectThree = ({ formik }) => (
         <OutlinedInput
           name="processingMin"
           formik={formik}
+          width={100}
         />
         <Duration>~</Duration>
         <OutlinedInput
           name="processingMax"
           formik={formik}
+          width={100}
         />
       </InlineCont>
     </InputCont>
@@ -36,11 +38,13 @@ const SectThree = ({ formik }) => (
         <OutlinedInput
           name="deliveryMin"
           formik={formik}
+          width={100}
         />
         <Duration>~</Duration>
         <OutlinedInput
           name="deliveryMax"
           formik={formik}
+          width={100}
         />
       </InlineCont>
     </InputCont>
@@ -51,6 +55,7 @@ const SectThree = ({ formik }) => (
         formik={formik}
         sideText="원"
         right
+        width={150}
       />
     </InputCont>
   </SectCont>

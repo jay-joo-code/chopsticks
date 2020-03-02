@@ -7,6 +7,7 @@ const Container = styled.div`
   left: 0;
   right: 0;
   background: ${(props) => props.theme.primary};
+  background: ${props => props.color ? props.theme[props.color] : ''};
   display: flex;
   justify-content: center;
   padding: .5rem 0;
@@ -19,7 +20,7 @@ const Msg = styled.p`
   font-size: .8rem;
 `;
 
-const Alert = ({ show, setShow, msg }) => {
+const Alert = ({ show, setShow, msg, color }) => {
   useEffect(() => {
     if (show) {
       setTimeout(() => setShow(false), 3000);
@@ -28,6 +29,7 @@ const Alert = ({ show, setShow, msg }) => {
   return (
     <Container
       show={show}
+      color={color}
     >
       <Msg>{msg}</Msg>
     </Container>

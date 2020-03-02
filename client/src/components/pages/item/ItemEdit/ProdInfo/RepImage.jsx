@@ -1,26 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import FileUpload from 'src/components/common/form/FileUpload';
-import ErrMsg from 'src/components/common/form/ErrMsg';
-import Label from 'src/components/common/form/Label';
 import styled from 'styled-components';
 import ImgDisplay from './ImgDisplay';
-import SectCont from '../SectCont';
+import Label from 'src/components/common/fonts/Label';
+import FileUpload from 'src/components/common/form/FileUpload';
+import ErrMsg from 'src/components/common/fonts/ErrMsg';
+import Body from 'src/components/common/fonts/Body';
 
-const LabelCont = styled.div`
-  padding: 1rem 0;
+const Container = styled.div`
+
 `;
 
-const SectImg = ({ formik, _id }) => {
+const LabelCont = styled.div`
+  margin-bottom: 1rem;
+`
+
+const RepImage = ({ formik, _id }) => {
   const [src, setSrc] = useState();
   useEffect(() => {
     if (src && src.length > 0) {
       formik.setFieldValue('image', src);
     }
   }, [src]);
+  
+  
   return (
-    <SectCont>
+    <Container>
       <LabelCont>
         <Label>대표 사진 *</Label>
+        <Body>*640 x 640 픽셀의 사진을 권장합니다</Body>
       </LabelCont>
       <FileUpload
         path={`/items/${_id}`}
@@ -30,8 +37,8 @@ const SectImg = ({ formik, _id }) => {
         ? <ErrMsg>{formik.errors.image}</ErrMsg>
         : <div />}
       <ImgDisplay src={formik.values.image} />
-    </SectCont>
-  );
+    </Container>
+  )
 };
 
-export default SectImg;
+export default RepImage;

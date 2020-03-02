@@ -1,24 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import RedButton from 'src/components/common/buttons/RedButton';
 import log from 'src/util/log';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import ErrMsg from 'src/components/common/form/ErrMsg';
-import SectOne from './SectOne';
-import SectOpt from './SectOpt';
-import SectThree from './SectThree';
-import SectImg from './SectImg';
-import SectIntro from './SectIntro';
+import FormContents from './FormContents';
 
 const Container = styled.div`
   padding: 3rem 0;
-`;
-
-const Form = styled.form`
-
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    padding: 3rem 7rem;
+  }
 `;
 
 const Title = styled.h2`
@@ -29,27 +23,19 @@ const Title = styled.h2`
   margin: 4rem 0;
 `;
 
-const BtnCont = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
 const ItemEdit = ({ item }) => {
   const history = useHistory();
   const formik = useFormik({
     initialValues: {
       name: item.name,
       category: item.category,
-      style: item.style,
+      style: item.style || '',
       image: item.image,
       content: item.content,
       intro: item.intro,
       price: item.price,
       stock: item.stock,
-      options: item.options,
-      optionsTwo: item.optionsTwo,
+      optGrps: item.optGrps || [],
       madeOnOrder: item.madeOnOrder,
       processingMin: item.processingMin,
       processingMax: item.processingMax,
@@ -107,29 +93,15 @@ const ItemEdit = ({ item }) => {
     },
   });
 
-  const [hasErrors, setHasErrors] = useState(false);
-  useEffect(() => {
-    setHasErrors(Object.keys(formik.errors).length > 0);
-  }, [formik.errors]);
-
   if (item === {} || !formik) return <div />;
 
   return (
     <Container>
       <Title>상품 등록</Title>
-      <Form onSubmit={formik.handleSubmit}>
-        <SectOne formik={formik} />
-        <SectIntro formik={formik} _id={item._id} />
-        <SectImg formik={formik} _id={item._id} />
-        <SectOpt formik={formik} />
-        <SectThree formik={formik} />
-        <BtnCont>
-          <RedButton type="submit">저장</RedButton>
-          {hasErrors && (
-            <ErrMsg>입력하신 항목에 오류가 있습니다</ErrMsg>
-          )}
-        </BtnCont>
-      </Form>
+      <FormContents
+        formik={formik}
+        _id={item._id}
+      />
     </Container>
   );
 };

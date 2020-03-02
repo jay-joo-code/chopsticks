@@ -99,9 +99,6 @@ const ItemInfo = ({
 }) => {
   const user = useSelector((state) => state.user);
   const { item, quantity, optionsIndex } = cartObj;
-  const ownerId = item.owner.email.split('@')[0];
-  const optOne = item.options.length > 0 && item.options[optionsIndex[0]];
-  const optTwo = item.optionsTwo.length > 0 && item.optionsTwo[optionsIndex[1]];
   const totalPrice = getTotalPrice(cartObj);
 
   const handleQtyChange = (e) => {
@@ -122,7 +119,7 @@ const ItemInfo = ({
           <Link to={`/item/${item._id}`}>
             <Name>{item.name}</Name>
           </Link>
-          <Owner>{`@${ownerId}`}</Owner>
+          <Owner>{`@${item.owner.shop.title}`}</Owner>
         </div>
         <ActionsSection
           order={order}
@@ -134,8 +131,10 @@ const ItemInfo = ({
       </Top>
       <Bottom>
         <Options>
-          <OptElt>{optOne && `${optOne.name} (+ ${optOne.priceChange || 0}원)`}</OptElt>
-          <OptElt>{optTwo && `${optTwo.name} (+ ${optTwo.priceChange || 0}원)`}</OptElt>
+          {item.optGrps && item.optGrps.map((optGrp, i) => {
+            const opt = optGrp.opts[optionsIndex[i]]
+            return opt && <OptElt key={optGrp.title}>{`${opt.name} (+ ${opt.diff}원)`}</OptElt>
+          })}
         </Options>
         <PriceCalc>
           <QtyCont>
