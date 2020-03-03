@@ -52,8 +52,6 @@ const ItemEdit = ({ item }) => {
         .required('필수'),
       style: Yup.string()
         .required('필수'),
-      content: Yup.string()
-        .required('필수'),
       intro: Yup.string()
         .required('필수'),
       price: Yup.number()
