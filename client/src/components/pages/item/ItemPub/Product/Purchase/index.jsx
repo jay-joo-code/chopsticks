@@ -74,12 +74,6 @@ const CloseBtn = styled.div`
   cursor: pointer;
 `;
 
-const CartAlert = styled.p`
-  font-size: .8rem;
-  opacity: .8;
-  text-align: center;
-`;
-
 const Purchase = ({ item }) => {
   // mobile 
   const [expanded, setExpanded] = useState(false);

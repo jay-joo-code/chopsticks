@@ -7,6 +7,7 @@ import SearchBox from 'src/components/common/form/SearchBox';
 import theme from 'src/theme';
 import ItemsList from './ItemsList';
 import Toolbar from './Toolbar';
+import Categories from './Categories';
 
 const Container = styled.div`
 
@@ -28,6 +29,7 @@ const SearchCont = styled.div`
 const Browse = () => {
   const history = useHistory();
   const location = useLocation();
+  
   useEffect(() => {
     const query = getQuery(location);
     if (!query.page || !query.limit) {
@@ -38,10 +40,11 @@ const Browse = () => {
       };
       updateQuery(newQuery, location, history);
     }
-  }, [location]);
+  }, [location, history]);
 
   return (
     <Container>
+      <Categories />
       <SearchCont>
         <DyncCont>
           <SearchBox />

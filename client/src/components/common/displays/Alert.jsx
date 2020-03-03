@@ -26,6 +26,7 @@ const Alert = ({ show, setShow, msg, color }) => {
       setTimeout(() => setShow(false), 3000);
     }
   }, [show]);
+  
   return (
     <Container
       show={show}
