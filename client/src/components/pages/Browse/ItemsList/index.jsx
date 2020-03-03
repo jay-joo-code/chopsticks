@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import log from 'src/util/log';
 import ItemsList from 'src/components/layout/ItemsList';
@@ -15,24 +15,27 @@ const NavCont = styled.div`
 `;
 
 const ItemsListComp = () => {
-  const { search } = useLocation();
+  const location = useLocation();
+  const history = useHistory();
   const [items, setItems] = useState([]);
   const [metadata, setMetadata] = useState({});
+  
   useEffect(() => {
-    axios.get(`/api/item${search}`)
+    const path = `/api/item${location.search}`;
+    axios.get(path)
       .then((res) => {
-        setMetadata({
-          page: res.data.page,
-          totalPages: res.data.totalPages,
-        });
-        setItems(res.data.docs);
+        if (res.data.page && res.data.totalPages) {
+          setMetadata({
+            page: res.data.page,
+            totalPages: res.data.totalPages,
+          });
+        }
+        if (res.data.docs) setItems(res.data.docs);
       })
       .catch((e) => {
         log('ERROR fetch filtered items', e);
       });
-  }, [search]);
-
-  if (!items || !metadata) return <div />;
+  }, [location, history]);
 
   return (
     <Container>

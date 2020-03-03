@@ -16,7 +16,8 @@ const Wrapper = styled.div`
 `;
 
 const ItemsList = ({ items }) => {
-  const displayItems = items.filter((item) => item.display);
+  const displayItems = items ? items.filter((item) => item.display) : [];
+  
   return (
     <Container>
       <Wrapper>
