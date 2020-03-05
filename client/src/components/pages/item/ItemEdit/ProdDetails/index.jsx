@@ -37,21 +37,21 @@ const SectIntro = ({ formik, _id }) => {
   const padding = isMinified ? '0' : '2rem 50px';
   
   // guidelines
-  const guidelines = `<div class="textlayer" style="width: 1440px; height: 810px;">
-<p style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">* 상품의 가치를 스토리와 함께 표현해 보세요</p>
-<p style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">&nbsp; 아래의 항목들은 상품에 맞게 배치 / 작성 하여도 좋습니다.</p>
-<p style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">&nbsp;</p>
-<h1 style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">제품의 상세 소개 (제품의 제작 배경 및 스토리를 담아 제품 본연의 가치를 전달해주세요. )</h1>
-<h1 style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">&nbsp;</h1>
-<h1 style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">1. 제품 제작의 배경 및 스토리</h1>
+  const guidelines = `<div>
+<p>* 상품의 가치를 스토리와 함께 표현해 보세요</p>
+<p>&nbsp; 아래의 항목들은 상품에 맞게 배치 / 작성 하여도 좋습니다.</p>
 <p>&nbsp;</p>
-<h1 style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">2. 제품 소개</h1>
+<h1>제품의 상세 소개 (제품의 제작 배경 및 스토리를 담아 제품 본연의 가치를 전달해주세요. )</h1>
+<h1>&nbsp;</h1>
+<h1>1. 제품 제작의 배경 및 스토리</h1>
 <p>&nbsp;</p>
-<h1 style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">3. 제작 과정 &amp; 방법 (제작 방법과 제작 과정의 이미지를 함께 보여주시면 더 좋습니다)</h1>
-<h1 style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">&nbsp;</h1>
-<h1 style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">4. Notice &amp; FAQ</h1>
-<h1 style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">&nbsp;</h1>
-<h1 style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">5. 작가 / 디자이너 &amp; 브랜드 소개</h1>
+<h1>2. 제품 소개</h1>
+<p>&nbsp;</p>
+<h1>3. 제작 과정 &amp; 방법 (제작 방법과 제작 과정의 이미지를 함께 보여주시면 더 좋습니다)</h1>
+<h1>&nbsp;</h1>
+<h1>4. Notice &amp; FAQ</h1>
+<h1>&nbsp;</h1>
+<h1>5. 작가 / 디자이너 &amp; 브랜드 소개</h1>
 <p>&nbsp;</p>
 </div>`
   const initialValue = formik.values.intro || guidelines;
@@ -69,7 +69,7 @@ const SectIntro = ({ formik, _id }) => {
               height: 700,
               width: dynamicWidth,
               menubar: false,
-              content_style: `body { padding: ${padding}; margin: 0; } img { width: 620px; object-fit: cover; }`,
+              content_style: `body { padding: ${padding}; margin: 0; } img { width: 620px; object-fit: cover; } h1 { font-size: 1.2rem; }`,
               plugins: [
                 'advlist autolink lists link image',
                 'charmap print preview anchor help',
