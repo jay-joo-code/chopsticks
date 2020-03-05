@@ -16,6 +16,7 @@ const EditorContainer = styled.div`
 `
 
 const SectIntro = ({ formik, _id }) => {
+  // handlers
   const handleEditorChange = (e) => {
     formik.setFieldValue('intro', e.target.getContent());
     console.log(e.target.getContent())
@@ -29,7 +30,13 @@ const SectIntro = ({ formik, _id }) => {
       failure(e);
     }
   };
-  const dynamicWidth = window.innerWidth < 620 ? window.innerWidth - 40 : 620;
+  
+  // constants
+  const isMinified = window.innerWidth < 620;
+  const dynamicWidth = isMinified ? window.innerWidth - 40 : 720;
+  const padding = isMinified ? '0' : '2rem 50px';
+  
+  // guidelines
   const guidelines = `<div class="textlayer" style="width: 1440px; height: 810px;">
 <p style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">* 상품의 가치를 스토리와 함께 표현해 보세요</p>
 <p style="left: 74.55000000000001px; top: 184.63432617187505px; font-size: 16.5px; font-family: sans-serif;">&nbsp; 아래의 항목들은 상품에 맞게 배치 / 작성 하여도 좋습니다.</p>
@@ -62,6 +69,7 @@ const SectIntro = ({ formik, _id }) => {
               height: 700,
               width: dynamicWidth,
               menubar: false,
+              content_style: `body { padding: ${padding}; } img { width: 620px; object-fit: cover; }`,
               plugins: [
                 'advlist autolink lists link image',
                 'charmap print preview anchor help',
