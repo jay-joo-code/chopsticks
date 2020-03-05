@@ -5,11 +5,13 @@ import RedButton from 'src/components/common/buttons/RedButton';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
+import PhoneVerifInput from 'src/components/common/form/PhoneVerifInput';
 import OutlinedTextarea from 'src/components/common/form/OutlinedTextarea';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import log from 'src/util/log';
 import { useHistory } from 'react-router-dom';
+
 
 const Form = styled.form`
 
@@ -31,13 +33,13 @@ const AppForm = () => {
   const history = useHistory();
   const [titleVerif, setTitleVerif] = useState(false);
   const firstThree = ['010', '011', '016', '017', '018', '019'];
-  const spec = ['!', '@', '#', '$', '%']
   const formik = useFormik({
     initialValues: {
       id: user._id,
       title: '',
       email: user.email,
       mobile: user.mobile || '',
+      mobileVerif: user.mobileVerif || false,
       intro: '',
     },
     validationSchema: Yup.object({
@@ -53,6 +55,7 @@ const AppForm = () => {
         .matches(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g, '형식이 틀립니다')
         .test('firstThree', '첫 3자는 010, 011,016, 017, 018, 019 중에 하나이여야 됩니다', v => v && firstThree.includes(v.substring(0, 3)))
         .required('필수'),
+      mobileVerif: Yup.bool().oneOf([true], '휴대폰 인증은 필수입니다'),
       intro: Yup.string()
         .required('필수'),
     }),
@@ -123,8 +126,9 @@ const AppForm = () => {
             />
           </li>
           <li>
-            <OutlinedInput
+            <PhoneVerifInput
               name="mobile"
+              verifName="mobileVerif"
               label="전화번호 *"
               formik={formik}
             />
@@ -139,7 +143,7 @@ const AppForm = () => {
         </ul>
       </div>
       <BtnCont>
-        <RedButton type="submit">입점 신청</RedButton>
+        <RedButton type="submit" id='submit-btn'>입점 신청</RedButton>
       </BtnCont>
     </Form>
   );

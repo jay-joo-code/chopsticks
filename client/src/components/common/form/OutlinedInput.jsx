@@ -9,6 +9,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   width: ${props => props.width ? `${props.width}px` : ''};
+  background: inherit;
 `;
 
 const InputArea = styled.div`
@@ -28,11 +29,13 @@ const Input = styled.input`
   border: ${(props) => (props.hasError ? 'solid 1px #de6362' : 'none')};
   text-align: ${(props) => (props.right ? 'right' : '')};
   width: 100%;
+  background: white;
   background: ${props => props.grey ? 'rgba(0, 0, 0, .1)' : ''};
 `;
 
 const ButtonContainer = styled.div`
   margin-left: 1rem;
+  flex-grow: 5;
 `;
 
 const OutlinedInput = ({

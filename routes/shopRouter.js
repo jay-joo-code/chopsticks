@@ -37,6 +37,7 @@ shopRouter.post('/apply', async (req, res) => {
   try {
     const data = {
       mobile: req.body.mobile,
+      mobileVerif: req.body.mobileVerif,
       shop: {
         title: req.body.title,
         intro: req.body.intro,

@@ -9,15 +9,11 @@ import axios from 'axios';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 
 const Container = styled.div`
-
-`;
-
-const StyledInput = styled(OutlinedInput)`
-  background-color: rgba(0, 0, 0, .1);
 `;
 
 const InputCont = styled.div`
   margin: .5rem;
+  background: inherit;
 `;
 
 const BtnCont = styled.div`
@@ -70,28 +66,28 @@ const DeliveryForm = ({ setView, user }) => {
     <Container>
       <form onSubmit={formik.handleSubmit}>
         <InputCont>
-          <StyledInput
+          <OutlinedInput
             name="recipient"
             label="받는분"
             formik={formik}
           />
         </InputCont>
         <InputCont>
-          <StyledInput
+          <OutlinedInput
             name="address"
             label="주소"
             formik={formik}
           />
         </InputCont>
         <InputCont>
-          <StyledInput
+          <OutlinedInput
             name="addressDetail"
             label="주소상세"
             formik={formik}
           />
         </InputCont>
         <InputCont>
-          <StyledInput
+          <OutlinedInput
             name="mobile"
             label="전화번호"
             formik={formik}

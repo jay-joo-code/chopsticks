@@ -32,6 +32,10 @@ var userSchema = Schema({
     type: String,
     default: ''
   },
+  mobileVerif: {
+    type: Boolean,
+    default: false
+  },
   password: { //only email provider case has password
     type: String
   },

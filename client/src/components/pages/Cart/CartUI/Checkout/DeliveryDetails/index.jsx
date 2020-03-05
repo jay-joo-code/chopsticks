@@ -4,10 +4,24 @@ import { useSelector } from 'react-redux';
 import RedButton from 'src/components/common/buttons/RedButton';
 import DeliveryDetailCard from 'src/components/common/cards/DeliveryDetailCard';
 import DeliveryPopup from './DeliveryPopup';
+import UserInfo from './UserInfo';
+import Subheading from 'src/components/common/fonts/Subheading'
 
 const Container = styled.div`
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    justify-content: flex-start;
+  }
 `;
+
+const Section = styled.div`
+  min-width: 100px;
+  margin: 1rem 0;
+`
 
 const Header = styled.div`
   display: flex;
@@ -41,24 +55,27 @@ const DeliveryDetails = () => {
 
   return (
     <Container>
-      <Header>
-        <p>배송정보</p>
+      <Section>
+        <Subheading>주문 고객</Subheading>
+        <UserInfo user={user} />
+      </Section>
+      <Section>
         <StyledBtn green rounded onClick={handleClick}>배송지 추가 / 변경</StyledBtn>
-      </Header>
-      {hasDeliveryDetails
-        ? (
-          <DeliveryDetailCard
-            {...selectedData}
-            selected
-          />
-        )
-        : (<Warning>배송지 정보를 추가해 주세요</Warning>)}
-
-      <DeliveryPopup
-        user={user}
-        display={displayPopup}
-        handleClosePopup={handleClosePopup}
-      />
+        {hasDeliveryDetails
+          ? (
+            <DeliveryDetailCard
+              {...selectedData}
+              selected
+            />
+          )
+          : (<Warning>배송지 정보를 추가해 주세요</Warning>)}
+  
+        <DeliveryPopup
+          user={user}
+          display={displayPopup}
+          handleClosePopup={handleClosePopup}
+        />
+      </Section>
     </Container>
   );
 };
