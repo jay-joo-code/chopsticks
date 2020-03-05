@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import SectCont from './../SectCont';
 import RepImage from './RepImage';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
@@ -7,9 +8,21 @@ import useStyles from 'src/util/hooks/useStyles';
 import Select from 'src/components/common/form/Select';
 import InputCont from './../InputCont';
 
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+  
+  & > div {
+    margin-right: 1rem;
+  }
+`
+
 const ProdInfo = ({formik, _id }) => {
   const cat = useCategories();
   const styles = useStyles();
+  const subcats = formik.values.category && cat && cat.length !== 0
+    ? cat.filter((category) => category.name === formik.values.category)[0].sub
+    : []
   
   return (
     <SectCont>
@@ -33,15 +46,28 @@ const ProdInfo = ({formik, _id }) => {
         </Select>
       </InputCont>
       <InputCont>
-      <Select
-        name="category"
-        label="카테고리 *"
-        formik={formik}
-      >
-        {cat.map((opt) => (
-          <option key={opt.name} value={opt.name}>{opt.korean}</option>
-        ))}
-      </Select>
+      <Row>
+        <Select
+          name="category"
+          label="카테고리 *"
+          formik={formik}
+        >
+          {cat.map((opt) => (
+            <option key={opt.name} value={opt.name}>{opt.korean}</option>
+          ))}
+        </Select>
+        {formik.values.category && 
+          <Select
+            name="subcat"
+            label="세부 카테고리 *"
+            formik={formik}
+          >
+            {subcats.map((opt) => (
+              <option key={opt} value={opt}>{opt}</option>
+            ))}
+          </Select>
+        }
+      </Row>
       </InputCont>
     </SectCont>
   )

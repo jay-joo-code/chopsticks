@@ -29,6 +29,7 @@ const ItemEdit = ({ item }) => {
     initialValues: {
       name: item.name,
       category: item.category,
+      subcat: item.subcat || '',
       style: item.style || '',
       image: item.image,
       content: item.content,
@@ -49,6 +50,8 @@ const ItemEdit = ({ item }) => {
       image: Yup.string()
         .required('필수'),
       category: Yup.string()
+        .required('필수'),
+      subcat: Yup.string()
         .required('필수'),
       style: Yup.string()
         .required('필수'),

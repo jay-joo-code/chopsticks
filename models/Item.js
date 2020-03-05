@@ -38,6 +38,7 @@ var itemSchema = Schema({
     type: String,
     default: ''
   },
+  subcat: String,
   style: { // crafted || original
     type: String
   },

@@ -7,14 +7,16 @@ const sort = require('./../util/sort');
 itemRouter.get('/', async (req, res) => {
   try {
     // CREATE FILTER: CATEGORY, OWNER, SEARCH
-    const { category, owner, search } = req.query;
+    const { category, subcat, owner, search } = req.query;
     const categoryFilter = category ? { category } : {};
+    const subcatFilter = subcat ? { subcat } : {};
     const ownerFilter = owner ? { owner } : {};
     const searchFilter = search ? { name: { $regex: search } } : {};
 
     const filter = {
       display: true,
       ...categoryFilter,
+      ...subcatFilter,
       ...ownerFilter,
       ...searchFilter,
     };

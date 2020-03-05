@@ -7,7 +7,7 @@ const StyledBody = styled.p`
 `;
 
 const Body = (props) => (
-  <StyledBody>
+  <StyledBody {...props}>
     {props.children}
   </StyledBody>
 );

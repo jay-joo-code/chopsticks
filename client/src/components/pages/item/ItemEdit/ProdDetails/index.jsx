@@ -19,8 +19,8 @@ const SectIntro = ({ formik, _id }) => {
   // handlers
   const handleEditorChange = (e) => {
     formik.setFieldValue('intro', e.target.getContent());
-    console.log(e.target.getContent())
   };
+  
   const handleEditorImageUpload = async (blobInfo, success, failure) => {
     const file = new File([blobInfo.blob()], blobInfo.filename());
     try {
@@ -66,10 +66,10 @@ const SectIntro = ({ formik, _id }) => {
             apiKey="hx67eymwnlq0vtdniv7pbbnfdip57g2vcuqtwmqyugszg4f1"
             initialValue={initialValue}
             init={{
-              height: 700,
+              height: 1000,
               width: dynamicWidth,
               menubar: false,
-              content_style: `body { padding: ${padding}; margin: 0; } img { width: 620px; object-fit: cover; } h1 { font-size: 1.2rem; }`,
+              content_style: `body { padding: ${padding}; margin: 0; opacity: .9; } img { width: 620px; object-fit: cover; } h1 { font-size: 1.2rem; }`,
               plugins: [
                 'advlist autolink lists link image',
                 'charmap print preview anchor help',

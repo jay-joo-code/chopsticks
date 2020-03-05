@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from 'react';
-
-const useCategories = () => {
-  const tempCat = [{
+const categories = [{
     korean: '홈데코',
     name: 'living',
     sub: ['조명', '오브제', '캔들', '방향', '월데코']
@@ -25,13 +22,5 @@ const useCategories = () => {
     name: 'limited',
     sub: ['졸업작품']
   }]
-  
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    setCategories(tempCat);
-  }, [])
-  
-  return categories;
-}
 
-export default useCategories;
+export default categories;
