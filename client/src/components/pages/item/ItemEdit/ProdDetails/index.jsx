@@ -69,7 +69,7 @@ const SectIntro = ({ formik, _id }) => {
               height: 700,
               width: dynamicWidth,
               menubar: false,
-              content_style: `body { padding: ${padding}; } img { width: 620px; object-fit: cover; }`,
+              content_style: `body { padding: ${padding}; margin: 0; } img { width: 620px; object-fit: cover; }`,
               plugins: [
                 'advlist autolink lists link image',
                 'charmap print preview anchor help',
