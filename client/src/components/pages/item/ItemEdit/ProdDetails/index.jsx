@@ -33,8 +33,9 @@ const SectIntro = ({ formik, _id }) => {
   
   // constants
   const isMinified = window.innerWidth < 620;
-  const dynamicWidth = isMinified ? window.innerWidth - 40 : 720;
-  const padding = isMinified ? '0' : '2rem 50px';
+  const dynamicWidth = isMinified ? window.innerWidth - 40 : 820;
+  const padding = isMinified ? '0' : '2rem 100px';
+  const font = 'h1 { font-size: 32px; margin: 0; } h2 { font-size: 24px; margin: 0; } h3 { font-size: 19px; margin: 0; } h4 { font-size: 16px; margin: 0; } h5 { font-size: 13px; margin: 0; } h6 { font-size: 10px; margin: 0; } p { font-size: 16px; margin: 0; }';
   
   // guidelines
   const guidelines = `<div>
@@ -60,7 +61,7 @@ const SectIntro = ({ formik, _id }) => {
     <SectCont>
       <Container>
         <Label>상품 상세 소개</Label>
-        <Body>* Heading 1 만 스타일이 적용 됩니다</Body>
+        <Body>* 이미지 넓이는 620px 를 권장합니다</Body>
         <EditorContainer>
           <Editor
             apiKey="hx67eymwnlq0vtdniv7pbbnfdip57g2vcuqtwmqyugszg4f1"
@@ -69,7 +70,7 @@ const SectIntro = ({ formik, _id }) => {
               height: 1000,
               width: dynamicWidth,
               menubar: false,
-              content_style: `body { padding: ${padding}; margin: 0; opacity: .9; } img { width: 620px; object-fit: cover; } h1 { font-size: 1.2rem; }`,
+              content_style: `body { padding: ${padding}; margin: 0; opacity: .9; } img { width: 620px; object-fit: cover; }` + font,
               plugins: [
                 'advlist autolink lists link image',
                 'charmap print preview anchor help',
