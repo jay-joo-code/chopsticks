@@ -26,7 +26,8 @@ var userSchema = Schema({
     type: String,
   },
   bday: {
-    type: Date
+    type: Date,
+    default: new Date
   },
   mobile: {
     type: String,

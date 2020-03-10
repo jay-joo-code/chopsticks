@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AuthPanel from 'src/components/layout/AuthPanel';
-import FormikInput from 'src/components/common/form/FormikInput';
+import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import Button from 'src/components/common/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -9,7 +9,6 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import log from 'src/util/log';
 import { useSelector, useDispatch } from 'react-redux';
-
 
 const Container = styled.div`
 
@@ -22,25 +21,33 @@ const RegisterBtnContainer = styled.div`
 `;
 
 const RegisterBtn = styled(Link)`
-  text-decoration: underline;
   opacity: .8;
   margin-top: 2rem;
+  cursor: auto;
+  
+  & > span {
+    color: ${props => props.theme.primary};
+    cursor: pointer;
+  }
 `;
 
-const CheckboxContainer = styled.div`
-  font-size: .8rem;
+const InfoContainer = styled.div`
+  margin-top: 1rem;
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    max-width: 200px;
+  }
+`
+
+const InfoText = styled.p`
   opacity: .8;
-  display: flex;
-  align-items: center;
-`;
-
-const LinkWrapper = styled(Link)`
+  font-size: .7rem;
   text-decoration: underline;
-`;
+`
 
-const CheckboxSection = styled.div`
-  padding: 1rem 0;
-`;
+const Input = styled(OutlinedInput)`
+  margin: .5rem 0;
+`
 
 const Register = () => {
   // REDIRECT IF LOGGED IN
@@ -52,21 +59,6 @@ const Register = () => {
     }
   }, []);
 
-  // TERMS AGREEMENT LOGIC
-  const [privacy, setPrivacy] = useState(false);
-  const [use, setUse] = useState(false);
-
-  const agreeAll = (e) => {
-    setPrivacy(e.target.checked);
-    setUse(e.target.checked);
-  };
-  const agreePrivacy = () => {
-    setPrivacy(!privacy);
-  };
-  const agreeUse = () => {
-    setUse(!use);
-  };
-
   const dispatch = useDispatch();
 
   // FORM
@@ -75,6 +67,7 @@ const Register = () => {
       password: '',
       confpwd: '',
       email: '',
+      name: '',
     },
     validationSchema: Yup.object({
       password: Yup.string()
@@ -90,29 +83,29 @@ const Register = () => {
       email: Yup.string()
         .email('이메일 형식 오류')
         .required('필수'),
+      name: Yup.string()
+        .required('필수')
     }),
     onSubmit: (values) => {
-      if (use && privacy) {
-        axios.post('/api/user/create', values)
-          .then(() => {
-            axios.post('/api/user/login', values)
-              .then((res) => {
-                dispatch({
-                  type: 'USER_SET',
-                  payload: res.data,
-                });
-                window.alert('성공! 자동으로 로그인 됬습니다');
-                history.push('/');
-              })
-              .catch((e) => {
-                log('auto login failed', e);
+      axios.post('/api/user/create', values)
+        .then(() => {
+          axios.post('/api/user/login', values)
+            .then((res) => {
+              dispatch({
+                type: 'USER_SET',
+                payload: res.data,
               });
-          })
-          .catch((e) => {
-            log('register failed', e);
-            window.alert('회원가입 실패. 다시 시도 해주세요');
-          });
-      }
+              window.alert('성공! 자동으로 로그인 됬습니다');
+              history.push('/');
+            })
+            .catch((e) => {
+              log('auto login failed', e);
+            });
+        })
+        .catch((e) => {
+          log('register failed', e);
+          window.alert('회원가입 실패. 다시 시도 해주세요');
+        });
     },
   });
 
@@ -120,28 +113,19 @@ const Register = () => {
     <AuthPanel title="회원가입">
       <Container>
         <form onSubmit={formik.handleSubmit}>
-          <FormikInput name="email" placeholder="이메일" formik={formik} />
-          <FormikInput name="password" type="password" placeholder="비밀번호" formik={formik} />
-          <FormikInput name="confpwd" type="password" placeholder="비밀번호 확인" formik={formik} />
-          <CheckboxSection>
-            <CheckboxContainer>
-              <input type="checkbox" checked={use && privacy} onChange={agreeAll} />
-              {' '}
-  모두 동의
-            </CheckboxContainer>
-            <CheckboxContainer>
-              <input type="checkbox" checked={use} onChange={agreeUse} />
-              <LinkWrapper to="/terms/use">이용약관 (필수)</LinkWrapper>
-            </CheckboxContainer>
-            <CheckboxContainer>
-              <input type="checkbox" checked={privacy} onChange={agreePrivacy} />
-              <LinkWrapper to="/terms/privacy">개인정보 취급방침 (필수)</LinkWrapper>
-            </CheckboxContainer>
-          </CheckboxSection>
-          <Button type="submit" inverted>회원가입</Button>
+          <Input name="email" label="이메일" formik={formik} grey />
+          <Input name="password" type="password" label="비밀번호" formik={formik} grey/>
+          <Input name="confpwd" type="password" label="비밀번호 확인" formik={formik} grey/>
+          <Input name="name" label="이름" formik={formik} grey/>
+          <Button type="submit" inverted>동의하며 회원가입</Button>
         </form>
+        <InfoContainer>
+          <Link to='/terms/use'>
+            <InfoText>본인은 만 14세 이상이며, chopsticks 이용약관, 개인정보 처리방침 내용을 확인 하였으며, 동의합니다.</InfoText>
+          </Link>
+        </InfoContainer>
         <RegisterBtnContainer>
-          <RegisterBtn to="/login">이미 회원이신가요? 로그인</RegisterBtn>
+          <RegisterBtn to="/login">이미 회원이시면 <span>로그인 하기</span></RegisterBtn>
         </RegisterBtnContainer>
       </Container>
     </AuthPanel>
