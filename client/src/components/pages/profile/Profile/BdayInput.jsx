@@ -16,7 +16,9 @@ const PickerWrapper = styled.div`
 `
 
 const BdayInput = ({ formik }) => {
-  const [bday, setBday] = useState(new Date());
+  const initVal = new Date(formik.values.bday);
+  const [bday, setBday] = useState(initVal);
+  
   const handleChange = (date) => {
     setBday(date)
   }

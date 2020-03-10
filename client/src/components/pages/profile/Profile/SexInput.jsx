@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const SexInput = ({ formik }) => {
-  const [sex, setSex] = useState('');
+  const [sex, setSex] = useState(formik.values.sex);
   const [errMsg, setErrMsg] = useState('');
   
   useEffect(() => {

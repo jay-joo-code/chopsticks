@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Btn from 'src/components/common/buttons/Btn';
 import logout from 'src/util/auth/logout';
@@ -7,6 +7,7 @@ import Form from './Form';
 import TitledPage from 'src/components/layout/TitledPage';
 import { useSelector } from 'react-redux';
 import PwdForm from './PwdForm';
+import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 
 const Container = styled.div`
   display: flex;
@@ -25,7 +26,12 @@ const Profile = () => {
     logout();
     history.push('/');
   };
+  
   const user = useSelector((state) => state.user);
+  
+  useEffect(() => {
+    if (user && user._id) fetchSelfAndStore(user._id);
+  }, [])
   
   if (!user) return <div />;
   

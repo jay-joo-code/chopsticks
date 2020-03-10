@@ -1,3 +1,5 @@
+import tempCat from 'src/util/hooks/categories';
+
 const adminNav = [{
   name: '상품',
   path: '/shop/admin/items'
@@ -22,25 +24,9 @@ const profileNav = [{
   },
 ];
 
-const categoryNav = [{
-    name: '홈데코',
-    path: '/browse?category=living'
-  }, {
-    name: '주방 / 욕실',
-    path: '/browse?category=kitchen'
-  },
-  {
-    name: '가구',
-    path: '/browse?category=furniture'
-  },
-  {
-    name: '테크',
-    path: '/browse?category=tech'
-  },
-  {
-    name: 'One & Only',
-    path: '/browse?category=limited'
-  },
-]
+const categoryNav = tempCat.map((cat) => ({
+  name: cat.korean,
+  path: `/browse?category=${cat.name}`
+}))
 
 export { adminNav, profileNav, categoryNav };

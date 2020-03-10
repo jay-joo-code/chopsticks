@@ -20,8 +20,12 @@ const Row = styled.div`
 const ProdInfo = ({formik, _id }) => {
   const cat = useCategories();
   const styles = useStyles();
-  const subcats = formik.values.category && cat && cat.length !== 0
-    ? cat.filter((category) => category.name === formik.values.category)[0].sub
+  const hasCat = formik.values.category && cat && cat.length !== 0;
+  const currentCat = hasCat
+    ? cat.filter((category) => category.name === formik.values.category)
+    : []
+  const subcats = currentCat && currentCat.length > 0 
+    ? currentCat[0].sub
     : []
   
   return (

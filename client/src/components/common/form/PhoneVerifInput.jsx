@@ -40,6 +40,7 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
   // auth
   const [sentSms, setSentSms] = useState(false);
   const [code, setCode] = useState();
+  
   const auth = () => {
     var appVerifier = window.recaptchaVerifier;
     const phoneNumber = '+82' + formik.values[name];
@@ -65,11 +66,14 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
     });
   }
   
-  // reset auth on mobile change
+  // reset auth on number change
   const user = useSelector((state) => state.user)
   useEffect(() => {
     if (user && user.mobile !== formik.values[name]) {
+      // reset 
       formik.setFieldValue(verifName, false);
+      setCode('');
+      setSentSms(false);
     }
   }, [formik.values[name], user])
   
