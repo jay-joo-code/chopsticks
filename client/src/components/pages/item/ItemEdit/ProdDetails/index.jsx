@@ -34,9 +34,11 @@ const SectIntro = ({ formik, _id }) => {
   // styles
   const CONTENT_WIDTH = 620;
   const HORI_PADDING = 100;
+  const HORI_PADDING_MOBILE = 20;
   const isMinified = window.innerWidth < CONTENT_WIDTH;
-  const dynamicWidth = isMinified ? window.innerWidth - 40 : CONTENT_WIDTH + HORI_PADDING * 2;
-  const padding = isMinified ? '0' : '2rem 100px';
+  const DYNAMIC_WIDTH = isMinified ? window.innerWidth - HORI_PADDING_MOBILE * 4 : CONTENT_WIDTH + HORI_PADDING * 2;
+  const DYNAMIC_EDITOR_WIDTH = isMinified ? DYNAMIC_WIDTH + HORI_PADDING_MOBILE * 2 : DYNAMIC_WIDTH;
+  const padding = isMinified ? '2rem 10px' : '2rem 100px';
   const font = `
   h1 { font-size: 32px; margin: 0; } 
   h2 { font-size: 24px; margin: 0; }
@@ -45,8 +47,8 @@ const SectIntro = ({ formik, _id }) => {
   h5 { font-size: 13px; margin: 0; } 
   h6 { font-size: 10px; margin: 0; } 
   p { font-size: 16px; margin: 0; }`;
-  const img = `img { width: ${CONTENT_WIDTH}px; object-fit: cover; height: auto; }`
-  const style = `body { width: ${CONTENT_WIDTH}px; padding: ${padding}; margin: 0; opacity: .9; }` + img + font;
+  const img = `img { width: ${DYNAMIC_WIDTH}px; object-fit: cover; height: auto; }`
+  const style = `body { width: ${DYNAMIC_WIDTH}px; padding: ${padding}; margin: 0; opacity: .9; }` + img + font;
   
   // guidelines
   const guidelines = `
@@ -81,7 +83,7 @@ const SectIntro = ({ formik, _id }) => {
             initialValue={initialValue}
             init={{
               height: 1000,
-              width: dynamicWidth,
+              width: DYNAMIC_EDITOR_WIDTH,
               menubar: false,
               content_style: style,
               plugins: [

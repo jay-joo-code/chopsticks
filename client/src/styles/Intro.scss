@@ -1,5 +1,6 @@
 .intro {
   word-wrap: break-word;
+  width: 100%;
   
   h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
@@ -21,8 +22,12 @@
   
   img {
     box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
-    width: 620px; 
+    width: 100%;
     object-fit: cover; 
     height: auto;
+    
+    @media (min-width: 768px) {
+      width: 620px;
+    }
   } 
 }
