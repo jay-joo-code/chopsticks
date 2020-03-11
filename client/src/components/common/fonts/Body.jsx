@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const StyledBody = styled.p`
   opacity: .8;
   font-size: 1rem;
+  line-height: 1.2;
   
   font-size: ${props => props.muted ? '.8rem' : ''};
 `;

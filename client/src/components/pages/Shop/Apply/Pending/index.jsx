@@ -1,33 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import RedButton from 'src/components/common/buttons/RedButton';
-import styled from 'styled-components';
+import MsgPageContainer from 'src/containers/MsgPageContainer';
+import Btn from 'src/components/common/buttons/Btn';
 
-const Container = styled.div`
-  padding: 2rem 0 0 0;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0;
-`;
-
-const Pending = () => (
-  <div id="container">
-    <Container>
-      <div className="complete">
-        <p className="tlt">샵 오픈 신청을 접수했습니다</p>
-        <p className="txt">샵 오픈 신청을 해주셔서 감사합니다</p>
-        <p className="txt">신청 결과는 일주일 내 개별 안내 드리겠습니다</p>
-        <ButtonContainer>
-          <Link to="/">
-            <RedButton>홈으로 이동</RedButton>
-          </Link>
-        </ButtonContainer>
-      </div>
-    </Container>
-  </div>
-);
+const Pending = () => {
+  const btn = (
+    <Link to='/'>
+      <Btn
+        color='secondary'
+      >
+        Go Home
+      </Btn>
+    </Link>
+    )
+  
+  return (
+    <MsgPageContainer
+      title='샵 오픈 신청이 완료되었습니다'
+      msg='샵 오픈 신청은 24시간 이내로 확인 및 수락되며, 
+          그 이후 상품 등록을 진행하실 수 있도록 개별 안내 드리도록 하겠습니다.'
+      btn={btn}
+    />
+    )
+};
 
 export default Pending;
