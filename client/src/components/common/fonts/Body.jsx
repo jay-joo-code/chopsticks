@@ -7,11 +7,13 @@ const StyledBody = styled.p`
   line-height: 1.2;
   
   font-size: ${props => props.muted ? '.8rem' : ''};
+  margin-bottom: ${props => props.mb ? `${props.mb}rem`: ''};
 `;
 
-const Body = ({ children, muted, ...rest }) => (
+const Body = ({ children, muted, mb, ...rest }) => (
   <StyledBody 
     {...rest}
+    mb={mb}
     muted={muted}  
   >
     {children}

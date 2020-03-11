@@ -27,7 +27,7 @@ const RepImage = ({ formik, _id }) => {
     <Container>
       <LabelCont>
         <Label>대표 사진 *</Label>
-        <Body>*640 x 640 픽셀의 사진을 권장합니다</Body>
+        <Body>*최소 280 x 350px 이상의 이미지를 권장합니다. (비율 4:5)</Body>
       </LabelCont>
       <FileUpload
         path={`/items/${_id}`}

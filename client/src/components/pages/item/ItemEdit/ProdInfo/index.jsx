@@ -3,10 +3,14 @@ import styled from 'styled-components';
 import SectCont from './../SectCont';
 import RepImage from './RepImage';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
+import RadioGroup from 'src/components/common/form/RadioGroup';
 import useCategories from 'src/util/hooks/useCategories';
 import useStyles from 'src/util/hooks/useStyles';
 import Select from 'src/components/common/form/Select';
 import InputCont from './../InputCont';
+import Body from 'src/components/common/fonts/Body';
+import Label from 'src/components/common/fonts/Label';
+
 
 const Row = styled.div`
   display: flex;
@@ -18,6 +22,7 @@ const Row = styled.div`
 `
 
 const ProdInfo = ({formik, _id }) => {
+  // category
   const cat = useCategories();
   const styles = useStyles();
   const hasCat = formik.values.category && cat && cat.length !== 0;
@@ -27,6 +32,17 @@ const ProdInfo = ({formik, _id }) => {
   const subcats = currentCat && currentCat.length > 0 
     ? currentCat[0].sub
     : []
+    
+  // styles
+  const opts = [{
+    label: 'Original Design',
+    value: 'Original',
+    sideLabel: '*창작자 고유의 디자인을 기반으로 제작된 새롭고 창의적인 디자인 제품'
+  }, {
+    label: 'Craft Design',
+    value: 'Crafted',
+    sideLabel: '*창작자의 독창성과 개성을 담아 금형을 사용하지 않고 손으로 직접 작업한 공예ㆍ디자인 제품'
+  }]
   
   return (
     <SectCont>
@@ -39,39 +55,36 @@ const ProdInfo = ({formik, _id }) => {
         />
       </InputCont>
       <InputCont>
-        <Select
-          name="style"
-          label="디자인 타입 *"
+        <RadioGroup
+          name='style'
+          label='다지인 타입 *'
           formik={formik}
-        >
-          {styles.map((opt) => (
-            <option key={opt} value={opt}>{opt}</option>
-          ))}
-        </Select>
+          opts={opts}
+        />
       </InputCont>
       <InputCont>
-      <Row>
-        <Select
-          name="category"
-          label="카테고리 *"
-          formik={formik}
-        >
-          {cat.map((opt) => (
-            <option key={opt.name} value={opt.name}>{opt.korean}</option>
-          ))}
-        </Select>
-        {formik.values.category && subcats && subcats.length > 0 &&
+        <Label>카테고리</Label>
+        <Body muted mb={.5}>*상품을 찾는데 도움이 되도록, 상품과 가장 잘 어울리는 카테고리를 선택해주세요.</Body>
+        <Row>
           <Select
-            name="subcat"
-            label="세부 카테고리 *"
+            name="category"
             formik={formik}
           >
-            {subcats.map((opt) => (
-              <option key={opt} value={opt}>{opt}</option>
+            {cat.map((opt) => (
+              <option key={opt.name} value={opt.name}>{opt.korean}</option>
             ))}
           </Select>
-        }
-      </Row>
+          {formik.values.category && subcats && subcats.length > 0 &&
+            <Select
+              name="subcat"
+              formik={formik}
+            >
+              {subcats.map((opt) => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
+            </Select>
+          }
+        </Row>
       </InputCont>
     </SectCont>
   )

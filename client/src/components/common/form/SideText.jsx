@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.p`
-  margin-left: 1rem;
+  margin-left: .5rem;
+  white-space: nowrap;
 `;
 
 const SideText = ({ children, ...rest }) => (

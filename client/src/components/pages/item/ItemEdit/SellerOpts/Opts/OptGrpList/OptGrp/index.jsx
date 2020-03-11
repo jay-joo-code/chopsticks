@@ -5,6 +5,7 @@ import InputRow from './InputRow';
 
 const Container = styled.div`
   margin: 1rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
 `;
 
 const OptGrp = ({ formik, optGrp, index }) => {

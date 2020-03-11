@@ -73,7 +73,8 @@ const SectIntro = ({ formik, _id }) => {
     <SectCont>
       <Container>
         <Label>상품 상세 소개</Label>
-        <Body>* 이미지 넓이는 620px 를 권장합니다</Body>
+        <Body muted>*상품을 스토리와 함께 표현하여 상품 본연의 가치를 전달해 주세요.</Body>
+        <Body muted>*이미지 넓이는 620px 를 권장합니다</Body>
         <EditorContainer>
           <Editor
             apiKey="hx67eymwnlq0vtdniv7pbbnfdip57g2vcuqtwmqyugszg4f1"
