@@ -8,8 +8,8 @@ const categories = [{
     sub: ['주얼리', '패션잡화']
   },
   {
-    korean: 'Stationary',
-    name: 'stationary',
+    korean: 'Stationery',
+    name: 'stationery',
     sub: []
   },
   {

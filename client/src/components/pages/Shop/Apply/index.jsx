@@ -1,11 +1,16 @@
 import React from 'react';
+import styled from 'styled-components';
 import AppForm from './AppForm';
+import Subheading from 'src/components/common/fonts/Subheading';
+
+const Title = styled(Subheading)`
+  text-align: center;
+`
 
 const Apply = () => (
   <div id="container">
     <div className="shop_op2">
-      <p className="st_tlt_04">샵 오픈 신청</p>
-      <p className="txt">여러분과 여러분의 샵을 소개해 주세요</p>
+      <Title>샵 오픈 신청</Title>
       <AppForm />
     </div>
   </div>

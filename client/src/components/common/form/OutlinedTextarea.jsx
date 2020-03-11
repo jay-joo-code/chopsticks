@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import Body from 'src/components/common/fonts/Body';
+import Label from 'src/components/common/fonts/Label';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const Label = styled.label`
-  margin-bottom: .5rem;
-`;
+const Guideline = styled(Body)`
+  margin: 0 0 1rem 0;
+`
 
 const InputArea = styled.div`
   display: flex;
@@ -34,7 +36,7 @@ const ErrorMsg = styled.div`
 `;
 
 const OutlinedTextarea = ({
-  formik, name, label, sideButton, value, setValue, ...rest
+  formik, name, label, sideButton, value, setValue, guideline, ...rest
 }) => {
   // non formik props
   const handleChange = (e) => {
@@ -60,6 +62,7 @@ const OutlinedTextarea = ({
   return (
     <Container>
       <Label htmlFor={name}>{label}</Label>
+      <Guideline muted>{guideline}</Guideline>
       <InputArea>
         <Textarea
           type="text"

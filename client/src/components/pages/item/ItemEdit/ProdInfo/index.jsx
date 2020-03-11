@@ -60,7 +60,7 @@ const ProdInfo = ({formik, _id }) => {
             <option key={opt.name} value={opt.name}>{opt.korean}</option>
           ))}
         </Select>
-        {formik.values.category && 
+        {formik.values.category && subcats && subcats.length > 0 &&
           <Select
             name="subcat"
             label="세부 카테고리 *"

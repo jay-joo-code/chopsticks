@@ -136,7 +136,8 @@ const AppForm = () => {
           <li>
             <OutlinedTextarea
               name="intro"
-              label="작품 / 본인 소개 *"
+              label="샵 소개"
+              guideline='*창작자, 브랜드, 스튜디오에 대한 소개를 해주세요. 해당 내용은 상품 상세 페이지에서 함께 노출됩니다.'
               formik={formik}
             />
           </li>

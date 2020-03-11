@@ -4,11 +4,16 @@ import styled from 'styled-components';
 const StyledBody = styled.p`
   opacity: .8;
   font-size: 1rem;
+  
+  font-size: ${props => props.muted ? '.8rem' : ''};
 `;
 
-const Body = (props) => (
-  <StyledBody {...props}>
-    {props.children}
+const Body = ({ children, muted, ...rest }) => (
+  <StyledBody 
+    {...rest}
+    muted={muted}  
+  >
+    {children}
   </StyledBody>
 );
 
