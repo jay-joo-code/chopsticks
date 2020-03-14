@@ -39,7 +39,6 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
   setTimeout(setRecaptcha, 1000)
   
   // auth
-  const [sentSms, setSentSms] = useState(false);
   const [code, setCode] = useState();
   const [pendingAuth, setPendingAuth] = useState(false);
   
@@ -52,7 +51,6 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
       .then((confirmationResult) => {
         // sms sent
         window.confirmationResult = confirmationResult;
-        setSentSms(true);
       }).catch((error) => {
         // Error; SMS not sent
         formik.setFieldError(name, '인증 서버에 문제가 있습니다. 페이지 새로고침 후 다시 시도해주세요')
@@ -78,7 +76,6 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
       // reset 
       formik.setFieldValue(verifName, false);
       setCode('');
-      setSentSms(false);
       setPendingAuth(false);
     }
   }, [formik.values[name], user])
