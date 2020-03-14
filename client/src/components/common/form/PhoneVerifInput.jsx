@@ -6,6 +6,7 @@ import firebase from 'src/firebase';
 import Muted from 'src/components/common/fonts/Muted';
 import ErrMsg from 'src/components/common/fonts/ErrMsg';
 import { useSelector } from 'react-redux';
+import Loading from 'src/components/common/displays/Loading';
 
 const Container = styled.div`
 
@@ -40,8 +41,10 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
   // auth
   const [sentSms, setSentSms] = useState(false);
   const [code, setCode] = useState();
+  const [pendingAuth, setPendingAuth] = useState(false);
   
   const auth = () => {
+    setPendingAuth(true)
     var appVerifier = window.recaptchaVerifier;
     const phoneNumber = '+82' + formik.values[name];
     
@@ -82,15 +85,16 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
   const btn = <Btn 
       onClick={auth}
       type='button'
-      id='auth-btn'
     >
       인증
     </Btn>
+  const authBtn = pendingAuth ? <Loading /> : btn;
   
   const cnfBtn = (
     <Btn
       onClick={cnfAuth}
       type='button'
+      id='auth-btn'
     >
       확인
     </Btn>
@@ -102,9 +106,10 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
         formik={formik}
         name={name}
         label={label}
-        sideButton={authed ? null : btn}
+        sideButton={authed ? null : authBtn}
+        placeholder='전화번호'
       />
-      {sentSms && !authed &&
+      {!authed &&
         <OutlinedInput
           onChange={(e) => setCode(e.target.value)}
           value={code}
