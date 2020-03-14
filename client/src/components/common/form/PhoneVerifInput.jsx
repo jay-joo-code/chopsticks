@@ -56,6 +56,7 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
       }).catch((error) => {
         // Error; SMS not sent
         formik.setFieldError(name, '인증 서버에 문제가 있습니다. 페이지 새로고침 후 다시 시도해주세요')
+        setPendingAuth(false);
       });
   }
   
@@ -65,7 +66,8 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
       formik.setFieldValue(verifName, true);
     }).catch(function (error) {
       // fail, bad code
-      formik.setFieldError(name, '인증 번호가 알맞지 않습니다')
+      formik.setFieldError(name, '인증 번호가 알맞지 않습니다');
+      setPendingAuth(false);
     });
   }
   
@@ -77,6 +79,7 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
       formik.setFieldValue(verifName, false);
       setCode('');
       setSentSms(false);
+      setPendingAuth(false);
     }
   }, [formik.values[name], user])
   
