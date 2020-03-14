@@ -37,7 +37,7 @@ const Row = styled.div`
 `
 
 const Subheading = styled(SubheadingRaw)`
-  font-size: 1rem;
+  font-size: .8rem;
   opacity: .9;
   margin-bottom: .5rem !important;
 `
@@ -62,6 +62,10 @@ const Col = styled.div`
 
 const StyledLink = styled(Link)`
   margin-bottom: .2rem;
+  
+  & > p {
+    font-size: .8rem;
+  }
 `
 
 const TopFooter = () => {

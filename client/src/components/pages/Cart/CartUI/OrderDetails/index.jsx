@@ -69,6 +69,7 @@ const TotalCont = styled.div`
 const OrderDetails = ({ cart, expanded, setExpanded }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalDelivery, setTotalDelivery] = useState(0);
+  
   useEffect(() => {
     let priceAccum = 0; let
       deliveryAccum = 0;
@@ -83,6 +84,7 @@ const OrderDetails = ({ cart, expanded, setExpanded }) => {
   const user = useSelector((state) => state.user);
   const hasDeliveryDetails = user.deliveryInfo && user.deliveryInfo.options.length;
   const history = useHistory();
+  
   const initTransaction = () => {
     if (!user || !user._id) return;
     cartTransaction(user._id)
@@ -93,6 +95,7 @@ const OrderDetails = ({ cart, expanded, setExpanded }) => {
         log('ERROR cartTransaction at OrderDetails', e);
       });
   };
+  
   const attemptTransaction = () => {
     if (!expanded) setExpanded(true);
     else if (expanded && hasDeliveryDetails) initTransaction();

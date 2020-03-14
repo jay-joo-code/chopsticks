@@ -58,7 +58,7 @@ const cartTransaction = (userId) => {
         price: grandTotalAcc,
         application_id: '5e293e0602f57e00366eebe1',
         name: transactionName,
-        pg: 'inicis',
+        pg: 'danal',
         method: 'card',
         show_agree_window: 0,
         items: items,
