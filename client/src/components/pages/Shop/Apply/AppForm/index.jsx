@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import OutlinedButton from 'src/components/common/buttons/OutlinedButton';
-import RedButton from 'src/components/common/buttons/RedButton';
+import Btn from 'src/components/common/buttons/Btn';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
@@ -144,7 +144,14 @@ const AppForm = () => {
         </ul>
       </div>
       <BtnCont>
-        <RedButton type="submit" id='submit-btn'>입점 신청</RedButton>
+        <Btn 
+          type="submit" 
+          id='submit-btn'
+          color='secondary'
+          inverted
+        >
+          입점 신청
+        </Btn>
       </BtnCont>
     </Form>
   );
