@@ -48,6 +48,7 @@ const SectIntro = ({ formik, _id }) => {
   const img = `img { width: ${CONTENT_WIDTH}px; object-fit: cover; height: auto; }`
   const style = `body { width: ${CONTENT_WIDTH}px; padding: ${padding}; margin: 0; opacity: .9; }` + img + font;
   
+  
   // guidelines
   const guidelines = `
 <div>
