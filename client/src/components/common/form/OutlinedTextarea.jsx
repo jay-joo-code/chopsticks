@@ -24,6 +24,10 @@ const Textarea = styled.textarea`
   padding: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
   border: ${(props) => (props.hasError ? 'solid 1px #de6362' : 'none')};
+  line-height: 1.2;
+  
+  // height
+  height: ${props => props.height ? `${props.height}px` : ''};
 `;
 
 const ButtonContainer = styled.div`
@@ -36,7 +40,7 @@ const ErrorMsg = styled.div`
 `;
 
 const OutlinedTextarea = ({
-  formik, name, label, sideButton, value, setValue, guideline, ...rest
+  formik, name, label, sideButton, value, setValue, guideline, height, ...rest
 }) => {
   // non formik props
   const handleChange = (e) => {
@@ -68,6 +72,7 @@ const OutlinedTextarea = ({
           type="text"
           {...rest}
           {...dynProps}
+          height={height}
         />
         {sideButton && (
           <ButtonContainer>
