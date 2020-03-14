@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import log from 'src/util/log';
 import ItemsList from 'src/components/layout/ItemsList';
-import RedButton from 'src/components/common/buttons/RedButton';
+import Heading from 'src/components/common/fonts/Heading';
+import PageNav from 'src/components/layout/PageNav';
 
 const Container = styled.div`
   padding: 2rem 0;
@@ -16,53 +16,34 @@ const Container = styled.div`
 
 const TitleSect = styled.div`
   display: flex;
-  margin: 2rem 0 .5rem 0;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 0 1rem;
-`;
-
-const Title = styled.h3`
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #82ab96;
-  margin: 0;
-`;
-
-const Btn = styled(RedButton)`
-  padding: .5rem 1rem;
-  border-radius: 15px;
-  font-size: .8rem;
+  padding: 2rem 0 4rem 0;
 `;
 
 const ItemsListComp = () => {
   const [items, setItems] = useState([]);
+  const [meta, setMeta] = useState();
+  
   useEffect(() => {
-    axios.get('/api/item?page=1&limit=4')
+    axios.get('/api/item?page=1&limit=16')
       .then((res) => {
         setItems(res.data.docs);
+        setMeta(res.data);
       })
       .catch((e) => {
         log('ERROR fetching items at home', e);
       });
   }, []);
+
   return (
     <Container>
       <TitleSect>
-        <Title>인기 상품</Title>
-        <Link to="/browse">
-          <Btn green>더보기</Btn>
-        </Link>
+        <Heading>Designer's Items</Heading>
       </TitleSect>
       <ItemsList items={items} />
-      <TitleSect>
-        <Title>최신 상품</Title>
-        <Link to="/browse">
-          <Btn green>더보기</Btn>
-        </Link>
-      </TitleSect>
-      <ItemsList items={items} />
+      {meta && <PageNav metadata={meta} />}
     </Container>
   );
 };

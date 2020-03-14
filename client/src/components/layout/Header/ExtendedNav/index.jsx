@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { adminNav, profileNav, categoryNav } from './routes';
 import NavElt from './NavElt';
 import './ExtendedNav.css';
+
+const Container = styled.div`
+  border-top: 1px solid rgba(0, 0, 0, .1);
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  margin: 1rem 0;
+`
 
 const ExtendedNav = () => {
   const { pathname } = useLocation();
@@ -20,13 +27,15 @@ const ExtendedNav = () => {
   }, [pathname]);
 
   return (
-    <nav className="gnb">
-      <ul>
-        {nav.map((elt) => (
-          <NavElt key={elt.name} {...elt} />
-        ))}
-      </ul>
-    </nav>
+    <Container>
+      <nav className="gnb">
+        <ul>
+          {nav.map((elt) => (
+            <NavElt key={elt.name} {...elt} />
+          ))}
+        </ul>
+      </nav>
+    </Container>
   );
 };
 

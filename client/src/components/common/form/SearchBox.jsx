@@ -23,19 +23,28 @@ const StyledIcon = styled(Icon)`
   width: 1rem;
 `;
 
+const Input = styled.input`
+  font-size: 16px;
+`
+
 const SearchBox = () => {
+  const [query, setQuery] = useState('');
+  
   const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
-    const query = e.target[0].value;
     history.push(`/browse?search=${query}`);
   };
+  
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
         <OutlinedInput
           type="text"
           placeholder="검색"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          width={300}
         />
         <button type="submit"><StyledIcon /></button>
       </Form>

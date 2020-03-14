@@ -8,8 +8,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  width: ${props => props.width ? `${props.width}px` : ''};
   background: inherit;
+  
+  // width
+  width: ${props => props.width ? `${props.width}px` : ''};
 `;
 
 const InputArea = styled.div`
