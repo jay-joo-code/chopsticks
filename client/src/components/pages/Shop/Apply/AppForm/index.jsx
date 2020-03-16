@@ -150,7 +150,7 @@ const AppForm = () => {
           color='secondary'
           inverted
         >
-          입점 신청
+          샵 오픈 신청
         </Btn>
       </BtnCont>
     </Form>
