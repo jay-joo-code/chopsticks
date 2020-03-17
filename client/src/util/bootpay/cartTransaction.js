@@ -1,12 +1,17 @@
 import BootPay from "bootpay-js";
-import log from 'src/util/log';
+import generator from 'generate-password';
 import axios from 'axios';
 import getTotalPrice from 'src/util/calculation/getTotalPrice';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 
-const cartTransaction = (userId) => {
+const cartTransaction = (userId, method) => {
   return new Promise(async(resolve, reject) => {
     try {
+      // TRANSACTION METHOD
+      if (!method || (method !== 'card' && method !== 'vbank')) {
+        throw new Error('Invalid transaction method')
+      }
+      
       // USER
       const { data: user } = await axios.get(`/api/user/${userId}`);
       if (!user) throw new Error('Invalid userId provided');
@@ -52,18 +57,26 @@ const cartTransaction = (userId) => {
         price: grandTotalAcc,
         buyer: user._id,
       }
+      
+      var currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 1);
+      const tmr = new Date(currentDate).toISOString().slice(0, 10);
 
-      // TRANSACTION
+      // TRANSACTION REQUEST DATA
       const reqData = {
         price: grandTotalAcc,
         application_id: '5e293e0602f57e00366eebe1',
         name: transactionName,
         pg: 'danal',
-        method: 'card',
+        method,
         show_agree_window: 0,
         items: items,
         user_info: userInfo,
-        order_id: 'must provide',
+        order_id: generator.generate({ length: 16, numbers: false }),
+        account_expire_at: tmr,
+        extra: {
+          vbank_result: 1
+        }
       }
 
       // REQUEST
@@ -73,6 +86,9 @@ const cartTransaction = (userId) => {
         })
         .cancel((data) => {
           reject(data);
+        })
+        .ready((data) => {
+          console.log('vbank ready', data);
         })
         .confirm((data) => {
           // 재고 validation

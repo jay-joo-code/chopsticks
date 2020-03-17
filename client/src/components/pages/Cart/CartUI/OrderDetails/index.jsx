@@ -8,6 +8,7 @@ import cartTransaction from 'src/util/bootpay/cartTransaction';
 import { useSelector } from 'react-redux';
 import FixedBottomPanel from 'src/components/layout/FixedBottomPanel';
 import { useHistory } from 'react-router-dom';
+import Alert from 'src/components/common/displays/Alert';
 
 const DesktopDisplay = styled.div`
   display: none;
@@ -66,9 +67,11 @@ const TotalCont = styled.div`
   width: 100%;
 `;
 
-const OrderDetails = ({ cart, expanded, setExpanded }) => {
+const OrderDetails = ({ cart, expanded, setExpanded, method }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalDelivery, setTotalDelivery] = useState(0);
+  const [show, setShow] = useState(false);
+  const [msg, setMsg] = useState('');
   
   useEffect(() => {
     let priceAccum = 0; let
@@ -82,12 +85,10 @@ const OrderDetails = ({ cart, expanded, setExpanded }) => {
   }, [cart]);
 
   const user = useSelector((state) => state.user);
-  const hasDeliveryDetails = user.deliveryInfo && user.deliveryInfo.options.length;
   const history = useHistory();
   
   const initTransaction = () => {
-    if (!user || !user._id) return;
-    cartTransaction(user._id)
+    cartTransaction(user._id, method)
       .then((res) => {
         history.push('/profile/orders');
       })
@@ -97,8 +98,35 @@ const OrderDetails = ({ cart, expanded, setExpanded }) => {
   };
   
   const attemptTransaction = () => {
-    if (!expanded) setExpanded(true);
-    else if (expanded && hasDeliveryDetails) initTransaction();
+    if (!expanded) {
+      setExpanded(true)
+      return;
+    };
+    
+    if (!user || !user._id) {
+      history.push('/login');
+      return;
+    };
+    
+    if (!method) {
+      setMsg('결제 방법을 설정해주세요')
+      setShow(true);
+      return;
+    }
+    
+    if (!user.mobileVerif) {
+      setMsg('휴대폰 인증을 해주세요')
+      setShow(true);
+      return;
+    }
+    
+    if (user.deliveryInfo && user.deliveryInfo.options.length < 1) {
+      setMsg('배송지를 추가해주세요')
+      setShow(true);
+      return;
+    }
+    
+    initTransaction();
   };
 
   const mobileBuyBtn = <RedButton green rounded onClick={attemptTransaction}>결제하기</RedButton>;
@@ -134,6 +162,12 @@ const OrderDetails = ({ cart, expanded, setExpanded }) => {
           <RedButton onClick={attemptTransaction} green>결제하기</RedButton>
         </Container>
       </DesktopDisplay>
+      <Alert
+        color='danger'
+        show={show}
+        setShow={setShow}
+        msg={msg}
+      />
     </div>
   );
 };

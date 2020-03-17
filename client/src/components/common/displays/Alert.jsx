@@ -12,6 +12,7 @@ const Container = styled.div`
   justify-content: center;
   padding: .5rem 0;
   display: ${(props) => (props.show ? 'block' : 'none')};
+  z-index: 100;
 `;
 
 const Msg = styled.p`

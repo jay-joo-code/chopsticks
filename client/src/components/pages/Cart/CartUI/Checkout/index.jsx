@@ -22,16 +22,19 @@ const InnerCont = styled.div`
   width: 100%;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
-    width: 30%;
+    // width: 30%;
   }
 `;
 
-const Checkout = () => (
+const Checkout = ({ method, setMethod }) => (
   <Container>
     <Title>결제</Title>
     <Inner>
       <InnerCont>
-        <DeliveryDetails />
+        <DeliveryDetails 
+          method={method}
+          setMethod={setMethod}
+        />
       </InnerCont>
     </Inner>
   </Container>

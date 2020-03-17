@@ -5,7 +5,8 @@ import RedButton from 'src/components/common/buttons/RedButton';
 import DeliveryDetailCard from 'src/components/common/cards/DeliveryDetailCard';
 import DeliveryPopup from './DeliveryPopup';
 import UserInfo from './UserInfo';
-import Subheading from 'src/components/common/fonts/Subheading'
+import Subheading from 'src/components/common/fonts/Subheading';
+import MethodSelector from './MethodSelector';
 
 const Container = styled.div`
   width: 100%;
@@ -14,21 +15,17 @@ const Container = styled.div`
   justify-content: center;
   
   @media (min-width: ${props => props.theme.desktopContentWidth}px) {
-    justify-content: flex-start;
+    justify-content: space-between;
   }
 `;
 
 const Section = styled.div`
-  min-width: 100px;
+  min-width: 200px;
   margin: 1rem 0;
-`
-
-const Header = styled.div`
   display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-`;
+  flex-direction: column;
+  align-items: flex-start;
+`
 
 const StyledBtn = styled(RedButton)`
   font-size: .8rem;
@@ -41,7 +38,7 @@ const Warning = styled.p`
   text-align: center;
 `;
 
-const DeliveryDetails = () => {
+const DeliveryDetails = ({ method, setMethod }) => {
   const [displayPopup, setDisplayPopup] = useState(0);
   const handleClick = () => {
     setDisplayPopup(1);
@@ -74,6 +71,13 @@ const DeliveryDetails = () => {
           user={user}
           display={displayPopup}
           handleClosePopup={handleClosePopup}
+        />
+      </Section>
+      <Section>
+        <Subheading>결제 방법</Subheading>
+        <MethodSelector
+          method={method}
+          setMethod={setMethod}
         />
       </Section>
     </Container>

@@ -18,17 +18,20 @@ const CartSection = styled.div`
 const CartUI = () => {
   const user = useSelector((state) => state.user);
   const cart = user && user.cart;
+  
   const [expanded, setExpanded] = useState(false);
+  const [method, setMethod] = useState();
 
   return (
     <Container>
-      {expanded && <Checkout />}
+      {expanded && <Checkout method={method} setMethod={setMethod}/>}
       <CartSection>
         <CartList cart={cart} />
         <OrderDetails
           cart={cart}
           expanded={expanded}
           setExpanded={setExpanded}
+          method={method}
         />
       </CartSection>
     </Container>
