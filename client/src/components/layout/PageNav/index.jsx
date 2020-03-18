@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import log from 'src/util/log';
 import updateQuery from 'src/util/path/updateQuery';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -8,6 +7,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  margin: 2rem 0;
 `;
 
 const PageElt = styled.div`

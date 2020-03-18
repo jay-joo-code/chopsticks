@@ -7,8 +7,14 @@ import RedButton from 'src/components/common/buttons/RedButton';
 import log from 'src/util/log';
 import axios from 'axios';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
+import AddressInput from './AddressInput';
 
 const Container = styled.div`
+  // width 100%;
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    min-width: 500px;
+  }
 `;
 
 const InputCont = styled.div`
@@ -73,9 +79,7 @@ const DeliveryForm = ({ setView, user }) => {
           />
         </InputCont>
         <InputCont>
-          <OutlinedInput
-            name="address"
-            label="주소"
+          <AddressInput
             formik={formik}
           />
         </InputCont>

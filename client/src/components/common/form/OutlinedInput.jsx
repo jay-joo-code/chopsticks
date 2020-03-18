@@ -33,6 +33,14 @@ const Input = styled.input`
   width: 100%;
   background: white;
   background: ${props => props.grey ? 'rgba(0, 0, 0, .1)' : ''};
+  
+  // sideButton
+  flex-shrink: ${props => props.sideButton ? '2' : ''};
+  width: ${props => props.sideButton ? 'auto' : ''};
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    width: 100%;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -57,6 +65,7 @@ const OutlinedInput = ({
           grey={grey}
           hasError={hasError}
           {...rest}
+          sideButton={sideButton}
         />
         {sideText && (
           <SideText>
