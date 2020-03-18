@@ -7,6 +7,9 @@ import Muted from 'src/components/common/fonts/Muted';
 import ErrMsg from 'src/components/common/fonts/ErrMsg';
 import { useSelector } from 'react-redux';
 import Loading from 'src/components/common/displays/Loading';
+import api from 'src/util/api';
+import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
+import log from 'src/util/log';
 
 const Container = styled.div`
 
@@ -20,7 +23,7 @@ const Msg = styled(Muted)`
   color: ${props => props.theme.primary};
 `
 
-const PhoneVerifInput = ({ formik, name, verifName, label }) => {
+const PhoneVerifInput = ({ formik, name, verifName, label, autosave }) => {
   // recaptcha
   const [hasCaptcha, setHasCaptcha] = useState(false);
   const setRecaptcha = () => {
@@ -59,14 +62,21 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
   }
   
   const cnfAuth = () => {
-    window.confirmationResult.confirm(code).then(function (result) {
-      // success
-      formik.setFieldValue(verifName, true);
-    }).catch(function (error) {
-      // fail, bad code
-      formik.setFieldError(name, '인증 번호가 알맞지 않습니다');
-      setPendingAuth(false);
-    });
+    if (!window.confirmationResult) return;
+    window.confirmationResult.confirm(code)
+      .then((result) => {
+        // success
+        formik.setFieldValue(verifName, true);
+        
+        if (autosave) {
+          formik.submitForm()  
+        }
+      })
+      .catch((error) => {
+        // fail, bad code
+        formik.setFieldError(name, '인증 번호가 알맞지 않습니다');
+        setPendingAuth(false);
+      });
   }
   
   // reset auth on number change
@@ -77,10 +87,18 @@ const PhoneVerifInput = ({ formik, name, verifName, label }) => {
       formik.setFieldValue(verifName, false);
       setCode('');
       setPendingAuth(false);
+      
+      if (autosave) {
+        let data ={};
+        data[verifName] = false;
+        api.put(`/user/${user._id}/update`, data)
+          .then(() => fetchSelfAndStore(user._id))
+          .catch((e) => log('ERROR autosave reset mobileVerif', e))
+      }
     }
   }, [formik.values[name], user])
   
-  // conditional rendering
+  // btn
   const authed = formik.values[verifName];
   const btn = <Btn 
       onClick={auth}
