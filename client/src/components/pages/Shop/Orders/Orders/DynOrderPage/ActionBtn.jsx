@@ -43,6 +43,7 @@ const ActionBtn = ({ order, v, setV, selectedOrders, state }) => {
       log('ERROR seenSelected', e);
     }
   };
+  
   const updateState = (order) => {
     const state = order.state === 'pending' ? 'delivering' : 'complete';
     api.put(`/order/${order._id}/update`, { state, seen: false })
