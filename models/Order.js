@@ -4,7 +4,27 @@ var mongoosePaginate = require('mongoose-paginate-v2');
 
 var orderSchema = Schema({
   deliv : {
-    type: Object,
+    type: {
+      recipient: {
+        type: String,
+        required: true
+      },
+      address: {
+        type: String,
+        required: true
+      },
+      addressDetail: {
+        type: String,
+        required: true
+      },
+      mobile: {
+        type: String,
+        required: true
+      },
+      company: String,
+      companyCode: String,
+      invoice: String
+    },
     required: true,
   },
   bootpay : {

@@ -42,14 +42,14 @@ const ColText = styled.p`
 const OrdersList = ({
   orders, selected, setSelected, v, setV,
 }) => {
-  const colWidths = ['2rem', '10rem', '8rem', '8rem', '8rem', '8rem', '8rem', '8rem', '2rem'];
-  const colNames = ['', '주문번호', '', '상품', '주문일', '택배사', '송장번호', '상태변경', ''];
+  const colWidths = ['2rem', '10rem', '5rem', '8rem', '5rem', '12rem', '10rem', '8rem', '2rem'];
+  const colNames = ['', '주문번호', '', '상품', '주문일', '주소', '택배사 / 송장번호', '상태변경', ''];
 
   return (
     <Container>
       <Header>
         {colWidths.map((width, i) => (
-          <ColHeader width={width}>
+          <ColHeader key={Math.random()} width={width}>
             <ColText>{colNames[i]}</ColText>
           </ColHeader>
         ))}

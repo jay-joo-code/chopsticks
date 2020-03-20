@@ -30,7 +30,7 @@ const MethodSelector = ({ method, setMethod }) => {
           checked={method === 'card'}
           onChange={handleChange}
         />
-        <Body>카드</Body>
+        <Body>신용카드 / 체크카드</Body>
       </Row>
       <Row>
         <Input
@@ -39,7 +39,7 @@ const MethodSelector = ({ method, setMethod }) => {
           checked={method === 'vbank'}
           onChange={handleChange}
         />
-        <Body>가상계좌</Body>
+        <Body>무통장 입금</Body>
       </Row>
     </Container>
   )

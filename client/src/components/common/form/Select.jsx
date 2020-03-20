@@ -15,15 +15,25 @@ const StyledSelect = styled.select`
   appearance: none;
   background: url(${selectIcon}) no-repeat 93% 50%;
   border-radius: 8px;
-  border-color: ${(props) => (props.hasError ? props.theme.red : '')};
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
-  padding: .6rem 3rem .6rem 1rem;
+  padding: .3rem 2rem .3rem .5rem;
   cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, .1);
+  
+  & > option {
+    width: auto;
+  }
+  
+  // hasError
+  border-color: ${(props) => (props.hasError ? props.theme.red : '')};
+  
+  // width
+  width: ${props => props.width ? `${props.width}px` : ''};
 `;
 
 const Select = ({
-  formik, name, children, label, placeholder, ...rest
+  formik, name, children, label, placeholder, width, ...rest
 }) => {
   const hasError = formik ? formik.touched[name] && formik.errors[name] : false;
   const formikProps = formik ? formik.getFieldProps(name) : [];
@@ -34,6 +44,7 @@ const Select = ({
       <StyledSelect
         name={name}
         hasError={hasError}
+        width={width}
         {...formikProps}
         {...rest}
       >

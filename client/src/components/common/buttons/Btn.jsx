@@ -11,15 +11,20 @@ const Button = styled.button`
   color: white;
   font-size: 1rem;
   opacity: ${(props) => (props.disabled ? '.4' : '')};
+  
+  // size: sm
+  font-size: ${props => props.size === 'sm' ? '.7rem' : ''};
+  padding: ${props => props.size === 'sm' ? '.3rem .5rem' : ''};
 `;
 
 const RedButton = ({
-  children, color, disabled, ...rest
+  children, color, disabled, size, ...rest
 }) => (
   <Button
     color={color}
     disabled={disabled}
     {...rest}
+    size={size}
   >
     {children}
   </Button>

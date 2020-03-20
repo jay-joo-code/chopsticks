@@ -17,6 +17,7 @@ const AddressInput = ({ formik }) => {
   useScript('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
   
   const initPostcode = () => {
+    if (!window.daum) return;
     new window.daum.Postcode({
         oncomplete: function(data) {
           const addrString = `${data.address}, ${data.bname}, ${data.buildingName}`;

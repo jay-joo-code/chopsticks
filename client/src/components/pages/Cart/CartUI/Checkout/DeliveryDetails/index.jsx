@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import RedButton from 'src/components/common/buttons/RedButton';
+import Btn from 'src/components/common/buttons/Btn';
 import DeliveryDetailCard from 'src/components/common/cards/DeliveryDetailCard';
 import DeliveryPopup from './DeliveryPopup';
 import UserInfo from './UserInfo';
@@ -26,11 +26,6 @@ const Section = styled.div`
   flex-direction: column;
   align-items: flex-start;
 `
-
-const StyledBtn = styled(RedButton)`
-  font-size: .8rem;
-  padding: .5rem;
-`;
 
 const Warning = styled.p`
   margin: 2rem 0;
@@ -57,7 +52,7 @@ const DeliveryDetails = ({ method, setMethod }) => {
         <UserInfo user={user} />
       </Section>
       <Section>
-        <StyledBtn green rounded onClick={handleClick}>배송지 추가 / 변경</StyledBtn>
+        <Btn size='sm' onClick={handleClick}>배송지 추가 / 변경</Btn>
         {hasDeliveryDetails
           ? (
             <DeliveryDetailCard

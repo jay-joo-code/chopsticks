@@ -6,6 +6,7 @@ import MenuBtn from './MenuBtn';
 import Menu from './Menu';
 import ActionBtn from '../ActionBtn';
 import Checkbox from './Checkbox';
+import Deliv from './Deliv';
 
 const Wrapper = styled.div`
   
@@ -136,8 +137,15 @@ const OrderListCardIndex = ({
         <Col width={colWidths[4]}>
           <Text>{date}</Text>
         </Col>
-        <Col width={colWidths[5]} />
-        <Col width={colWidths[6]} />
+        <Col width={colWidths[5]}>
+          <Text>{order.deliv.address}</Text>
+          <Text>{order.deliv.addressDetail}</Text>
+        </Col>
+        <Col width={colWidths[6]}>
+          <Deliv 
+            order={order}
+          />
+        </Col>
         <DisplayGroup>
           <Col width={colWidths[7]}>
             <ActionBtn

@@ -26,7 +26,7 @@ const Input = styled.input`
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
   height: 3rem;
   line-height: 3rem;
-  padding: 0 .5rem 0 1rem;
+  padding: .5rem;
   flex-grow: 2;
   border: ${(props) => (props.hasError ? 'solid 1px #de6362' : 'none')};
   text-align: ${(props) => (props.right ? 'right' : '')};
@@ -49,7 +49,7 @@ const ButtonContainer = styled.div`
 `;
 
 const OutlinedInput = ({
-    formik, name, label, sideButton, type, sideText, disabled, grey, width, ...rest
+    formik, name, label, sideButton, type, sideText, disabled, grey, width, size, ...rest
   }) => {
   const hasError = formik ? formik.touched[name] && formik.errors[name] : false;
   const formikProps = formik ? formik.getFieldProps(name) : [];
@@ -66,6 +66,7 @@ const OutlinedInput = ({
           hasError={hasError}
           {...rest}
           sideButton={sideButton}
+          size={size}
         />
         {sideText && (
           <SideText>
