@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
 import OrderPopup from './OrderPopup';
+import DelivPopup from './DelivPopup';
 import MenuBtn from './MenuBtn';
 import Menu from './Menu';
 import ActionBtn from '../ActionBtn';
@@ -21,7 +23,6 @@ const Container = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
   background: white;
   margin: .5rem 0 0 0;
-  position: relative;
   cursor: pointer;
   
   @media (min-width: ${(props) => props.theme.desktopContentWidth}px) {
@@ -81,6 +82,10 @@ const OrderListCardIndex = ({
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showPopup, setShowPopup] = useState(0);
+  
+  const [showDelivPopup, setShowDelivPopup] = useState(false);
+  const [delivData, setDelivData] = useState(false);
+  
   const openPopup = (e) => {
     setShowPopup(1);
   };
@@ -144,6 +149,8 @@ const OrderListCardIndex = ({
         <Col width={colWidths[6]}>
           <Deliv 
             order={order}
+            v={v}
+            setV={setV}
           />
         </Col>
         <DisplayGroup>
@@ -152,6 +159,9 @@ const OrderListCardIndex = ({
               order={order}
               v={v}
               setV={setV}
+              delivData={delivData}
+              setDelivData={setDelivData}
+              setShowDelivPopup={setShowDelivPopup}
             />
           </Col>
         </DisplayGroup>
@@ -174,6 +184,12 @@ const OrderListCardIndex = ({
         showPopup={showPopup}
         setShowPopup={setShowPopup}
         order={order}
+      />
+      <DelivPopup
+        show={showDelivPopup}
+        setShow={setShowDelivPopup}
+        data={delivData}
+        company={order.deliv.company}
       />
     </Wrapper>
   );

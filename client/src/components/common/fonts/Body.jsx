@@ -8,13 +8,18 @@ const StyledBody = styled.p`
   
   font-size: ${props => props.muted ? '.8rem' : ''};
   margin-bottom: ${props => props.mb ? `${props.mb}rem`: ''};
+  
+  // strong
+  //opacity: ${props => props.strong ? '.9' : ''};
+  //font-weight: ${props => props.strong ? 'bold' : ''};
 `;
 
-const Body = ({ children, muted, mb, ...rest }) => (
+const Body = ({ children, muted, mb, strong, ...rest }) => (
   <StyledBody 
     {...rest}
     mb={mb}
     muted={muted}  
+    strong={strong}
   >
     {children}
   </StyledBody>

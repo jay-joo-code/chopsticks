@@ -3,22 +3,26 @@ import styled from 'styled-components';
 import Intro from './Intro';
 
 const Container = styled.div`
-  flex-grow: 4;
+  margin: 0 2rem;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    width: 620px;
+  }
 `;
+
+const Img = styled.img`
+  object-fit: cover;
+  width: 100%;
+`
 
 const Details = ({ item }) => (
   <Container>
-    <div className="detail_content">
-      <div className="video">
-        <img src={item.image} alt="item primary image" />
-      </div>
-      <div className="img_txt">
-        <p className="txt">{item.content}</p>
-      </div>
-      <Intro item={item} />
-    </div>
+    <Img src={item.image} />
+    <Intro item={item} />
   </Container>
 );
 

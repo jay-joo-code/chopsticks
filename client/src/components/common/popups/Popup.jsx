@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Overlay = styled.div`
-  z-index: 50;
+  z-index: 999;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -18,14 +18,17 @@ const Overlay = styled.div`
 `;
 
 const Container = styled.div`
-  z-index: 60;
+  z-index: 998;
   background-color: rgba(230, 230, 230, 1);
   padding: 2rem;
   margin: 2rem;
   border-radius: 5px;
-  position: relative;
+  position: fixed;
   transition: all 5s ease-in-out;
   display: inline-block;
+  
+  // white
+  background: white;
 `;
 
 const Header = styled.div`
@@ -44,7 +47,7 @@ const Content = styled.div`
 
 `;
 
-const Popup = ({ display, handleClosePopup, children }) => {
+const Popup = ({ display, handleClosePopup, children, white, ...rest }) => {
   const handleContainerClick = (e) => {
     e.stopPropagation();
   };
@@ -53,7 +56,11 @@ const Popup = ({ display, handleClosePopup, children }) => {
       display={display}
       onClick={handleClosePopup}
     >
-      <Container onClick={handleContainerClick}>
+      <Container 
+        onClick={handleContainerClick}
+        white={white}
+        {...rest}
+      >
         <Header>
           <CloseButton onClick={handleClosePopup}>x</CloseButton>
         </Header>

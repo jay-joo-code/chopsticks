@@ -11,14 +11,16 @@ const Container = styled.div `
   line-height: 1.2;
 `;
 
-const Deliv = ({ order }) => {
-  const disabled = order.state === 'pending' ? false : true;
+const Deliv = ({ order, v, setV }) => {
+  const canEdit = ['pending', 'exchangePending'];
+  const disabled = !canEdit.includes(order.state);
   
   const stopPropagation = (e) => {
     e.stopPropagation();
   }
 
   const [code, setCode] = useState(order.deliv.companyCode || '');
+  const [invoice, setInvoice] = useState(order.deliv.invoice || '');
   
   useEffect(() => {
     if (!code || !companies) return;
@@ -36,12 +38,13 @@ const Deliv = ({ order }) => {
     }
 
     api.put(`/order/${order._id}/update`, data)
+      .then(() => {
+        setV(v + 1);
+      })
       .catch((e) => {
         log(`ERROR Deliv`, e)
       })
   }, [code])
-
-  const [invoice, setInvoice] = useState(order.deliv.invoice || '');
   
   useEffect(() => {
     if (!invoice) return;
@@ -53,9 +56,10 @@ const Deliv = ({ order }) => {
       }
     }
     
-    console.log(data);
-    
     api.put(`/order/${order._id}/update`, data)
+      .then(() => {
+        setV(v + 1);
+      })
       .catch((e) => {
         log(`ERROR Deliv`, e)
       })

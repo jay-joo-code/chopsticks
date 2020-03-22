@@ -7,16 +7,21 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-bottom: 5rem;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     width: auto;
     display: block;
     width: 20%;
+    margin-bottom: 0;
   }
 `;
 
 const Wrapper = styled.div`
   display: flex;
+  max-width: 200px;
+  white-space: pre-line;
+  word-break: break-word;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     padding: 2rem 0;
@@ -30,20 +35,19 @@ const ImgContainer = styled.div`
   justify-content: center;
 `;
 
-const ImgWrapper = styled.div`
+const Img = styled.img`
+  object-fit: scale-down;
   width: 4rem;
   height: 4rem;
-  overflow: hidden;
   border-radius: 50%;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     width: 8rem;
     height: 8rem;
   }
-`;
-
-const Img = styled.img`
-  height: 100%;
+  
 `;
 
 const TextCont = styled.div`
@@ -80,16 +84,14 @@ const Intro = styled.p`
 
 const Owner = ({ item }) => {
   const email = item && item.owner ? item.owner.email : '';
-  const id = email.split('@')[0];
   const src = item.owner.shop.image;
+  const defaultSrc = 'https://firebasestorage.googleapis.com/v0/b/chopsticks-248516.appspot.com/o/users%2F5e1eb49698c4320017334663%2F%ED%88%AC%EB%AA%85%20%EB%A1%9C%EA%B3%A0.png?alt=media&token=a1c77c2b-ec8d-4136-9e63-087dcb7a7315';
 
   return (
     <Container>
       <Wrapper>
         <ImgContainer>
-          <ImgWrapper>
-            <Img src={src} />
-          </ImgWrapper>
+          <Img src={src || defaultSrc} default={!src} />
         </ImgContainer>
         <TextCont>
           <Name>{`@${item.owner.shop.title}`}</Name>
