@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import OrderPopup from './OrderPopup';
-import DelivPopup from './DelivPopup';
+import DelivPopup from 'src/components/common/popups/DelivPopup';
 import MenuBtn from './MenuBtn';
 import Menu from './Menu';
 import ActionBtn from '../ActionBtn';
