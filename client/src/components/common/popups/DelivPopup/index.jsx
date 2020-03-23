@@ -15,6 +15,7 @@ const PopupInner = styled.div`
   
   @media (min-width: ${props => props.theme.desktopContentWidth}px) {
     width: auto;
+    min-width: 400px;
   }
 `
 
