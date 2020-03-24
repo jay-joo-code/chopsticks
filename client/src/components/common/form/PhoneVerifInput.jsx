@@ -10,6 +10,7 @@ import Loading from 'src/components/common/displays/Loading';
 import api from 'src/util/api';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import log from 'src/util/log';
+import useScript from 'src/util/hooks/useScript';
 
 const Container = styled.div`
 
@@ -26,6 +27,7 @@ const Msg = styled(Muted)`
 const PhoneVerifInput = ({ formik, name, verifName, label, autosave }) => {
   // recaptcha
   const [hasCaptcha, setHasCaptcha] = useState(false);
+  useScript('https://www.google.com/recaptcha/api.js');
   const setRecaptcha = () => {
     if (!hasCaptcha) {
       window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('auth-btn', {
@@ -40,11 +42,11 @@ const PhoneVerifInput = ({ formik, name, verifName, label, autosave }) => {
     }
   }
   setTimeout(setRecaptcha, 1000)
-  
-  // auth
+
   const [code, setCode] = useState();
   const [pendingAuth, setPendingAuth] = useState(false);
   
+  // send code  
   const auth = () => {
     setPendingAuth(true)
     var appVerifier = window.recaptchaVerifier;
@@ -56,11 +58,14 @@ const PhoneVerifInput = ({ formik, name, verifName, label, autosave }) => {
         window.confirmationResult = confirmationResult;
       }).catch((error) => {
         // Error; SMS not sent
-        formik.setFieldError(name, '인증 서버에 문제가 있습니다. 페이지 새로고침 후 다시 시도해주세요')
+        window.recaptchaVerifier.render().then(function(widgetId) {
+          window.grecaptcha.reset(widgetId);
+        })
         setPendingAuth(false);
       });
   }
   
+  // confirm code
   const cnfAuth = () => {
     if (!window.confirmationResult) return;
     window.confirmationResult.confirm(code)
@@ -74,10 +79,15 @@ const PhoneVerifInput = ({ formik, name, verifName, label, autosave }) => {
       })
       .catch((error) => {
         // fail, bad code
-        formik.setFieldError(name, '인증 번호가 알맞지 않습니다');
-        setPendingAuth(false);
+        formik.touched[verifName] = true;
+        formik.setFieldError(verifName, '인증 번호가 알맞지 않습니다');
       });
   }
+  
+  // reset err msg on code change
+  useEffect(() => {
+    formik.setFieldError(verifName, '');
+  }, [code])
   
   // reset auth on number change
   const user = useSelector((state) => state.user)
