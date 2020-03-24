@@ -106,7 +106,7 @@ const PhoneVerifInput = ({ formik, name, verifName, label, autosave }) => {
           .catch((e) => log('ERROR autosave reset mobileVerif', e))
       }
     }
-  }, [formik.values[name], user])
+  }, [formik.values[name]])
   
   // btn
   const authed = formik.values[verifName];
