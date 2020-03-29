@@ -24,44 +24,46 @@ const Msg = styled(Muted)`
   color: ${props => props.theme.primary};
 `
 
-const PhoneVerifInput = ({ formik, name, verifName, label, autosave, submitId }) => {
+const PhoneVerifInput = ({ formik, name, verifName, label, autosave }) => {
   // recaptcha
   useScript('https://www.google.com/recaptcha/api.js');
   
-  const [ref, setRef] = useState();
+  const setRecaptcha = () => {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('auth-btn', {
+      'size': 'invisible',
+      'callback': function(response) {
+        console.log('new recaptcha response', response);
+      },
+      'expired-callback': () => {
+        // recaptcha failed
+      }
+    });
+  }
+  setTimeout(setRecaptcha, 2000);
   
-  useEffect(() => {
-    if (!ref) return;
-    
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(ref, {
-      'size': 'invisible'
-    });
-    
-    window.recaptchaVerifier.render().then(function (widgetId) {
-      window.recaptchaWidgetId = widgetId;
-    });
-  }, [ref])
+  const resetRecaptcha = () => {
+  }
   
   const [code, setCode] = useState();
   const [pendingAuth, setPendingAuth] = useState(false);
   
-  const resetRecaptcha = () => {
-    window.grecaptcha.reset(window.recaptchaWidgetId);
-  }
+  console.log('recaptchaVerifier', window.recaptchaVerifier)
   
   // send code  
   const auth = () => {
+    console.log('auth')
     setPendingAuth(true);
     var appVerifier = window.recaptchaVerifier;
     const phoneNumber = '+82' + formik.values[name];
     
     firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
       .then((confirmationResult) => {
+        // sms sent
         window.confirmationResult = confirmationResult;
-      })
-      .catch((error) => {
-        setPendingAuth(false);
+      }).catch((error) => {
+        // Error; SMS not sent
         resetRecaptcha();
+        setPendingAuth(false);
       });
   }
   
@@ -153,7 +155,6 @@ const PhoneVerifInput = ({ formik, name, verifName, label, autosave, submitId })
       {formik.errors[verifName] && formik.touched[verifName] &&
         <ErrMsg>{formik.errors[verifName]}</ErrMsg>
       }
-      <div ref={(ref)=> setRef(ref)} />
     </Container>
   )
 };
