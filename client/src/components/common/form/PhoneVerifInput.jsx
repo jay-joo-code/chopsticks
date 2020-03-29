@@ -27,7 +27,6 @@ const Msg = styled(Muted)`
 const PhoneVerifInput = ({ formik, name, verifName, label, autosave, submitId }) => {
   // recaptcha
   useScript('https://www.google.com/recaptcha/api.js');
-  
   const [ref, setRef] = useState();
   
   useEffect(() => {
@@ -37,10 +36,10 @@ const PhoneVerifInput = ({ formik, name, verifName, label, autosave, submitId })
       'size': 'invisible'
     });
     
-    window.recaptchaVerifier.render().then(function (widgetId) {
+    window.recaptchaVerifier.render().then((widgetId) => {
       window.recaptchaWidgetId = widgetId;
     });
-  }, [ref])
+  }, [ref]);
   
   const [code, setCode] = useState();
   const [pendingAuth, setPendingAuth] = useState(false);
