@@ -5,7 +5,6 @@ import log from 'src/util/log';
 import ItemsList from 'src/components/layout/ItemsList';
 import Heading from 'src/components/common/fonts/Heading';
 import PageNav from 'src/components/layout/PageNav';
-import { sendAlert } from 'src/util/bizm';
 
 const Container = styled.div`
   padding: 2rem 0;
@@ -37,8 +36,6 @@ const ItemsListComp = () => {
         log('ERROR fetching items at home', e);
       });
   }, []);
-  
-  sendAlert();  
 
   return (
     <Container>

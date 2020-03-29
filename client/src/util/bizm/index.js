@@ -3,25 +3,24 @@ import axios from 'axios';
 const BASE_DEV = 'https://dev-alimtalk-api.bizmsg.kr:1443';
 const BASE_PROD = 'https://alimtalk-api.bizmsg.kr';
 
-const isDev = process.env.NODE_ENV === 'development';
-const BASE =  isDev ? BASE_DEV : BASE_PROD;
-
 const bizm = axios.create({
-  baseURL: BASE,
-  headers: {'userid': 'PREPAY_USER'}
+  baseURL: BASE_PROD,
+  headers: {'userid': 'chopsticks'}
 });
 
-export const sendAlert = (msg) => {
-  const data = {
+const formatNumber = (number) => {
+  return '+82' + number.substr(1);
+}
+
+export const sendAlert = (number) => {
+  const data = [{
     'message_type': 'AT',
-    'phn': '+8201048648254',
-    'profile': '89823b83f2182b1e229c2e95e21cf5e6301eed98',
+    'phn': formatNumber(number),
+    'profile': 'beaed98a65b993e706e963a8aa941c2db48e4938',
     'reserveDt': '00000000000000',
-    'tmplId': 'alimtalktest_003',
-    'msg': '테스트'
-  }
-  
-  console.log('sending request', data);
+    'tmplId': 'chopsticks_template_01',
+    'msg': '재형님의 택배가 (10:00)에 발송되었습니다. '
+  }]
   
   bizm.post(`/v2/sender/send`, data)
     .then((res) => {
