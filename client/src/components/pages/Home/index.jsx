@@ -7,11 +7,11 @@ const Container = styled.div`
 
 `;
 
-const DefaultComponent = () => (
+const Home = () => (
   <Container>
     <Banner />
     <ItemsList />
   </Container>
 );
 
-export default DefaultComponent;
+export default Home;
