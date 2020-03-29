@@ -68,7 +68,7 @@ const UserInfo = ({ user }) => {
         <Label>이름:</Label>
         <Body>{user.name}</Body>
       </Row>
-      <Form onSubmit={formik.handleSubmit}>
+      <Form onSubmit={formik.handleSubmit} validateOnChange={true}>
         <PhoneVerifInput
           formik={formik}
           name='mobile'
