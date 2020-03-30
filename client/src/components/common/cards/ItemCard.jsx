@@ -71,7 +71,6 @@ const Owner = styled.p`
 const Price = styled.p`
   color: black;
   flex-shrink: 0;
-  flex-grow: 2;
 `;
 
 const ItemCard = ({ onClickPath, item, ...rest }) => {
