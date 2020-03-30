@@ -11,69 +11,6 @@ import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import Compressed from './Compressed';
 import Alert from 'src/components/common/displays/Alert';
 
-const DyncCont = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: white;
-  display: inline-block;
-  z-index: 20;
-  
-  @media (min-width: ${theme.desktopContentWidth}px) {
-    background-color: inherit;
-    display: block;
-    width: auto;
-    cursor: default;
-    position: static;
-  }
-`;
-const Container = styled.div`
-  position: sticky;
-  top: 2rem;
-  padding: 2rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Name = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #000;
-  opacity: .8;
-  
-`;
-
-const SelectCont = styled.div`
-  margin: .5rem 0;
-`;
-
-const Price = styled.div`
-  font-size: 3rem;
-  font-weight: bold;
-  color: ${(props) => props.theme.green};
-  margin: 2rem 0;
-`;
-
-const BuySect = styled.div`
-  margin: 1rem 0;
-  display: flex;
-  flex-direction: column;
-`;
-
-const BuyButton = styled(RedButton)`
-  margin: .5rem 0;
-`;
-
-const CloseBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-  text-decoration: underline;
-  cursor: pointer;
-`;
-
 const Purchase = ({ item }) => {
   // mobile 
   const [expanded, setExpanded] = useState(false);
@@ -179,5 +116,69 @@ const Purchase = ({ item }) => {
     </DyncCont>
   );
 };
+
+const DyncCont = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  display: inline-block;
+  z-index: 20;
+  
+  @media (min-width: ${theme.desktopContentWidth}px) {
+    background-color: inherit;
+    display: block;
+    width: auto;
+    cursor: default;
+    position: static;
+  }
+`;
+const Container = styled.div`
+  position: sticky;
+  top: 2rem;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Name = styled.h3`
+  font-size: 1.5rem;
+  font-weight: bold;
+  max-width: 250px;
+  opacity: .8;
+  white-space: pre-line;
+  text-align: center;
+`;
+
+const SelectCont = styled.div`
+  margin: .5rem 0;
+`;
+
+const Price = styled.div`
+  font-size: 3rem;
+  font-weight: bold;
+  color: ${(props) => props.theme.green};
+  margin: 2rem 0;
+`;
+
+const BuySect = styled.div`
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+`;
+
+const BuyButton = styled(RedButton)`
+  margin: .5rem 0;
+`;
+
+const CloseBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  text-decoration: underline;
+  cursor: pointer;
+`;
 
 export default Purchase;

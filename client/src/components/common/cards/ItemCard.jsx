@@ -57,6 +57,9 @@ const Row = styled.div`
 `;
 
 const Name = styled.p`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 const Owner = styled.p`
@@ -67,6 +70,8 @@ const Owner = styled.p`
 
 const Price = styled.p`
   color: black;
+  flex-shrink: 0;
+  flex-grow: 2;
 `;
 
 const ItemCard = ({ onClickPath, item, ...rest }) => {
