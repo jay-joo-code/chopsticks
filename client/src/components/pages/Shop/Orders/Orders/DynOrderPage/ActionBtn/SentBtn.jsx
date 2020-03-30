@@ -5,6 +5,7 @@ import api from 'src/util/api';
 import log from 'src/util/log';
 import axios from 'axios';
 import Alert from 'src/components/common/displays/Alert';
+import { sendAlert } from 'src/util/bizm';
 
 const Container = styled.div`
 
@@ -16,7 +17,10 @@ const SentBtn = ({ order, v, setV }) => {
   
   const setDelivering = () => {
     api.put(`/order/${order._id}/update`, { state: 'delivering' })
-      .then(() => setV(v + 1))
+      .then(() => {
+        setV(v + 1);
+        sendAlert(order.deliv.mobile);
+      })
       .catch((e) => log(`ERROR SentBtn`, e))
   }
   

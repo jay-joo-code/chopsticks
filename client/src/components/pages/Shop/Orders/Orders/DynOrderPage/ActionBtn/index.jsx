@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import api from 'src/util/api';
 import log from 'src/util/log';
 import Btn from 'src/components/common/buttons/Btn';
+import { sendAlert } from 'src/util/bizm';
 
 import ExchangeActionBtn from './ExchangeActionBtn';
 import SentBtn from './SentBtn';
@@ -66,6 +67,10 @@ const ActionBtn = ({ order, v, setV, selectedOrders, state, delivData, setDelivD
     try {
       if (order.state === 'cancelPending') {
         await api.post(`/order/${order._id}/cancel`);
+        
+        // 취소 승인 알림톡
+        sendAlert(order.deliv.mobile);
+        
       } else if (order.state === 'exchangePending') {
         await api.post(`/order/${order._id}/state-change/exchanged`);
       } else if (order.state === 'refundPending') {
