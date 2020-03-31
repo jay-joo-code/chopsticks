@@ -6,6 +6,7 @@ import log from 'src/util/log';
 import axios from 'axios';
 import Alert from 'src/components/common/displays/Alert';
 import { sendAlert } from 'src/util/bizm';
+import trackerUrl from 'src/util/path/trackerUrl';
 
 const Container = styled.div`
 
@@ -35,7 +36,7 @@ const SentBtn = ({ order, v, setV }) => {
     
     // validation
     const { REACT_APP_TRACKER_BASE, REACT_APP_TRACKER_KEY } = process.env
-    axios.get(`${REACT_APP_TRACKER_BASE}/trackingInfo?t_key=${REACT_APP_TRACKER_KEY}&t_code=${companyCode}&t_invoice=${invoice}`)
+    axios.get(trackerUrl(order))
       .then((res) => {
         if (res.data.receiverAddr) setDelivering();
         else {
