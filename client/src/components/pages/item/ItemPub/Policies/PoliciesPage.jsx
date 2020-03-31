@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Subheading from 'src/components/common/fonts/Subheading';
 import Body from 'src/components/common/fonts/Body';
+import { initDelivery, initRefund } from 'src/constants';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -24,8 +25,11 @@ const Section = styled.div`
 
 const PoliciesPage = ({ item }) => {
   const policies = item.owner.shop.policies;
-  const { delivery, refund, etc } = policies;
   const { deliveryCost, processingMin, processingMax, deliveryMin, deliveryMax } = item;
+  
+  const delivery = (policies && policies.delivery) || initDelivery;
+  const refund = (policies && policies.refund) || initRefund;
+  const etc = policies && policies.etc;
   
   return (
     <Wrapper>
@@ -35,7 +39,6 @@ const PoliciesPage = ({ item }) => {
         <Body>{`제작기간: ${processingMin} ~ ${processingMax}`}</Body>
         <Body>{`배송기간: ${deliveryMin} ~ ${deliveryMax}`}</Body>
         <Body>{`배송비: ${deliveryCost}`}</Body>
-        <Body>*제주도 & 도서 산간 지방의 경우 추가 비용이 발생합니다</Body>
         <Body>{delivery}</Body>
       </Section>
       <Section>
