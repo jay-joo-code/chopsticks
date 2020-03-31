@@ -8,6 +8,7 @@ import Heading from 'src/components/common/fonts/Heading';
 import Btn from 'src/components/common/buttons/Btn';
 import Badge from 'src/components/common/displays/Badge';
 import ErrMsg from 'src/components/common/fonts/ErrMsg';
+import { sendAlert } from 'src/util/bizm';
 
 const Container = styled.div`
   background: rgba(0, 0, 0, .05);
@@ -45,15 +46,18 @@ const ActionPopup = ({
   const handleClosePopup = () => {
     setShow(false);
   };
+  
   const handleOrderStateChange = (newState) => {
     const dynNewState = newState || newOrderState;
     api.post(`/order/${order._id}/state-change/${dynNewState}`, { stateMsg: msg })
       .then((res) => setV(v + 1))
       .catch((e) => log('ERROR ActionSection handleOrderStateChange', e));
   };
+  
   const handleReview = () => {
     // TODO: update item obj with review
   };
+  
   const handleAction = () => {
     // reset popup
     setErr('');
@@ -68,6 +72,10 @@ const ActionPopup = ({
     } else if (action === '취소문의') {
       handleOrderStateChange('cancelPending');
     }
+    
+    // send alert
+    const number = order.seller.mobile;
+    sendAlert(number);
   };
 
   return (

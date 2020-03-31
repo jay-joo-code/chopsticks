@@ -91,10 +91,10 @@ const TopFooter = () => {
             <Row>
               <Col spaced>
                 <Subheading>About</Subheading>
-                <StyledLink to='/'>
+                <StyledLink to='/about'>
                   <Body>About Chopsticks</Body>
                 </StyledLink>
-                <StyledLink to='/'>
+                <StyledLink to='/contact'>
                   <Body>Contact Us</Body>
                 </StyledLink>
               </Col>
