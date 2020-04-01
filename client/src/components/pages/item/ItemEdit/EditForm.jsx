@@ -51,8 +51,7 @@ const ItemEdit = ({ item }) => {
         .required('필수'),
       category: Yup.string()
         .required('필수'),
-      subcat: Yup.string()
-        .required('필수'),
+      subcat: Yup.string(),
       style: Yup.string()
         .required('필수'),
       intro: Yup.string()
