@@ -56,7 +56,7 @@ const OutlinedInput = ({
 
   return (
     <Container {...rest} width={width}>
-      <Label htmlFor={name}>{label}</Label>
+      {label && <Label htmlFor={name}>{label}</Label>}
       <InputArea>
         <Input
           type={type || 'text'}

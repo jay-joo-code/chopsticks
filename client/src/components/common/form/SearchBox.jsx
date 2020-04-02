@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import { ReactComponent as Icon } from 'src/assets/svgs/magnifier.svg';
-import log from 'src/util/log';
 import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
-  margin-left: 2rem;
+  
 `;
 
 const Form = styled.form`
@@ -23,17 +22,14 @@ const StyledIcon = styled(Icon)`
   width: 1rem;
 `;
 
-const Input = styled.input`
-  font-size: 16px;
-`
-
-const SearchBox = () => {
+const SearchBox = ({ autoFocus, onSubmit }) => {
   const [query, setQuery] = useState('');
   
   const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
     history.push(`/browse?search=${query}`);
+    onSubmit();
   };
   
   return (
@@ -45,6 +41,7 @@ const SearchBox = () => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           width={300}
+          autoFocus={autoFocus}
         />
         <button type="submit"><StyledIcon /></button>
       </Form>

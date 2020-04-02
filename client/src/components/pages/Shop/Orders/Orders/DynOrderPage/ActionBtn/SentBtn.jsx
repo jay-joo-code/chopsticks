@@ -40,7 +40,7 @@ const SentBtn = ({ order, v, setV }) => {
       .then((res) => {
         if (res.data.receiverAddr) setDelivering();
         else {
-          setMsg('틀린 택배사 / 송장번호 조합입니다')
+          setMsg('운송장이 아직 등록되지 않았거나 잘못된 운송장번호입니다.')
           setShow(true)
         }
       })
