@@ -32,7 +32,7 @@ const NavElt = ({ icon, label, notification, to, top, right }) => {
           {icon}
         </Icon>
         <Label>{label}</Label>
-        {notification && (<Notification text={notification} top={top} right={right} />)}
+        {notification && notification !== '0' && (<Notification text={notification} top={top} right={right} />)}
       </Container>
     </Link>
   )

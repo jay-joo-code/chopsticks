@@ -4,14 +4,15 @@ import Subheading from 'src/components/common/fonts/Subheading';
 import Body from 'src/components/common/fonts/Body';
 import { initDelivery, initRefund } from 'src/constants';
 
-const Wrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`
-
 const Container = styled.div`
-  width: 70%;
+  width: 100%;
+  overflow: hidden;
+  white-space: pre-line;
+  word-break: break-word;
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    width: 620px;
+  }
 `;
 
 const Section = styled.div`
@@ -32,7 +33,6 @@ const PoliciesPage = ({ item }) => {
   const etc = policies && policies.etc;
   
   return (
-    <Wrapper>
     <Container>
       <Section>
         <Subheading>제작 / 배송</Subheading>
@@ -50,7 +50,6 @@ const PoliciesPage = ({ item }) => {
         <Body>{etc}</Body>
       </Section>
     </Container>
-    </Wrapper>
   )
 };
 

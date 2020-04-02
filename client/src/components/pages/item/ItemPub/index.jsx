@@ -1,33 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import TabbedPage from 'src/components/layout/TabbedPage';
-import Product from './Product';
-import Reviews from './Reviews';
-import Policies from './Policies';
+import Tabs from './Tabs';
+import MainImg from './MainImg';
+import Owner from './Owner';
+import Purchase from './Purchase';
+import useCurrentItem from 'src/util/hooks/useCurrentItem';
 
 const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    flex-wrap: nowrap;
+  }
 `;
 
-const ItemPub = () => {
-  const productComp = <Product />;
-  const reviewsComp = <Reviews />;
-  const policiesComp = <Policies />;
+const Col = styled.div`
+  width: 100%;
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    width: auto;
+  }
+`
 
-  const pages = [{
-    name: '상품',
-    component: productComp,
-  }, {
-    name: '리뷰',
-    component: reviewsComp,
-  }, {
-    name: '배송/정책',
-    component: policiesComp,
-  }];
+const ItemPub = () => {
+  const item = useCurrentItem();
+  
+  if (!item) return <div />;
+  
   return (
     <Container>
-      <TabbedPage
-        pages={pages}
-      />
+    <Col>
+     <Owner item={item} />
+    </Col>
+    <Col>
+      <MainImg item={item} />
+      <Tabs />
+    </Col>
+    <Col>
+      <Purchase item={item} />
+    </Col>
     </Container>
   );
 };

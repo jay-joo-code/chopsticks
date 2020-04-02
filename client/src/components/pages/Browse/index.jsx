@@ -45,11 +45,6 @@ const Browse = () => {
   return (
     <Container>
       <Categories />
-      <SearchCont>
-        <DyncCont>
-          <SearchBox />
-        </DyncCont>
-      </SearchCont>
       <Toolbar />
       <ItemsList />
     </Container>
