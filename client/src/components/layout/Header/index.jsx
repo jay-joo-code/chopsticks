@@ -20,13 +20,14 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const RenderDesktop = styled.div`
+const DesktopSearchBoxContainer = styled.div`
   display: none;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     display: block;
+    margin-left: 2rem;
   }
-`;
+`
 
 const LeftCont = styled.div`
   display: flex;
@@ -50,9 +51,9 @@ const Header = () => {
         <Container>
           <LeftCont>
             <Logo />
-            <RenderDesktop>
+            <DesktopSearchBoxContainer>
               <SearchBox />
-            </RenderDesktop>
+            </DesktopSearchBoxContainer>
           </LeftCont>
           <Nav 
            enableSearch={enableSearch}

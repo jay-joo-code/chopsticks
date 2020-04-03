@@ -16,10 +16,12 @@ const Form = styled.form`
 
 const StyledIcon = styled(Icon)`
   position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  height: 25px;
   right: 1rem;
-  top: 1.5rem;
-  height: 1rem;
-  width: 1rem;
 `;
 
 const SearchBox = ({ autoFocus, onSubmit }) => {
@@ -43,7 +45,7 @@ const SearchBox = ({ autoFocus, onSubmit }) => {
           width={300}
           autoFocus={autoFocus}
         />
-        <button type="submit"><StyledIcon /></button>
+        <StyledIcon />
       </Form>
     </Container>
   );
