@@ -38,7 +38,7 @@ const SentBtn = ({ order, v, setV }) => {
     const { REACT_APP_TRACKER_BASE, REACT_APP_TRACKER_KEY } = process.env
     axios.get(trackerUrl(order))
       .then((res) => {
-        if (res.data.receiverAddr) setDelivering();
+        if (res.data.result === 'Y') setDelivering();
         else {
           setMsg('운송장이 아직 등록되지 않았거나 잘못된 운송장번호입니다.')
           setShow(true)

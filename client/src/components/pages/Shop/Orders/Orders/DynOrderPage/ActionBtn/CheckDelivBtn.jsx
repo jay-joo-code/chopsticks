@@ -15,6 +15,7 @@ const CheckDelivBtn = ({ order, delivData, setDelivData, setShowDelivPopup }) =>
     
     axios.get(trackerUrl(order))
       .then((res) => {
+        console.log(res);
         setDelivData(res.data);
         setShowDelivPopup(true);
       })
