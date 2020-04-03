@@ -7,7 +7,7 @@ import Logo from './Logo';
 import Nav from './Nav';
 import ExtendedNav from './ExtendedNav';
 import MobileSearch from './MobileSearch';
-import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 
 const Wrapper = styled.div`
   display: flex;
@@ -62,7 +62,6 @@ const Header = () => {
       <ExtendedNav />
       <MobileSearch
         expandSearch={expandSearch}
-        enableSearch={enableSearch}
         disableSearch={disableSearch}
       />
     </Wrapper>

@@ -36,7 +36,7 @@ const RenderMobile = styled.div`
   }
 `;
 
-const MobileSearch = ({ expandSearch, enableSearch, disableSearch }) => {
+const MobileSearch = ({ expandSearch, disableSearch }) => {
   const { pathname } = useLocation();
   
   useEffect(() => {
