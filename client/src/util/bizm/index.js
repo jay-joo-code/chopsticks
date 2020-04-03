@@ -50,6 +50,10 @@ export const sendAlertOnEvent = (number, event, data) => {
       'msg': orderSentMsg(data),
       'tmplId': 'chopsticks_01'
     },
+    'MOBILE_AUTH': {
+      'msg': mobileAuthMsg(data),
+      'tmplId': 'chopsticks_05'
+    },
   }
   
   const config = [{
@@ -122,4 +126,8 @@ ${buyerName}님께서 주문하신 상품이 발송되었습니다.
 ◆ 송장번호 : ${invoice}
 ◆ 배송조회 : ${url}
 `)
+}
+
+const mobileAuthMsg = ({ code }) => {
+  return `[${code}] 인증번호를 입력하시면 인증이 완료됩니다. `
 }
