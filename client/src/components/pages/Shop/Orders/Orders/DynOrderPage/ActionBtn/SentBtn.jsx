@@ -5,7 +5,7 @@ import api from 'src/util/api';
 import log from 'src/util/log';
 import axios from 'axios';
 import Alert from 'src/components/common/displays/Alert';
-import { sendAlert } from 'src/util/bizm';
+import { sendAlertOnEvent } from 'src/util/bizm';
 import trackerUrl from 'src/util/path/trackerUrl';
 
 const Container = styled.div`
@@ -16,13 +16,23 @@ const SentBtn = ({ order, v, setV }) => {
   const [show, setShow] = useState(false);
   const [msg, setMsg] = useState('')
   
-  const setDelivering = () => {
-    api.put(`/order/${order._id}/update`, { state: 'delivering' })
-      .then(() => {
-        setV(v + 1);
-        sendAlert(order.deliv.mobile);
-      })
-      .catch((e) => log(`ERROR SentBtn`, e))
+  const setDelivering = async () => {
+    try {
+      await api.put(`/order/${order._id}/update`, { state: 'delivering' })
+      setV(v + 1);
+      const number = order.deliv.mobile
+      const data = {
+        itemName: order.cartObj.item.name,
+        sellerName: order.seller.name,
+        buyerName: order.buyer.name,
+        delivCompany: order.deliv.company,
+        invoice: order.deliv.invoice,
+        url: 'https://chopsticks.market/profile/orders'
+      }
+      sendAlertOnEvent(number, 'ORDER_SENT', data);
+    } catch (e) {
+      log(`ERROR SentBtn`, e)
+    }
   }
   
   const handleClick = (e) => {

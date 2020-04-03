@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import api from 'src/util/api';
 import log from 'src/util/log';
 import Btn from 'src/components/common/buttons/Btn';
-import { sendAlert } from 'src/util/bizm';
+import { sendAlertOnEvent } from 'src/util/bizm';
 
 import ExchangeActionBtn from './ExchangeActionBtn';
 import SentBtn from './SentBtn';
@@ -69,7 +69,15 @@ const ActionBtn = ({ order, v, setV, selectedOrders, state, delivData, setDelivD
         await api.post(`/order/${order._id}/cancel`);
         
         // 취소 승인 알림톡
-        sendAlert(order.deliv.mobile);
+        const number = order.deliv.mobile;
+        const data = {
+          itemName: order.cartObj.item.name,
+          sellerName: order.seller.name,
+          buyerName: order.buyer.name,
+          price: order.cartObj.price,
+          transactionMethod: order.bootpay.method,
+        }
+        sendAlertOnEvent(number, 'CANCEL_APPROVED', data);
         
       } else if (order.state === 'exchangePending') {
         await api.post(`/order/${order._id}/state-change/exchanged`);

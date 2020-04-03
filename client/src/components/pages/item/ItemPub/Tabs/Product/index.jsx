@@ -4,6 +4,7 @@ import useCurrentItem from 'src/util/hooks/useCurrentItem';
 import Details from './Details';
 
 const Container = styled.div`
+  margin: 2rem 0;
 `;
 
 const Product = () => {

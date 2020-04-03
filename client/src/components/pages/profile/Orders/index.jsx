@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import api from 'src/util/api';
 import { useSelector } from 'react-redux';
 import ItemListElt from 'src/components/common/cards/ItemListElt';
+import { useHistory } from 'react-router-dom';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -19,6 +20,7 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [v, setV] = useState(1);
   const user = useSelector((state) => state.user);
+  
   useEffect(() => {
     if (user) {
       // fetch orders
@@ -29,6 +31,9 @@ const Orders = () => {
   }, [v]);
 
   const [selectedItemId, setSelectedItemId] = useState([]);
+  
+  const history = useHistory();
+  if (!user) history.push('/login');
 
   return (
     <Wrapper>

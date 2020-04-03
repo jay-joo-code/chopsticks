@@ -8,6 +8,7 @@ import theme from 'src/theme';
 import { Link } from 'react-router-dom';
 import getTotalPrice from 'src/util/calculation/getTotalPrice';
 import ActionsSection from './ActionsSection';
+import { cartObjToOptsString } from 'src/util/helpers';
 
 const Container = styled.div`
   width: 100%;
