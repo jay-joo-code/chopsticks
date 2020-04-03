@@ -17,6 +17,7 @@ import ItemPub from 'src/components/pages/item/ItemPub';
 import ItemEdit from 'src/components/pages/item/ItemEdit';
 
 import AdminShops from 'src/components/pages/admin/AdminShops';
+import AdminUsers from 'src/components/pages/admin/AdminUsers';
 import BizmTest from 'src/components/pages/admin/BizmTest';
 
 import Header from 'src/components/layout/Header';
@@ -83,6 +84,7 @@ const AppRouter = () => (
 
           <Route path="/admin/shops" component={AdminShops} />
           <Route path="/admin/bizm" component={BizmTest} />
+          <Route path="/admin/users" component={AdminUsers} />
           
           <Route exact path="/about" component={About} />
           <Route exact path="/" component={Home} />
