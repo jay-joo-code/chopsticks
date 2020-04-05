@@ -20,7 +20,7 @@ const SentBtn = ({ order, v, setV }) => {
     try {
       await api.put(`/order/${order._id}/update`, { state: 'delivering' })
       setV(v + 1);
-      const number = order.deliv.mobile
+      const number = order.buyer.mobile
       const data = {
         itemName: order.cartObj.item.name,
         sellerName: order.seller.name,

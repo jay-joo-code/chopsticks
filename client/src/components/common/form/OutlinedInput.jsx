@@ -23,7 +23,7 @@ const InputArea = styled.div`
 const Input = styled.input`
   border-radius: 8px;
   font-size: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
   height: 3rem;
   line-height: 3rem;
   padding: .5rem;
@@ -31,8 +31,9 @@ const Input = styled.input`
   border: ${(props) => (props.hasError ? 'solid 1px #de6362' : 'none')};
   text-align: ${(props) => (props.right ? 'right' : '')};
   width: 100%;
-  background: white;
-  background: ${props => props.grey ? 'rgba(0, 0, 0, .1)' : ''};
+  background: white !;
+  //background: ${props => props.grey ? 'rgba(0, 0, 0, .1)' : ''};
+  border: 1px solid rgba(0, 0, 0, .2);
   
   // sideButton
   flex-shrink: ${props => props.sideButton ? '2' : ''};

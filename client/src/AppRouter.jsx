@@ -40,7 +40,6 @@ const Container = styled.div`
     flex-direction: column;
     width: 100%;
     min-height: 101vh;
-    background-color: rgba(0, 0, 0, .01);
 `;
 
 const AppRouter = () => (

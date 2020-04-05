@@ -4,6 +4,7 @@ import api from 'src/util/api';
 import log from 'src/util/log';
 import ToolBar from './ToolBar';
 import OrdersList from './OrdersList';
+import { updateDelivState } from 'src/util/helpers';
 
 const Container = styled.div`
   margin-top: 2rem;
@@ -23,7 +24,7 @@ const DynOrderPageIndex = ({ user, state, seen }) => {
   const [selected, setSelected] = useState([]);
   const [v, setV] = useState(0);
 
-  // reload orders on state change
+  // fetch orders based on state and seen
   useEffect(() => {
     if (user && state) {
       const seenQuery = seen ? `&seen=${seen}` : '';
@@ -34,6 +35,8 @@ const DynOrderPageIndex = ({ user, state, seen }) => {
         .catch((e) => log('ERROR fetching orders at DynOrderPageIndex', e));
     }
   }, [state, user, v, seen]);
+  
+  updateDelivState(user._id, 'seller');
 
   return (
     <Container>

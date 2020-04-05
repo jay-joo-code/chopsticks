@@ -4,6 +4,7 @@ import api from 'src/util/api';
 import { useSelector } from 'react-redux';
 import ItemListElt from 'src/components/common/cards/ItemListElt';
 import { useHistory } from 'react-router-dom';
+import { updateDelivState } from 'src/util/helpers';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -34,6 +35,8 @@ const Orders = () => {
   
   const history = useHistory();
   if (!user) history.push('/login');
+  
+  updateDelivState(user._id, 'buyer')
 
   return (
     <Wrapper>
