@@ -73,7 +73,7 @@ var userSchema = Schema({
     intro: String,
     accepted: {
       type: Boolean,
-      default: false
+      default: true
     },
     applied: {
       type: Boolean,

@@ -65,7 +65,7 @@ const AppForm = () => {
       } else {
         axios.post('/api/shop/apply', values)
           .then((res) => {
-            history.push('/shop/apply/pending');
+            history.push('/shop/admin/items');
           })
           .catch((e) => {
             log('ERROR submit apply shop form', e);
