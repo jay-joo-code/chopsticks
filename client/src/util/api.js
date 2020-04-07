@@ -1,7 +1,15 @@
 import axios from 'axios';
 import cfg from 'src/config';
 
-const baseURL = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_API_URL : cfg.BASE;
+let baseURL = cfg.BASE;
+
+if (process.env.NODE_ENV === 'production') {
+  if (process.env.REACT_APP_ENV === 'release') {
+    baseURL = cfg.BASE_RELEASE
+  } else{
+    baseURL = cfg.BASE_PROD
+  }
+}
 
 const api = axios.create({
   baseURL
