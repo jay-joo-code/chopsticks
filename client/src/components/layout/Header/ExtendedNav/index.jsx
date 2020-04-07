@@ -8,7 +8,11 @@ import './ExtendedNav.css';
 const Container = styled.div`
   border-top: 1px solid rgba(0, 0, 0, .1);
   border-bottom: 1px solid rgba(0, 0, 0, .1);
-  margin: 1rem 0;
+  margin: 0 0 1rem 0;
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    margin: 1rem 0;
+  }
 `
 
 const ExtendedNav = () => {

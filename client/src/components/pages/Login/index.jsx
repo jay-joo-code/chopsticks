@@ -7,14 +7,17 @@ import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import log from 'src/util/log';
-import { useDispatch } from 'react-redux';
 import ErrMsg from 'src/components/common/form/ErrMsg';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 
 const Container = styled.div`
-
+  
 `;
+
+const Input = styled(OutlinedInput)`
+  margin: .2rem 0;
+`
 
 const BtnCont = styled.div`
   display: flex;
@@ -36,7 +39,6 @@ const RegisterBtn = styled(Link)`
 `;
 
 const Login = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
   const [errmsg, setErrmsg] = useState('');
   const formik = useFormik({
@@ -69,13 +71,13 @@ const Login = () => {
     <AuthPanel title="로그인">
       <Container>
         <form onSubmit={formik.handleSubmit}>
-          <OutlinedInput 
+          <Input 
             name="email" 
             placeholder="이메일" 
             formik={formik} 
             grey 
           />
-          <OutlinedInput 
+          <Input 
             name="password" 
             type="password" 
             placeholder="비밀번호" 

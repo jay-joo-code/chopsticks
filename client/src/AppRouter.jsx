@@ -17,6 +17,7 @@ import ItemPub from 'src/components/pages/item/ItemPub';
 import ItemEdit from 'src/components/pages/item/ItemEdit';
 
 import AdminShops from 'src/components/pages/admin/AdminShops';
+import AdminUsers from 'src/components/pages/admin/AdminUsers';
 import BizmTest from 'src/components/pages/admin/BizmTest';
 
 import Header from 'src/components/layout/Header';
@@ -39,7 +40,6 @@ const Container = styled.div`
     flex-direction: column;
     width: 100%;
     min-height: 101vh;
-    background-color: rgba(0, 0, 0, .01);
 `;
 
 const AppRouter = () => (
@@ -83,6 +83,7 @@ const AppRouter = () => (
 
           <Route path="/admin/shops" component={AdminShops} />
           <Route path="/admin/bizm" component={BizmTest} />
+          <Route path="/admin/users" component={AdminUsers} />
           
           <Route exact path="/about" component={About} />
           <Route exact path="/" component={Home} />

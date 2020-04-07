@@ -15,7 +15,7 @@ orderRouter.get('/:usertype/:uid', async (req, res) => {
     // filter by user
     const filter = {};
     filter[usertype] = uid;
-    const results = await Order.find(filter).populate('seller');
+    const results = await Order.find(filter).populate('seller').populate('buyer');
 
     // filter by monthIndex, state, seen
     const filtered = results.filter((doc) => {

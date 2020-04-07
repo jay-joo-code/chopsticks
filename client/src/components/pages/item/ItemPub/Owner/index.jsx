@@ -1,19 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import placeholder from 'src/assets/images/placeholders/ph1.jpg';
 import theme from 'src/theme';
 
 const Container = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;
-  margin-bottom: 5rem;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
-    width: auto;
     display: block;
-    width: 20%;
-    margin-bottom: 0;
+    margin: 0;
   }
 `;
 
@@ -25,7 +22,6 @@ const Wrapper = styled.div`
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     padding: 2rem 0;
-    margin: 0 1rem 0 0;
     display: block;
   }
 `;
@@ -40,12 +36,11 @@ const Img = styled.img`
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  width: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
   
   @media (min-width: ${theme.desktopContentWidth}px) {
-    width: 8rem;
-    height: 8rem;
+    width: 10rem;
+    height: 10rem;
   }
   
 `;
@@ -77,13 +72,16 @@ const Name = styled.p`
 
 const Intro = styled.p`
   opacity: .8;
-  text-align: center;
   margin: 0;
   text-overflow: ellipsis;
+  font-size: .8rem;
+  
+  @media (min-width: ${theme.desktopContentWidth}px) {
+    text-align: center;
+  }
 `;
 
 const Owner = ({ item }) => {
-  const email = item && item.owner ? item.owner.email : '';
   const src = item.owner.shop.image;
   const defaultSrc = 'https://firebasestorage.googleapis.com/v0/b/chopsticks-248516.appspot.com/o/users%2F5e1eb49698c4320017334663%2F%ED%88%AC%EB%AA%85%20%EB%A1%9C%EA%B3%A0.png?alt=media&token=a1c77c2b-ec8d-4136-9e63-087dcb7a7315';
 

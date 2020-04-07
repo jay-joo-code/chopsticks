@@ -3,7 +3,8 @@ import generator from 'generate-password';
 import axios from 'axios';
 import getTotalPrice from 'src/util/calculation/getTotalPrice';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
-import { sendAlert } from 'src/util/bizm'
+import { sendAlertOnEvent } from 'src/util/bizm';
+import { cartObjToOptsString } from 'src/util/helpers';
 
 const cartTransaction = (userId, method) => {
   return new Promise(async(resolve, reject) => {
@@ -107,8 +108,19 @@ const cartTransaction = (userId, method) => {
           axios.post(`/api/transaction/${data.receipt_id}/process`, { transaction })
             .then((res) => {
               fetchSelfAndStore(user._id);
+              
+              // send kakao alerts
               cart.map((cartObj) => {
-                sendAlert(cartObj.item.owner.mobile);  
+                const { item, quantity } = cartObj;
+                const number = item.owner.mobile;
+                const data = {
+                  itemName: item.name,
+                  optsString: cartObjToOptsString(cartObj),
+                  qty: quantity,
+                  buyerName: user.name,
+                  url: 'https://chopsticks.market/profile/orders',
+                }
+                sendAlertOnEvent(number, 'NEW_ORDER', data);  
               })
               
               resolve(res);

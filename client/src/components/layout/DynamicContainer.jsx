@@ -15,7 +15,7 @@ const Container = styled.div`
   max-width: 90%;
   
   @media(min-width: ${desktopContentWidth}px) {
-    width: ${desktopContentWidth}px;
+    width: ${desktopContentWidth + 280}px;
   }
 `;
 

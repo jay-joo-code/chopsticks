@@ -1,17 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import useCurrentItem from 'src/util/hooks/useCurrentItem';
-import Owner from './Owner';
 import Details from './Details';
-import Purchase from './Purchase';
 
 const Container = styled.div`
-  padding: 2rem 0;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  margin: 2rem 0;
 `;
 
 const Product = () => {
@@ -20,11 +13,7 @@ const Product = () => {
   if (!item) return <div />;
   return (
     <Container>
-      <Wrapper>
-        <Owner item={item} />
-        <Details item={item} />
-        <Purchase item={item} />
-      </Wrapper>
+      <Details item={item} />
     </Container>
   );
 };

@@ -8,7 +8,8 @@ import Heading from 'src/components/common/fonts/Heading';
 import Btn from 'src/components/common/buttons/Btn';
 import Badge from 'src/components/common/displays/Badge';
 import ErrMsg from 'src/components/common/fonts/ErrMsg';
-import { sendAlert } from 'src/util/bizm';
+import { sendAlertOnEvent } from 'src/util/bizm';
+import { cartObjToOptsString } from 'src/util/helpers';
 
 const Container = styled.div`
   background: rgba(0, 0, 0, .05);
@@ -75,7 +76,30 @@ const ActionPopup = ({
     
     // send alert
     const number = order.seller.mobile;
-    sendAlert(number);
+    const { cartObj, buyer } = order;
+    let newState = '';
+    if (action === '취소문의') {
+      newState = '취소'
+    } 
+    else if (action !== '환불/교환 문의') return;
+    else {
+      if (newOrderState === 'refundPending') {
+        newState = '환불'
+      }
+      else if (newOrderState === 'exchangePending') {
+        newState = '교환'
+      }
+    }
+    const data = {
+      itemName: cartObj.item.name,
+      optsString: cartObjToOptsString(cartObj),
+      qty: cartObj.quantity,
+      buyerName: buyer.name,
+      newState,
+      url: 'https://chopsticks.market/shop/admin/orders'
+    }
+    
+    sendAlertOnEvent(number, 'ORDER_STATE_CHANGE', data);
   };
 
   return (

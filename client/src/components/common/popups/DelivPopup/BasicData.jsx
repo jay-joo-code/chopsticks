@@ -27,7 +27,7 @@ const BasicData = ({ data, company }) => {
       )
   }
   
-  if (!data.receiverAddr) {
+  if (data.result !== 'Y') {
     return (
       <div>유효하지 않은 송장번호 입니다</div>
       )

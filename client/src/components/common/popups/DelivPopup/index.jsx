@@ -24,7 +24,7 @@ const DelivPopup = ({ show, setShow, data, company }) => {
     setShow(false);
   }
   
-  const hasError = !data || !data.receiverAddr || data.code === '105';
+  const hasError = !data || data.result !== 'Y' || data.code === '105';
   
   return (
     <Container>

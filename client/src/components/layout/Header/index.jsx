@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import DynamicContainer from 'src/components/layout/DynamicContainer';
 import SearchBox from 'src/components/common/form/SearchBox';
@@ -6,6 +6,13 @@ import theme from 'src/theme';
 import Logo from './Logo';
 import Nav from './Nav';
 import ExtendedNav from './ExtendedNav';
+import MobileSearch from './MobileSearch';
+import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
 const Container = styled.div`
   display: flex;
@@ -13,13 +20,14 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const DyncCont = styled.div`
+const DesktopSearchBoxContainer = styled.div`
   display: none;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     display: block;
+    margin-left: 2rem;
   }
-`;
+`
 
 const LeftCont = styled.div`
   display: flex;
@@ -27,21 +35,37 @@ const LeftCont = styled.div`
 `;
 
 const Header = () => {
+  const [expandSearch, setExpandSearch] = useState(false);
+  const enableSearch = () => {
+    disableBodyScroll();
+    setExpandSearch(true);
+  }
+  const disableSearch = () => {
+    clearAllBodyScrollLocks();
+    setExpandSearch(false);
+  }
+  
   return (
-    <div>
+    <Wrapper>
       <DynamicContainer>
         <Container>
           <LeftCont>
             <Logo />
-            <DyncCont>
+            <DesktopSearchBoxContainer>
               <SearchBox />
-            </DyncCont>
+            </DesktopSearchBoxContainer>
           </LeftCont>
-          <Nav />
+          <Nav 
+           enableSearch={enableSearch}
+          />
         </Container>
       </DynamicContainer>
       <ExtendedNav />
-    </div>
+      <MobileSearch
+        expandSearch={expandSearch}
+        disableSearch={disableSearch}
+      />
+    </Wrapper>
   );
 };
 

@@ -47,6 +47,7 @@ const TextSect = styled.div`
   align-items: flex-start;  
   font-size: .9rem;
   line-height: 1.2rem;
+  height: 5rem;
 `;
 
 const Row = styled.div`
@@ -58,8 +59,12 @@ const Row = styled.div`
 
 const Name = styled.p`
   text-overflow: ellipsis;
-  white-space: nowrap;
   overflow: hidden;
+  font-size: .8rem;
+  
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const Owner = styled.p`
@@ -89,10 +94,10 @@ const ItemCard = ({ onClickPath, item, ...rest }) => {
         </ImgSect>
         <TextSect>
           <Row>
-            <Name>{item.name}</Name>
+            <Owner>{`@${item.owner.shop.title}`}</Owner>
             <Price>{`${styledPrice}원`}</Price>
           </Row>
-          <Owner>{`@${item.owner.shop.title}`}</Owner>
+          <Name>{item.name}</Name>
         </TextSect>
       </Link>
     </Cont>

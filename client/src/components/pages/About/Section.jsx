@@ -9,23 +9,35 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
+  width: 100%;
   
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    max-width: 500px;
+  }
 `
 
-const Title = styled.h2`
+const Heading = styled.h2`
   font-size: 1.5rem;
-  margin-bottom: 2rem;
+  text-align: center;
+`
+
+const Subheading = styled(BodyRaw)`
+  text-align: center;
+  font-weight: bold;
+  margin: 2rem 0 .5rem 0;
 `
 
 const Body = styled(BodyRaw)`
   text-align: center;
 `
 
-const Section = ({ title, body }) => {
+const Section = ({ heading, headingNext, subheading, body }) => {
   return (
     <Container>
       <Content>
-        <Title>"{title}"</Title>
+        <Heading>{heading}</Heading>
+        <Heading>{headingNext}</Heading>
+        <Subheading>"{subheading}"</Subheading>
         <Body>{body}</Body>
       </Content>
     </Container>
