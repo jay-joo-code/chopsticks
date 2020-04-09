@@ -23,7 +23,7 @@ const SentBtn = ({ order, v, setV }) => {
       const number = order.buyer.mobile
       const data = {
         itemName: order.cartObj.item.name,
-        sellerName: order.seller.name,
+        shopTitle: order.seller.shop.title,
         buyerName: order.buyer.name,
         delivCompany: order.deliv.company,
         invoice: order.deliv.invoice,

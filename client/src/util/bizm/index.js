@@ -107,20 +107,20 @@ ${buyerName}님의 결제 취소 승인이 완료되었습니다.
 ◆ 상품명 : ${itemName}
 ◆ Designed by ${sellerName}
 
-◆ 취소금액 : ${price}
+◆ 취소금액 : ${`${price}원`}
 ◆ 결제수단 : ${transactionMethod}
 
 결제수단에 따라 영업일 기준 1~5일 이후 환불금액 확인이 가능합니다. 
 `)
 }
 
-const orderSentMsg = ({ itemName, sellerName, buyerName, delivCompany, invoice, url }) => {
+const orderSentMsg = ({ itemName, shopTitle, buyerName, delivCompany, invoice, url }) => {
   return (`안녕하세요. Chopsticks입니다.
 
 ${buyerName}님께서 주문하신 상품이 발송되었습니다.
 
 ◆ 상품명 : ${itemName}
-◆ Designed by ${sellerName}
+◆ Designed by ${shopTitle}
 
 ◆ 택배사 : ${delivCompany}
 ◆ 송장번호 : ${invoice}
