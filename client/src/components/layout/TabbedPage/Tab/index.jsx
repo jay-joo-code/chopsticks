@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 `;
 
 const Tab = (props) => {
-  const { pages, index, setIndex } = props;
+  const { pages, index, setIndex, tabWidth } = props;
   const handleTabClick = (i) => {
     setIndex(i);
   };
@@ -27,6 +27,7 @@ const Tab = (props) => {
             key={page.name}
             on={index === i ? 1 : 0}
             page={page}
+            tabWidth={tabWidth}
             onClick={() => handleTabClick(i)}
           />
         ))}
