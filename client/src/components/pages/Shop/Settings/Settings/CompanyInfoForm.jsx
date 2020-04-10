@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Alert from 'src/components/common/displays/Alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
-import OutlinedTextarea from 'src/components/common/form/OutlinedTextarea';
 import ImageInput from 'src/components/common/form/ImageInput';
 import Btn from 'src/components/common/buttons/Btn';
 import api from 'src/util/api';
@@ -14,38 +14,27 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 4rem 0;
 `;
 
 const InputContainer = styled.div`
   width: 100%;
   margin: 1rem 0;
-  
-  @media (min-width: ${(props) => props.theme.desktopContentWidth}px) {
-    width: 40%;
-  }
 `;
 
-const Msg = styled.p`
-  color: ${(props) => props.theme.primary};
-  font-size: .8rem;
-`;
-
-const BasicInfoForm = ({ user }) => {
+const CompanyInfoForm = ({ user }) => {
   const { shop } = user;
-  const [msg, setMsg] = useState('');
+  const [hasError, setHasError] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  
   const formik = useFormik({
     initialValues: {
-      title: shop.title || '',
-      intro: shop.intro || '',
-      image: shop.image || '',
+      certification: shop.certification || '',
+      reportNumber: shop.reportNumber || ''
     },
     validationSchema: Yup.object({
-      title: Yup.string()
-        .required('필수'),
-      intro: Yup.string()
-        .required('필수'),
-      image: Yup.string()
-        .required('필수'),
+      certification: Yup.string(),
+      reportNumber: Yup.string()
     }),
     onSubmit: (values) => {
       const updatedShop = { ...user.shop, ...values };
@@ -53,7 +42,8 @@ const BasicInfoForm = ({ user }) => {
       api.put(`/user/${user._id}/update`, updatedUser)
         .then(() => {
           fetchSelfAndStore(user._id);
-          setMsg('저장 완료');
+          setHasError(false);
+          setShowAlert(true);
         })
         .catch((e) => log('ERROR update store basic info at form', e));
     },
@@ -65,22 +55,16 @@ const BasicInfoForm = ({ user }) => {
         <ImageInput
           formik={formik}
           path={`/users/${user._id}`}
-          name="image"
-          label="샵 대표사진"
+          name="certification"
+          label="사업자 등록증"
+          square
         />
       </InputContainer>
       <InputContainer>
         <OutlinedInput
           formik={formik}
-          name="title"
-          label="샵 이름"
-        />
-      </InputContainer>
-      <InputContainer>
-        <OutlinedTextarea
-          formik={formik}
-          name="intro"
-          label="샵 소개"
+          name="reportNumber"
+          label="통신판매업 신고번호"
         />
       </InputContainer>
       <Btn
@@ -88,9 +72,14 @@ const BasicInfoForm = ({ user }) => {
       >
 저장
       </Btn>
-      {msg && msg.length > 0 && <Msg>{msg}</Msg>}
+      <Alert
+        msg={hasError ? '입력란에 오류가 있습니다' : '저장되었습니다'}
+        show={showAlert}
+        setShow={setShowAlert}
+        color={hasError ? 'danger' : 'primary'}
+      />
     </Form>
-  );
+  )
 };
 
-export default BasicInfoForm;
+export default CompanyInfoForm;

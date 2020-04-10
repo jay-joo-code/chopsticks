@@ -16,12 +16,15 @@ const Container = styled.div`
 
 const Img = styled.img`
   object-fit: cover;
-  height: 5rem;
-  width: 5rem;
+  height: 7rem;
+  width: 7rem;
   border-radius: 50%;
   background: rgba(0, 0, 0, .05);
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
   flex-shrink: 0;
+  
+  // square
+  border-radius: ${props => props.square ? '0' : ''};
 `;
 
 const DescSection = styled.div`
@@ -30,7 +33,7 @@ const DescSection = styled.div`
 `;
 
 const ImageInput = ({
-  formik, name, label, path,
+  formik, name, label, path, square
 }) => {
   const setSrc = (src) => {
     if (src) formik.setFieldValue(name, src);
@@ -42,6 +45,7 @@ const ImageInput = ({
       <Container>
         <Img
           src={formik.values[name]}
+          square={square}
         />
         <DescSection>
           <FileUpload

@@ -85,6 +85,8 @@ var userSchema = Schema({
       refund: String,
       etc: String
     },
+    certification: String,
+    reportNumber: String,
     createdAt: Date
   },
   deliveryInfo: {
