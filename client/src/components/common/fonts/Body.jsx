@@ -6,6 +6,8 @@ const StyledBody = styled.p`
   font-size: 1rem;
   line-height: 1.2;
   white-space: pre-line;
+  word-break: break-word;
+  overflow: hidden;
   
   font-size: ${props => props.muted ? '.8rem' : ''};
   margin-bottom: ${props => props.mb ? `${props.mb}rem`: ''};

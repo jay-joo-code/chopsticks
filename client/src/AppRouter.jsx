@@ -16,9 +16,7 @@ import About from 'src/components/pages/About';
 import ItemPub from 'src/components/pages/item/ItemPub';
 import ItemEdit from 'src/components/pages/item/ItemEdit';
 
-import AdminShops from 'src/components/pages/admin/AdminShops';
-import AdminUsers from 'src/components/pages/admin/AdminUsers';
-import BizmTest from 'src/components/pages/admin/BizmTest';
+import Admin from 'src/components/pages/Admin';
 
 import Header from 'src/components/layout/Header';
 import Footer from 'src/components/layout/Footer';
@@ -81,9 +79,7 @@ const AppRouter = () => (
           <Route path="/shop/admin/settings" component={ShopSettings} />
           <Route path="/shop" component={Shop} />
 
-          <Route path="/admin/shops" component={AdminShops} />
-          <Route path="/admin/bizm" component={BizmTest} />
-          <Route path="/admin/users" component={AdminUsers} />
+          <Route path="/admin" component={Admin} />
           
           <Route exact path="/about" component={About} />
           <Route exact path="/" component={Home} />

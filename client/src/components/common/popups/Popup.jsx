@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Subheading from 'src/components/common/fonts/Subheading';
 
 const Overlay = styled.div`
   z-index: 999;
@@ -20,9 +21,8 @@ const Overlay = styled.div`
 const Container = styled.div`
   z-index: 998;
   background-color: rgba(230, 230, 230, 1);
-  padding: 2rem;
+  padding: 1rem;
   margin: 2rem;
-  border-radius: 5px;
   position: fixed;
   transition: all 5s ease-in-out;
   display: inline-block;
@@ -33,21 +33,29 @@ const Container = styled.div`
 
 const Header = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
 `;
+
+const Line = styled.div`
+  margin: 1rem 0;
+  width: 100%;
+  border-bottom: 1px solid grey;
+`
 
 const CloseButton = styled.button`
   text-align: right;
   font-size: 1rem;
   font-weight: bold;
   opacity: .8;
+  background: inherit;
 `;
 
 const Content = styled.div`
 
 `;
 
-const Popup = ({ display, handleClosePopup, children, white, ...rest }) => {
+const Popup = ({ display, handleClosePopup, children, white, title, ...rest }) => {
   const handleContainerClick = (e) => {
     e.stopPropagation();
   };
@@ -62,8 +70,10 @@ const Popup = ({ display, handleClosePopup, children, white, ...rest }) => {
         {...rest}
       >
         <Header>
+          {title && <Subheading>{title}</Subheading>}
           <CloseButton onClick={handleClosePopup}>x</CloseButton>
         </Header>
+        {title && <Line />}
         <Content>
           {children}
         </Content>

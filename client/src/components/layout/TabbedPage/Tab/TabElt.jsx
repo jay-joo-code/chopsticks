@@ -18,10 +18,10 @@ const Container = styled.div`
   }
 `;
 
-const Tab = (props) => {
-  const { page, tabWidth } = props;
+const Tab = ({ page, tabWidth, ...rest }) => {
+  
   return (
-    <Container {...props}>
+    <Container {...rest}>
       {page.name}
     </Container>
   );

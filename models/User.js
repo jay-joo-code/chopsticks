@@ -87,6 +87,11 @@ var userSchema = Schema({
     },
     certification: String,
     reportNumber: String,
+    account: {
+      owner: String,
+      bank: String,
+      number: String
+    },
     createdAt: Date
   },
   deliveryInfo: {
