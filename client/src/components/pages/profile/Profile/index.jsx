@@ -47,7 +47,6 @@ const Profile = () => {
         <BtnContainer>
           <Btn 
             color='primary'
-            inverted
             onClick={handleLogout}
           >로그아웃</Btn>
         </BtnContainer>

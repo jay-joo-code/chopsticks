@@ -21,7 +21,7 @@ const Button = styled.button`
   background: ${props => props.inverted ? 'white' : ''};
 `;
 
-const RedButton = ({
+const Btn = ({
   children, color, disabled, size, inverted, ...rest
 }) => (
   <Button
@@ -35,4 +35,4 @@ const RedButton = ({
   </Button>
 );
 
-export default RedButton;
+export default Btn;

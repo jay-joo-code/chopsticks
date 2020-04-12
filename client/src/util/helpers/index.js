@@ -13,7 +13,7 @@ export const cartObjToOptsString = (cartObj) => {
 }
 
 // if delivery is complete
-// update state: delivering to complete
+// automatically update state: delivering to complete
 export const updateDelivState = async (uid, userType) => {
   try {
     const { data: orders } = await api.get(`/order/${userType}/${uid}?state=delivering`)
@@ -26,4 +26,12 @@ export const updateDelivState = async (uid, userType) => {
   } catch (e) {
     log(`ERROR updateDelivState`, e)
   }
+}
+
+export const setOrderState = (orderId, newState) => {
+  return new Promise((resolve, reject) => {
+    api.put(`/order/${orderId}/update`, { state: newState })
+      .then((res) => resolve(res.data))
+      .catch((e) => reject(e))
+  })
 }

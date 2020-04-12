@@ -30,6 +30,7 @@ const Orders = ({ user }) => {
     name: '취소건',
     component: <DynOrderPage user={user} state="canceled" />,
   }];
+  
   return (
     <Container>
       <TabbedPage

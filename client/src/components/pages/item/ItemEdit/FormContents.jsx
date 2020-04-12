@@ -35,7 +35,6 @@ const FormContents = ({ formik, _id }) => {
         <BtnCont>
           <Btn type="submit"
             color='secondary'
-            inverted
           >
             저장
           </Btn>

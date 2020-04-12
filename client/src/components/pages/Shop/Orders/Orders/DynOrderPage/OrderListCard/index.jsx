@@ -51,6 +51,9 @@ const Col = styled.div`
   overflow: hidden;
   white-space: initial;
   
+  // alignStart
+  align-items: ${props => props.alignStart ? 'flex-start' : ''};
+  
   @media (min-width: ${(props) => props.theme.desktopContentWidth}px) {
     width: ${(props) => props.width};
     padding: 0;
@@ -69,6 +72,9 @@ const DisplayGroup = styled.div`
 const Text = styled.p`
   font-size: ${(props) => (props.size === 'sm' ? '10px' : '12px')};
   line-height: 1rem;
+  
+  // color
+  color: ${props => props.color ? props.theme[props.color] : ''};
 `;
 
 const Img = styled.img`
@@ -99,6 +105,17 @@ const OrderListCardIndex = ({
   const opts = optGrps && optGrps.map((optGrp, i) => optGrp.opts[idx[i]].name).join(' ')
   const orderDesc = `수량 ${order.cartObj.quantity}, 옵션 ${opts || '없음'}`;
   const date = new Date(order.createdAt).toLocaleDateString('ko-KR');
+  
+  let stateText = '';
+  if (order.state.includes('exchange')) {
+    stateText = '(교환건)'
+  }
+  else if (order.state.includes('refund')) {
+    stateText = '(환불건)'
+  }
+  else if (order.state.includes('cancel')) {
+    stateText = '(취소건)'
+  }
 
   if (!order) return <div />;
 
@@ -117,8 +134,9 @@ const OrderListCardIndex = ({
             />
           </Col>
           <Col width={colWidths[1]}>
+            {stateText && <Text color={stateText === '(취소건)' ? 'danger' : 'primary'}>{stateText}</Text>}
             <Text size="sm">{order.bootpay.receipt_id}</Text>
-            <Text>{order.deliv.recipient}</Text>
+            <Text>{date}</Text>
           </Col>
           <ShowOn display="mobile">
             <MenuBtn
@@ -127,22 +145,22 @@ const OrderListCardIndex = ({
             />
           </ShowOn>
         </DisplayGroup>
+        <Col width={colWidths[2]}>
+          <Text>{order.buyer.name}</Text>
+        </Col>
         <Link to={`/item/${order.cartObj.item._id}`}>
           <DisplayGroup>
-            <Col width={colWidths[2]}>
+            <Col width={colWidths[3]}>
               <Img src={imgSrc} />
             </Col>
-            <Col width={colWidths[3]}>
+            <Col width={colWidths[4]}>
               <Text>{name}</Text>
               <Text size="sm">{orderDesc}</Text>
               <Text>{`${order.cartObj.price.toLocaleString()}원`}</Text>
             </Col>
           </DisplayGroup>
         </Link>
-        <Col width={colWidths[4]}>
-          <Text>{date}</Text>
-        </Col>
-        <Col width={colWidths[5]}>
+        <Col width={colWidths[5]} alignStart>
           <Text>{order.deliv.address}</Text>
           <Text>{order.deliv.addressDetail}</Text>
         </Col>
