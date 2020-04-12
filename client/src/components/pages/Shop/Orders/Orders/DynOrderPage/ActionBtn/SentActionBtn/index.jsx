@@ -12,7 +12,7 @@ const Container = styled.div`
 
 `;
 
-const SentBtn = ({ order, v, setV }) => {
+const SentActionBtn = ({ order, v, setV }) => {
   const [show, setShow] = useState(false);
   const [msg, setMsg] = useState('')
   
@@ -31,7 +31,7 @@ const SentBtn = ({ order, v, setV }) => {
       }
       sendAlertOnEvent(number, 'ORDER_SENT', data);
     } catch (e) {
-      log(`ERROR SentBtn`, e)
+      log(`ERROR SentActionBtn`, e)
     }
   }
   
@@ -74,4 +74,4 @@ const SentBtn = ({ order, v, setV }) => {
   )
 };
 
-export default SentBtn;
+export default SentActionBtn;

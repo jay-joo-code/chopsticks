@@ -10,10 +10,10 @@ const Container = styled.div`
 const Orders = ({ user }) => {
   const pages = [{
     name: '새주문',
-    component: <DynOrderPage user={user} state="pending" seen="false" />,
+    component: <DynOrderPage user={user} state="new" />,
   }, {
     name: '배송전',
-    component: <DynOrderPage user={user} state="pending" seen="true" />,
+    component: <DynOrderPage user={user} state="pending" />,
   }, {
     name: '배송중',
     component: <DynOrderPage user={user} state="delivering" />,
@@ -22,13 +22,13 @@ const Orders = ({ user }) => {
     component: <DynOrderPage user={user} state="complete" />,
   }, {
     name: '교환건',
-    component: <DynOrderPage user={user} state="exchanged" />,
+    component: <DynOrderPage user={user} state="exchange" />,
   }, {
     name: '환불건',
-    component: <DynOrderPage user={user} state="refunded" />,
+    component: <DynOrderPage user={user} state="refund" />,
   }, {
     name: '취소건',
-    component: <DynOrderPage user={user} state="canceled" />,
+    component: <DynOrderPage user={user} state="cancel" />,
   }];
   
   return (

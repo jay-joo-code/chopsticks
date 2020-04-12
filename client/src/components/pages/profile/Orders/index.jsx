@@ -36,7 +36,7 @@ const Orders = () => {
   const history = useHistory();
   if (!user) history.push('/login');
   
-  updateDelivState(user._id, 'buyer')
+  updateDelivState(user._id, 'buyer');
 
   return (
     <Wrapper>

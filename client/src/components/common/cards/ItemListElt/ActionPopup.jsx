@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Popup from 'src/components/common/popups/Popup';
 import api from 'src/util/api';
@@ -42,52 +42,48 @@ const ActionPopup = ({
   const [msg, setMsg] = useState('');
   const [newOrderState, setNewOrderState] = useState();
   const [err, setErr] = useState();
+  
+  useEffect(() => {
+    if (action === '취소문의') {
+      setNewOrderState('cancelRequested')
+    }
+  }, [action])
 
-  // action handlers
   const handleClosePopup = () => {
     setShow(false);
   };
   
-  const handleOrderStateChange = (newState) => {
-    const dynNewState = newState || newOrderState;
-    api.post(`/order/${order._id}/state-change/${dynNewState}`, { stateMsg: msg })
-      .then((res) => setV(v + 1))
-      .catch((e) => log('ERROR ActionSection handleOrderStateChange', e));
-  };
-  
-  const handleReview = () => {
-    // TODO: update item obj with review
-  };
-  
   const handleAction = () => {
+    // 교환 / 환불 selection validation
+    if (action === '환불/교환 문의' && !newOrderState) {
+      setErr('환불, 교환 둘중 하나를 골라주세요');
+      return;
+    } 
+    
     // reset popup
     setErr('');
     setShow(false);
     setMsg('');
-
-    // function call depending on action
-    if (action === '환불/교환 문의') {
-      if (newOrderState === 'refundPending' || newOrderState === 'exchangePending') {
-        handleOrderStateChange();
-      } else setErr('환불, 교환 둘중 하나를 골라주세요');
-    } else if (action === '취소문의') {
-      handleOrderStateChange('cancelPending');
-    }
+    
+    // update db with new state
+    api.post(`/order/${order._id}/state-change/${newOrderState}`, { stateMsg: msg })
+      .then((res) => setV(v + 1))
+      .catch((e) => log('ERROR ActionSection handleOrderStateChange', e));
     
     // send alert
     const number = order.seller.mobile;
     const { cartObj, buyer } = order;
-    let newState = '';
+    let newStateString = '';
     if (action === '취소문의') {
-      newState = '취소'
+      newStateString = '취소'
     } 
     else if (action !== '환불/교환 문의') return;
     else {
-      if (newOrderState === 'refundPending') {
-        newState = '환불'
+      if (newOrderState === 'refundRequested') {
+        newStateString = '환불'
       }
-      else if (newOrderState === 'exchangePending') {
-        newState = '교환'
+      else if (newOrderState === 'exchangeRequested') {
+        newStateString = '교환'
       }
     }
     const data = {
@@ -95,7 +91,7 @@ const ActionPopup = ({
       optsString: cartObjToOptsString(cartObj),
       qty: cartObj.quantity,
       buyerName: buyer.name,
-      newState,
+      newState: newStateString,
       url: 'https://chopsticks.market/shop/admin/orders'
     }
     
@@ -115,16 +111,16 @@ const ActionPopup = ({
               <Badge
                 color="primary"
                 type="button"
-                onClick={() => setNewOrderState('refundPending')}
-                inverted={newOrderState === 'refundPending'}
+                onClick={() => setNewOrderState('refundRequested')}
+                inverted={newOrderState === 'refundRequested'}
               >
 환불
               </Badge>
               <Badge
                 type="button"
                 color="primary"
-                onClick={() => setNewOrderState('exchangePending')}
-                inverted={newOrderState === 'exchangePending'}
+                onClick={() => setNewOrderState('exchangeRequested')}
+                inverted={newOrderState === 'exchangeRequested'}
               >
 교환
               </Badge>

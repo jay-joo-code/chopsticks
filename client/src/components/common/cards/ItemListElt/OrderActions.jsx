@@ -43,10 +43,8 @@ const OrderActions = ({ order, setV, v }) => {
     }
     setShow(true);
   };
-
-  if (!actions) {
-    return <div />;
-  }
+  
+  console.log(order)
 
   return (
     <Container>
@@ -57,7 +55,7 @@ const OrderActions = ({ order, setV, v }) => {
       >
         {orderStateToString(order.state)}
       </Badge>
-      {actions.map((action) => (
+      {actions && actions.map((action) => (
         <Badge
           color="primary"
           size="sm"

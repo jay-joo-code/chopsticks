@@ -33,44 +33,48 @@ export const sendAlert = (number) => {
 }
 
 export const sendAlertOnEvent = (number, event, data) => {
-  const eventToConfig = {
-    'NEW_ORDER': {
-      'msg': newOrderMsg(data),
-      'tmplId': 'chopsticks_03'
-    },
-    'ORDER_STATE_CHANGE': {
-      'msg': orderStateChangeMsg(data),
-      'tmplId': 'chopsticks_04'
-    },
-    'CANCEL_APPROVED': {
-      'msg': cancelApprovedMsg(data),
-      'tmplId': 'chopsticks_02'
-    },
-    'ORDER_SENT': {
-      'msg': orderSentMsg(data),
-      'tmplId': 'chopsticks_01'
-    },
-    'MOBILE_AUTH': {
-      'msg': mobileAuthMsg(data),
-      'tmplId': 'chopsticks_05'
-    },
-  }
-  
-  const config = [{
-    'message_type': 'AT',
-    'phn': formatNumber(number),
-    'profile': 'beaed98a65b993e706e963a8aa941c2db48e4938',
-    'reserveDt': '00000000000000',
-    ...eventToConfig[event]
-  }]
-  
-  bizm.post(`/v2/sender/send`, config)
-    .then((res) => {
-      log('sendAlert res', res);
-    })
-    .catch((e) => {
-      log('sendAlert error', e);
-    })
+  return new Promise((resolve, reject) => {
+    const eventToConfig = {
+      'NEW_ORDER': {
+        'msg': newOrderMsg(data),
+        'tmplId': 'chopsticks_03'
+      },
+      'ORDER_STATE_CHANGE': {
+        'msg': orderStateChangeMsg(data),
+        'tmplId': 'chopsticks_04'
+      },
+      'CANCEL_APPROVED': {
+        'msg': cancelApprovedMsg(data),
+        'tmplId': 'chopsticks_02'
+      },
+      'ORDER_SENT': {
+        'msg': orderSentMsg(data),
+        'tmplId': 'chopsticks_01'
+      },
+      'MOBILE_AUTH': {
+        'msg': mobileAuthMsg(data),
+        'tmplId': 'chopsticks_05'
+      },
+    }
+    
+    const config = [{
+      'message_type': 'AT',
+      'phn': formatNumber(number),
+      'profile': 'beaed98a65b993e706e963a8aa941c2db48e4938',
+      'reserveDt': '00000000000000',
+      ...eventToConfig[event]
+    }]
+    
+    bizm.post(`/v2/sender/send`, config)
+      .then((res) => {
+        log('sendAlert res', res);
+        resolve(res.data);
+      })
+      .catch((e) => {
+        log('sendAlert error', e);
+        reject(e);
+      })
+  })
 }
 
 const newOrderMsg = ({ itemName, optsString, qty, buyerName, url }) => {

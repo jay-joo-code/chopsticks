@@ -46,15 +46,14 @@ var orderSchema = Schema({
     required: true
   },
   state: { 
-    // TODO: add state "new"
-    // pending delivering complete 
+    // new pending delivering complete 
     // exchangeRequested exchangePending exchanged exchangeRejected 
     // refundRequested refundPending refunded refundRejected
-    // cancelRequested cancelPending canceled cancelRejected
+    // cancelRequested canceled cancelRejected
     // error
     type: String,
     required: true,
-    default: 'pending'
+    default: 'new'
   },
   stateMsg: {
     // 교환, 환불, 취소 사유 메세지

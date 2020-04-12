@@ -17,25 +17,22 @@ orderRouter.get('/:usertype/:uid', async (req, res) => {
     filter[usertype] = uid;
     const results = await Order.find(filter).populate('seller').populate('buyer');
 
-    // filter by monthIndex, state, seen
     const filtered = results.filter((doc) => {
       let condition = true;
+      
+      // filter: monthIndex
       if (monthIndex) {
         condition = new Date(doc.createdAt).getMonth() === Number(monthIndex) && condition;
       }
+      
+      // filter: state
+      // filtering my state is string inclusive
+      // ex) state "cancel" should include cancelRequested, cancelPending etc
       if (state) {
-        let newCondition = doc.state === state;
-
-        // also filter pending states
-        if (state === 'canceled') {
-          newCondition = doc.state === 'cancelPending' || newCondition;
-        } else if (state === 'exchanged') {
-          newCondition = doc.state === 'exchangePending' || newCondition;
-        } else if (state === 'refunded') {
-          newCondition = doc.state === 'refundPending' || newCondition;
-        }
-        condition = newCondition && condition;
+        condition = doc.state.includes(state) && condition;
       }
+      
+      // filter: seen
       if (seen !== undefined) {
         const boolSeen = seen === 'true';
         condition = doc.seen === boolSeen && condition;
@@ -65,11 +62,10 @@ orderRouter.post('/:id/cancel', async (req, res) => {
 
     // update db order state
     if (cancelRes.status !== 200) {
-      const newState = cancelRes.code === -13002 ? 'canceled' : 'error';
-      order.state = newState;
-      const result = await order.save();
-      res.send(result);
-    } else {
+      console.log('Bootpay cancel error', cancelRes);
+      throw new Error(cancelRes);
+    } 
+    else {
       order.state = 'canceled';
       order.bootpay = cancelRes.data;
       const dbRes = await order.save();

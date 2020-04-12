@@ -66,7 +66,7 @@ const Deliv = ({ order, v, setV }) => {
   }, [invoice])
   
   // don't render on 새주문 페이지
-  if (order.state === 'pending' && order.seen === false) return <div />;
+  if (order.state === 'new') return <div />;
   
   return (
     <Container>

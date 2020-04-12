@@ -19,22 +19,21 @@ const SectionContainer = styled.div`
   align-items: center;
 `;
 
-const DynOrderPageIndex = ({ user, state, seen }) => {
+const DynOrderPageIndex = ({ user, state }) => {
   const [orders, setOrders] = useState([]);
   const [selected, setSelected] = useState([]);
   const [v, setV] = useState(0);
 
-  // fetch orders based on state and seen
+  // fetch orders based on state
   useEffect(() => {
     if (user && state) {
-      const seenQuery = seen ? `&seen=${seen}` : '';
-      api.get(`/order/seller/${user._id}?state=${state}${seenQuery}`)
+      api.get(`/order/seller/${user._id}?state=${state}`)
         .then((res) => {
           setOrders(res.data);
         })
         .catch((e) => log('ERROR fetching orders at DynOrderPageIndex', e));
     }
-  }, [state, user, v, seen]);
+  }, [state, user, v]);
   
   updateDelivState(user._id, 'seller');
 
