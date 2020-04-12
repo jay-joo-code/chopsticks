@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Btn from 'src/components/common/buttons/Btn';
 import api from 'src/util/api';
@@ -14,7 +14,7 @@ const Container = styled.div`
 
 const SentActionBtn = ({ order, v, setV }) => {
   const [show, setShow] = useState(false);
-  const [msg, setMsg] = useState('')
+  const [msg, setMsg] = useState('');
   
   const setDelivering = async () => {
     try {
@@ -35,32 +35,45 @@ const SentActionBtn = ({ order, v, setV }) => {
     }
   }
   
+  // validation
+  const { company, companyCode, invoice } = order.deliv;
+  const noDelivData = !company || !companyCode || !invoice;
+  const [invalidDelivData, setInvalidDelivData] = useState(true);
+  useEffect(() => {
+    axios.get(trackerUrl(order))
+      .then((res) => {
+        if (res.data.result === 'Y') {
+          setInvalidDelivData(false);
+        }
+        else {
+          setInvalidDelivData(true);
+        }
+      })
+      .catch((e) => log(`ERROR CheckDelivBtn`, e))
+  }, [order])
+  
   const handleClick = (e) => {
     e.stopPropagation();
-    const { company, companyCode, invoice } = order.deliv;
-    if (!company || !companyCode || !invoice) {
+
+    if (noDelivData) {
       setMsg('택배사 / 송장번호를 입력해주세요')
       setShow(true);
       return;
     };
     
-    // validation
-    const { REACT_APP_TRACKER_BASE, REACT_APP_TRACKER_KEY } = process.env
-    axios.get(trackerUrl(order))
-      .then((res) => {
-        if (res.data.result === 'Y') setDelivering();
-        else {
-          setMsg('운송장이 아직 등록되지 않았거나 잘못된 운송장번호입니다.')
-          setShow(true)
-        }
-      })
-      .catch((e) => log(`ERROR CheckDelivBtn`, e))
+    if (invalidDelivData) {
+      setMsg('운송장이 아직 등록되지 않았거나 잘못된 운송장번호입니다.')
+      setShow(true)
+    }
+    
+    setDelivering();
   }
   
   return (
     <Container>
       <Btn
         onClick={handleClick}
+        disabled={noDelivData || invalidDelivData}
       >
         발송완료
       </Btn>

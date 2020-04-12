@@ -36,7 +36,8 @@ const Deliv = ({ order, v, setV }) => {
         companyCode: code
       }
     }
-
+    
+    setV(v + 1);
     api.put(`/order/${order._id}/update`, data)
       .then(() => {
         setV(v + 1);

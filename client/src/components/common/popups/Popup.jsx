@@ -70,7 +70,7 @@ const Popup = ({ display, handleClosePopup, children, white, title, ...rest }) =
         {...rest}
       >
         <Header>
-          {title && <Subheading>{title}</Subheading>}
+          {title ? <Subheading>{title}</Subheading> : <div />}
           <CloseButton onClick={handleClosePopup}>x</CloseButton>
         </Header>
         {title && <Line />}
