@@ -43,8 +43,6 @@ const OrderActions = ({ order, setV, v }) => {
     }
     setShow(true);
   };
-  
-  console.log(order)
 
   return (
     <Container>

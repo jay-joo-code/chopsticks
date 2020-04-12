@@ -4,9 +4,7 @@ import Popup from 'src/components/common/popups/Popup';
 import api from 'src/util/api';
 import log from 'src/util/log';
 import OutlinedTextarea from 'src/components/common/form/OutlinedTextarea';
-import Heading from 'src/components/common/fonts/Heading';
 import Btn from 'src/components/common/buttons/Btn';
-import Badge from 'src/components/common/displays/Badge';
 import ErrMsg from 'src/components/common/fonts/ErrMsg';
 import { sendAlertOnEvent } from 'src/util/bizm';
 import { cartObjToOptsString } from 'src/util/helpers';
@@ -26,117 +24,83 @@ const PopupContent = styled.div`
   }
 `;
 
-const NewOrderState = styled.div`
+const BtnSection = styled.div`
   display: flex;
-  margin: .5rem 0;
   
-  & > * {
-    margin: 0 .5rem;
+  & > button {
+    margin: 0 .4rem;
   }
-`;
+`
 
 const ActionPopup = ({
   order, show, setShow, action, rid, setV, v,
 }) => {
   // state
   const [msg, setMsg] = useState('');
-  const [newOrderState, setNewOrderState] = useState();
   const [err, setErr] = useState();
   
-  useEffect(() => {
-    if (action === '취소문의') {
-      setNewOrderState('cancelRequested')
-    }
-  }, [action])
-
-  const handleClosePopup = () => {
+  const closePopup = () => {
     setShow(false);
   };
   
   const handleAction = () => {
-    // 교환 / 환불 selection validation
-    if (action === '환불/교환 문의' && !newOrderState) {
-      setErr('환불, 교환 둘중 하나를 골라주세요');
-      return;
-    } 
-    
-    // reset popup
-    setErr('');
-    setShow(false);
-    setMsg('');
+    closePopup();
     
     // update db with new state
-    api.post(`/order/${order._id}/state-change/${newOrderState}`, { stateMsg: msg })
+    const actionToNewState = {
+      '취소문의': 'cancelRequested',
+      '교환문의': 'exchangeRequested',
+      '환불문의': 'refundRequested'  
+    }
+    api.post(`/order/${order._id}/state-change/${actionToNewState[action]}`, { stateMsg: msg })
       .then((res) => setV(v + 1))
       .catch((e) => log('ERROR ActionSection handleOrderStateChange', e));
     
     // send alert
     const number = order.seller.mobile;
     const { cartObj, buyer } = order;
-    let newStateString = '';
-    if (action === '취소문의') {
-      newStateString = '취소'
-    } 
-    else if (action !== '환불/교환 문의') return;
-    else {
-      if (newOrderState === 'refundRequested') {
-        newStateString = '환불'
-      }
-      else if (newOrderState === 'exchangeRequested') {
-        newStateString = '교환'
-      }
-    }
     const data = {
       itemName: cartObj.item.name,
       optsString: cartObjToOptsString(cartObj),
       qty: cartObj.quantity,
       buyerName: buyer.name,
-      newState: newStateString,
+      newState: action.slice(0, 2),
       url: 'https://chopsticks.market/shop/admin/orders'
     }
     
     sendAlertOnEvent(number, 'ORDER_STATE_CHANGE', data);
   };
+  
+  const actionToTitle = {
+    '취소문의': '취소신청',
+    '교환문의': '교환신청',
+    '환불문의': '환불신청'
+  }
 
   return (
     <Container>
       <Popup
         display={show}
-        handleClosePopup={handleClosePopup}
+        handleClosePopup={closePopup}
+        title={actionToTitle[action]}
       >
         <PopupContent>
-          <Heading>{action}</Heading>
-          {action === '환불/교환 문의' && (
-            <NewOrderState>
-              <Badge
-                color="primary"
-                type="button"
-                onClick={() => setNewOrderState('refundRequested')}
-                inverted={newOrderState === 'refundRequested'}
-              >
-환불
-              </Badge>
-              <Badge
-                type="button"
-                color="primary"
-                onClick={() => setNewOrderState('exchangeRequested')}
-                inverted={newOrderState === 'exchangeRequested'}
-              >
-교환
-              </Badge>
-            </NewOrderState>
-          )}
           <OutlinedTextarea
             value={msg}
             setValue={setMsg}
           />
-          <Btn
-            color="primary"
-            inverted
-            onClick={handleAction}
-          >
-저장
-          </Btn>
+          <BtnSection>
+            <Btn
+              inverted
+              onClick={closePopup}
+            >취소
+            </Btn>
+            <Btn
+              color="primary"
+              onClick={handleAction}
+            >신청
+            </Btn>
+          </BtnSection>
           {err && <ErrMsg>{err}</ErrMsg>}
         </PopupContent>
       </Popup>

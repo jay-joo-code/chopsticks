@@ -25,8 +25,8 @@ const orderStateToActions = (state) => {
   const actionsMap = {
     'new': ['취소문의'],
     'pending': ['취소문의'],
-    'delivering': ['배송추적', '환불/교환 문의'],
-    'complete': ['배송추적', '환불/교환 문의', '리뷰쓰기']
+    'delivering': ['배송추적', '교환문의', '환불문의'],
+    'complete': ['배송추적', '교환문의', '환불문의']
   }
   return actionsMap[state];
 }
