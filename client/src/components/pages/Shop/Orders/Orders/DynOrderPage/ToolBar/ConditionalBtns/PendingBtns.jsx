@@ -1,27 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Btn from 'src/components/common/buttons/Btn';
-import { setOrderState } from 'src/util/helpers';
 import log from 'src/util/log';
 import { validateDeliv } from './../../actions';
+import { setDelivering } from './../../actions/pending';
+import Alert from 'src/components/common/displays/Alert';
 
 const Container = styled.div`
   margin: 0 .5rem;
 `;
 
 const PendingBtns = ({ selected, setSelected, v, setV }) => {
-  const handleClick = () => {
-    const promiseArray = selected.map((id) => validateDeliv(id, 'byId'));
-    
-    Promise.all(promiseArray)
-      .then((res) => {
-        console.log(res)
-        setV(v + 1);
-        setSelected([]);
+  const [msg, setMsg] = useState('')
+  const [show, setShow] = useState(false);
+  
+  const handleClick = async () => {
+    try {
+      // validation
+      const validationPromises = selected.map((id) => validateDeliv(id, 'byId'));
+      const validationRes = await Promise.all(validationPromises);
+      const failedValidations = validationRes.map((res) => {
+        if (!res.isValid) return res;
       })
-      .catch((e) => {
-        log('ERROR PendingBtns', e);
-      })
+      if (failedValidations.length > 0) {
+        // failed validation
+        setMsg(failedValidations[0].msg);
+        setShow(true);
+        return;
+      }
+      
+      // change state to delivering
+      const stateChangePromises = selected.map((id) => setDelivering(id, 'byId'));
+      Promise.all(stateChangePromises);
+    }
+    catch (e) {
+      log('ERROR PendingBtns', e);
+    }
   }
   
   return (
@@ -30,6 +44,12 @@ const PendingBtns = ({ selected, setSelected, v, setV }) => {
         onClick={handleClick}
       >발송완료
       </Btn>
+      <Alert
+        show={show}
+        setShow={setShow}
+        msg={msg}
+        color='danger'
+      />
     </Container>
   )
 };

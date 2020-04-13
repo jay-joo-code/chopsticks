@@ -8,7 +8,7 @@ import NewActionBtn from './NewActionBtn';
 import ExchangeActionBtn from './ExchangeActionBtn';
 import RefundActionBtn from './RefundActionBtn';
 import CancelActionBtn from './CancelActionBtn';
-import SentActionBtn from './SentActionBtn';
+import PendingActionBtn from './PendingActionBtn';
 import CheckDelivBtn from './CheckDelivBtn';
 
 const SBtn = styled(Btn)`
@@ -29,7 +29,7 @@ const ActionBtn = ({ order, v, setV, selectedOrders, state, delivData, setDelivD
   
   if (order.state === 'pending') {
     return (
-      <SentActionBtn
+      <PendingActionBtn
         order={order}
         v={v}
         setV={setV}

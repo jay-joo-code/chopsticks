@@ -11,7 +11,7 @@ const Container = styled.div`
 
 `;
 
-const SentActionBtn = ({ order, v, setV }) => {
+const PendingActionBtn = ({ order, v, setV }) => {
   const [show, setShow] = useState(false);
   const [msg, setMsg] = useState('');
   
@@ -32,7 +32,7 @@ const SentActionBtn = ({ order, v, setV }) => {
       }
       sendAlertOnEvent(number, 'ORDER_SENT', data);
     } catch (e) {
-      log(`ERROR SentActionBtn`, e)
+      log(`ERROR PendingActionBtn`, e)
     }
   }
   
@@ -46,7 +46,7 @@ const SentActionBtn = ({ order, v, setV }) => {
         setIsValid(res.isValid);
       })
       .catch((e) => {
-        log('ERROR SentActionBtn', e);
+        log('ERROR PendingActionBtn', e);
       })
   }, [order])
   
@@ -78,4 +78,4 @@ const SentActionBtn = ({ order, v, setV }) => {
   )
 };
 
-export default SentActionBtn;
+export default PendingActionBtn;

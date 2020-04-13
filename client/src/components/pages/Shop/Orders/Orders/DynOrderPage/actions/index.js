@@ -8,15 +8,17 @@ export const validateDeliv = (orderData, method) => {
       let order = orderData;
       
       if (method === 'byId') {
-        order = await api.get(`/order/${orderData}`);
+        const orderRes = await api.get(`/order/${orderData}`);
+        order = orderRes.data;
       }
-      
+            
       const { company, companyCode, invoice } = order.deliv;
       if (!company || !companyCode || !invoice) {
         resolve({ isValid: false, msg: '택배사 / 송장번호를 입력해주세요'});
       }
       
       const res = await axios.get(trackerUrl(order))
+      
       if (res.data.result === 'Y') {
         resolve({ isValid: true })
       }
