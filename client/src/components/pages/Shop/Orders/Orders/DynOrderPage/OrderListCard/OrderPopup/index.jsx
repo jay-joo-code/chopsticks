@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import DeliveryDetailCard from 'src/components/common/cards/DeliveryDetailCard';
 import Popup from 'src/components/common/popups/Popup';
+import StateMsg from './StateMsg';
 
 const Container = styled.div`
   padding: 1rem 0;
@@ -55,6 +56,9 @@ const OrderPopup = ({ showPopup, setShowPopup, order }) => {
       handleClosePopup={closePopup}
     >
       <Container>
+        <StateMsg
+          order={order}
+        />
         <DeliveryDetailCard
           {...order.deliv}
         />

@@ -48,12 +48,20 @@ orderRouter.get('/:usertype/:uid', async (req, res) => {
   }
 });
 
+orderRouter.get('/:id', async (req, res) => {
+  try {
+    const doc = await Order.findById(req.params.id);
+    res.send(doc)
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
 orderRouter.post('/create', async (req, res) => {
   try {
     const newOrderRes = await new Order(req.body).save();
     res.send(newOrderRes)
   } catch (e) {
-    console.log(e);
     res.status(500).send(e);
   }
 });
