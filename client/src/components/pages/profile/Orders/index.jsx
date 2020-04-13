@@ -14,7 +14,11 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: 60%;
+  width: 100%;
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    width: 60%;
+  }
 `;
 
 const Orders = () => {

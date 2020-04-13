@@ -20,15 +20,17 @@ const Overlay = styled.div`
 
 const Container = styled.div`
   z-index: 998;
-  background-color: rgba(230, 230, 230, 1);
+  background: white;
   padding: 1rem;
   margin: 2rem;
   position: fixed;
   transition: all 5s ease-in-out;
   display: inline-block;
+  width: 90%;
   
-  // white
-  background: white;
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    width: auto;
+  }
 `;
 
 const Header = styled.div`

@@ -7,14 +7,14 @@ const orderStateToString = (state) => {
     'complete': '배송완료',
     'exchangeRequested': '교환대기',
     'exchangePending': '교환대기',
-    'exchangeRejected': '교환거절',
+    'exchangeRejected': '교환거부',
     'exchanged': '교환완료',
     'refundRequested': '환불대기',
     'refundPending': '환불대기',
-    'refundRjected': '환불거절',
+    'refundRjected': '환불거부',
     'refunded': '환불완료',
     'cancelRequested': '취소대기',
-    'cancelRejected': '취소거절',
+    'cancelRejected': '취소거부',
     'canceled': '취소완료',
     'error': '오류'
   }

@@ -6,6 +6,7 @@ import Label from 'src/components/common/fonts/Label';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const Guideline = styled(Body)`
@@ -14,6 +15,7 @@ const Guideline = styled(Body)`
 
 const InputArea = styled.div`
   display: flex;
+  width: 100%;
 `;
 
 const Textarea = styled.textarea`
@@ -25,6 +27,7 @@ const Textarea = styled.textarea`
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
   border: ${(props) => (props.hasError ? 'solid 1px #de6362' : 'none')};
   line-height: 1.2;
+  border: 1px solid rgba(0, 0, 0, .2);
   
   // height
   height: ${props => props.height ? `${props.height}px` : ''};
@@ -65,8 +68,8 @@ const OutlinedTextarea = ({
 
   return (
     <Container>
-      <Label htmlFor={name}>{label}</Label>
-      <Guideline muted>{guideline}</Guideline>
+      {label && <Label htmlFor={name}>{label}</Label>}
+      {guideline && <Guideline muted>{guideline}</Guideline>}
       <InputArea>
         <Textarea
           type="text"

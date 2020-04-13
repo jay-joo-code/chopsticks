@@ -5,9 +5,12 @@ import api from 'src/util/api';
 import log from 'src/util/log';
 import OutlinedTextarea from 'src/components/common/form/OutlinedTextarea';
 import Btn from 'src/components/common/buttons/Btn';
+import Body from 'src/components/common/fonts/Body';
 import ErrMsg from 'src/components/common/fonts/ErrMsg';
 import { sendAlertOnEvent } from 'src/util/bizm';
 import { cartObjToOptsString } from 'src/util/helpers';
+import OrderData from './OrderData';
+
 
 const Container = styled.div`
   background: rgba(0, 0, 0, .05);
@@ -19,13 +22,18 @@ const PopupContent = styled.div`
   flex-direction: column;
   align-items: center;
   
-  & > * {
-    margin: 1rem 0;
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    min-width: 400px;
   }
 `;
 
+const GuidelinesSection = styled.div`
+  margin: 1rem 0 0;
+`
+
 const BtnSection = styled.div`
   display: flex;
+  margin-top: 2rem;
   
   & > button {
     margin: 0 .4rem;
@@ -70,25 +78,29 @@ const ActionPopup = ({
     
     sendAlertOnEvent(number, 'ORDER_STATE_CHANGE', data);
   };
-  
-  const actionToTitle = {
-    '취소문의': '취소신청',
-    '교환문의': '교환신청',
-    '환불문의': '환불신청'
-  }
 
   return (
     <Container>
       <Popup
         display={show}
         handleClosePopup={closePopup}
-        title={actionToTitle[action]}
+        title={action && action.slice(0, 2) + '신청'}
       >
         <PopupContent>
+          <OrderData order={order} />
           <OutlinedTextarea
             value={msg}
             setValue={setMsg}
+            label={action && action.slice(0, 2) + '사유'}
+            placeholder='자세한 사유를 입력해주세요'
           />
+          {(action === '교환문의' || action === '환불문의') && (
+            <GuidelinesSection>
+              <Body muted>- 교환/환불 전 디자이너/작가님에게 문의를 해보세요.</Body>
+              <Body muted>- 타당하지 않은 사유는 신청이 거부될 수도 있습니다</Body>
+              <Body muted>- 작성하신 사유에 의해 책임 여부가 결정되며, 이에 따른 추가 배송비가 발생 할 수 있습니다.</Body>
+            </GuidelinesSection>
+          )}
           <BtnSection>
             <Btn
               inverted

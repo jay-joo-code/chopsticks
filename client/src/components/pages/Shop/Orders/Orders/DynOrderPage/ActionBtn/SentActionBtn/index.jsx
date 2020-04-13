@@ -69,6 +69,8 @@ const SentActionBtn = ({ order, v, setV }) => {
     setDelivering();
   }
   
+  log(noDelivData, invalidDelivData, order.deliv);
+  
   return (
     <Container>
       <Btn

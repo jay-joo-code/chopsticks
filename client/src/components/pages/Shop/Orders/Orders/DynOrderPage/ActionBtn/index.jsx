@@ -6,6 +6,7 @@ import Btn from 'src/components/common/buttons/Btn';
 
 import NewActionBtn from './NewActionBtn';
 import ExchangeActionBtn from './ExchangeActionBtn';
+import RefundActionBtn from './RefundActionBtn';
 import CancelActionBtn from './CancelActionBtn';
 import SentActionBtn from './SentActionBtn';
 import CheckDelivBtn from './CheckDelivBtn';
@@ -50,6 +51,16 @@ const ActionBtn = ({ order, v, setV, selectedOrders, state, delivData, setDelivD
   if (order.state.includes('exchange')) {
     return (
       <ExchangeActionBtn
+        order={order}
+        v={v}
+        setV={setV}
+      />
+      )
+  }
+  
+  if (order.state.includes('refund')) {
+    return (
+      <RefundActionBtn
         order={order}
         v={v}
         setV={setV}

@@ -31,6 +31,7 @@ const CancelActionBtn = ({ order, v, setV}) => {
       log('ERROR CancelActionBtn', e);
     }
   }
+  
   return (
     <div>
       {order.state === 'cancelRequested' && (

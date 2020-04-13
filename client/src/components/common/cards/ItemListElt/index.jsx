@@ -74,7 +74,7 @@ const ListElt = ({
     }
   };
 
-  // remove self from cart if item has been delete from db
+  // remove self from cart if item has been deleted from db
   const user = useSelector((state) => state.user);
   useEffect(() => {
     if (!item) {
