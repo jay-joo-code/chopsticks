@@ -3,10 +3,9 @@ import styled from 'styled-components';
 import Btn from 'src/components/common/buttons/Btn';
 import api from 'src/util/api';
 import log from 'src/util/log';
-import axios from 'axios';
 import Alert from 'src/components/common/displays/Alert';
 import { sendAlertOnEvent } from 'src/util/bizm';
-import trackerUrl from 'src/util/path/trackerUrl';
+import { validateDeliv } from './../../actions';
 
 const Container = styled.div`
 
@@ -20,6 +19,8 @@ const SentActionBtn = ({ order, v, setV }) => {
     try {
       await api.put(`/order/${order._id}/update`, { state: 'delivering' })
       setV(v + 1);
+      
+      // bizm alert
       const number = order.buyer.mobile
       const data = {
         itemName: order.cartObj.item.name,
@@ -36,46 +37,34 @@ const SentActionBtn = ({ order, v, setV }) => {
   }
   
   // validation
-  const { company, companyCode, invoice } = order.deliv;
-  const noDelivData = !company || !companyCode || !invoice;
-  const [invalidDelivData, setInvalidDelivData] = useState(true);
+  const [isValid, setIsValid] = useState(false);
+  
   useEffect(() => {
-    axios.get(trackerUrl(order))
+    validateDeliv(order)
       .then((res) => {
-        if (res.data.result === 'Y') {
-          setInvalidDelivData(false);
-        }
-        else {
-          setInvalidDelivData(true);
-        }
+        setMsg(res.msg);
+        setIsValid(res.isValid);
       })
-      .catch((e) => log(`ERROR CheckDelivBtn`, e))
+      .catch((e) => {
+        log('ERROR SentActionBtn', e);
+      })
   }, [order])
   
   const handleClick = (e) => {
     e.stopPropagation();
 
-    if (noDelivData) {
-      setMsg('택배사 / 송장번호를 입력해주세요')
+    if (!isValid) {
       setShow(true);
       return;
     };
     
-    if (invalidDelivData) {
-      setMsg('운송장이 아직 등록되지 않았거나 잘못된 운송장번호입니다.')
-      setShow(true)
-    }
-    
     setDelivering();
   }
-  
-  log(noDelivData, invalidDelivData, order.deliv);
   
   return (
     <Container>
       <Btn
         onClick={handleClick}
-        disabled={noDelivData || invalidDelivData}
       >
         발송완료
       </Btn>

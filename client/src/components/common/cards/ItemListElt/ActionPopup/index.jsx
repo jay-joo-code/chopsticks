@@ -10,6 +10,7 @@ import ErrMsg from 'src/components/common/fonts/ErrMsg';
 import { sendAlertOnEvent } from 'src/util/bizm';
 import { cartObjToOptsString } from 'src/util/helpers';
 import OrderData from './OrderData';
+import { setOrderState } from 'src/util/helpers';
 
 
 const Container = styled.div`
@@ -49,9 +50,12 @@ const ActionPopup = ({
   
   const closePopup = () => {
     setShow(false);
+    setMsg('')
+    setErr(null);
   };
   
-  const handleAction = () => {
+  const handleAction = async () => {
+    try {
     closePopup();
     
     // update db with new state
@@ -60,9 +64,21 @@ const ActionPopup = ({
       '교환문의': 'exchangeRequested',
       '환불문의': 'refundRequested'  
     }
-    api.post(`/order/${order._id}/state-change/${actionToNewState[action]}`, { stateMsg: msg })
-      .then((res) => setV(v + 1))
-      .catch((e) => log('ERROR ActionSection handleOrderStateChange', e));
+    const newState = actionToNewState[action];
+    
+    if (newState === 'exchangeRequested') {
+      const exchangeOrderData = {
+        ...order,
+        _id: undefined,
+        linkedOrderId: order._id,
+        state: 'exchangeRequested'
+      }
+      await api.post(`/order/create`, exchangeOrderData);
+    }
+    else {
+      await setOrderState(order._id, newState, msg); 
+    }
+    setV(v + 1);
     
     // send alert
     const number = order.seller.mobile;
@@ -77,6 +93,10 @@ const ActionPopup = ({
     }
     
     sendAlertOnEvent(number, 'ORDER_STATE_CHANGE', data);
+    }
+    catch (e) {
+      log('ERROR ActionPopup', e)
+    }
   };
 
   return (

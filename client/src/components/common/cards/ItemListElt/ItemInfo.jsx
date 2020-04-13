@@ -136,6 +136,9 @@ const ItemInfo = ({
             const opt = optGrp.opts[optionsIndex[i]]
             return opt && <OptElt key={optGrp.title}>{`${opt.name} (+ ${opt.diff}원)`}</OptElt>
           })}
+          {process.env.NODE_ENV === 'development' && <p>{order && order.createdAt.slice(0, 10)}</p>}
+          {process.env.NODE_ENV === 'development' && <p>id: {order && order._id}</p>}
+          {process.env.NODE_ENV === 'development' && <p>linked id: {order && order.linkedOrderId}</p>}
         </Options>
         <PriceCalc>
           <QtyCont>

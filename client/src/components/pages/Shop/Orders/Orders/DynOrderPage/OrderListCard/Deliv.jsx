@@ -66,6 +66,14 @@ const Deliv = ({ order, v, setV }) => {
       })
   }, [invoice])
   
+  // reset deliv data when state changed to exchangePending
+  useEffect(() => {
+    if (order.state === 'exchangePending') {
+      setCode('');
+      setInvoice('');
+    }
+  }, [order.state])
+  
   // don't render on 새주문 페이지
   if (order.state === 'new') return <div />;
   

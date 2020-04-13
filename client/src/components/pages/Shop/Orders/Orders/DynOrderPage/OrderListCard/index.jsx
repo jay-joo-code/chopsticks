@@ -135,7 +135,7 @@ const OrderListCardIndex = ({
           </Col>
           <Col width={colWidths[1]}>
             {stateText && <Text color={stateText === '(취소건)' ? 'danger' : 'primary'}>{stateText}</Text>}
-            <Text size="sm">{order.bootpay.receipt_id}</Text>
+            <Text size="sm">{order._id}</Text>
             <Text>{date}</Text>
           </Col>
           <ShowOn display="mobile">

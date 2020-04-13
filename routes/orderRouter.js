@@ -48,6 +48,16 @@ orderRouter.get('/:usertype/:uid', async (req, res) => {
   }
 });
 
+orderRouter.post('/create', async (req, res) => {
+  try {
+    const newOrderRes = await new Order(req.body).save();
+    res.send(newOrderRes)
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+});
+
 orderRouter.post('/:id/cancel', async (req, res) => {
   try {
     const { id } = req.params;
