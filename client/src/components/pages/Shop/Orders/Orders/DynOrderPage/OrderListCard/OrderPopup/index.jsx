@@ -49,15 +49,22 @@ const OrderPopup = ({ showPopup, setShowPopup, order }) => {
   const { quantity, price, priceNoDeliv } = order.cartObj;
   const idx = order.cartObj.optionsIndex;
   const opts = `${(options[idx[0]] || '')} ${(optionsTwo[idx[1]] || '')}`.trim() || '없음';
-
+  let stateType = '';
+  if (order.state.includes('cancel')) stateType = '취소';
+  if (order.state.includes('exchange')) stateType = '교환';
+  if (order.state.includes('refund')) stateType = '환불';
+  const title = stateType ? stateType + '요청' : undefined;
+  
   return (
     <Popup
       display={showPopup}
       handleClosePopup={closePopup}
+      title={title}
     >
       <Container>
         <StateMsg
           order={order}
+          stateType={stateType}
         />
         <DeliveryDetailCard
           {...order.deliv}
@@ -65,7 +72,7 @@ const OrderPopup = ({ showPopup, setShowPopup, order }) => {
         <OrderDetails>
           <Row font="bold">
             <div>
-              <Text>주문정보</Text>
+              <Text>{stateType === '교환' && '이전'} 주문정보</Text>
             </div>
             <Row>
               <Text align='center'>옵션</Text>

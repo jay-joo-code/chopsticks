@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Title from 'src/components/common/fonts/Title';
 import Card from 'src/components/common/cards/Card';
 
 const Wrapper = styled.div`
@@ -14,10 +13,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 4rem;
-  
-  @media(min-width: ${(props) => props.theme.desktopContentWidth}px) {
-    width: 40%;
-  }
 `;
 
 const CardInner = styled.div`
@@ -67,7 +62,7 @@ const Value = styled.p`
   
 `;
 
-const Transactions = ({ orders, monthIndex, setMonthIndex }) => {
+const RevenueByMonth = ({ orders, monthIndex, setMonthIndex }) => {
   const [count, setCount] = useState();
   const [total, setTotal] = useState();
   useEffect(() => {
@@ -86,7 +81,6 @@ const Transactions = ({ orders, monthIndex, setMonthIndex }) => {
   return (
     <Wrapper>
       <Container>
-        <Title>매출 / 정산</Title>
         <Card>
           <CardInner>
             <MonthSection>
@@ -125,4 +119,4 @@ const Transactions = ({ orders, monthIndex, setMonthIndex }) => {
   );
 };
 
-export default Transactions;
+export default RevenueByMonth;
