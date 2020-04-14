@@ -75,7 +75,8 @@ orderRouter.post('/:id/cancel', async (req, res) => {
     // bootpay cancel
     const token = await BootpayRest.getAccessToken();
     if (token.status !== 200) throw new Error('access token failed');
-    const prms = [rid, order.cartObj.price, order.deliv.recipient, order.stateMsg];
+    const stateMsg = order.stateMsg || '취소/환불 문의';
+    const prms = [rid, order.cartObj.price, order.deliv.recipient, stateMsg];
     const cancelRes = await BootpayRest.cancel(...prms);
 
     // update db order state
@@ -90,6 +91,7 @@ orderRouter.post('/:id/cancel', async (req, res) => {
       res.send(dbRes);
     }
   } catch (e) {
+    console.log(e);
     res.status(500).send(e);
   }
 });
@@ -113,7 +115,8 @@ orderRouter.post('/:id/state-change/:state', async (req, res) => {
 
 orderRouter.put('/:id/update', async (req, res) => {
   try {
-    const result = await Order.findByIdAndUpdate(req.params.id, req.body);
+    const result = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    console.log('result', result);
     res.send(result);
   } catch (e) {
     res.status(500).send(e);

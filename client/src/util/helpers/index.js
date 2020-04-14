@@ -31,7 +31,9 @@ export const updateDelivState = async (uid, userType) => {
 export const setOrderState = (orderId, newState, stateMsg = '') => {
   return new Promise((resolve, reject) => {
     api.put(`/order/${orderId}/update`, { state: newState, stateMsg })
-      .then((res) => resolve(res.data))
+      .then((res) => {
+        resolve(res.data)
+      })
       .catch((e) => reject(e))
   })
 }
