@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import theme from 'src/theme';
 import Body from 'src/components/common/fonts/Body';
 import { ReactComponent as ArrowRaw } from 'src/assets/svgs/arrow.svg';
+import RenderOn from 'src/components/layout/RenderOn';
 
 const Container = styled.div`
   width: 100%;
@@ -75,6 +76,10 @@ const Name = styled.p`
 const IntroSection = styled.div`
   display: flex;
   align-items: flex-start;
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    justify-content: center;
+  }
 `
 
 const Intro = styled(Body)`
@@ -137,7 +142,9 @@ const Owner = ({ item }) => {
             <Intro 
               expandIntro={expandIntro} 
             >{item && item.owner && item.owner.shop.intro}</Intro>
-            <Arrow expandIntro={expandIntro} />
+            <RenderOn mobile>
+              <Arrow expandIntro={expandIntro} />
+            </RenderOn>
           </IntroSection>
         </TextCont>
       </Wrapper>

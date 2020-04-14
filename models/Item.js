@@ -51,7 +51,8 @@ var itemSchema = Schema({
         name: String,
         diff: Number
       }]
-    }]
+    }],
+    default: []
   },
   options: [{
     name: String,
