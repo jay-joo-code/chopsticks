@@ -7,6 +7,7 @@ import Alert from 'src/components/common/displays/Alert';
 import api from 'src/util/api';
 import log from 'src/util/log';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
+import Btn from 'src/components/common/buttons/Btn';
 
 const Form = styled.form`
 
@@ -14,6 +15,11 @@ const Form = styled.form`
 
 const Input = styled(OutlinedInput)`
   margin-bottom: .5rem;
+`
+
+const BtnSection = styled.div`
+  display: flex;
+  justify-content: center;
 `
 
 const AccountForm = ({ user }) => {
@@ -76,7 +82,9 @@ const AccountForm = ({ user }) => {
         label='계좌번호'
         name='number'
       />
-      <button type="submit">Submit</button>
+      <BtnSection>
+        <Btn type="submit" color='danger'>저장</Btn>
+      </BtnSection>
       <Alert
         show={show}
         setShow={setShow}
