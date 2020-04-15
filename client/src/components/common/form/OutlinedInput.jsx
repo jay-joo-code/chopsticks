@@ -28,10 +28,13 @@ const Input = styled.input`
   line-height: 3rem;
   padding: .5rem;
   flex-grow: 2;
-  text-align: ${(props) => (props.right ? 'right' : '')};
   width: 100%;
   background: white !;
   border: 1px solid rgba(0, 0, 0, .2);
+  
+  // align
+  text-align: ${(props) => (props.right ? 'right' : '')};
+  text-align: ${(props) => (props.center ? 'center' : '')};
   
   // hasError
   border: ${(props) => (props.hasError ? 'solid 1px #de6362' : '')};
