@@ -15,10 +15,19 @@ const Container = styled.div`
   padding: 0 .5rem;
 `;
 
-const DispBtn = styled(RedButton)`
-  font-size: .8rem;
-  padding: .2rem .5rem;
+const DispBtnSection = styled.div`
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, .2);
   box-shadow: 0 2px 4px rgba(0, 0, 0, .4);
+`
+
+const DispBtn = styled.div`
+  font-size: .8rem;
+  padding: .3rem 1rem;
+  cursor: pointer;
+  
+  // highlight
+  background: ${props => props.highlight ? props.theme.primary : ''};
 `;
 
 const RightSection = styled.div`
@@ -60,15 +69,14 @@ const BtnWrapper = styled.div`
   margin: 0 .5rem;
 `;
 
-const Tools = ({ item, v, setV }) => {
+const Tools = ({ item, v, setV, hasMaxDisplayed }) => {
   // display
-  const dispText = item.display ? '공개' : '비공개';
-  const color = item.display ? { green: true } : '';
-  const changeDisplay = () => {
+  const setDisplay = (newState) => {
     const updatedItem = {
       ...item,
     };
-    updatedItem.display = !item.display;
+    updatedItem.display = newState;
+    if (hasMaxDisplayed) updatedItem.display = false;
     api.put(`/item/${item._id}/update`, updatedItem)
       .then(() => setV(v + 1))
       .catch(() => setV(v + 1));
@@ -94,13 +102,10 @@ const Tools = ({ item, v, setV }) => {
 
   return (
     <Container>
-      <DispBtn
-        rounded
-        {...color}
-        onClick={changeDisplay}
-      >
-        {dispText}
-      </DispBtn>
+      <DispBtnSection>
+        <DispBtn highlight={item.display} onClick={() => setDisplay(true)}>판매중</DispBtn>
+        <DispBtn highlight={!item.display} onClick={() => setDisplay(false)}>판매중지</DispBtn>
+      </DispBtnSection>
       <RightSection>
         <SCopy onClick={handleCopy} />
         <STrash onClick={() => setShowPopup(1)} />

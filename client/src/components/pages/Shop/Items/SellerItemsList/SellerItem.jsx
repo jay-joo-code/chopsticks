@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const SellerItem = ({
-  item, onClickPath, v, setV,
+  item, onClickPath, v, setV, hasMaxDisplayed
 }) => (
   <Container>
     <Itemcard
@@ -19,6 +19,7 @@ const SellerItem = ({
       item={item}
       v={v}
       setV={setV}
+      hasMaxDisplayed={hasMaxDisplayed}
     />
   </Container>
 );
