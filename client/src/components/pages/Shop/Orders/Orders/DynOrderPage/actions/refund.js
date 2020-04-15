@@ -5,7 +5,7 @@ export const refundOrder = (order) => {
   return new Promise(async (resolve, reject) => {
     try {
       console.log('order', order);
-      await api.post(`/order/${order._id}/cancel`);
+      await api.post(`/order/${order._id}/refund`);
       await setOrderState(order._id, 'refunded');
       resolve();
     }

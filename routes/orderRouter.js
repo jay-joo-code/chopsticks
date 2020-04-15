@@ -66,7 +66,8 @@ orderRouter.post('/create', async (req, res) => {
   }
 });
 
-orderRouter.post('/:id/cancel', async (req, res) => {
+orderRouter.post('/:id/:type', async (req, res) => {
+  // type: "cancel" or "refund"
   try {
     const { id } = req.params;
     const order = await Order.findById(id);
@@ -79,17 +80,22 @@ orderRouter.post('/:id/cancel', async (req, res) => {
     const prms = [rid, order.cartObj.price, order.deliv.recipient, stateMsg];
     const cancelRes = await BootpayRest.cancel(...prms);
 
-    // update db order state
+    // bootpay error handling
     if (cancelRes.status !== 200) {
-      console.log('Bootpay cancel error', cancelRes);
-      throw new Error(cancelRes);
+      if (cancelRes.message === '이미 취소된 거래건 입니다.') {
+        // since the transaction was already canceled,
+        // don't throw an error
+      }
+      else {
+        console.log('Bootpay cancel error', cancelRes);
+        throw new Error(cancelRes);
+      }
     } 
-    else {
-      order.state = 'canceled';
-      order.bootpay = cancelRes.data;
-      const dbRes = await order.save();
-      res.send(dbRes);
-    }
+    
+    order.state = req.params.type + 'ed';
+    order.bootpay = cancelRes.data || {};
+    const dbRes = await order.save();
+    res.send(dbRes);
   } catch (e) {
     console.log(e);
     res.status(500).send(e);
@@ -116,7 +122,6 @@ orderRouter.post('/:id/state-change/:state', async (req, res) => {
 orderRouter.put('/:id/update', async (req, res) => {
   try {
     const result = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    console.log('result', result);
     res.send(result);
   } catch (e) {
     res.status(500).send(e);
