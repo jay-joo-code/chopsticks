@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from 'src/theme';
+import Body from 'src/components/common/fonts/Body';
+import { ReactComponent as ArrowRaw } from 'src/assets/svgs/arrow.svg';
+import RenderOn from 'src/components/layout/RenderOn';
 
 const Container = styled.div`
   width: 100%;
@@ -9,20 +12,20 @@ const Container = styled.div`
   margin-bottom: 1rem;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
-    display: block;
     margin: 0;
+    justify-content: center;
   }
 `;
 
 const Wrapper = styled.div`
   display: flex;
-  max-width: 200px;
   white-space: pre-line;
   word-break: break-word;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     padding: 2rem 0;
     display: block;
+    max-width: 200px;
   }
 `;
 
@@ -59,7 +62,7 @@ const TextCont = styled.div`
 `;
 
 const Name = styled.p`
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #de6362;
   text-align: center;
@@ -70,21 +73,63 @@ const Name = styled.p`
   }
 `;
 
-const Intro = styled.p`
+const IntroSection = styled.div`
+  display: flex;
+  align-items: flex-start;
+  
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    justify-content: center;
+  }
+`
+
+const Intro = styled(Body)`
   opacity: .8;
   margin: 0;
-  text-overflow: ellipsis;
   font-size: .8rem;
+  
+  // mobile - compressed
+  cursor: pointer;
+  flex-shrink: 1;
+  padding-right: .5rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  
+  // mobile - expanded
+  display: ${props => props.expandIntro ? 'inline' : ''};
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     text-align: center;
+    
+    // remove expand option
+    cursor: auto;
+    flex-shrink: 0;
+    padding-right: 0;
+    text-overflow: none;
+    display: inline;
+    -webkit-line-clamp: none;
+    -webkit-box-orient: auto;
+    
+    white-space: pre-line;
+    word-break: break-word;
+    max-width: 100%;
+    
   }
 `;
+
+const Arrow = styled(ArrowRaw)`
+  width: 50px;
+  transform: rotate(90deg);
+  transform: ${props => props.expandIntro ? 'rotate(-90deg)' : ''};
+`
 
 const Owner = ({ item }) => {
   const src = item.owner.shop.image;
   const defaultSrc = 'https://firebasestorage.googleapis.com/v0/b/chopsticks-248516.appspot.com/o/users%2F5e1eb49698c4320017334663%2F%ED%88%AC%EB%AA%85%20%EB%A1%9C%EA%B3%A0.png?alt=media&token=a1c77c2b-ec8d-4136-9e63-087dcb7a7315';
-
+  const [expandIntro, setExpandIntro] = useState(false);
+  
   return (
     <Container>
       <Wrapper>
@@ -93,7 +138,14 @@ const Owner = ({ item }) => {
         </ImgContainer>
         <TextCont>
           <Name>{`@${item.owner.shop.title}`}</Name>
-          <Intro>{item && item.owner && item.owner.shop.intro}</Intro>
+          <IntroSection onClick={() => setExpandIntro(!expandIntro)}>
+            <Intro 
+              expandIntro={expandIntro} 
+            >{item && item.owner && item.owner.shop.intro}</Intro>
+            <RenderOn mobile>
+              <Arrow expandIntro={expandIntro} />
+            </RenderOn>
+          </IntroSection>
         </TextCont>
       </Wrapper>
     </Container>

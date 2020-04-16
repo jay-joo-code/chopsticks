@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import api from 'src/util/api';
 import log from 'src/util/log';
 import Btn from 'src/components/common/buttons/Btn';
-import { sendAlertOnEvent } from 'src/util/bizm';
 
+import NewActionBtn from './NewActionBtn';
 import ExchangeActionBtn from './ExchangeActionBtn';
-import SentBtn from './SentBtn';
+import RefundActionBtn from './RefundActionBtn';
+import CancelActionBtn from './CancelActionBtn';
+import PendingActionBtn from './PendingActionBtn';
 import CheckDelivBtn from './CheckDelivBtn';
 
 const SBtn = styled(Btn)`
@@ -14,9 +16,10 @@ const SBtn = styled(Btn)`
 `;
 
 const ActionBtn = ({ order, v, setV, selectedOrders, state, delivData, setDelivData, setShowDelivPopup }) => {
-  if (order.state === 'exchangePending' || order.state === 'exchanged') {
+  // render different Action Button depending on order state
+  if (order.state === 'new') {
     return (
-      <ExchangeActionBtn
+      <NewActionBtn
         order={order}
         v={v}
         setV={setV}
@@ -24,9 +27,9 @@ const ActionBtn = ({ order, v, setV, selectedOrders, state, delivData, setDelivD
       )
   }
   
-  if (order.state === 'pending' && order.seen) {
+  if (order.state === 'pending') {
     return (
-      <SentBtn
+      <PendingActionBtn
         order={order}
         v={v}
         setV={setV}
@@ -41,6 +44,36 @@ const ActionBtn = ({ order, v, setV, selectedOrders, state, delivData, setDelivD
         delivData={delivData}
         setDelivData={setDelivData}
         setShowDelivPopup={setShowDelivPopup}
+      />
+      )
+  }
+  
+  if (order.state.includes('exchange')) {
+    return (
+      <ExchangeActionBtn
+        order={order}
+        v={v}
+        setV={setV}
+      />
+      )
+  }
+  
+  if (order.state.includes('refund')) {
+    return (
+      <RefundActionBtn
+        order={order}
+        v={v}
+        setV={setV}
+      />
+      )
+  }
+  
+  if (order.state.includes('cancel')) {
+    return (
+      <CancelActionBtn
+        order={order}
+        v={v}
+        setV={setV}
       />
       )
   }
@@ -65,26 +98,6 @@ const ActionBtn = ({ order, v, setV, selectedOrders, state, delivData, setDelivD
 
   const setSeen = async (order) => {
     try {
-      if (order.state === 'cancelPending') {
-        await api.post(`/order/${order._id}/cancel`);
-        
-        // 취소 승인 알림톡
-        const number = order.deliv.mobile;
-        const data = {
-          itemName: order.cartObj.item.name,
-          sellerName: order.seller.name,
-          buyerName: order.buyer.name,
-          price: order.cartObj.price,
-          transactionMethod: order.bootpay.method,
-        }
-        sendAlertOnEvent(number, 'CANCEL_APPROVED', data);
-        
-      } else if (order.state === 'exchangePending') {
-        await api.post(`/order/${order._id}/state-change/exchanged`);
-      } else if (order.state === 'refundPending') {
-        await api.post(`/order/${order._id}/cancel`);
-        await api.post(`/order/${order._id}/state-change/refunded`);
-      }
       await api.put(`/order/${order._id}/update`, { seen: true });
       setV(v + 1);
     } catch (e) {

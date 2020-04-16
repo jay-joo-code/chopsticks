@@ -93,7 +93,6 @@ const Form = ({ user }) => {
         <ErrMsg>{err}</ErrMsg>
         <Btn
           color='primary'
-          inverted
           type='submit'
         >저장</Btn>
       </Center>

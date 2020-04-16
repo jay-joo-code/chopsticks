@@ -44,10 +44,6 @@ const OrderActions = ({ order, setV, v }) => {
     setShow(true);
   };
 
-  if (!actions) {
-    return <div />;
-  }
-
   return (
     <Container>
       <Badge
@@ -57,7 +53,7 @@ const OrderActions = ({ order, setV, v }) => {
       >
         {orderStateToString(order.state)}
       </Badge>
-      {actions.map((action) => (
+      {actions && actions.map((action) => (
         <Badge
           color="primary"
           size="sm"
@@ -73,7 +69,7 @@ const OrderActions = ({ order, setV, v }) => {
         show={show}
         setShow={setShow}
         action={action}
-        rid={order.bootpay.receipt_id}
+        rid={order.bootpay && order.bootpay.receipt_id}
         setV={setV}
         v={v}
         order={order}

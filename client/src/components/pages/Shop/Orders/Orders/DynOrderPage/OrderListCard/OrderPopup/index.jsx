@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import DeliveryDetailCard from 'src/components/common/cards/DeliveryDetailCard';
 import Popup from 'src/components/common/popups/Popup';
+import StateMsg from './StateMsg';
 
 const Container = styled.div`
   padding: 1rem 0;
@@ -44,24 +45,32 @@ const HL = styled.div`
 
 const OrderPopup = ({ showPopup, setShowPopup, order }) => {
   const closePopup = () => setShowPopup(0);
-  const { options, optionsTwo } = order.cartObj.item;
-  const { quantity, price, priceNoDeliv } = order.cartObj;
-  const idx = order.cartObj.optionsIndex;
-  const opts = `${(options[idx[0]] || '')} ${(optionsTwo[idx[1]] || '')}`.trim() || '없음';
-
+  const { quantity, price, priceNoDeliv, optString } = order.cartObj;
+  
+  let stateType = '';
+  if (order.state.includes('cancel')) stateType = '취소';
+  if (order.state.includes('exchange')) stateType = '교환';
+  if (order.state.includes('refund')) stateType = '환불';
+  const title = stateType ? stateType + '요청' : undefined;
+  
   return (
     <Popup
       display={showPopup}
       handleClosePopup={closePopup}
+      title={title}
     >
       <Container>
+        <StateMsg
+          order={order}
+          stateType={stateType}
+        />
         <DeliveryDetailCard
           {...order.deliv}
         />
         <OrderDetails>
           <Row font="bold">
             <div>
-              <Text>주문정보</Text>
+              <Text>{stateType === '교환' && '이전'} 주문정보</Text>
             </div>
             <Row>
               <Text align='center'>옵션</Text>
@@ -74,7 +83,7 @@ const OrderPopup = ({ showPopup, setShowPopup, order }) => {
               <Text>{order.cartObj.item.name}</Text>
             </div>
             <Row>
-              <Text align='center'>{opts}</Text>
+              <Text align='center'>{optString}</Text>
               <Text align='center'>{quantity}</Text>
               <Text align='right'>{`${priceNoDeliv.toLocaleString()}원`}</Text>
             </Row>

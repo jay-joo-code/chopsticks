@@ -17,7 +17,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
     line-height: 1;
-    background: #f6f8f7;
+    background: white;
 }
 
 ol, ul {
@@ -54,7 +54,7 @@ input, select {
 #wrap {
     min-width: 320px;
     width: 100%;
-    background: #f6f8f7;
+    background: white;
     
 }
 
@@ -357,7 +357,7 @@ input, select {
 .main_visual .arrow button {
     width: 48px;
     height: 48px;
-    background: #f6f8f7 url(/img/arrow.svg) no-repeat;
+    background: white url(/img/arrow.svg) no-repeat;
     background-size: 6px;
     background-position: 19px;
     border-radius: 50%;
@@ -1873,7 +1873,7 @@ textarea::placeholder {
     width: 16px;
     height: 16px;
     top: 10px;
-    background-color: #f6f8f7;
+    background-color: white;
 }
 
 .cart_list .checks input[type="checkbox"]:checked + label:after {
@@ -1916,7 +1916,7 @@ textarea::placeholder {
 
 .sel_box_06 {
     width: 80px;
-    background-color: #f6f8f7 !important;
+    background-color: white !important;
 }
 
 .cart_product .price_box {
@@ -2217,7 +2217,7 @@ textarea::placeholder {
 }
 
 .detail_pop {
-    background: #f6f8f7;
+    background: white;
     position: absolute;
     top: 0;
     left: 0px;
@@ -2394,7 +2394,7 @@ textarea::placeholder {
 .review_content .thumbnail .arrow button {
     width: 48px;
     height: 48px;
-    background: #f6f8f7 url(/img/arrow.svg) no-repeat;
+    background: white url(/img/arrow.svg) no-repeat;
     background-size: 6px;
     background-position: 19px;
     border-radius: 50%;
@@ -2596,7 +2596,7 @@ textarea::placeholder {
     width: 16px;
     height: 16px;
     top: 0px;
-    background-color: #f6f8f7;
+    background-color: white;
 }
 
 .pay_box.checks input[type="checkbox"]:checked + label:after {
@@ -2760,7 +2760,7 @@ textarea::placeholder {
     width: 16px;
     height: 16px;
     top: -2px;
-    background-color: #f6f8f7;
+    background-color: white;
 }
 
 .add_shipping .checks input[type="checkbox"]:checked + label:after {
@@ -4610,7 +4610,7 @@ textarea::placeholder {
     }
 
     .checkout .txt_box textarea {
-        background-color: #f6f8f7;
+        background-color: white;
         height: 120px;
     }
 
@@ -5664,7 +5664,7 @@ textarea::placeholder {
     .detail_content .arrow button {
         width: 48px;
         height: 48px;
-        background: #f6f8f7 url(/img/arrow.svg) no-repeat;
+        background: white url(/img/arrow.svg) no-repeat;
         background-size: 6px;
         background-position: 19px;
         border-radius: 50%;
@@ -5776,7 +5776,7 @@ textarea::placeholder {
     }
 
     .checkout .txt_box textarea {
-        background-color: #f6f8f7;
+        background-color: white;
         height: 120px;
     }
 
@@ -6401,7 +6401,7 @@ select::-ms-expand {
 .paging .prev {
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
-    background: #f6f8f7 url(/img/arrow.svg) no-repeat;
+    background: white url(/img/arrow.svg) no-repeat;
     background-size: 6px;
     text-indent: -9999px;
     width: 6px;
@@ -6409,7 +6409,7 @@ select::-ms-expand {
 }
 
 .paging .next {
-    background: #f6f8f7 url(/img/arrow.svg) no-repeat;
+    background: white url(/img/arrow.svg) no-repeat;
     background-size: 6px;
     text-indent: -9999px;
     width: 6px;
@@ -6669,7 +6669,7 @@ button {
     left: 0;
     z-index: 20;
     border-radius: 8px;
-    background-color: #f6f8f7;
+    background-color: white;
     padding: 40px 20px 44px;
 }
 

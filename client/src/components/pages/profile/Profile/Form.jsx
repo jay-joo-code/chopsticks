@@ -88,7 +88,6 @@ const Form = ({ user }) => {
       <Center>
         <Btn
           color='primary'
-          inverted
           type='submit'
         >저장</Btn>
       </Center>

@@ -33,44 +33,48 @@ export const sendAlert = (number) => {
 }
 
 export const sendAlertOnEvent = (number, event, data) => {
-  const eventToConfig = {
-    'NEW_ORDER': {
-      'msg': newOrderMsg(data),
-      'tmplId': 'chopsticks_03'
-    },
-    'ORDER_STATE_CHANGE': {
-      'msg': orderStateChangeMsg(data),
-      'tmplId': 'chopsticks_04'
-    },
-    'CANCEL_APPROVED': {
-      'msg': cancelApprovedMsg(data),
-      'tmplId': 'chopsticks_02'
-    },
-    'ORDER_SENT': {
-      'msg': orderSentMsg(data),
-      'tmplId': 'chopsticks_01'
-    },
-    'MOBILE_AUTH': {
-      'msg': mobileAuthMsg(data),
-      'tmplId': 'chopsticks_05'
-    },
-  }
-  
-  const config = [{
-    'message_type': 'AT',
-    'phn': formatNumber(number),
-    'profile': 'beaed98a65b993e706e963a8aa941c2db48e4938',
-    'reserveDt': '00000000000000',
-    ...eventToConfig[event]
-  }]
-  
-  bizm.post(`/v2/sender/send`, config)
-    .then((res) => {
-      log('sendAlert res', res);
-    })
-    .catch((e) => {
-      log('sendAlert error', e);
-    })
+  return new Promise((resolve, reject) => {
+    const eventToConfig = {
+      'NEW_ORDER': {
+        'msg': newOrderMsg(data),
+        'tmplId': 'chopsticks_03'
+      },
+      'ORDER_STATE_CHANGE': {
+        'msg': orderStateChangeMsg(data),
+        'tmplId': 'chopsticks_04'
+      },
+      'CANCEL_APPROVED': {
+        'msg': cancelApprovedMsg(data),
+        'tmplId': 'chopsticks_02'
+      },
+      'ORDER_SENT': {
+        'msg': orderSentMsg(data),
+        'tmplId': 'chopsticks_01'
+      },
+      'MOBILE_AUTH': {
+        'msg': mobileAuthMsg(data),
+        'tmplId': 'chopsticks_05'
+      },
+    }
+    
+    const config = [{
+      'message_type': 'AT',
+      'phn': formatNumber(number),
+      'profile': 'beaed98a65b993e706e963a8aa941c2db48e4938',
+      'reserveDt': '00000000000000',
+      ...eventToConfig[event]
+    }]
+    
+    bizm.post(`/v2/sender/send`, config)
+      .then((res) => {
+        log('sendAlert res', res);
+        resolve(res.data);
+      })
+      .catch((e) => {
+        log('sendAlert error', e);
+        reject(e);
+      })
+  })
 }
 
 const newOrderMsg = ({ itemName, optsString, qty, buyerName, url }) => {
@@ -107,20 +111,20 @@ ${buyerName}님의 결제 취소 승인이 완료되었습니다.
 ◆ 상품명 : ${itemName}
 ◆ Designed by ${sellerName}
 
-◆ 취소금액 : ${price}
+◆ 취소금액 : ${`${price}원`}
 ◆ 결제수단 : ${transactionMethod}
 
 결제수단에 따라 영업일 기준 1~5일 이후 환불금액 확인이 가능합니다. 
 `)
 }
 
-const orderSentMsg = ({ itemName, sellerName, buyerName, delivCompany, invoice, url }) => {
+const orderSentMsg = ({ itemName, shopTitle, buyerName, delivCompany, invoice, url }) => {
   return (`안녕하세요. Chopsticks입니다.
 
 ${buyerName}님께서 주문하신 상품이 발송되었습니다.
 
 ◆ 상품명 : ${itemName}
-◆ Designed by ${sellerName}
+◆ Designed by ${shopTitle}
 
 ◆ 택배사 : ${delivCompany}
 ◆ 송장번호 : ${invoice}

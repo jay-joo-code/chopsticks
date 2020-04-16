@@ -36,7 +36,8 @@ const Deliv = ({ order, v, setV }) => {
         companyCode: code
       }
     }
-
+    
+    setV(v + 1);
     api.put(`/order/${order._id}/update`, data)
       .then(() => {
         setV(v + 1);
@@ -64,6 +65,17 @@ const Deliv = ({ order, v, setV }) => {
         log(`ERROR Deliv`, e)
       })
   }, [invoice])
+  
+  // reset deliv data when state changed to exchangePending
+  useEffect(() => {
+    if (order.state === 'exchangePending') {
+      setCode('');
+      setInvoice('');
+    }
+  }, [order.state])
+  
+  // don't render on 새주문 페이지
+  if (order.state === 'new') return <div />;
   
   return (
     <Container>

@@ -12,23 +12,26 @@ const Content = styled.div`
   width: 100%;
   
   @media (min-width: ${props => props.theme.desktopContentWidth}px) {
-    max-width: 500px;
+    max-width: 700px;
   }
 `
 
 const Heading = styled.h2`
-  font-size: 1.5rem;
+  font-size: 2rem;
   text-align: center;
+  line-height: 1.2;
 `
 
 const Subheading = styled(BodyRaw)`
   text-align: center;
   font-weight: bold;
-  margin: 2rem 0 .5rem 0;
+  margin: 4rem 0 1rem 0;
+  font-size: 1.5rem;
 `
 
 const Body = styled(BodyRaw)`
   text-align: center;
+  font-size: 1.2rem;
 `
 
 const Section = ({ heading, headingNext, subheading, body }) => {

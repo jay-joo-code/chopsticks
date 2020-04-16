@@ -33,6 +33,7 @@ const ItemPub = () => {
     <Container>
       <TabbedPage
         pages={pages}
+        tabWidth={180}
       />
     </Container>
   );

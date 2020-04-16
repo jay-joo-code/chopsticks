@@ -21,6 +21,7 @@ const Col = styled.div`
   
   @media (min-width: ${props => props.theme.desktopContentWidth}px) {
     width: auto;
+    width: ${props => props.sidebar ? '300px' : ''};
   }
 `
 
@@ -31,16 +32,16 @@ const ItemPub = () => {
   
   return (
     <Container>
-    <Col>
-     <Owner item={item} />
-    </Col>
-    <Col>
-      <MainImg item={item} />
-      <Tabs />
-    </Col>
-    <Col>
-      <Purchase item={item} />
-    </Col>
+      <Col sidebar>
+       <Owner item={item} />
+      </Col>
+      <Col>
+        <MainImg item={item} />
+        <Tabs />
+      </Col>
+      <Col sidebar>
+        <Purchase item={item} />
+      </Col>
     </Container>
   );
 };

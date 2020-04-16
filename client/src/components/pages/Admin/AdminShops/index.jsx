@@ -3,6 +3,12 @@ import axios from 'axios';
 import log from 'src/util/log';
 import styled from 'styled-components';
 
+import ShopPopup from './ShopPopup';
+
+const Tr = styled.tr`
+  cursor: pointer;
+`
+
 const Title = styled.h3`
   font-size: 1.5rem;
   font-weight: bold;
@@ -23,8 +29,6 @@ const AdminShops = () => {
           if (user.shop.accepted) activeShops.push(user);
           return !user.shop.accepted;
         });
-        log(disabledShops);
-        log(activeShops);
         setDisabledShops(disabledShops);
         setActiveShops(activeShops);
       })
@@ -48,9 +52,31 @@ const AdminShops = () => {
         log('ERROR accept shop', e);
       });
   };
+  
+  const handleActionClick = (e, user, newState) => {
+    e.stopPropagation();
+    setShopState(user._id, user.shop, newState)
+  }
+  
+  // popup
+  const [displayPopup, setDisplayPopup] = useState(false);
+  const [selectedUser, setSelectedUser] = useState();
+  const [selectedShopType, setSelectedShopType] = useState();
+  const togglePopup = (user, type) => {
+    setSelectedShopType(type)
+    setSelectedUser(user);
+    setDisplayPopup(true);
+  }
 
   return (
     <div className="container-fluid">
+      <ShopPopup 
+        display={displayPopup} 
+        handleClosePopup={() => setDisplayPopup(false)}
+        user={selectedUser}
+        setShopState={setShopState}
+        type={selectedShopType}
+      />
       <div className="page-header">
         <div className="page-title">
           <Title>Shop Applications</Title>
@@ -71,7 +97,7 @@ const AdminShops = () => {
           </thead>
           <tbody>
             {disabledShops.map((user, i) => (
-              <tr>
+              <Tr onClick={() => togglePopup(user, 'disabled')}>
                 <td width="5%">
                   {i + 1}
                 </td>
@@ -91,7 +117,7 @@ const AdminShops = () => {
                   <button
                     type="button"
                     className="btn btn-default btn-xs"
-                    onClick={() => setShopState(user._id, user.shop, true)}
+                    onClick={(e) => handleActionClick(e, user, true)}
                   >
                   Accept
                   </button>
@@ -99,7 +125,7 @@ const AdminShops = () => {
                 <td>
                   {user.shop.createdAt}
                 </td>
-              </tr>
+              </Tr>
             ))}
           </tbody>
         </table>
@@ -124,7 +150,7 @@ const AdminShops = () => {
           </thead>
           <tbody>
             {activeShops.map((user, i) => (
-              <tr>
+              <Tr onClick={() => togglePopup(user, 'active')}>
                 <td width="5%">
                   {i + 1}
                 </td>
@@ -144,7 +170,7 @@ const AdminShops = () => {
                   <button
                     type="button"
                     className="btn btn-default btn-xs"
-                    onClick={() => setShopState(user._id, user.shop, false)}
+                    onClick={(e) => handleActionClick(e, user, false)}
                   >
                   Disable
                   </button>
@@ -152,7 +178,7 @@ const AdminShops = () => {
                 <td>
                   {user.shop.createdAt}
                 </td>
-              </tr>
+              </Tr>
             ))}
           </tbody>
         </table>

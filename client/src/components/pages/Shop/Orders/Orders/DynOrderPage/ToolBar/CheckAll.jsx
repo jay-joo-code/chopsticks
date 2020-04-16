@@ -1,42 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import ActionBtn from './ActionBtn';
+import Body from 'src/components/common/fonts/Body';
 
 const Container = styled.div`
-  width: 100%;
   display: flex;
-  justify-content: flex-start;
-`;
-
-const ToolBarContainer = styled.div`
-  margin: 1rem 0;
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
-  
-  & > p {
-    padding: 0 .5rem;
-  }
 `;
 
-const ToolBar = ({
-  btn, selected, setSelected, orders, state, v, setV
-}) => {
-  const [allSelected, setAllSelected] = useState(0);
-  const [selectedOrders, setSelectedOrders] = useState([])
+const Input = styled.input`
+  margin-right: .5rem !important;
+`
 
+const CheckAll = ({ orders, selected, setSelected }) => {
+  const [allSelected, setAllSelected] = useState(0);
+  
   // whenever selected changes, check if all is selected
   useEffect(() => {
     if (selected.length === orders.length) setAllSelected(1);
     else setAllSelected(0);
   }, [selected, orders]);
   
-  // when selected changes, apply changes to selectedOrders
-  useEffect(() => {
-    const filtered = orders.map((order) => selected.includes(order._id))
-    setSelectedOrders(filtered);
-  }, [selected])
-
   // handle toolbar checkbox click
   const handleCheckboxChange = (e) => {
     if (e.target.checked) {
@@ -46,19 +29,17 @@ const ToolBar = ({
       setSelected([]);
     }
   };
-
+  
   return (
     <Container>
-      <ToolBarContainer>
-        <input
+      <Input
           type="checkbox"
           checked={allSelected}
           onChange={handleCheckboxChange}
         />
-        <p>모두선택</p>
-      </ToolBarContainer>
+        <Body>모두선택</Body>
     </Container>
-  );
+  )
 };
 
-export default ToolBar;
+export default CheckAll;

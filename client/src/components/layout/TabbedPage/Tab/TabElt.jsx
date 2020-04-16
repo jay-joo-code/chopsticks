@@ -10,15 +10,18 @@ const Container = styled.div`
   color: ${(props) => (props.on ? '#000' : '#7a8680')};
   cursor: pointer;
   
+  // tabWidth
+  width: ${props => props.tabWidth ? `${props.tabWidth}px` : ''};
+  
   @media (min-wdith: ${theme.desktopContentWidth}px) {
     padding: 1rem 3rem;
   }
 `;
 
-const Tab = (props) => {
-  const { page } = props;
+const Tab = ({ page, tabWidth, ...rest }) => {
+  
   return (
-    <Container {...props}>
+    <Container {...rest}>
       {page.name}
     </Container>
   );

@@ -118,7 +118,7 @@ const cartTransaction = (userId, method) => {
                   optsString: cartObjToOptsString(cartObj),
                   qty: quantity,
                   buyerName: user.name,
-                  url: 'https://chopsticks.market/profile/orders',
+                  url: 'https://chopsticks.market/shop/admin/orders',
                 }
                 sendAlertOnEvent(number, 'NEW_ORDER', data);  
               })

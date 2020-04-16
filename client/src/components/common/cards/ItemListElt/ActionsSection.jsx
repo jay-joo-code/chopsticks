@@ -12,7 +12,8 @@ const Cross = styled.p`
 const ActionSection = ({
   order, setV, v, user, cartObj,
 }) => {
-  // cart logic
+  
+  // render in cart
   const handleRemove = () => {
     api.put(`/user/${user._id}/cart/delete/cartobj`, { cartObj })
       .then((res) => {
@@ -24,6 +25,8 @@ const ActionSection = ({
   };
 
   if (!order) return <Cross onClick={handleRemove}>X</Cross>;
+
+  // render in profile order list
   return (
     <OrderActions
       order={order}

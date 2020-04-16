@@ -15,19 +15,24 @@ const Button = styled.button`
   // size: sm
   font-size: ${props => props.size === 'sm' ? '.7rem' : ''};
   padding: ${props => props.size === 'sm' ? '.3rem .5rem' : ''};
+  
+  // inverted
+  color: ${(props) => (props.inverted ? props.theme[props.color] || 'black' : '')};
+  background: ${props => props.inverted ? 'white' : ''};
 `;
 
-const RedButton = ({
-  children, color, disabled, size, ...rest
+const Btn = ({
+  children, color, disabled, size, inverted, ...rest
 }) => (
   <Button
     color={color}
     disabled={disabled}
     {...rest}
     size={size}
+    inverted={inverted}
   >
     {children}
   </Button>
 );
 
-export default RedButton;
+export default Btn;

@@ -29,8 +29,7 @@ const AdminUsers = () => {
   return (
     <Container>
       <Row>
-        <Heading>유저</Heading>
-        <p>{users.length}명</p>
+        <p>총 회원 수: {users.length}명</p>
       </Row>
       <div className="tableContainer">
         <table className="table table-striped table-hover">

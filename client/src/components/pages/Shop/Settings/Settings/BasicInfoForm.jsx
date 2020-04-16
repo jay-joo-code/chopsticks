@@ -50,7 +50,6 @@ const BasicInfoForm = ({ user }) => {
     onSubmit: (values) => {
       const updatedShop = { ...user.shop, ...values };
       const updatedUser = { ...user, shop: updatedShop };
-      log(updatedUser);
       api.put(`/user/${user._id}/update`, updatedUser)
         .then(() => {
           fetchSelfAndStore(user._id);
