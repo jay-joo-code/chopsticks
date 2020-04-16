@@ -94,6 +94,7 @@ const cartTransaction = (userId, method) => {
         })
         .confirm((data) => {
           // 재고 validation
+          
           var passedValidation = true;
           if (passedValidation) {
             BootPay.transactionConfirm(data);

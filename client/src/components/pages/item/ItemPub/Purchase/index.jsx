@@ -99,6 +99,7 @@ const Purchase = ({ item }) => {
   // alert
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [msg, setMsg] = useState('');
   
   // opts
   const [optionsIndex, setOptionsIndex] = useState(Array(item.optGrps.length).fill(null));
@@ -110,7 +111,7 @@ const Purchase = ({ item }) => {
   }
   
   const formatOptStr = (opt) => {
-    return `${opt.optString} (+ ${opt.diff}) ${opt.qty}개`;
+    return `${opt.optString} (+ ${opt.diff}원) ${opt.qty}개`;
   }
   const findOptByIndex = (searchIndex) => {
     const foundOpt = optData.filter((opt, i) => {
@@ -147,30 +148,44 @@ const Purchase = ({ item }) => {
   const history = useHistory();
   const handleAddToCart = () => {
     // validation
-    if (!user) history.push('/login');
+    if (!user) {
+      history.push('/login');
+      return;
+    }
     else if (optionsIndex.includes(null)) {
-     setIsSuccess(false);
-     setShowAlert(true);
+      setIsSuccess(false);
+      setMsg('옵션을 모두 선택해주세요')
+      setShowAlert(true);
+      return;
+    }
+    else if (selectedOpt.qty === 0) {
+      setIsSuccess(false);
+      setMsg('선택하신 옵션의 수량이 없습니다. 다른 옵션을 선택해주세요')
+      setShowAlert(true);
+      return;
+    }
+    else {
+      setMsg('')
+      setShowAlert(false);
     }
     
-    else {
-      const cartObj = {
-        item: item._id,
-        optionsIndex,
-        quantity: 1,
-        optString: selectedOpt.optString,
-        diff: selectedOpt.diff
-      };
-      axios.post(`/api/user/${user._id}/cart/add`, { cartObj })
-        .then((res) => {
-          setIsSuccess(true);
-          setShowAlert(true);
-          fetchSelfAndStore(user._id);
-        })
-        .catch((e) => {
-          log('ERROR add item to cart');
-        });
-    }
+    const cartObj = {
+      item: item._id,
+      optionsIndex,
+      quantity: 1,
+      optString: selectedOpt.optString,
+      diff: selectedOpt.diff
+    };
+    axios.post(`/api/user/${user._id}/cart/add`, { cartObj })
+      .then((res) => {
+        setIsSuccess(true);
+        setMsg('카트에 상품을 담았습니다')
+        setShowAlert(true);
+        fetchSelfAndStore(user._id);
+      })
+      .catch((e) => {
+        log('ERROR add item to cart');
+      });
   };
   
   // conditional rendering
@@ -226,11 +241,7 @@ const Purchase = ({ item }) => {
             show={showAlert}
             color={isSuccess ? 'primary' : 'danger'}
             setShow={setShowAlert}
-            msg={
-              isSuccess
-                ? '카트에 상품을 담았습니다'
-                : '옵션을 골라주세요'
-            }
+            msg={msg}
           />
           {!isDesktop && <CloseBtn onClick={handleClick}>축소</CloseBtn>}
         </BuySect>
