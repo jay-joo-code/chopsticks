@@ -44,7 +44,7 @@ const OrdersList = ({
 }) => {
   const colWidths = ['2rem', '10rem', '5rem', '4rem', '8rem', '12rem', '10rem', '8rem', '2rem'];
   const colNames = ['', '주문번호', '이름', '', '상품', '주소', '택배사 / 송장번호', '상태변경', ''];
-
+  
   return (
     <Container>
       <Header>
