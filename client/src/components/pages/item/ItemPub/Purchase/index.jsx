@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Select from 'src/components/common/form/Select';
 import RedButton from 'src/components/common/buttons/RedButton';
@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import Compressed from './Compressed';
 import Alert from 'src/components/common/displays/Alert';
+import Body from 'src/components/common/fonts/Body';
 
 const DyncCont = styled.div`
   position: fixed;
@@ -50,6 +51,10 @@ const Name = styled.h3`
 const SelectCont = styled.div`
   margin: .5rem 0;
 `;
+
+const OptString = styled(Body)`
+  margin-top: 1rem;
+`
 
 const Price = styled.div`
   font-size: 2rem;
@@ -96,7 +101,7 @@ const Purchase = ({ item }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   
   // opts
-  const [optionsIndex, setOptionsIndex] = useState(Array(item.optGrps.length));
+  const [optionsIndex, setOptionsIndex] = useState(Array(item.optGrps.length).fill(null));
   const handleOptChange = (e, optGrpIndex) => {
     const selectedIndex = e.target.value;
     let newIndexArray = [...optionsIndex];
@@ -104,13 +109,46 @@ const Purchase = ({ item }) => {
     setOptionsIndex(newIndexArray);
   }
   
+  const formatOptStr = (opt) => {
+    return `${opt.optString} (+ ${opt.diff}) ${opt.qty}개`;
+  }
+  const findOptByIndex = (searchIndex) => {
+    const foundOpt = optData.filter((opt, i) => {
+      return opt.index.join() === searchIndex.join();
+    });
+    return foundOpt.length !== 0 ? foundOpt[0] : null;
+  }
+  
+  // last opt handling
+  const [isLastOpt, setIsLastOpt] = useState(false);
+  const { optData } = item;
+  useEffect(() => {
+    if (optionsIndex.filter((index) => index === null).length === 1) {
+      setIsLastOpt(true);
+    }
+    else {
+      setIsLastOpt(false);
+    }
+  }, [optionsIndex])
+  
+  // selectedOpt
+  const [selectedOpt, setSelectedOpt] = useState();
+  useEffect(() => {
+    if (!optionsIndex.includes(null)) {
+      setSelectedOpt(findOptByIndex(optionsIndex))
+    }
+    else {
+      setSelectedOpt(null)
+    }
+  }, [optionsIndex])
+  
   // add to cart
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const handleAddToCart = () => {
     // validation
     if (!user) history.push('/login');
-    else if (optionsIndex.includes(undefined)) {
+    else if (optionsIndex.includes(null)) {
      setIsSuccess(false);
      setShowAlert(true);
     }
@@ -120,6 +158,8 @@ const Purchase = ({ item }) => {
         item: item._id,
         optionsIndex,
         quantity: 1,
+        optString: selectedOpt.optString,
+        diff: selectedOpt.diff
       };
       axios.post(`/api/user/${user._id}/cart/add`, { cartObj })
         .then((res) => {
@@ -160,14 +200,25 @@ const Purchase = ({ item }) => {
               onChange={(e) => handleOptChange(e, optGrpIndex)}
               placeholder={optGrp.title}
             >
-              {optGrp.opts.map((opt, i) => (
-                <option key={opt.name} value={i}>
-                  {`${opt.name} (+${opt.diff})`}
-                </option>
-              ))}
+              {optGrp.opts.map((opt, i) => {
+                let curIndex = [...optionsIndex];
+                curIndex.splice(optGrpIndex, 1, `${i}`);
+                const curOpt = findOptByIndex(curIndex)
+                
+                const dispStr = isLastOpt && curOpt
+                  ? formatOptStr(curOpt)
+                  : opt;
+                  
+                return (
+                  <option key={opt} value={i}>
+                    {dispStr}
+                  </option>
+                )
+              })}
             </Select>
           </SelectCont>
         ))}
+        <OptString>{selectedOpt && formatOptStr(selectedOpt)}</OptString>
         <BuySect>
           <BuyButton white rounded>즉시 구매</BuyButton>
           <BuyButton onClick={handleAddToCart} green rounded>장바구니에 담기</BuyButton>

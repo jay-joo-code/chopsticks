@@ -55,6 +55,8 @@ var userSchema = Schema({
         default: [],
         required: true
       },
+      optString: String,
+      diff: Number,
       quantity: {
         type: Number,
         default: 1,
