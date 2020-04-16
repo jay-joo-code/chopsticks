@@ -69,7 +69,7 @@ const OrderActions = ({ order, setV, v }) => {
         show={show}
         setShow={setShow}
         action={action}
-        rid={order.bootpay.receipt_id}
+        rid={order.bootpay && order.bootpay.receipt_id}
         setV={setV}
         v={v}
         order={order}
