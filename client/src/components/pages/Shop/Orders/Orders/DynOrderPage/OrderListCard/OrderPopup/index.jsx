@@ -45,10 +45,8 @@ const HL = styled.div`
 
 const OrderPopup = ({ showPopup, setShowPopup, order }) => {
   const closePopup = () => setShowPopup(0);
-  const { options, optionsTwo } = order.cartObj.item;
-  const { quantity, price, priceNoDeliv } = order.cartObj;
-  const idx = order.cartObj.optionsIndex;
-  const opts = `${(options[idx[0]] || '')} ${(optionsTwo[idx[1]] || '')}`.trim() || '없음';
+  const { quantity, price, priceNoDeliv, optString } = order.cartObj;
+  
   let stateType = '';
   if (order.state.includes('cancel')) stateType = '취소';
   if (order.state.includes('exchange')) stateType = '교환';
@@ -85,7 +83,7 @@ const OrderPopup = ({ showPopup, setShowPopup, order }) => {
               <Text>{order.cartObj.item.name}</Text>
             </div>
             <Row>
-              <Text align='center'>{opts}</Text>
+              <Text align='center'>{optString}</Text>
               <Text align='center'>{quantity}</Text>
               <Text align='right'>{`${priceNoDeliv.toLocaleString()}원`}</Text>
             </Row>

@@ -47,21 +47,20 @@ var itemSchema = Schema({
   optGrps: {
     type: [{
       title: String,
-      opts: [{
-        name: String,
-        diff: Number
-      }]
+      opts: [ String ]
     }],
     default: []
   },
-  options: [{
-    name: String,
-    priceChange: Number
-  }],
-  optionsTwo: [{
-    name: String,
-    priceChange: Number
-  }],
+  optData: {
+    type: [{
+      index: [ Number ],
+      optString: String,
+      diff: Number,
+      qty: Number,
+      trackQty: Boolean
+    }],
+    default: []
+  },
   deliveryCost: {
     type: Number,
     default: 0

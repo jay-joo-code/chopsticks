@@ -56,43 +56,53 @@ const ActionPopup = ({
   
   const handleAction = async () => {
     try {
-    closePopup();
-    
-    // update db with new state
-    const actionToNewState = {
-      '취소문의': 'cancelRequested',
-      '교환문의': 'exchangeRequested',
-      '환불문의': 'refundRequested'  
-    }
-    const newState = actionToNewState[action];
-    
-    if (newState === 'exchangeRequested') {
-      const exchangeOrderData = {
-        ...order,
-        _id: undefined,
-        linkedOrderId: order._id,
-        state: 'exchangeRequested'
+      // validation
+      if (!msg) {
+        setErr('사유를 입력해주세요');
+        return;
       }
-      await api.post(`/order/create`, exchangeOrderData);
-    }
-    else {
-      await setOrderState(order._id, newState, msg); 
-    }
-    setV(v + 1);
-    
-    // send alert
-    const number = order.seller.mobile;
-    const { cartObj, buyer } = order;
-    const data = {
-      itemName: cartObj.item.name,
-      optsString: cartObjToOptsString(cartObj),
-      qty: cartObj.quantity,
-      buyerName: buyer.name,
-      newState: action.slice(0, 2),
-      url: 'https://chopsticks.market/shop/admin/orders'
-    }
-    
-    sendAlertOnEvent(number, 'ORDER_STATE_CHANGE', data);
+      else {
+        setErr('');
+      }
+      
+      closePopup();
+      
+      // update db with new state
+      const actionToNewState = {
+        '취소문의': 'cancelRequested',
+        '교환문의': 'exchangeRequested',
+        '환불문의': 'refundRequested'  
+      }
+      const newState = actionToNewState[action];
+      
+      if (newState === 'exchangeRequested') {
+        const exchangeOrderData = {
+          ...order,
+          _id: undefined,
+          linkedOrderId: order._id,
+          state: 'exchangeRequested',
+          stateMsg: msg
+        }
+        await api.post(`/order/create`, exchangeOrderData);
+      }
+      else {
+        await setOrderState(order._id, newState, msg); 
+      }
+      setV(v + 1);
+      
+      // send alert
+      const number = order.seller.mobile;
+      const { cartObj, buyer } = order;
+      const data = {
+        itemName: cartObj.item.name,
+        optsString: cartObjToOptsString(cartObj),
+        qty: cartObj.quantity,
+        buyerName: buyer.name,
+        newState: action.slice(0, 2),
+        url: 'https://chopsticks.market/shop/admin/orders'
+      }
+      
+      sendAlertOnEvent(number, 'ORDER_STATE_CHANGE', data);
     }
     catch (e) {
       log('ERROR ActionPopup', e)
