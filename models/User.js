@@ -44,7 +44,7 @@ var userSchema = Schema({
     type: String
   },
   cart: {
-    type: [{
+    type: [{ // cartObj
       item: {
         type: Schema.Types.ObjectId,
         ref: 'Item',

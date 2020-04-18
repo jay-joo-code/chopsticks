@@ -19,9 +19,8 @@ const PendingBtns = ({ selected, setSelected, v, setV }) => {
       // validation
       const validationPromises = selected.map((id) => validateDeliv(id, 'byId'));
       const validationRes = await Promise.all(validationPromises);
-      const failedValidations = validationRes.map((res) => {
-        if (!res.isValid) return res;
-      })
+      const failedValidations = validationRes.filter((res) => !res.isValid);
+      
       if (failedValidations.length > 0) {
         // failed validation
         setMsg(failedValidations[0].msg);

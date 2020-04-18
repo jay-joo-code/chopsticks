@@ -31,7 +31,7 @@ const OptDataInput = ({ formik }) => {
     formik.setFieldValue('optData', optData);
   }, [formik.values.optGrps])
   
-  function* allPossibleCases(head, ...tail) {
+  function* allPossibleCases(head = [], ...tail) {
     let remainder = tail.length ? allPossibleCases(...tail) : [[]];
     for (let r of remainder) for (let h of head) yield [h, ...r];
   }
