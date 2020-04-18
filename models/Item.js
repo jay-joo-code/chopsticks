@@ -61,6 +61,10 @@ var itemSchema = Schema({
     }],
     default: []
   },
+  soldout: {
+    type: Boolean,
+    default: false
+  },
   deliveryCost: {
     type: Number,
     default: 0

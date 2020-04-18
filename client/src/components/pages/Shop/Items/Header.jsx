@@ -41,6 +41,16 @@ const Stats = styled(Body)`
 const Header = ({ items }) => {
   const displayedCount = items.filter((item) => item.display).length;
   
+  const isSoldout = (item) => {
+    let allItemsSoldOut = true;
+    item.optData.map((opt) => {
+      if (opt.qty !== 0) allItemsSoldOut = false;
+    })
+    return allItemsSoldOut;
+  }
+  
+  const soldOutCount = items.filter((item) => isSoldout(item)).length;
+  
   return (
     <Container>
       <LeftContainer>
@@ -63,7 +73,7 @@ const Header = ({ items }) => {
             </tr>
             <tr>
               <td><Stats>Sold Out</Stats></td>
-              <td><Stats>0</Stats></td>
+              <td><Stats>{soldOutCount}</Stats></td>
             </tr>
           </tbody>
         </table>

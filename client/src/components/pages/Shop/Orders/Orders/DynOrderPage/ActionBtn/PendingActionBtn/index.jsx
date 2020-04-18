@@ -3,16 +3,15 @@ import styled from 'styled-components';
 import Btn from 'src/components/common/buttons/Btn';
 import api from 'src/util/api';
 import log from 'src/util/log';
-import Alert from 'src/components/common/displays/Alert';
 import { sendAlertOnEvent } from 'src/util/bizm';
 import { validateDeliv } from './../../actions';
+import { useDispatch } from 'react-redux';
 
 const Container = styled.div`
 
 `;
 
 const PendingActionBtn = ({ order, v, setV }) => {
-  const [show, setShow] = useState(false);
   const [msg, setMsg] = useState('');
   
   const setDelivering = async () => {
@@ -50,12 +49,20 @@ const PendingActionBtn = ({ order, v, setV }) => {
       })
   }, [order])
   
+  const dispatch = useDispatch();
+  
   const handleClick = (e) => {
     e.stopPropagation();
 
     if (!isValid) {
-      setShow(true);
-      return;
+      dispatch({
+        type: 'ALERT_SET',
+        payload: {
+          show: true,
+          msg: msg,
+          color: 'danger'
+        }
+      })
     };
     
     setDelivering();
@@ -68,12 +75,6 @@ const PendingActionBtn = ({ order, v, setV }) => {
       >
         발송완료
       </Btn>
-      <Alert
-        color='danger'
-        show={show}
-        setShow={setShow}
-        msg={msg}
-      />
     </Container>
   )
 };
