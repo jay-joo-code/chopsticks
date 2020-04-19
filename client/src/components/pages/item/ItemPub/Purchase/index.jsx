@@ -174,7 +174,7 @@ const Purchase = ({ item }) => {
     }
     else if (selectedOpt.qty === 0) {
       setIsSuccess(false);
-      setMsg('선택하신 옵션의 수량이 없습니다. 다른 옵션을 선택해주세요')
+      setMsg('선택하신 옵션이 재고가 없습니다. 다른 옵션을 선택해주세요')
       setShowAlert(true);
       return;
     }
