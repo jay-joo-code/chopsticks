@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Popup from 'src/components/common/popups/Popup';
 import api from 'src/util/api';

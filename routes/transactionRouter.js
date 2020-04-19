@@ -5,8 +5,28 @@ const Transaction = require('./../models/Transaction');
 const TransactionError = require('./../models/TransactionError');
 const Order = require('./../models/Order');
 const User = require('./../models/User');
+const Item = require('./../models/Item');
 
 BootpayRest.setConfig(config.BOOTPAY_REST_ID, config.BOOTPAY_PK);
+
+const decItemQty = async (itemId, targetIndex, decQty) => {
+  const item = await Item.findById(itemId);
+  const prevOptData = [...item.optData];
+  const newOptData = prevOptData.map((opt) => {
+    if (targetIndex.join() === opt.index.join()) {
+      const newOpt =  {
+        ...opt.toObject(),
+        qty: opt.qty - decQty || 0
+      }
+      return newOpt;
+    }
+    else {
+      return opt;
+    }
+  })
+  item.optData = newOptData;
+  await item.save();
+}
 
 // process transaction
 transactionRouter.post('/:rid/process', async (req, res) => {
@@ -27,10 +47,10 @@ transactionRouter.post('/:rid/process', async (req, res) => {
     const isValid = verifRes.data.price === transaction.price && verifRes.data.status === 1;
     if (!isValid) throw new Error('failed validation');
     await new Transaction(transaction).save();
-
-    // store order details to DB
+    
     const orders = [];
     transaction.cart.map(async (cartObj) => {
+      // store order details to DB
       const order = {
         cartObj,
         bootpay: verifRes.data,
@@ -40,6 +60,9 @@ transactionRouter.post('/:rid/process', async (req, res) => {
       };
       const saveResult = await new Order(order).save();
       orders.push(saveResult._id);
+      
+      // decrement item opt qty
+      decItemQty(cartObj.item._id, cartObj.optionsIndex, cartObj.quantity);
     });
 
     // empty cart
@@ -53,7 +76,7 @@ transactionRouter.post('/:rid/process', async (req, res) => {
       message: e.toString(),
       data: e.errors,
     };
-    console.log(errData);
+    console.log('handle transaction error', errData);
     await new TransactionError(errData).save();
     res.status(500).send(e);
   }

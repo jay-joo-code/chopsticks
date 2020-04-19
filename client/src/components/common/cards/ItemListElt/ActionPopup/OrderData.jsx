@@ -31,11 +31,8 @@ const Img = styled.img`
 `
 
 const OrderData = ({ order }) => {
-  const { item, quantity, price, optionsIndex } = order.cartObj;
+  const { item, quantity, price, optString } = order.cartObj;
   
-  const optString = item && item.optGrps && item.optGrps.map((optGrp, i) => {
-    return optGrp.opts[optionsIndex[i]].name;
-  }).join(', ')
   
   return (
     <Container>
@@ -43,7 +40,7 @@ const OrderData = ({ order }) => {
       <Row>
         <Img src={item.image} />
         <Col>
-          <Body>{optString}</Body>
+          <Body>{optString || ''}</Body>
           <Body>{quantity}개, {price}원</Body>
         </Col>
       </Row>

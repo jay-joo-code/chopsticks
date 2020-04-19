@@ -8,7 +8,7 @@ import theme from 'src/theme';
 import { Link } from 'react-router-dom';
 import getTotalPrice from 'src/util/calculation/getTotalPrice';
 import ActionsSection from './ActionsSection';
-import { cartObjToOptsString } from 'src/util/helpers';
+import Body from 'src/components/common/fonts/Body';
 
 const Container = styled.div`
   width: 100%;
@@ -99,7 +99,7 @@ const ItemInfo = ({
   cartObj, order, setV, v,
 }) => {
   const user = useSelector((state) => state.user);
-  const { item, quantity, optionsIndex } = cartObj;
+  const { item, quantity, optString, diff } = cartObj;
   const totalPrice = getTotalPrice(cartObj);
 
   const handleQtyChange = (e) => {
@@ -132,18 +132,10 @@ const ItemInfo = ({
       </Top>
       <Bottom>
         <Options>
-          {item.optGrps && item.optGrps.map((optGrp, i) => {
-            const opt = optGrp.opts[optionsIndex[i]]
-            return opt && <OptElt key={optGrp.title}>{`${opt.name} (+ ${opt.diff}원)`}</OptElt>
-          })}
-          {process.env.NODE_ENV === 'development' && (
-            <div>
-              <p>{order && order.createdAt.slice(0, 10)}</p>
-              <p>id: {order && order._id}</p>
-              <p>linked id: {order && order.linkedOrderId}</p>
-              <p>bootpay receipt_id: {(order && order.bootpay) && order.bootpay.receipt_id}</p>
-            </div>
-          )}
+          {optString && <Body>{`${optString} (+ ${diff})`}</Body>}
+          {process.env.NODE_ENV === 'development' && <p>{order && order.createdAt.slice(0, 10)}</p>}
+          {process.env.NODE_ENV === 'development' && <p>id: {order && order._id}</p>}
+          {process.env.NODE_ENV === 'development' && <p>linked id: {order && order.linkedOrderId}</p>}
         </Options>
         <PriceCalc>
           <QtyCont>

@@ -4,7 +4,9 @@ import axios from 'axios';
 import getTotalPrice from 'src/util/calculation/getTotalPrice';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import { sendAlertOnEvent } from 'src/util/bizm';
-import { cartObjToOptsString } from 'src/util/helpers';
+import api from 'src/util/api';
+import log from 'src/util/log';
+import store from 'src/redux/store';
 
 const cartTransaction = (userId, method) => {
   return new Promise(async(resolve, reject) => {
@@ -15,7 +17,7 @@ const cartTransaction = (userId, method) => {
       }
       
       // USER
-      const { data: user } = await axios.get(`/api/user/${userId}`);
+      const { data: user } = await api.get(`/user/${userId}`);
       if (!user) throw new Error('Invalid userId provided');
       if (!user.deliveryInfo) throw new Error('No delievery info provided');
       const { options, defaultIndex } = user.deliveryInfo;
@@ -94,18 +96,48 @@ const cartTransaction = (userId, method) => {
         })
         .confirm((data) => {
           // 재고 validation
-          var passedValidation = true;
+          let passedValidation = true;
+          
+          cart.map((cartObj) => {
+            const { optionsIndex, item } = cartObj;
+            const matchedOpt = item.optData.filter((opt) => {
+              return opt.index.join() === optionsIndex.join()
+            });
+            if (!matchedOpt.length) {
+              passedValidation = false;
+            }
+            else {
+              const targetOpt = matchedOpt[0];
+              if (!targetOpt.qty) {
+                // 재고 없음
+                passedValidation = false;
+              }
+              else if (targetOpt.qty < cartObj.quantity) {
+                // 카트에 담긴 주문 수량보다 재고가 적음
+                passedValidation = false;
+              }
+            }
+          })
+          
           if (passedValidation) {
             BootPay.transactionConfirm(data);
           }
           else {
+            store.dispatch({
+              type: 'ALERT_SET', 
+              payload: {
+                show: true,
+                msg: '재고가 없습니다',
+                color: 'danger'
+              }
+            })
             BootPay.removePaymentWindow();
           }
         })
         .close((data) => {
         })
         .done((data) => {
-          axios.post(`/api/transaction/${data.receipt_id}/process`, { transaction })
+          api.post(`/transaction/${data.receipt_id}/process`, { transaction })
             .then((res) => {
               fetchSelfAndStore(user._id);
               
@@ -115,7 +147,7 @@ const cartTransaction = (userId, method) => {
                 const number = item.owner.mobile;
                 const data = {
                   itemName: item.name,
-                  optsString: cartObjToOptsString(cartObj),
+                  optsString: cartObj.optString,
                   qty: quantity,
                   buyerName: user.name,
                   url: 'https://chopsticks.market/shop/admin/orders',

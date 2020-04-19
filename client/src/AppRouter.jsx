@@ -33,6 +33,8 @@ import ShopTransactions from 'src/components/pages/Shop/Transactions';
 import ShopSettings from 'src/components/pages/Shop/Settings';
 import ShopOrders from 'src/components/pages/Shop/Orders';
 
+import ReduxAlert from 'src/components/common/displays/ReduxAlert';
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -85,6 +87,7 @@ const AppRouter = () => (
           <Route exact path="/" component={Home} />
         </Switch>
       </DynamicContainer>
+      <ReduxAlert />
       <Footer />
     </Container>
   </BrowserRouter>

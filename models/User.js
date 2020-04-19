@@ -44,7 +44,7 @@ var userSchema = Schema({
     type: String
   },
   cart: {
-    type: [{
+    type: [{ // cartObj
       item: {
         type: Schema.Types.ObjectId,
         ref: 'Item',
@@ -55,6 +55,8 @@ var userSchema = Schema({
         default: [],
         required: true
       },
+      optString: String,
+      diff: Number,
       quantity: {
         type: Number,
         default: 1,

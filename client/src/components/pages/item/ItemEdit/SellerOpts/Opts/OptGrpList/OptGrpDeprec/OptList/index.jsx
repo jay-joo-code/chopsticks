@@ -9,10 +9,11 @@ const Container = styled.div`
 const List = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 1rem;
+  padding: 1rem;
 `;
 
 const OptionsList = ({ opts, formik, grpIndex }) => {
+  
 
   return (
     <Container>

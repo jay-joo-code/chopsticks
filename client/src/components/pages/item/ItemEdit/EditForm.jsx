@@ -37,6 +37,7 @@ const ItemEdit = ({ item }) => {
       price: item.price,
       stock: item.stock,
       optGrps: item.optGrps || [],
+      optData: item.optData || [],
       madeOnOrder: item.madeOnOrder,
       processingMin: item.processingMin,
       processingMax: item.processingMax,

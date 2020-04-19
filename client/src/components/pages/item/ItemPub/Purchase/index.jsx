@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Select from 'src/components/common/form/Select';
 import RedButton from 'src/components/common/buttons/RedButton';
@@ -10,6 +10,8 @@ import { useHistory } from 'react-router-dom';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import Compressed from './Compressed';
 import Alert from 'src/components/common/displays/Alert';
+import Body from 'src/components/common/fonts/Body';
+import { useDispatch } from 'react-redux';
 
 const DyncCont = styled.div`
   position: fixed;
@@ -50,6 +52,10 @@ const Name = styled.h3`
 const SelectCont = styled.div`
   margin: .5rem 0;
 `;
+
+const OptString = styled(Body)`
+  margin-top: 1rem;
+`
 
 const Price = styled.div`
   font-size: 2rem;
@@ -94,9 +100,11 @@ const Purchase = ({ item }) => {
   // alert
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [msg, setMsg] = useState('');
   
   // opts
-  const [optionsIndex, setOptionsIndex] = useState(Array(item.optGrps.length));
+  const emptyOptionsIndex = Array(item.optGrps.length).fill(null);
+  const [optionsIndex, setOptionsIndex] = useState(emptyOptionsIndex);
   const handleOptChange = (e, optGrpIndex) => {
     const selectedIndex = e.target.value;
     let newIndexArray = [...optionsIndex];
@@ -104,33 +112,94 @@ const Purchase = ({ item }) => {
     setOptionsIndex(newIndexArray);
   }
   
+  const formatOptStr = (opt) => {
+    if (!opt || !opt.optString) return '';
+    return `${opt.optString} (+ ${opt.diff}원) ${opt.qty}개`;
+  }
+  const findOptByIndex = (searchIndex) => {
+    const foundOpt = optData.filter((opt, i) => {
+      return opt.index.join() === searchIndex.join();
+    });
+    return foundOpt.length !== 0 ? foundOpt[0] : null;
+  }
+  
+  // conditional render based on unset opt 
+  const unsetOptCount = optionsIndex.filter((index) => index === null).length;
+  const unsetOptIndex = optionsIndex.indexOf(null);
+  const { optData } = item;
+  
+  // selectedOpt
+  // when all opts are selected, determine which opt combination was selected
+  const [selectedOpt, setSelectedOpt] = useState();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!optionsIndex.includes(null)) {
+      const selectedOpt = findOptByIndex(optionsIndex)
+      if (selectedOpt) {
+        setSelectedOpt(selectedOpt)
+      }
+      else {
+        // selected a combination that was deleted by seller
+        // reset other optionsIndex
+        dispatch({
+          type: 'ALERT_SET',
+          payload: {
+            show: true,
+            msg: '등록되지 않은 옵션 조합을 선택하셨습니다. 다른 옵션을 선택해주세요.',
+            color: 'danger'
+          }
+        })
+        setOptionsIndex(emptyOptionsIndex);
+      }
+    }
+    else {
+      setSelectedOpt(null)
+    }
+  }, [optionsIndex])
+  
   // add to cart
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const handleAddToCart = () => {
     // validation
-    if (!user) history.push('/login');
-    else if (optionsIndex.includes(undefined)) {
-     setIsSuccess(false);
-     setShowAlert(true);
+    if (!user) {
+      history.push('/login');
+      return;
+    }
+    else if (optionsIndex.includes(null)) {
+      setIsSuccess(false);
+      setMsg('옵션을 모두 선택해주세요')
+      setShowAlert(true);
+      return;
+    }
+    else if (selectedOpt.qty === 0) {
+      setIsSuccess(false);
+      setMsg('선택하신 옵션이 재고가 없습니다. 다른 옵션을 선택해주세요')
+      setShowAlert(true);
+      return;
+    }
+    else {
+      setMsg('')
+      setShowAlert(false);
     }
     
-    else {
-      const cartObj = {
-        item: item._id,
-        optionsIndex,
-        quantity: 1,
-      };
-      axios.post(`/api/user/${user._id}/cart/add`, { cartObj })
-        .then((res) => {
-          setIsSuccess(true);
-          setShowAlert(true);
-          fetchSelfAndStore(user._id);
-        })
-        .catch((e) => {
-          log('ERROR add item to cart');
-        });
-    }
+    const cartObj = {
+      item: item._id,
+      optionsIndex,
+      quantity: 1,
+      optString: selectedOpt.optString,
+      diff: selectedOpt.diff
+    };
+    axios.post(`/api/user/${user._id}/cart/add`, { cartObj })
+      .then((res) => {
+        setIsSuccess(true);
+        setMsg('카트에 상품을 담았습니다')
+        setShowAlert(true);
+        fetchSelfAndStore(user._id);
+      })
+      .catch((e) => {
+        log('ERROR add item to cart');
+      });
   };
   
   // conditional rendering
@@ -160,14 +229,40 @@ const Purchase = ({ item }) => {
               onChange={(e) => handleOptChange(e, optGrpIndex)}
               placeholder={optGrp.title}
             >
-              {optGrp.opts.map((opt, i) => (
-                <option key={opt.name} value={i}>
-                  {`${opt.name} (+${opt.diff})`}
-                </option>
-              ))}
+              {optGrp.opts.map((opt, i) => {
+                let curIndex = [...optionsIndex];
+                curIndex.splice(optGrpIndex, 1, `${i}`);
+                const curOpt = findOptByIndex(curIndex);
+                
+                let dispStr = '';
+                if (unsetOptCount === 1) {
+                  // render optData only for last optGrp
+                  if (unsetOptIndex === optGrpIndex) {
+                    dispStr = formatOptStr(curOpt);
+                    
+                    // don't render empty string
+                    // this means this opt combination was deleted by user
+                    if (!dispStr) return null;
+                  }
+                  else {
+                    dispStr = opt;
+                  }
+                }
+                else {
+                  // render opt only for all optGrps
+                  dispStr = opt;
+                }
+                  
+                return (
+                  <option key={opt} value={i}>
+                    {dispStr}
+                  </option>
+                )
+              })}
             </Select>
           </SelectCont>
         ))}
+        <OptString>{selectedOpt && formatOptStr(selectedOpt)}</OptString>
         <BuySect>
           <BuyButton white rounded>즉시 구매</BuyButton>
           <BuyButton onClick={handleAddToCart} green rounded>장바구니에 담기</BuyButton>
@@ -175,11 +270,7 @@ const Purchase = ({ item }) => {
             show={showAlert}
             color={isSuccess ? 'primary' : 'danger'}
             setShow={setShowAlert}
-            msg={
-              isSuccess
-                ? '카트에 상품을 담았습니다'
-                : '옵션을 골라주세요'
-            }
+            msg={msg}
           />
           {!isDesktop && <CloseBtn onClick={handleClick}>축소</CloseBtn>}
         </BuySect>

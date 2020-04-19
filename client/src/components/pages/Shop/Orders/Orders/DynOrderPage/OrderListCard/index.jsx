@@ -98,12 +98,10 @@ const OrderListCardIndex = ({
 
   // text formatting
   const {
-    image, images, primaryImageIndex, name, optGrps,
+    image, images, primaryImageIndex, name,
   } = order.cartObj.item;
   const imgSrc = image || images[primaryImageIndex];
-  const idx = order.cartObj.optionsIndex;
-  const opts = optGrps && optGrps.map((optGrp, i) => optGrp.opts[idx[i]].name).join(' ')
-  const orderDesc = `수량 ${order.cartObj.quantity}, 옵션 ${opts || '없음'}`;
+  const orderDesc = `수량 ${order.cartObj.quantity}, ${order.cartObj.optString || '옵션 없음'}`;
   const date = new Date(order.createdAt).toLocaleDateString('ko-KR');
   
   let stateText = '';

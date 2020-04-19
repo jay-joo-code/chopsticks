@@ -10,7 +10,10 @@ export const setDelivering = (orderData, method) => {
         const orderRes = await api.get(`/order/${orderData}`);
         order = orderRes.data;
       }
-            
+      
+      console.log('order setDelivering', order);
+      
+      /*      
       await api.put(`/order/${order._id}/update`, { state: 'delivering' });
       
       // bizm alert
@@ -25,6 +28,7 @@ export const setDelivering = (orderData, method) => {
       }
       sendAlertOnEvent(number, 'ORDER_SENT', data);
       resolve();
+      */
     }
     catch (e) {
       reject(e);
