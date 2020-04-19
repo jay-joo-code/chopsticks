@@ -11,6 +11,7 @@ import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import Compressed from './Compressed';
 import Alert from 'src/components/common/displays/Alert';
 import Body from 'src/components/common/fonts/Body';
+import { useDispatch } from 'react-redux';
 
 const DyncCont = styled.div`
   position: fixed;
@@ -102,7 +103,8 @@ const Purchase = ({ item }) => {
   const [msg, setMsg] = useState('');
   
   // opts
-  const [optionsIndex, setOptionsIndex] = useState(Array(item.optGrps.length).fill(null));
+  const emptyOptionsIndex = Array(item.optGrps.length).fill(null);
+  const [optionsIndex, setOptionsIndex] = useState(emptyOptionsIndex);
   const handleOptChange = (e, optGrpIndex) => {
     const selectedIndex = e.target.value;
     let newIndexArray = [...optionsIndex];
@@ -111,6 +113,7 @@ const Purchase = ({ item }) => {
   }
   
   const formatOptStr = (opt) => {
+    if (!opt || !opt.optString) return '';
     return `${opt.optString} (+ ${opt.diff}원) ${opt.qty}개`;
   }
   const findOptByIndex = (searchIndex) => {
@@ -120,23 +123,34 @@ const Purchase = ({ item }) => {
     return foundOpt.length !== 0 ? foundOpt[0] : null;
   }
   
-  // last opt handling
-  const [isLastOpt, setIsLastOpt] = useState(false);
+  // conditional render based on unset opt 
+  const unsetOptCount = optionsIndex.filter((index) => index === null).length;
+  const unsetOptIndex = optionsIndex.indexOf(null);
   const { optData } = item;
-  useEffect(() => {
-    if (optionsIndex.filter((index) => index === null).length === 1) {
-      setIsLastOpt(true);
-    }
-    else {
-      setIsLastOpt(false);
-    }
-  }, [optionsIndex])
   
   // selectedOpt
+  // when all opts are selected, determine which opt combination was selected
   const [selectedOpt, setSelectedOpt] = useState();
+  const dispatch = useDispatch();
   useEffect(() => {
     if (!optionsIndex.includes(null)) {
-      setSelectedOpt(findOptByIndex(optionsIndex))
+      const selectedOpt = findOptByIndex(optionsIndex)
+      if (selectedOpt) {
+        setSelectedOpt(selectedOpt)
+      }
+      else {
+        // selected a combination that was deleted by seller
+        // reset other optionsIndex
+        dispatch({
+          type: 'ALERT_SET',
+          payload: {
+            show: true,
+            msg: '등록되지 않은 옵션 조합을 선택하셨습니다. 다른 옵션을 선택해주세요.',
+            color: 'danger'
+          }
+        })
+        setOptionsIndex(emptyOptionsIndex);
+      }
     }
     else {
       setSelectedOpt(null)
@@ -218,11 +232,26 @@ const Purchase = ({ item }) => {
               {optGrp.opts.map((opt, i) => {
                 let curIndex = [...optionsIndex];
                 curIndex.splice(optGrpIndex, 1, `${i}`);
-                const curOpt = findOptByIndex(curIndex)
+                const curOpt = findOptByIndex(curIndex);
                 
-                const dispStr = isLastOpt && curOpt
-                  ? formatOptStr(curOpt)
-                  : opt;
+                let dispStr = '';
+                if (unsetOptCount === 1) {
+                  // render optData only for last optGrp
+                  if (unsetOptIndex === optGrpIndex) {
+                    dispStr = formatOptStr(curOpt);
+                    
+                    // don't render empty string
+                    // this means this opt combination was deleted by user
+                    if (!dispStr) return null;
+                  }
+                  else {
+                    dispStr = opt;
+                  }
+                }
+                else {
+                  // render opt only for all optGrps
+                  dispStr = opt;
+                }
                   
                 return (
                   <option key={opt} value={i}>

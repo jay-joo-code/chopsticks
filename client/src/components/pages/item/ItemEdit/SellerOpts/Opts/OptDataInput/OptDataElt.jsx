@@ -22,6 +22,13 @@ const Input = styled(OutlinedInput)`
   
 `
 
+const Cross = styled.p`
+  font-size: 1.5rem;
+  font-weight: bold;
+  opacity: .9;
+  cursor: pointer;
+`
+
 const OptDataElt = ({ formik, i}) => {
   const opt = formik.values.optData[i];
   const handleChange = (e, field) => {
@@ -34,6 +41,12 @@ const OptDataElt = ({ formik, i}) => {
     newOpt[field] = value;
     let newOptData = [...formik.values.optData];
     newOptData.splice(i, 1, newOpt);
+    formik.setFieldValue('optData', newOptData);
+  }
+  
+  const deleteOpt = () => {
+    let newOptData = [...formik.values.optData];
+    newOptData.splice(i, 1);
     formik.setFieldValue('optData', newOptData);
   }
   
@@ -59,6 +72,8 @@ const OptDataElt = ({ formik, i}) => {
           width={150}
           onChange={(e) => handleChange(e, 'qty')}
         />
+        <Body>개</Body>
+        <Cross onClick={deleteOpt}>x</Cross>
       </RightContainer>
     </Container>
   )
