@@ -5,6 +5,16 @@ const config = require('./../config');
 
 BootpayRest.setConfig(config.BOOTPAY_REST_ID, config.BOOTPAY_PK);
 
+// GET ALL ORDERS
+orderRouter.get('/', async (req, res) => {
+  try {
+    const results = await Order.find({}).populate('seller').populate('buyer');
+    res.send(results);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
 // GET ALL ITEMS OWNED BY USER WITH USERID
 orderRouter.get('/:usertype/:uid', async (req, res) => {
   try {

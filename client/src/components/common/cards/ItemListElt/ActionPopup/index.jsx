@@ -95,7 +95,7 @@ const ActionPopup = ({
       const { cartObj, buyer } = order;
       const data = {
         itemName: cartObj.item.name,
-        optsString: cartObjToOptsString(cartObj),
+        optsString: cartObj.optString,
         qty: cartObj.quantity,
         buyerName: buyer.name,
         newState: action.slice(0, 2),

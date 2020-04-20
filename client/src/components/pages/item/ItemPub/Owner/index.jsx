@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   @media (min-width: ${theme.desktopContentWidth}px) {
     padding: 2rem 0;
     display: block;
-    max-width: 200px;
+    width: 300px;
   }
 `;
 
@@ -86,6 +86,7 @@ const Intro = styled(Body)`
   opacity: .8;
   margin: 0;
   font-size: .8rem;
+  line-height: 1.4;
   
   // mobile - compressed
   cursor: pointer;
