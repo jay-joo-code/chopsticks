@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import api from 'src/util/api';
 import log from 'src/util/log';
 import ItemsList from 'src/components/layout/ItemsList';
 import Heading from 'src/components/common/fonts/Heading';
@@ -27,7 +27,7 @@ const ItemsListComp = () => {
   const [meta, setMeta] = useState();
   
   useEffect(() => {
-    axios.get('/api/item?page=1&limit=16')
+    api.get('/api/item?page=1&limit=16')
       .then((res) => {
         setItems(res.data.docs);
         setMeta(res.data);

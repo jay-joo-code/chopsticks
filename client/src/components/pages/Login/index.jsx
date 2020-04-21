@@ -5,7 +5,7 @@ import Button from 'src/components/common/buttons/RedButton';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios';
+import api from 'src/util/api';
 import log from 'src/util/log';
 import ErrMsg from 'src/components/common/form/ErrMsg';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
@@ -55,7 +55,7 @@ const Login = () => {
         .required('필수'),
     }),
     onSubmit: (values) => {
-      axios.post('/api/user/login', values)
+      api.post('/api/user/login', values)
         .then((res) => {
           fetchSelfAndStore(res.data._id);
           history.push('/');
