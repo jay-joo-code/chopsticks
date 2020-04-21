@@ -46,7 +46,6 @@ const TransactionsTable = ({ sellers, setSellers, reload, monthIndex }) => {
       paidByMonth: newPaidByMonth
     }
     
-    /*
     // local update
     setSellers(sellers.map((seller) => {
       if (seller._id === sellerToUpdate._id) {
@@ -57,12 +56,14 @@ const TransactionsTable = ({ sellers, setSellers, reload, monthIndex }) => {
       }
       return seller;
     }))
-    */
     
     // db update
     api.put(`/user/${sellerToUpdate._id}/update`, { shop: newShop })
-      .then(() => reload())
-      .catch((e) => log('ERROR TransactionsTable', e))
+      .then(() => {})
+      .catch((e) => {
+        log('ERROR TransactionsTable', e);
+        reload();
+      })
   }
 
   return (
