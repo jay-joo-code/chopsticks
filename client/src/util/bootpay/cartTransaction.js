@@ -1,11 +1,9 @@
 import BootPay from "bootpay-js";
 import generator from 'generate-password';
-import axios from 'axios';
 import getTotalPrice from 'src/util/calculation/getTotalPrice';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import { sendAlertOnEvent } from 'src/util/bizm';
 import api from 'src/util/api';
-import log from 'src/util/log';
 import store from 'src/redux/store';
 
 const cartTransaction = (userId, method) => {
