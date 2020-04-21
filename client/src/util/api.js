@@ -11,6 +11,8 @@ if (process.env.NODE_ENV === 'production') {
   }
 }
 
+console.log('API BASE', baseURL);
+
 const api = axios.create({
   baseURL
 });
