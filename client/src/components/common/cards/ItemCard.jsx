@@ -61,6 +61,7 @@ const Name = styled.p`
   text-overflow: ellipsis;
   overflow: hidden;
   font-size: .8rem;
+  word-break: break-word;
   
   display: -webkit-box;
   -webkit-line-clamp: 2;

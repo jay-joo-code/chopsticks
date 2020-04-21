@@ -1,7 +1,7 @@
 import axios from 'axios';
 import cfg from 'src/config';
 
-let baseURL = cfg.BASE_RELEASE;
+let baseURL = cfg.BASE;
 
 if (process.env.NODE_ENV === 'production') {
   if (process.env.REACT_APP_ENV === 'release') {

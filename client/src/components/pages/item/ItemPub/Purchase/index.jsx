@@ -47,6 +47,7 @@ const Name = styled.h3`
   opacity: .8;
   white-space: pre-line;
   text-align: center;
+  word-break: break-word;
 `;
 
 const SelectCont = styled.div`
