@@ -8,7 +8,7 @@ import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import PhoneVerifInput from 'src/components/common/form/PhoneVerifInput';
 import OutlinedTextarea from 'src/components/common/form/OutlinedTextarea';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
+import api from 'src/util/api';
 import log from 'src/util/log';
 import { useHistory } from 'react-router-dom';
 
@@ -65,7 +65,7 @@ const AppForm = () => {
       if (!titleVerif) {
         setFieldError('title', '중복 확인해주세요');
       } else {
-        axios.post('/api/shop/apply', values)
+        api.post('/shop/apply', values)
           .then((res) => {
             history.push('/shop/admin/items');
           })
@@ -78,7 +78,7 @@ const AppForm = () => {
   const checkTitleAvail = () => {
     const { title } = formik.values;
     if (title.length > 0) {
-      axios.get(`/api/shop/check-title?title=${title}`)
+      api.get(`/shop/check-title?title=${title}`)
         .then((res) => {
           setTitleVerif(true);
           formik.setFieldError('title', '');

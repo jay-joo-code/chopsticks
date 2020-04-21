@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation, useHistory } from 'react-router-dom';
-import axios from 'axios';
+import api from 'src/util/api';
 import log from 'src/util/log';
 import ItemsList from 'src/components/layout/ItemsList';
 import PageNav from 'src/components/layout/PageNav';
@@ -21,8 +21,7 @@ const ItemsListComp = () => {
   const [metadata, setMetadata] = useState({});
   
   useEffect(() => {
-    const path = `/api/item${location.search}`;
-    axios.get(path)
+    api.get(`/item${location.search}`)
       .then((res) => {
         if (res.data.page && res.data.totalPages) {
           setMetadata({
