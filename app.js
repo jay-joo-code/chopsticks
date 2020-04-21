@@ -87,7 +87,7 @@ passport.deserializeUser(function(id, done) {
 
 // ROUTING
 // applies in development or api servers
-if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_ENV === 'api') {
+if (process.env.NODE_ENV !== 'development' || process.env.REACT_APP_ENV === 'api') {
   app.use('/api', require('./routes'));
 }
 
