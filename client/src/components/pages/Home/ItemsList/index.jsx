@@ -19,8 +19,12 @@ const TitleSect = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 2rem 0 4rem 0;
+  padding: 2rem 0 1.5rem 0;
 `;
+
+const StyledHeading = styled(Heading)`
+  font-size: 1.6rem;
+`
 
 const ItemsListComp = () => {
   const [items, setItems] = useState([]);
@@ -40,7 +44,7 @@ const ItemsListComp = () => {
   return (
     <Container>
       <TitleSect>
-        <Heading>Designer's Items</Heading>
+        <StyledHeading>Designer's Items</StyledHeading>
       </TitleSect>
       <ItemsList items={items} />
       {meta && <PageNav metadata={meta} />}
