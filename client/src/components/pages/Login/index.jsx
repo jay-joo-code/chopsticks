@@ -55,7 +55,7 @@ const Login = () => {
         .required('필수'),
     }),
     onSubmit: (values) => {
-      api.post('/api/user/login', values)
+      api.post('/user/login', values)
         .then((res) => {
           fetchSelfAndStore(res.data._id);
           history.push('/');

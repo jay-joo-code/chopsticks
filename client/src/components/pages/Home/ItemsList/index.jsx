@@ -27,7 +27,7 @@ const ItemsListComp = () => {
   const [meta, setMeta] = useState();
   
   useEffect(() => {
-    api.get('/api/item?page=1&limit=16')
+    api.get('/item?page=1&limit=16')
       .then((res) => {
         setItems(res.data.docs);
         setMeta(res.data);
