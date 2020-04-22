@@ -66,13 +66,17 @@ const OptDataElt = ({ formik, i}) => {
           onChange={(e) => handleChange(e, 'diff')}
         />
         <Body>원</Body>
-        <Input
-          value={opt.qty}
-          right
-          width={150}
-          onChange={(e) => handleChange(e, 'qty')}
-        />
-        <Body>개</Body>
+        {!formik.values.madeOnOrder && (
+          <RightContainer>
+            <Input
+              value={opt.qty}
+              right
+              width={150}
+              onChange={(e) => handleChange(e, 'qty')}
+            />
+            <Body>개</Body>
+          </RightContainer>
+        )}
         <Cross onClick={deleteOpt}>x</Cross>
       </RightContainer>
     </Container>

@@ -8,6 +8,7 @@ import Popup from 'src/components/common/popups/Popup';
 import Title from 'src/components/common/fonts/Title';
 import Body from 'src/components/common/fonts/Body';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -120,6 +121,11 @@ const Tools = ({ item, v, setV, hasMaxDisplayed }) => {
         <DispBtn highlight={!item.display} background='danger' onClick={() => setDisplay(false)}>판매중지</DispBtn>
       </DispBtnSection>
       <RightSection>
+        {process.env.NODE_ENV === 'development' && (
+          <Link to={`/item/${item._id}`}>
+            View
+          </Link>
+        )}
         <SCopy onClick={handleCopy} />
         <STrash onClick={() => setShowPopup(1)} />
       </RightSection>

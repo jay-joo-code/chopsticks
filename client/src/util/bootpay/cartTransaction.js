@@ -97,21 +97,33 @@ const cartTransaction = (userId, method) => {
           let passedValidation = true;
           
           cart.map((cartObj) => {
-            const { optionsIndex, item } = cartObj;
-            const matchedOpt = item.optData.filter((opt) => {
-              return opt.index.join() === optionsIndex.join()
-            });
-            if (!matchedOpt.length) {
-              passedValidation = false;
-            }
-            else {
-              const targetOpt = matchedOpt[0];
-              if (!targetOpt.qty) {
-                // 재고 없음
+            if (cartObj.item.madeOnOrder) return;
+            
+            if (cartObj.item.optData.length !== 0) {
+              // 옵션 재고
+              const { optionsIndex, item } = cartObj;
+              const matchedOpt = item.optData.filter((opt) => {
+                return opt.index.join() === optionsIndex.join()
+              });
+              if (!matchedOpt.length) {
                 passedValidation = false;
               }
-              else if (targetOpt.qty < cartObj.quantity) {
-                // 카트에 담긴 주문 수량보다 재고가 적음
+              else {
+                const targetOpt = matchedOpt[0];
+                if (!targetOpt.qty) {
+                  // 해당 옵션 재고 없음
+                  passedValidation = false;
+                }
+                else if (targetOpt.qty < cartObj.quantity) {
+                  // 카트에 담긴 주문 수량보다 옵션 재고가 적음
+                  passedValidation = false;
+                }
+              }
+            }
+            else {
+              // 상품 재고
+              if (cartObj.item.stock < cartObj.quantity) {
+                // 카트에 담긴 주문 수량보다 상품 재고가 적음
                 passedValidation = false;
               }
             }

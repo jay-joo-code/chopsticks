@@ -11,20 +11,30 @@ BootpayRest.setConfig(config.BOOTPAY_REST_ID, config.BOOTPAY_PK);
 
 const decItemQty = async (itemId, targetIndex, decQty) => {
   const item = await Item.findById(itemId);
-  const prevOptData = [...item.optData];
-  const newOptData = prevOptData.map((opt) => {
-    if (targetIndex.join() === opt.index.join()) {
-      const newOpt =  {
-        ...opt.toObject(),
-        qty: opt.qty - decQty || 0
+  
+  if (item.madeOnOrder) return;
+  
+  if (item.optData.length !== 0) {
+    // 옵션재고 차감
+    const prevOptData = [...item.optData];
+    const newOptData = prevOptData.map((opt) => {
+      if (targetIndex.join() === opt.index.join()) {
+        const newOpt =  {
+          ...opt.toObject(),
+          qty: opt.qty - decQty || 0
+        }
+        return newOpt;
       }
-      return newOpt;
-    }
-    else {
-      return opt;
-    }
-  })
-  item.optData = newOptData;
+      else {
+        return opt;
+      }
+    })
+    item.optData = newOptData;
+  }
+  else {
+    // 상품재고 차감
+    item.stock -= 1;
+  }
   await item.save();
 }
 

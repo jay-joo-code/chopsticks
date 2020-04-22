@@ -115,7 +115,8 @@ const Purchase = ({ item }) => {
   
   const formatOptStr = (opt) => {
     if (!opt || !opt.optString) return '';
-    return `${opt.optString} (+ ${opt.diff}원) ${opt.qty}개`;
+    const qtyString = item.madeOnOrder ? '' : `${opt.qty}개`;
+    return `${opt.optString} (+ ${opt.diff}원) ${qtyString}`;
   }
   const findOptByIndex = (searchIndex) => {
     const foundOpt = optData.filter((opt, i) => {
@@ -134,6 +135,9 @@ const Purchase = ({ item }) => {
   const [selectedOpt, setSelectedOpt] = useState();
   const dispatch = useDispatch();
   useEffect(() => {
+    // do nothing if the item does not have options
+    if (item.optData.length === 0) return;
+    
     if (!optionsIndex.includes(null)) {
       const selectedOpt = findOptByIndex(optionsIndex)
       if (selectedOpt) {
@@ -167,29 +171,44 @@ const Purchase = ({ item }) => {
       history.push('/login');
       return;
     }
-    else if (optionsIndex.includes(null)) {
-      setIsSuccess(false);
-      setMsg('옵션을 모두 선택해주세요')
-      setShowAlert(true);
-      return;
+    
+    // 재고 validation
+    if (!item.madeOnOrder) {
+      if (item.optData.length !== 0) {
+        // 옵션 재고
+        if (optionsIndex.includes(null)) {
+          setIsSuccess(false);
+          setMsg('옵션을 모두 선택해주세요')
+          setShowAlert(true);
+          return;
+        }
+        else if (selectedOpt.qty === 0) {
+          setIsSuccess(false);
+          setMsg('선택하신 옵션이 재고가 없습니다. 다른 옵션을 선택해주세요')
+          setShowAlert(true);
+          return;
+        } 
+      }
+      else {
+        // 상품 재고
+        if (item.stock === 0) {
+          setIsSuccess(false);
+          setMsg('상품 재고가 없습니다')
+          setShowAlert(true);
+          return;
+        }
+      }
     }
-    else if (selectedOpt.qty === 0) {
-      setIsSuccess(false);
-      setMsg('선택하신 옵션이 재고가 없습니다. 다른 옵션을 선택해주세요')
-      setShowAlert(true);
-      return;
-    }
-    else {
-      setMsg('')
-      setShowAlert(false);
-    }
+    
+    setMsg('')
+    setShowAlert(false);
     
     const cartObj = {
       item: item._id,
       optionsIndex,
       quantity: 1,
-      optString: selectedOpt.optString,
-      diff: selectedOpt.diff
+      optString: selectedOpt ? selectedOpt.optString : '옵션 없음',
+      diff: selectedOpt ? selectedOpt.diff : 0
     };
     axios.post(`/api/user/${user._id}/cart/add`, { cartObj })
       .then((res) => {

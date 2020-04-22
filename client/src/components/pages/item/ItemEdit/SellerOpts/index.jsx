@@ -11,6 +11,7 @@ const CheckboxContainer = styled.div`
 `
 
 const SellerOpts = ({ formik, _id }) => {
+  const { optGrps, madeOnOrder } = formik.values;
   return (
     <SectCont>
       <InputCont>
@@ -31,7 +32,7 @@ const SellerOpts = ({ formik, _id }) => {
             formik={formik}
           />
         </CheckboxContainer>
-        {formik.values.madeOnOrder
+        {(madeOnOrder || optGrps.length !== 0)
           ? <div />
           : (
             <InputCont>

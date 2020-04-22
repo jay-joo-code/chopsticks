@@ -43,9 +43,16 @@ export const setOrderState = (orderId, newState, stateMsg) => {
 }
 
 export const isSoldout = (item) => {
-  let allItemsSoldOut = true;
-  item.optData.map((opt) => {
-    if (opt.qty !== 0) allItemsSoldOut = false;
-  })
-  return allItemsSoldOut;
+  if (item.madeOnOrder) return false;
+  
+  if (item.optData.length !== 0) {
+    let allItemsSoldOut = true;
+    item.optData.map((opt) => {
+      if (opt.qty !== 0) allItemsSoldOut = false;
+    })
+    return allItemsSoldOut;
+  }
+  else {
+    if (item.stock === 0) return true;
+  }
 }
