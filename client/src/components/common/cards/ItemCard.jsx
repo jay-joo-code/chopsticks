@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from 'src/theme';
 import { Link } from 'react-router-dom';
-import { ReactComponent as Star } from 'src/assets/svgs/star.svg';
+import { isSoldout } from 'src/util/helpers';
 
 const Cont = styled.div`
   width: 100%;
@@ -31,13 +31,34 @@ const StyleArea = styled.div`
   padding: .2rem .5rem;
 `;
 
+const SoldoutArea = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const Soldout = styled.p`
+  color: black;
+  font-size: 1.2rem;
+`
+
 const ImgSect = styled.div`
+  position: relative;
 `;
 
 const Img = styled.img`
   object-fit: cover;
   width: 100%;
   height: ${theme.CARD_HEIGHT}px;
+  
+  // soldout
+  opacity: ${props => props.soldout ? '.6' : ''};
 `;
 
 const TextSect = styled.div`
@@ -79,19 +100,25 @@ const Price = styled.p`
   flex-shrink: 0;
 `;
 
-const ItemCard = ({ onClickPath, item, ...rest }) => {
+const ItemCard = ({ onClickPath, item, seller, ...rest }) => {
   const path = onClickPath || `/item/${item._id}`;
   const src = item.image;
   const styledPrice = item.price.toLocaleString();
+  const soldout = isSoldout(item);
 
   return (
     <Cont>
       <Link to={path}>
         <ImgSect>
-          <Img src={src} />
+          <Img src={src} soldout={seller && soldout} />
           <StyleArea>
             <p>{item.style}</p>
           </StyleArea>
+          {(seller && soldout) &&
+            <SoldoutArea>
+              <Soldout>Sold Out</Soldout>
+            </SoldoutArea>
+          }
         </ImgSect>
         <TextSect>
           <Row>

@@ -41,3 +41,11 @@ export const setOrderState = (orderId, newState, stateMsg) => {
       .catch((e) => reject(e))
   })
 }
+
+export const isSoldout = (item) => {
+  let allItemsSoldOut = true;
+  item.optData.map((opt) => {
+    if (opt.qty !== 0) allItemsSoldOut = false;
+  })
+  return allItemsSoldOut;
+}

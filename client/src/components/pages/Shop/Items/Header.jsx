@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import HeadingRaw from 'src/components/common/fonts/Heading';
 import Body from 'src/components/common/fonts/Body';
+import { isSoldout } from 'src/util/helpers';
 
 const Container = styled.div`
   display: flex;
@@ -40,15 +41,6 @@ const Stats = styled(Body)`
 
 const Header = ({ items }) => {
   const displayedCount = items.filter((item) => item.display).length;
-  
-  const isSoldout = (item) => {
-    let allItemsSoldOut = true;
-    item.optData.map((opt) => {
-      if (opt.qty !== 0) allItemsSoldOut = false;
-    })
-    return allItemsSoldOut;
-  }
-  
   const soldOutCount = items.filter((item) => isSoldout(item)).length;
   
   return (

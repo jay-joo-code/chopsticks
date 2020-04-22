@@ -14,6 +14,7 @@ const SellerItem = ({
     <Itemcard
       item={item}
       onClickPath={onClickPath}
+      seller
     />
     <Tools
       item={item}
