@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -9,6 +9,7 @@ import Btn from 'src/components/common/buttons/Btn';
 import api from 'src/util/api';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import log from 'src/util/log';
+import { useDispatch } from 'react-redux';
 
 const Form = styled.form`
   display: flex;
@@ -32,7 +33,7 @@ const Msg = styled.p`
 
 const BasicInfoForm = ({ user }) => {
   const { shop } = user;
-  const [msg, setMsg] = useState('');
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       title: shop.title || '',
@@ -43,6 +44,7 @@ const BasicInfoForm = ({ user }) => {
       title: Yup.string()
         .required('필수'),
       intro: Yup.string()
+        .max(144, '최대 길이는 144자 입니다')
         .required('필수'),
       image: Yup.string()
         .required('필수'),
@@ -53,7 +55,14 @@ const BasicInfoForm = ({ user }) => {
       api.put(`/user/${user._id}/update`, updatedUser)
         .then(() => {
           fetchSelfAndStore(user._id);
-          setMsg('저장 완료');
+          dispatch({
+            type: 'ALERT_SET',
+            payload: {
+              show: true,
+              msg: '저장되었습니다',
+              color: 'success'
+            }
+          })
         })
         .catch((e) => log('ERROR update store basic info at form', e));
     },
@@ -81,6 +90,8 @@ const BasicInfoForm = ({ user }) => {
           formik={formik}
           name="intro"
           label="샵 소개"
+          charCounter
+          maxChar={144}
         />
       </InputContainer>
       <Btn
@@ -88,7 +99,6 @@ const BasicInfoForm = ({ user }) => {
       >
 저장
       </Btn>
-      {msg && msg.length > 0 && <Msg>{msg}</Msg>}
     </Form>
   );
 };

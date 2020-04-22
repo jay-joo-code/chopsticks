@@ -40,10 +40,20 @@ const ButtonContainer = styled.div`
 const ErrorMsg = styled.div`
   font-size: .8rem;
   color: #de6362;
+  margin: .5rem 0 0 .5rem;
 `;
 
+const CharCounter = styled.div`
+  margin: .5rem 0 0 .5rem;
+`
+
+const CounterText = styled(Body)`
+  // danger
+  color: ${props => props.danger ? props.theme.danger : ''};
+`
+
 const OutlinedTextarea = ({
-  formik, name, label, sideButton, value, setValue, guideline, height, ...rest
+  formik, name, label, sideButton, value, setValue, guideline, height, charCounter, maxChar, ...rest
 }) => {
   // non formik props
   const handleChange = (e) => {
@@ -65,6 +75,9 @@ const OutlinedTextarea = ({
     };
     dynProps = formikProps;
   }
+  
+  // value based on "value" or "formik" props
+  const dynValue = formik ? formik.values[name] : value;
 
   return (
     <Container>
@@ -86,6 +99,11 @@ const OutlinedTextarea = ({
       {formik && hasError
         ? <ErrorMsg>{formik.errors[name]}</ErrorMsg>
         : null}
+      {charCounter && (
+        <CharCounter>
+          <CounterText danger={dynValue.length > maxChar}>{dynValue.length} / {maxChar}</CounterText>
+        </CharCounter>
+      )}
     </Container>
   );
 };

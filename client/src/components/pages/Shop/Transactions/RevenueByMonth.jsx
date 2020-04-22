@@ -65,12 +65,14 @@ const Value = styled.p`
 const RevenueByMonth = ({ orders, monthIndex, setMonthIndex }) => {
   const [count, setCount] = useState();
   const [total, setTotal] = useState();
+  
   useEffect(() => {
     setCount(orders.length);
     const updatedTotal = orders.reduce((acc, cur) => acc + Number(cur.cartObj.price), 0);
     const totalStr = updatedTotal.toLocaleString();
     setTotal(totalStr);
   }, [orders]);
+  
   const changeMonth = (val) => {
     let newIndex = monthIndex + val;
     if (newIndex < 0) newIndex = 0;

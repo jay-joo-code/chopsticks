@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import RoundBtn from 'src/components/common/buttons/RoundBtn';
-import Body from 'src/components/common/fonts/Body';
 
 const Container = styled.div`
 
@@ -10,15 +9,13 @@ const Container = styled.div`
 
 const Row = styled.div`
   display: flex;
-  flex-wrap: wrap;
-`
-
-const Col = styled.div`
+  align-items: center;
   margin: .5rem 0;
 `;
 
 const Input = styled(OutlinedInput)`
-  margin: 0 .5rem .2rem 0;
+  margin-right: .5rem;
+  
 `
 
 const InputRow = ({ formik, index, optGrp }) => {
@@ -29,24 +26,23 @@ const InputRow = ({ formik, index, optGrp }) => {
   }
   
   const [name, setName] = useState('');
+  const [diff, setDiff] = useState(0);
   
   const handleChange = (e, type) => {
-    const text = e.target.value;
-    
-    if (text.includes(',')) {
-      handleAddOpt();
-      setName('');
-    }
-    else {
+    if (type === 'name') {
       setName(e.target.value);
+    } else if (type === 'diff') {
+      console.log(!isNaN(e.target.value))
+      if (!isNaN(e.target.value)) setDiff(e.target.value);
     }
   }
   
   const handleAddOpt = () => {
     let newOptGrps = [...formik.values.optGrps];
-    if (newOptGrps[index].opts.includes(name)) return;
-    newOptGrps[index].opts.push(name)
+    newOptGrps[index].opts.push({ name, diff })
     formik.setFieldValue('optGrps', newOptGrps);
+    setName('');
+    setDiff(0);
   }
   
   const handleDeleteOtpGrp = () => {
@@ -55,32 +51,32 @@ const InputRow = ({ formik, index, optGrp }) => {
     formik.setFieldValue('optGrps', newOptGrps);
   }
   
-  const deleteBtn = <RoundBtn onClick={handleDeleteOtpGrp}>x</RoundBtn>;
-  
   return (
     <Container>
-      <Row>
-        <Col>
-          <Input
-            label='옵션명'
-            value={optGrp.title}
-            onChange={handleTitleChange}
-            placeholder='옵션 종류 ex) 색상'
-            width={300}
-          />
-        </Col>
-        <Col>
-          <Input
-            label='옵션값'
-            value={name}
-            onChange={(e) => handleChange(e, 'name')}
-            placeholder='노란색, 파란색'
-            width={300}
-            sideButton={deleteBtn}
-          />
-          <Body muted>*각 옵션은 쉼표로 분리해주세요</Body>
-        </Col>
-      </Row>
+    <Row>
+      <Input
+        value={optGrp.title}
+        onChange={handleTitleChange}
+        placeholder='옵션 종류 ex) 색상'
+        width={300}
+      />
+      <RoundBtn onClick={handleDeleteOtpGrp}>x</RoundBtn>
+    </Row>
+    <Row>
+      <Input
+        value={name}
+        onChange={(e) => handleChange(e, 'name')}
+        placeholder='옵션 이름'
+        width={200}
+      />
+      <Input
+        value={diff}
+        onChange={(e) => handleChange(e, 'diff')}
+        placeholder='추가 금액'
+        width={200}
+      />
+      <RoundBtn onClick={handleAddOpt}>+</RoundBtn>
+    </Row>
     </Container>
   )
 };

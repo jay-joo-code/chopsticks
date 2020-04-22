@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import api from 'src/util/api';
 import log from 'src/util/log';
 
 const useCurrentItem = (version) => {
@@ -13,7 +13,7 @@ const useCurrentItem = (version) => {
 
   useEffect(() => {
     if (pathname.split('/')[1] === 'item' && itemId) {
-      axios.get(`/api/item/${itemId}`)
+      api.get(`/item/${itemId}`)
       .then((res) => {
         setItem(res.data);
       })

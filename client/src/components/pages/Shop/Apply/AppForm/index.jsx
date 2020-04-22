@@ -8,7 +8,7 @@ import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import PhoneVerifInput from 'src/components/common/form/PhoneVerifInput';
 import OutlinedTextarea from 'src/components/common/form/OutlinedTextarea';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
+import api from 'src/util/api';
 import log from 'src/util/log';
 import { useHistory } from 'react-router-dom';
 
@@ -58,13 +58,14 @@ const AppForm = () => {
         .required('필수'),
       mobileVerif: Yup.bool().oneOf([true], '휴대폰 인증은 필수입니다'),
       intro: Yup.string()
+        .max(144, '최대 길이는 144자 입니다')
         .required('필수'),
     }),
     onSubmit: (values, { setFieldError }) => {
       if (!titleVerif) {
         setFieldError('title', '중복 확인해주세요');
       } else {
-        axios.post('/api/shop/apply', values)
+        api.post('/shop/apply', values)
           .then((res) => {
             history.push('/shop/admin/items');
           })
@@ -77,7 +78,7 @@ const AppForm = () => {
   const checkTitleAvail = () => {
     const { title } = formik.values;
     if (title.length > 0) {
-      axios.get(`/api/shop/check-title?title=${title}`)
+      api.get(`/shop/check-title?title=${title}`)
         .then((res) => {
           setTitleVerif(true);
           formik.setFieldError('title', '');
@@ -140,6 +141,8 @@ const AppForm = () => {
               label="샵 소개"
               guideline='*창작자, 브랜드, 스튜디오에 대한 소개를 해주세요. 해당 내용은 상품 상세 페이지에서 함께 노출됩니다.'
               formik={formik}
+              charCounter
+              maxChar={144}
             />
           </li>
         </ul>
@@ -149,7 +152,6 @@ const AppForm = () => {
           type="submit" 
           id='submit-btn'
           color='secondary'
-          inverted
         >
           샵 오픈 신청
         </Btn>

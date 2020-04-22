@@ -44,7 +44,7 @@ var userSchema = Schema({
     type: String
   },
   cart: {
-    type: [{
+    type: [{ // cartObj
       item: {
         type: Schema.Types.ObjectId,
         ref: 'Item',
@@ -55,6 +55,8 @@ var userSchema = Schema({
         default: [],
         required: true
       },
+      optString: String,
+      diff: Number,
       quantity: {
         type: Number,
         default: 1,
@@ -92,7 +94,14 @@ var userSchema = Schema({
       bank: String,
       number: String
     },
-    createdAt: Date
+    paidByMonth: { // 정산 "이체확인" 상태값
+      type: [Boolean],
+      default: Array(12).fill(false)
+    },
+    createdAt: {
+      type: Date,
+      default: new Date
+    }
   },
   deliveryInfo: {
     defaultIndex: {

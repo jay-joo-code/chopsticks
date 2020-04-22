@@ -11,7 +11,7 @@ export const cancelOrder = (order) => {
       const number = order.deliv.mobile;
       const data = {
         itemName: order.cartObj.item.name,
-        sellerName: order.seller.name,
+        sellerName: order.seller.shop.title,
         buyerName: order.buyer.name,
         price: order.cartObj.price,
         transactionMethod: order.bootpay.method,

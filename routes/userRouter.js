@@ -87,30 +87,32 @@ userRouter.put('/:id/update/pwd', passport.authenticate('local'), async (req, re
 userRouter.post('/:id/cart/add', async (req, res) => {
   try {
     const { cartObj } = req.body;
-    const user = await User.findById(req.params.id);
-    const existingObj = user.cart.filter((obj) => {
-      const isSameItem = obj.item.toString() === cartObj.item;
-      const hasSameOptions = obj.optionsIndex === cartObj.optionsIndex;
-      return isSameItem && hasSameOptions;
+    const user = await User.findById(req.params.id).populate('cart.item');
+    
+    let incrementedQty = false;
+    const newCart = user.cart.map((obj) => {
+      const isSameItem = obj.item._id.toString() === cartObj.item;
+      const hasSameOptions = obj.optionsIndex.join() === cartObj.optionsIndex.join();
+      
+      if (isSameItem && hasSameOptions) {
+        // increment quantity of obj
+        incrementedQty = true;
+        obj.quantity += 1;
+      }
+      
+      return obj;
     });
-
-    const hasCartObj = existingObj.length > 0;
-    let newCart;
-    if (!hasCartObj) {
+    
+    if (!incrementedQty) {
       // ADD NEW CARTOBJ
-      newCart = user.cart;
+      let newCart = [...user.cart];
       newCart.push(cartObj);
-    } else {
-      // INCREMENT QUANTITY OF EXISTING CARTOBJ
-      newCart = user.cart.map((obj) => {
-        const newObj = { ...obj };
-        if (obj.item.toString() === cartObj.item) {
-          newObj.quantity += 1;
-        }
-        return newObj;
-      });
+      user.cart = newCart; 
     }
-    user.cart = newCart;
+    else {
+      user.cart = newCart;
+    }
+    
     await user.save();
     res.send(user);
   } catch (e) {

@@ -35,9 +35,12 @@ const Option = ({
   return (
     <Container>
       <TextCont>
-        {opt}
+        {opt.name}
       </TextCont>
       <RightCont>
+        <TextCont>
+          {`+${opt.diff}`}
+        </TextCont>
         <Delete onClick={handleDelete}>X</Delete>
       </RightCont>
     </Container>

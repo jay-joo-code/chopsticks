@@ -1,9 +1,9 @@
-import axios from 'axios';
+import api from 'src/util/api';
 import log from 'src/util/log';
 import store from 'src/redux/store';
 
 const logout = () => {
-  axios.post('/api/user/logout')
+  api.post('/user/logout')
     .then((res) => {
       log('logout successful', res);
       store.dispatch({

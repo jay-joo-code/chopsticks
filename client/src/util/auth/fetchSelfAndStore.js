@@ -1,10 +1,10 @@
 import store from 'src/redux/store';
-import axios from 'axios';
+import api from 'src/util/api';
 import log from 'src/util/log';
 
 const fetchSelfAndStore = (id) => {
   return new Promise((resolve, reject) => {
-    axios.get(`/api/user/${id}`)
+    api.get(`/user/${id}`)
       .then((res) => {
         store.dispatch({
           type: 'USER_SET',

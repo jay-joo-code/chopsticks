@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Popup from 'src/components/common/popups/Popup';
 import api from 'src/util/api';
@@ -95,7 +95,7 @@ const ActionPopup = ({
       const { cartObj, buyer } = order;
       const data = {
         itemName: cartObj.item.name,
-        optsString: cartObjToOptsString(cartObj),
+        optsString: cartObj.optString,
         qty: cartObj.quantity,
         buyerName: buyer.name,
         newState: action.slice(0, 2),
