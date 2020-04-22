@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import theme from 'src/theme';
 import { Link } from 'react-router-dom';
 import { isSoldout } from 'src/util/helpers';
+import Body from 'src/components/common/fonts/Body';
 
 const Cont = styled.div`
   width: 100%;
@@ -89,6 +90,12 @@ const Name = styled.p`
   -webkit-box-orient: vertical;
 `;
 
+const SoldoutPublic = styled.p`
+  font-size: .8rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+`
+
 const Owner = styled.p`
   color: ${(props) => props.theme.red};
   opacity: .9;
@@ -125,7 +132,10 @@ const ItemCard = ({ onClickPath, item, seller, ...rest }) => {
             <Owner>{`@${item.owner.shop.title}`}</Owner>
             <Price>{`${styledPrice}원`}</Price>
           </Row>
-          <Name>{item.name}</Name>
+          <Row>
+            <Name>{item.name}</Name>
+            {(!seller && soldout) && <SoldoutPublic>Sold Out</SoldoutPublic>}
+          </Row>
         </TextSect>
       </Link>
     </Cont>

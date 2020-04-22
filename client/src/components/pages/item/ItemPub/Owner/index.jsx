@@ -25,7 +25,6 @@ const Wrapper = styled.div`
   @media (min-width: ${theme.desktopContentWidth}px) {
     padding: 2rem 0;
     display: block;
-    width: 300px;
   }
 `;
 
@@ -108,7 +107,6 @@ const Intro = styled(Body)`
     cursor: auto;
     flex-shrink: 0;
     padding-right: 0;
-    text-overflow: none;
     display: inline;
     -webkit-line-clamp: none;
     -webkit-box-orient: auto;
@@ -117,6 +115,8 @@ const Intro = styled(Body)`
     word-break: break-word;
     max-width: 100%;
     
+    max-width: 310px;
+    max-height: 255px;
   }
 `;
 
