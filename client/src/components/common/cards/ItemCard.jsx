@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import theme from 'src/theme';
 import { Link } from 'react-router-dom';
 import { isSoldout } from 'src/util/helpers';
-import Body from 'src/components/common/fonts/Body';
 
 const Cont = styled.div`
   width: 100%;
@@ -11,7 +10,7 @@ const Cont = styled.div`
   position: relative;
   margin: 1rem .5rem 0 .5rem;
   
-  @media (min-width: ${theme.desktopContentWidth}px) {
+  @media (min-width: ${theme.CARD_WIDTH}px) {
     width: ${theme.CARD_WIDTH}px;
   }
 `;
