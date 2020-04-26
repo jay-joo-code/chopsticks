@@ -1,15 +1,15 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const cors = require('cors');
 const config = require('./config');
 const mongoose = require('mongoose');
 
 // MONGODB
 mongoose.connect(config.dbUriDev, { useNewUrlParser: true, useUnifiedTopology: true });
-var db = mongoose.connection;
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('db connection successful')
@@ -17,10 +17,10 @@ db.once('open', () => {
 
 // PORT
 const PORT = process.env.PORT || 8081;
-var app = express();
+const app = express();
 app.listen(PORT, () => {
   console.log(`listening at ${PORT}`)
-})
+});
 
 // VIEW ENGINE
 app.set('views', path.join(__dirname, 'views'));
