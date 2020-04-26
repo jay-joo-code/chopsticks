@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import { ReactComponent as Icon } from 'src/assets/svgs/magnifier.svg';
 import { useHistory } from 'react-router-dom';
+import useRouter from 'src/util/hooks/useRouter';
 
 const Container = styled.div`
   
@@ -25,14 +26,18 @@ const StyledIcon = styled(Icon)`
 `;
 
 const SearchBox = ({ autoFocus, onSubmit }) => {
-  const [query, setQuery] = useState('');
-  
-  const history = useHistory();
+  const { query, updatePathAndQuery } = useRouter();
+  const [value, setValue] = useState(query.search);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push(`/browse?search=${query}`);
-    onSubmit();
+    updatePathAndQuery('/browse', { search: value })
+    if (onSubmit) onSubmit();
   };
+
+  useEffect(() => {
+    setValue(query.search || '');
+  }, [query.search])
   
   return (
     <Container>
@@ -40,8 +45,8 @@ const SearchBox = ({ autoFocus, onSubmit }) => {
         <OutlinedInput
           type="text"
           placeholder="검색"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           width={300}
           autoFocus={autoFocus}
         />
