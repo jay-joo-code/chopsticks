@@ -28,6 +28,9 @@ const Row = styled.div`
 const Text = styled.p`
   min-width: 40px;
   margin: 0 1rem;
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
     
   @media (min-width: ${(props) => props.theme.DESKTOP_WIDTH}px) {
     min-width: 100px;

@@ -16,18 +16,32 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  overflow: hidden;
 `;
 
 const Top = styled.div`
   display: flex;
   justify-content: space-between;
+  overflow: hidden;
 `;
 
-const Name = styled.div`
+const TopData = styled.div`
+  overflow: hidden;
+  flex-grow: 0;
+  padding-right: 1rem;
+`
+
+const TopActionSection = styled.div`
+  flex-shrink: 0;
+`
+
+const Name = styled.p`
   font-size: 1.2rem;
   font-weight: bold;
   opacity: .9;
   margin-bottom: .5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Owner = styled.div`
@@ -116,19 +130,21 @@ const ItemInfo = ({
   return (
     <Container>
       <Top>
-        <div>
+        <TopData>
           <Link to={`/item/${item._id}`}>
             <Name>{item.name}</Name>
           </Link>
           <Owner>{`@${item.owner.shop.title}`}</Owner>
-        </div>
-        <ActionsSection
-          order={order}
-          user={user}
-          setV={setV}
-          v={v}
-          cartObj={cartObj}
-        />
+        </TopData>
+        <TopActionSection>
+          <ActionsSection
+            order={order}
+            user={user}
+            setV={setV}
+            v={v}
+            cartObj={cartObj}
+          />
+        </TopActionSection>
       </Top>
       <Bottom>
         <Options>

@@ -56,7 +56,7 @@ const Col = styled.div`
   
   @media (min-width: ${(props) => props.theme.desktopContentWidth}px) {
     width: ${(props) => props.width};
-    padding: 0;
+    padding: 0 .1rem;
   }
 `;
 
@@ -72,6 +72,9 @@ const DisplayGroup = styled.div`
 const Text = styled.p`
   font-size: ${(props) => (props.size === 'sm' ? '10px' : '12px')};
   line-height: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
   
   // color
   color: ${props => props.color ? props.theme[props.color] : ''};
