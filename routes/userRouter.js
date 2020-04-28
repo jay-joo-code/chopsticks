@@ -97,7 +97,7 @@ userRouter.post('/:id/cart/add', async (req, res) => {
       if (isSameItem && hasSameOptions) {
         // increment quantity of obj
         incrementedQty = true;
-        obj.quantity += 1;
+        obj.quantity += cartObj.quantity;
       }
       
       return obj;

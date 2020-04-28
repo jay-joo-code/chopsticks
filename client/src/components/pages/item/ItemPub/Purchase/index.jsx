@@ -164,41 +164,70 @@ const Purchase = ({ item }) => {
   // price 
   const priceWithDiff = selectedOpt ? item.price + selectedOpt.diff : item.price;
   const price = priceWithDiff.toLocaleString('en');
+
+  // 수량
+  const [quantity, setQuantity] = useState();
+  const maxQty = selectedOpt ? selectedOpt.qty : 99;
+  const quantityOpts = Array(maxQty).fill(null).map((elt, i) => i + 1);
+  const handleQuantityChange = (e) => {
+    setQuantity(Number(e.target.value));
+  }
+  let helperText = '';
+  if (item.madeOnOrder) helperText = '주문 후 제작';
+  else if (selectedOpt) helperText = `${selectedOpt.qty}개 남음`;
   
   // add to cart
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const handleAddToCart = () => {
-    // validation
+    // user validation
     if (!user) {
       history.push('/login');
       return;
     }
-    
+
+    // 옵션 validation
+    if (item.optData.length !== 0) {
+      if (optionsIndex.includes(null)) {
+        // 선택안된 옵션이 optional 옵션일 경우, 자동으로 "선택안함" 옵션을 선택
+        const autoSelectedOptionsIndex = optionsIndex.map((index, i) => {
+          if (index !== null) return index;
+          if (optGrps[i].optional) return 0;  // 0 이 "선택안함" 옵션임
+          else return null;
+        })
+        if (autoSelectedOptionsIndex.includes(null)) {
+          setIsSuccess(false);
+          setMsg('옵션을 모두 선택해주세요')
+          setShowAlert(true);
+          return;
+        }
+      }
+    }
+
+    // 수량 validation
+    if (!quantity) {
+      setIsSuccess(false);
+      setMsg('수량을 선택해주세요')
+      setShowAlert(true);
+      return;
+    }
+
     // 재고 validation
     if (!item.madeOnOrder) {
       if (item.optData.length !== 0) {
         // 옵션 재고
-        if (optionsIndex.includes(null)) {
-          // 선택안된 옵션이 optional 옵션일 경우, 자동으로 "선택안함" 옵션을 선택
-          const autoSelectedOptionsIndex = optionsIndex.map((index, i) => {
-            if (index !== null) return index;
-            if (optGrps[i].optional) return 0;  // 0 이 "선택안함" 옵션임
-            else return null;
-          })
-          if (autoSelectedOptionsIndex.includes(null)) {
-            setIsSuccess(false);
-            setMsg('옵션을 모두 선택해주세요')
-            setShowAlert(true);
-            return;
-          }
-        }
-        else if (selectedOpt.qty === 0) {
+        if (selectedOpt.qty === 0) {
           setIsSuccess(false);
           setMsg('선택하신 옵션이 재고가 없습니다. 다른 옵션을 선택해주세요')
           setShowAlert(true);
           return;
         } 
+        else if (selectedOpt.qty < quantity) {
+          setIsSuccess(false);
+          setMsg('선택하신 옵션의 재고가 부족합니다. 수량을 줄이거나 다른 옵션을 선택해주세요')
+          setShowAlert(true);
+          return;
+        }
       }
       else {
         // 상품 재고
@@ -217,7 +246,7 @@ const Purchase = ({ item }) => {
     const cartObj = {
       item: item._id,
       optionsIndex,
-      quantity: 1,
+      quantity,
       optString: selectedOpt ? selectedOpt.optString : '옵션 없음',
       diff: selectedOpt ? selectedOpt.diff : 0
     };
@@ -305,6 +334,20 @@ const Purchase = ({ item }) => {
             </Select>
           </SelectCont>
         ))}
+        <SelectCont>
+          <Select
+            value={quantity || ''}
+            onChange={handleQuantityChange}
+            placeholder='수량'
+            width='100%'
+            helperText={helperText}
+            maxSize={10}
+          >
+            {quantityOpts.map((quantity) => (
+              <option key={quantity} value={quantity}>{quantity}</option>
+            ))}
+          </Select>
+        </SelectCont>
         <BuySect>
           <BuyButton white rounded>즉시 구매</BuyButton>
           <BuyButton onClick={handleAddToCart} green rounded>장바구니에 담기</BuyButton>
