@@ -167,11 +167,11 @@ const Purchase = ({ item }) => {
 
   // 수량
   const [quantity, setQuantity] = useState();
-  const maxQty = selectedOpt 
-    ? selectedOpt.qty 
-    : item.optData.length === 0
-    ? item.stock
-    : 99;
+  let maxQty = 1;
+  if (item.madeOnOrder) maxQty = 99;
+  else if (item.optData.length === 0) maxQty = item.stock;
+  else if (selectedOpt) maxQty = selectedOpt.qty;
+  
   const quantityOpts = Array(maxQty).fill(null).map((elt, i) => i + 1);
   const handleQuantityChange = (e) => {
     setQuantity(Number(e.target.value));
