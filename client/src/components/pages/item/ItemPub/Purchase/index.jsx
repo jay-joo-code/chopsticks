@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Select from 'src/components/common/form/Select';
 import RedButton from 'src/components/common/buttons/RedButton';
 import theme from 'src/theme';
+import api from 'src/util/api';
 import log from 'src/util/log';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
@@ -255,7 +255,7 @@ const Purchase = ({ item }) => {
       optString: selectedOpt ? selectedOpt.optString : '옵션 없음',
       diff: selectedOpt ? selectedOpt.diff : 0
     };
-    axios.post(`/api/user/${user._id}/cart/add`, { cartObj })
+    api.post(`/user/${user._id}/cart/add`, { cartObj })
       .then((res) => {
         setIsSuccess(true);
         setMsg('카트에 상품을 담았습니다')

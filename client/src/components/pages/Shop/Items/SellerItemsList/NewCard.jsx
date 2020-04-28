@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from 'src/theme';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import api from 'src/util/api';
 import log from 'src/util/log';
 
 const Container = styled.div`
@@ -37,7 +37,7 @@ const NewCard = () => {
     const data = {
       owner: userId,
     };
-    axios.post('/api/item/create', data)
+    api.post('/item/create', data)
       .then((res) => {
         history.push(`/item/${res.data._id}/edit`);
       })
