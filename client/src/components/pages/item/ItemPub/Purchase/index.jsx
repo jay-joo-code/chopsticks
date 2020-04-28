@@ -167,7 +167,11 @@ const Purchase = ({ item }) => {
 
   // 수량
   const [quantity, setQuantity] = useState();
-  const maxQty = selectedOpt ? selectedOpt.qty : 99;
+  const maxQty = selectedOpt 
+    ? selectedOpt.qty 
+    : item.optData.length === 0
+    ? item.stock
+    : 99;
   const quantityOpts = Array(maxQty).fill(null).map((elt, i) => i + 1);
   const handleQuantityChange = (e) => {
     setQuantity(Number(e.target.value));
@@ -175,6 +179,7 @@ const Purchase = ({ item }) => {
   let helperText = '';
   if (item.madeOnOrder) helperText = '주문 후 제작';
   else if (selectedOpt) helperText = `${selectedOpt.qty}개 남음`;
+  else if (item.optData.length === 0) helperText = `${item.stock}개 남음`;
   
   // add to cart
   const user = useSelector((state) => state.user);
@@ -244,7 +249,7 @@ const Purchase = ({ item }) => {
     setShowAlert(false);
     
     const cartObj = {
-      item: item._id,
+      item,
       optionsIndex,
       quantity,
       optString: selectedOpt ? selectedOpt.optString : '옵션 없음',

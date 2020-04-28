@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import log from 'src/util/log';
 import api from 'src/util/api';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import theme from 'src/theme';
 import { Link } from 'react-router-dom';
@@ -113,11 +113,52 @@ const ItemInfo = ({
   cartObj, order, setV, v,
 }) => {
   const user = useSelector((state) => state.user);
-  const { item, quantity, optString, diff } = cartObj;
+  const { item, quantity, optString, diff, optionsIndex } = cartObj;
   const totalPrice = getTotalPrice(cartObj);
+  const dispatch = useDispatch();
+
+  const findOptByIndex = (searchIndex) => {
+    const foundOpt = item.optData.filter((opt, i) => {
+      return opt.index.join() === searchIndex.join();
+    });
+    return foundOpt.length !== 0 ? foundOpt[0] : null;
+  }
 
   const handleQtyChange = (e) => {
-    const data = { ...cartObj, quantity: e.target.value };
+    const quantity = Number(e.target.value);
+
+    // 재고 validation
+    let hasStockError = false;
+    if (!item.madeOnOrder) { 
+      if (item.optData.length !== 0) {
+        // 옵션 재고
+        const opt = findOptByIndex(optionsIndex);
+        console.log('opt', opt);
+        if (quantity > opt.qty) {
+          hasStockError = true;
+        }
+      }
+      else { 
+        // 상품 재고
+        if (quantity > item.stock) {
+          hasStockError = true;
+        }  
+      }
+    }
+
+    if (hasStockError) {
+      dispatch({
+        type: 'ALERT_SET',
+        payload: {
+          show: true,
+          color: 'danger',
+          msg: '상품 최대 재고입니다'
+        }
+      })
+      return;
+    }
+
+    const data = { ...cartObj, quantity, };
     api.put(`/user/${user._id}/cart/update/cartobj`, { cartObj: data })
       .then((res) => {
         fetchSelfAndStore(user._id);

@@ -88,31 +88,34 @@ userRouter.post('/:id/cart/add', async (req, res) => {
   try {
     const { cartObj } = req.body;
     const user = await User.findById(req.params.id).populate('cart.item');
-    
+
     let incrementedQty = false;
     const newCart = user.cart.map((obj) => {
-      const isSameItem = obj.item._id.toString() === cartObj.item;
+      const isSameItem = obj.item._id.toString() === cartObj.item._id;
       const hasSameOptions = obj.optionsIndex.join() === cartObj.optionsIndex.join();
-      
+
       if (isSameItem && hasSameOptions) {
         // increment quantity of obj
         incrementedQty = true;
         obj.quantity += cartObj.quantity;
+        console.log('obj.quantity', obj.quantity);
+        console.log('cartObj.item.stock', cartObj.item.stock);
+        if (obj.quantity > cartObj.item.stock) obj.quantity = cartObj.item.stock;
       }
-      
+
       return obj;
     });
-    
+
     if (!incrementedQty) {
       // ADD NEW CARTOBJ
-      let newCart = [...user.cart];
+      const newCart = [...user.cart];
       newCart.push(cartObj);
-      user.cart = newCart; 
+      user.cart = newCart;
     }
     else {
       user.cart = newCart;
     }
-    
+
     await user.save();
     res.send(user);
   } catch (e) {
