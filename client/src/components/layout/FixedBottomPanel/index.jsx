@@ -19,14 +19,21 @@ const Container = styled.div`
 
 const SideCont = styled.div`
   margin: 1rem;
+  flex-shrink: 0;
+  max-width: 70%;
 `;
 
-const Name = styled.div`
+const Name = styled.p`
   font-size: 1.2rem;
   font-weight: bold;
   color: #000;
   opacity: .8;
   margin-bottom: .5rem;
+  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  white-space: nowrap;
 `;
 
 const Price = styled.div`
