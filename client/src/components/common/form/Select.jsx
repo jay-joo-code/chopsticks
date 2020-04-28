@@ -30,6 +30,7 @@ const StyledSelect = styled.select`
   
   // width
   width: ${props => props.width ? `${props.width}px` : ''};
+  width: ${props => props.width === '100%' ? `100%` : ''};
 `;
 
 const Select = ({

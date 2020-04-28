@@ -37,7 +37,7 @@ const Container = styled.div`
   padding: 2rem 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
 `;
 
 const Name = styled.h3`
@@ -54,15 +54,12 @@ const SelectCont = styled.div`
   margin: .5rem 0;
 `;
 
-const OptString = styled(Body)`
-  margin-top: 1rem;
-`
-
-const Price = styled.div`
+const Price = styled.p`
   font-size: 2rem;
   font-weight: bold;
   opacity: .6;
   margin: 2rem 0;
+  text-align: center;
 `;
 
 const BuySect = styled.div`
@@ -92,7 +89,6 @@ const CloseBtn = styled.div`
 const Purchase = ({ item }) => {
   // mobile 
   const [expanded, setExpanded] = useState(false);
-  const price = item && item.price && item.price.toLocaleString('en');
   const isDesktop = window.innerWidth >= theme.desktopContentWidth;
   const handleClick = () => {
     setExpanded(!expanded);
@@ -104,8 +100,11 @@ const Purchase = ({ item }) => {
   const [msg, setMsg] = useState('');
   
   // opts
-  const emptyOptionsIndex = Array(item.optGrps.length).fill(null);
-  const [optionsIndex, setOptionsIndex] = useState(emptyOptionsIndex);
+  const initOptionsIndex = item.optGrps.map((optGrp) => {
+    if (optGrp.optional) return 0;
+    else return null;
+  })
+  const [optionsIndex, setOptionsIndex] = useState(initOptionsIndex);
   const handleOptChange = (e, optGrpIndex) => {
     const selectedIndex = e.target.value;
     let newIndexArray = [...optionsIndex];
@@ -154,13 +153,17 @@ const Purchase = ({ item }) => {
             color: 'danger'
           }
         })
-        setOptionsIndex(emptyOptionsIndex);
+        setOptionsIndex(initOptionsIndex);
       }
     }
     else {
       setSelectedOpt(null)
     }
   }, [optionsIndex])
+
+  // price 
+  const priceWithDiff = selectedOpt ? item.price + selectedOpt.diff : item.price;
+  const price = priceWithDiff.toLocaleString('en');
   
   // add to cart
   const user = useSelector((state) => state.user);
@@ -246,16 +249,14 @@ const Purchase = ({ item }) => {
     <DyncCont>
       <Container>
         <Name>{item.name}</Name>
-        <Price>
-          {price}
-원
-        </Price>
+        <Price>{price}원</Price>
         {item.optGrps.map((optGrp, optGrpIndex) => (
           <SelectCont>
             <Select
               value={optionsIndex[optGrpIndex] || ''}
               onChange={(e) => handleOptChange(e, optGrpIndex)}
               placeholder={optGrp.title}
+              width='100%'
             >
               {optGrp.opts.map((opt, i) => {
                 let curIndex = [...optionsIndex];
@@ -269,12 +270,26 @@ const Purchase = ({ item }) => {
                     dispStr = formatOptStr(curOpt);
                     
                     // don't render empty string
-                    // this means this opt combination was deleted by user
+                    // this means this opt combination was deleted by the seller
                     if (!dispStr) return null;
                   }
+                  // render opt for the other optGrps
                   else {
                     dispStr = opt;
                   }
+                }
+                else if (unsetOptCount === 0) {
+                  // render optData for all optGrps
+                  dispStr = formatOptStr(curOpt);
+
+                  // render opt for the currently selected opt
+                  if (Number(optionsIndex[optGrpIndex]) === i) {
+                    dispStr = opt;
+                  }
+                    
+                  // don't render empty string
+                  // this means this opt combination was deleted by the seller
+                  if (!dispStr) return null;
                 }
                 else {
                   // render opt only for all optGrps
@@ -290,7 +305,6 @@ const Purchase = ({ item }) => {
             </Select>
           </SelectCont>
         ))}
-        <OptString>{selectedOpt && formatOptStr(selectedOpt)}</OptString>
         <BuySect>
           <BuyButton white rounded>즉시 구매</BuyButton>
           <BuyButton onClick={handleAddToCart} green rounded>장바구니에 담기</BuyButton>
