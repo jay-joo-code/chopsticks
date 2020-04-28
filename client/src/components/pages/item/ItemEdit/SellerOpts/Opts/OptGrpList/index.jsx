@@ -6,12 +6,25 @@ const Container = styled.div`
   
 `;
 
-const OptGrpList = ({ formik }) => {
+const OptGrpList = ({ formik, optional }) => {
+  
   return (
     <Container>
-      {formik.values.optGrps.map((optGrp, index) => (
-        <OptGrp key={index} formik={formik} optGrp={optGrp} index={index} />
-      ))}
+      {formik.values.optGrps.map((optGrp, index) => {
+        if (optGrp.optional === optional) {
+          return (
+            <OptGrp 
+              key={index} 
+              formik={formik} 
+              optGrp={optGrp} 
+              index={index}
+            /> 
+          )
+        }
+        else {
+          return <div />;
+        }
+        })}
     </Container>
   )
 };

@@ -1,22 +1,23 @@
 const mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var mongoosePaginate = require('mongoose-paginate-v2');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
-var itemSchema = Schema({
+const { Schema } = mongoose;
+
+const itemSchema = Schema({
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
   display: {
     type: Boolean,
     default: false,
-    required: true
+    required: true,
   },
   created: {
     type: Boolean,
     default: false,
-    required: true
+    required: true,
   },
   image: String,
   name: {
@@ -24,67 +25,72 @@ var itemSchema = Schema({
   },
   price: {
     type: Number,
-    default: 0
+    default: 0,
   },
   madeOnOrder: {
     type: Boolean,
-    default: false
+    default: false,
   },
   stock: {
     type: Number,
-    default: 0
+    default: 0,
   },
   category: {
     type: String,
-    default: ''
+    default: '',
   },
   subcat: String,
   style: { // crafted || original
-    type: String
+    type: String,
   },
   content: String,
   intro: String,
   optGrps: {
     type: [{
       title: String,
-      opts: [ String ]
+      opts: [String],
+      optional: {
+        type: Boolean,
+        default: false,
+      },
     }],
-    default: []
+    default: [],
   },
   optData: {
+    // 옵션 조합 array
     type: [{
-      index: [ Number ],
+      index: [Number],
       optString: String,
       diff: Number,
       qty: Number,
-      trackQty: Boolean
+      trackQty: Boolean,
     }],
-    default: []
+    default: [],
   },
   deliveryCost: {
     type: Number,
-    default: 0
+    default: 0,
   },
   processingMin: {
     type: Number,
-    default: 0
+    default: 0,
   },
   processingMax: {
     type: Number,
-    default: 0
+    default: 0,
   },
   deliveryMin: {
     type: Number,
-    default: 0
+    default: 0,
   },
   deliveryMax: {
     type: Number,
-    default: 0
+    default: 0,
   },
   createdAt: {
     type: Date,
-    default: new Date
-  }
+    default: new Date,
+  },
 });
 
 itemSchema.plugin(mongoosePaginate);

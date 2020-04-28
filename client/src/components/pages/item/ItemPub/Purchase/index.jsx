@@ -128,7 +128,7 @@ const Purchase = ({ item }) => {
   // conditional render based on unset opt 
   const unsetOptCount = optionsIndex.filter((index) => index === null).length;
   const unsetOptIndex = optionsIndex.indexOf(null);
-  const { optData } = item;
+  const { optGrps, optData } = item;
   
   // selectedOpt
   // when all opts are selected, determine which opt combination was selected
@@ -177,10 +177,18 @@ const Purchase = ({ item }) => {
       if (item.optData.length !== 0) {
         // 옵션 재고
         if (optionsIndex.includes(null)) {
-          setIsSuccess(false);
-          setMsg('옵션을 모두 선택해주세요')
-          setShowAlert(true);
-          return;
+          // 선택안된 옵션이 optional 옵션일 경우, 자동으로 "선택안함" 옵션을 선택
+          const autoSelectedOptionsIndex = optionsIndex.map((index, i) => {
+            if (index !== null) return index;
+            if (optGrps[i].optional) return 0;  // 0 이 "선택안함" 옵션임
+            else return null;
+          })
+          if (autoSelectedOptionsIndex.includes(null)) {
+            setIsSuccess(false);
+            setMsg('옵션을 모두 선택해주세요')
+            setShowAlert(true);
+            return;
+          }
         }
         else if (selectedOpt.qty === 0) {
           setIsSuccess(false);
