@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var mongoosePaginate = require('mongoose-paginate-v2');
+const Schema = mongoose.Schema;
+const mongoosePaginate = require('mongoose-paginate-v2');
 
-var orderSchema = Schema({
+const orderSchema = Schema({
   deliv : {
     type: {
       recipient: {

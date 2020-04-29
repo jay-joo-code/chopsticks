@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Select from 'src/components/common/form/Select';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
-import api from 'src/util/api';
-import log from 'src/util/log';
 import companies from './companies';
 
 const Container = styled.div `
@@ -11,7 +9,7 @@ const Container = styled.div `
   line-height: 1.2;
 `;
 
-const Deliv = ({ order, v, setV }) => {
+const Deliv = ({ order, updateOrder }) => {
   const canEdit = ['pending', 'exchangePending'];
   const disabled = !canEdit.includes(order.state);
   
@@ -19,58 +17,43 @@ const Deliv = ({ order, v, setV }) => {
     e.stopPropagation();
   }
 
-  const [code, setCode] = useState(order.deliv.companyCode || '');
-  const [invoice, setInvoice] = useState(order.deliv.invoice || '');
-  
-  useEffect(() => {
-    if (!code || !companies) return;
-
-    const company = companies.filter((company) => company["Code"] === code);
-
-    if (!company.length) return;
-
-    const data = {
-      deliv: {
-        ...order.deliv,
-        company: company[0]["Name"],
-        companyCode: code
+  const handleChange = (value, type) => {
+    let updatedData;
+    if (type === 'code') {
+      const code = value;
+      const filteredCompanies = companies.filter((company) => company["Code"] === code);
+      if (!filteredCompanies.length) return;
+      updatedData = {
+        company: filteredCompanies[0]["Name"],
+        companyCode: code,
       }
     }
-    
-    setV(v + 1);
-    api.put(`/order/${order._id}/update`, data)
-      .then(() => {
-        setV(v + 1);
-      })
-      .catch((e) => {
-        log(`ERROR Deliv`, e)
-      })
-  }, [code])
-  
-  useEffect(() => {
-    if (!invoice) return;
-    
-    const data = {
+    else if (type === 'invoice') {
+      updatedData = { invoice: value };
+    }
+    const newOrder = {
+      ...order,
       deliv: {
         ...order.deliv,
-        invoice,
+        ...updatedData,
       }
     }
-    
-    api.put(`/order/${order._id}/update`, data)
-      .then(() => {
-        setV(v + 1);
-      })
-      .catch((e) => {
-        log(`ERROR Deliv`, e)
-      })
-  }, [invoice])
+    updateOrder(newOrder);
+  }
   
   // reset deliv data when state changed to exchangePending
   useEffect(() => {
     if (order.state === 'exchangePending') {
-      setCode('');
-      setInvoice('');
+      const newOrder = {
+        ...order,
+        deliv: {
+          ...order.deliv,
+          company: '',
+          companyCode: '',
+          invoice: '',
+        }
+      }
+      updateOrder(newOrder);
     }
   }, [order.state])
   
@@ -82,8 +65,8 @@ const Deliv = ({ order, v, setV }) => {
       <Select 
         onClick={stopPropagation}
         placeholder='택배사'
-        onChange={(e) => setCode(e.target.value)}
-        value={code}
+        onChange={(e) => handleChange(e.target.value, 'code')}
+        value={order.deliv.companyCode || ''}
         width={100}
         disabled={disabled}
       >
@@ -94,9 +77,8 @@ const Deliv = ({ order, v, setV }) => {
       <OutlinedInput
         onClick={stopPropagation}
         width={100}
-        grey
-        value={invoice}
-        onChange={(e) => setInvoice(e.target.value)}
+        value={order.deliv.invoice}
+        onChange={(e) => handleChange(e.target.value, 'invoice')}
         disabled={disabled}
         placeholder='송장번호'
       />

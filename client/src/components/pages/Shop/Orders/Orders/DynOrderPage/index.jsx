@@ -4,7 +4,6 @@ import api from 'src/util/api';
 import log from 'src/util/log';
 import ToolBar from './ToolBar';
 import OrdersList from './OrdersList';
-import { updateDelivState } from 'src/util/helpers';
 
 const Container = styled.div`
   margin-top: 2rem;
@@ -20,22 +19,26 @@ const SectionContainer = styled.div`
 `;
 
 const DynOrderPageIndex = ({ user, state }) => {
+  const [allOrders, setAllOrders] = useState([]);
   const [orders, setOrders] = useState([]);
   const [selected, setSelected] = useState([]);
   const [v, setV] = useState(0);
 
-  // fetch orders based on state
+  // fetch all orders
   useEffect(() => {
     if (user && state) {
-      api.get(`/order/seller/${user._id}?state=${state}`)
+      api.get(`/order/seller/${user._id}`)
         .then((res) => {
-          setOrders(res.data);
+          setAllOrders(res.data);
         })
         .catch((e) => log('ERROR fetching orders at DynOrderPageIndex', e));
     }
-  }, [state, user, v]);
-  
-  updateDelivState(user._id, 'seller');
+  }, [user, v]);
+
+  // filter orders by state
+  useEffect(() => {
+    setOrders(allOrders.filter((order) => order.state.includes(state)))
+  }, [allOrders, state])
 
   return (
     <Container>
@@ -50,6 +53,7 @@ const DynOrderPageIndex = ({ user, state }) => {
         />
         <OrdersList
           orders={orders}
+          setOrders={setOrders}
           selected={selected}
           setSelected={setSelected}
           v={v}

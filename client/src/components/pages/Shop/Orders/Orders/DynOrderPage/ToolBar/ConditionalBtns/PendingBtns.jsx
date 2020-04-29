@@ -36,6 +36,8 @@ const PendingBtns = ({ selected, setSelected, v, setV }) => {
       log('ERROR PendingBtns', e);
     }
   }
+
+  return <div />;
   
   return (
     <Container>

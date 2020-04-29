@@ -16,7 +16,7 @@ export const cartObjToOptsString = (cartObj) => {
 // automatically update state: delivering to complete
 export const updateDelivState = async (uid, userType) => {
   try {
-    const { data: orders } = await api.get(`/order/${userType}/${uid}?state=delivering`)
+    const { data: orders } = await api.get(`/order/${userType}/${uid}?state=delivering`);
     orders.map( async (order) => {
       const { data } = await axios.get(trackerUrl(order));
       if (data.complete) {

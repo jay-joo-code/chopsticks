@@ -87,7 +87,7 @@ const Img = styled.img`
 `;
 
 const OrderListCardIndex = ({
-  order, colWidths, v, setV, selected, setSelected,
+  order, updateOrder, colWidths, v, setV, selected, setSelected,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showPopup, setShowPopup] = useState(0);
@@ -117,6 +117,9 @@ const OrderListCardIndex = ({
   else if (order.state.includes('cancel')) {
     stateText = '(취소건)'
   }
+
+  // deliv
+  const [invoice, setInvoice] = useState(order.deliv.invoice);
 
   if (!order) return <div />;
 
@@ -170,6 +173,7 @@ const OrderListCardIndex = ({
             order={order}
             v={v}
             setV={setV}
+            updateOrder={updateOrder}
           />
         </Col>
         <DisplayGroup>
