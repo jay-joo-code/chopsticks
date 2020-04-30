@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import SectCont from './../SectCont';
 import InputCont from './../InputCont';
@@ -12,6 +12,8 @@ const CheckboxContainer = styled.div`
 
 const SellerOpts = ({ formik, _id }) => {
   const { optGrps, madeOnOrder } = formik.values;
+  const disableItemStock = madeOnOrder || optGrps.length !== 0;
+
   return (
     <SectCont>
       <InputCont>
@@ -32,20 +34,17 @@ const SellerOpts = ({ formik, _id }) => {
             formik={formik}
           />
         </CheckboxContainer>
-        {(madeOnOrder || optGrps.length !== 0)
-          ? <div />
-          : (
-            <InputCont>
-              <OutlinedInput
-                name="stock"
-                label="재고 *"
-                formik={formik}
-                sideText="개"
-                right
-                width={200}
-              />
-            </InputCont>
-          )}
+        <InputCont>
+          <OutlinedInput
+            name="stock"
+            label="재고 *"
+            formik={formik}
+            sideText="개"
+            right
+            disabled={disableItemStock}
+            width={200}
+          />
+        </InputCont>
       </InputCont>
       <InputCont>
         <Opts

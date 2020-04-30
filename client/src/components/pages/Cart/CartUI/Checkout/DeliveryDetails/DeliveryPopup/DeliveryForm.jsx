@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import RedButton from 'src/components/common/buttons/RedButton';
 import log from 'src/util/log';
-import axios from 'axios';
+import api from 'src/util/api';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import AddressInput from './AddressInput';
 
@@ -59,7 +59,7 @@ const DeliveryForm = ({ setView, user }) => {
         .required('필수'),
     }),
     onSubmit: (option) => {
-      axios.put(`/api/user/${user._id}/delivery-info/add`, { option })
+      api.put(`/user/${user._id}/delivery-info/add`, { option })
         .then(() => {
           fetchSelfAndStore(user._id);
           setView('list');

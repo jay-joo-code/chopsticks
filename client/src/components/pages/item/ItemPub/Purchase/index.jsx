@@ -21,6 +21,7 @@ const DyncCont = styled.div`
   background-color: white;
   display: inline-block;
   z-index: 20;
+  padding: 0 6rem;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     background-color: inherit;
@@ -29,6 +30,7 @@ const DyncCont = styled.div`
     width: auto;
     cursor: default;
     position: static;
+    padding: 0;
   }
 `;
 const Container = styled.div`
@@ -38,16 +40,16 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  text-align: center;
 `;
 
 const Name = styled.h3`
   font-size: 1.5rem;
   font-weight: bold;
-  max-width: 250px;
   opacity: .8;
   white-space: pre-line;
-  text-align: center;
   word-break: break-word;
+  text-align: center;
 `;
 
 const SelectCont = styled.div`
@@ -112,10 +114,10 @@ const Purchase = ({ item }) => {
     setOptionsIndex(newIndexArray);
   }
   
-  const formatOptStr = (opt) => {
+  const formatOptStr = (opt, optStr) => {
     if (!opt || !opt.optString) return '';
     const qtyString = item.madeOnOrder ? '' : `${opt.qty}개`;
-    return `${opt.optString} (+ ${opt.diff}원) ${qtyString}`;
+    return `${optStr} (+ ${opt.diff}원) ${qtyString}`;
   }
   const findOptByIndex = (searchIndex) => {
     const foundOpt = optData.filter((opt, i) => {
@@ -301,7 +303,7 @@ const Purchase = ({ item }) => {
                 if (unsetOptCount === 1) {
                   // render optData only for last optGrp
                   if (unsetOptIndex === optGrpIndex) {
-                    dispStr = formatOptStr(curOpt);
+                    dispStr = formatOptStr(curOpt, opt);
                     
                     // don't render empty string
                     // this means this opt combination was deleted by the seller
@@ -314,7 +316,7 @@ const Purchase = ({ item }) => {
                 }
                 else if (unsetOptCount === 0) {
                   // render optData for all optGrps
-                  dispStr = formatOptStr(curOpt);
+                  dispStr = formatOptStr(curOpt, opt);
 
                   // render opt for the currently selected opt
                   if (Number(optionsIndex[optGrpIndex]) === i) {

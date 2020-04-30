@@ -37,15 +37,15 @@ const OptDataElt = ({ formik, i}) => {
     
     if (!isNumber) return;
     
-    let newOpt = { ...opt };
+    const newOpt = { ...opt };
     newOpt[field] = value;
-    let newOptData = [...formik.values.optData];
+    const newOptData = [...formik.values.optData];
     newOptData.splice(i, 1, newOpt);
     formik.setFieldValue('optData', newOptData);
   }
   
   const deleteOpt = () => {
-    let newOptData = [...formik.values.optData];
+    const newOptData = [...formik.values.optData];
     newOptData.splice(i, 1);
     formik.setFieldValue('optData', newOptData);
   }
@@ -66,17 +66,16 @@ const OptDataElt = ({ formik, i}) => {
           onChange={(e) => handleChange(e, 'diff')}
         />
         <Body>원</Body>
-        {!formik.values.madeOnOrder && (
-          <RightContainer>
-            <Input
-              value={opt.qty}
-              right
-              width={150}
-              onChange={(e) => handleChange(e, 'qty')}
-            />
-            <Body>개</Body>
-          </RightContainer>
-        )}
+        <RightContainer>
+          <Input
+            value={opt.qty}
+            right
+            width={150}
+            disabled={formik.values.madeOnOrder}
+            onChange={(e) => handleChange(e, 'qty')}
+          />
+          <Body>개</Body>
+        </RightContainer>
         <Cross onClick={deleteOpt}>x</Cross>
       </RightContainer>
     </Container>
