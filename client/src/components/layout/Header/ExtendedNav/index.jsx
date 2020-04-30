@@ -21,7 +21,8 @@ const ExtendedNav = () => {
   // DIFF IN PROFILE, SHOP
   useEffect(() => {
     const pathArray = pathname.split('/');
-    if (pathArray[1] === 'shop' && pathArray[2] === 'admin') {
+    const isAdmin = (pathArray[1] === 'shop' && pathArray[2] === 'admin') || (pathArray[1] === 'item' && pathArray[3] === 'edit');
+    if (isAdmin) {
       setNav(adminNav);
     } else if (pathArray[1] === 'profile') {
       setNav(profileNav);
