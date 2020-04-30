@@ -49,10 +49,6 @@ const itemSchema = Schema({
     type: [{
       title: String,
       opts: [String],
-      optional: {
-        type: Boolean,
-        default: false,
-      },
     }],
     default: [],
   },

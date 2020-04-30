@@ -6,21 +6,14 @@ const Container = styled.div`
 
 `;
 
-const AddOptGrpBtn = ({ formik, optional }) => {
+const AddOptGrpBtn = ({ formik }) => {
   const handleClick = () => {
     const newOptGrps = [...formik.values.optGrps];
-    const opts = optional ? ['선택안함'] : [];
     const initData = {
       title: '',
-      opts,
-      optional,
-    }
-    if (optional) {
-      newOptGrps.push(initData);
-    }
-    else {
-      newOptGrps.unshift(initData);
-    }
+      opts: [],
+    };
+    newOptGrps.push(initData);
     formik.setFieldValue('optGrps', newOptGrps);
   }
   
