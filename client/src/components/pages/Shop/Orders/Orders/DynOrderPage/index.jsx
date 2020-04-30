@@ -37,7 +37,8 @@ const DynOrderPageIndex = ({ user, state }) => {
 
   // filter orders by state
   useEffect(() => {
-    setOrders(allOrders.filter((order) => order.state.includes(state)))
+    let filteredOrders = allOrders.filter((order) => order.state.includes(state));
+    setOrders(filteredOrders);
   }, [allOrders, state])
 
   return (

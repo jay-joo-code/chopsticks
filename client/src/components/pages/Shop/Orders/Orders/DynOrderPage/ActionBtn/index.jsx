@@ -77,74 +77,7 @@ const ActionBtn = ({ order, v, setV, selectedOrders, state, delivData, setDelivD
       />
       )
   }
-  
-  // handle click
-  const handleClick = (e) => {
-    e.stopPropagation();
-    const isPending = order.state === 'pending' && order.seen;
-    const isDelivering = order.state === 'delivering';
-    const showStateChangeBtn = (isPending || isDelivering);
-    
-    if (selectedOrders) {
-      selectedOrders.map((order) => {
-        if (showStateChangeBtn) updateState(order);
-        else setSeen(order);
-      })
-    } else {
-      if (showStateChangeBtn) updateState(order);
-      else setSeen(order);
-    }
-  };
-
-  const setSeen = async (order) => {
-    try {
-      await api.put(`/order/${order._id}/update`, { seen: true });
-      setV(v + 1);
-    } catch (e) {
-      log('ERROR seenSelected', e);
-    }
-  };
-  
-  const updateState = (order) => {
-    const state = order.state === 'pending' ? 'delivering' : 'complete';
-    
-    if (order.state === 'pending' && (!order.deliv.company || !order.deliv.companyCode || !order.deliv.invoice)) {
-      return;
-    }
-    
-    api.put(`/order/${order._id}/update`, { state, seen: false })
-      .then(() => setV(v + 1))
-      .catch((e) => log('ERROR OrderListCardIndex updateState', e));
-  };
-  
-  // text
-  let text = '확인';
-  const condBtnText = {
-    pending: '발송완료',
-    delivering: '배송완료',
-  };
-  if ((state === 'pending' && seen) || state === 'delivering') {
-    text = condBtnText[state];
-  }
-  
-  // seen
-  let seen = 0;
-  if (text === '확인') {
-    seen = !selectedOrders && order.seen ? 1 : 0;
-    const pendingStates = ['cancelPending', 'exchangePending', 'refundPending']
-    if (pendingStates.includes(order.state)) seen = 0;
-  }
-  
-  return (
-    <SBtn
-      type="button"
-      color="primary"
-      onClick={handleClick}
-      seen={seen}
-    >
-      {text}
-    </SBtn>
-  );
+  return <div />;
 };
 
 export default ActionBtn;
