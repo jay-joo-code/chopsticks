@@ -85,7 +85,7 @@ transactionRouter.post('/:rid/process', async (req, res) => {
     };
     console.log('handle transaction error', errData);
     await new TransactionError(errData).save();
-    res.status(500).send(e);
+    res.status(500).send({ ...e, errData });
   }
 });
 

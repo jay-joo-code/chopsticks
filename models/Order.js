@@ -7,23 +7,23 @@ const orderSchema = Schema({
     type: {
       recipient: {
         type: String,
-        required: true
+        required: true,
       },
       address: {
         type: String,
-        required: true
+        required: true,
       },
       addressDetail: {
         type: String,
-        required: true
+        required: true,
       },
       mobile: {
         type: String,
-        required: true
+        required: true,
       },
       company: String,
       companyCode: String,
-      invoice: String
+      invoice: String,
     },
     required: true,
   },
@@ -38,12 +38,12 @@ const orderSchema = Schema({
   buyer: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
   seller: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
   state: { 
     // new pending delivering complete 
@@ -53,11 +53,11 @@ const orderSchema = Schema({
     // error
     type: String,
     required: true,
-    default: 'new'
+    default: 'new',
   },
   stateMsg: {
     // 교환, 환불, 취소 사유 메세지
-    type: String
+    type: String,
   },
   linkedOrderId: {
     // 교환 시 관련 주문건 id 를 저장
@@ -66,16 +66,21 @@ const orderSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'Order',
   },
+  hideToBuyer: {
+    // 교환 신청 시 기존 주문건은 구매자에게만 안보인다
+    type: Boolean,
+    default: false,
+  },
   seen: {
     // TODO: remove seen property
     type: Boolean,
     required: true,
-    default: false
+    default: false,
   },
   createdAt: {
     type: Date,
-    default: new Date
-  }
+    default: new Date,
+  },
 });
 
 orderSchema.plugin(mongoosePaginate);
