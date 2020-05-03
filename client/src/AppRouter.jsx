@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from 'src/components/pages/Home';
@@ -42,55 +42,61 @@ const Container = styled.div`
     min-height: 101vh;
 `;
 
-const AppRouter = () => (
-  <BrowserRouter>
-    <Container>
-      <Header />
-      <DynamicContainer>
-        <Switch>
-          <Route path="/purchase/complete" component={Home} />
-          <Route path="/purchase/finalise" component={Home} />
-          <Route path="/purchase/details" component={Home} />
-          <Route path="/purchase/item" component={Home} />
-          <Route path="/purchase/method" component={Home} />
+const AppRouter = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [window.location])
+  
+  return (
+    <BrowserRouter>
+      <Container>
+        <Header />
+        <DynamicContainer>
+          <Switch>
+            <Route path="/purchase/complete" component={Home} />
+            <Route path="/purchase/finalise" component={Home} />
+            <Route path="/purchase/details" component={Home} />
+            <Route path="/purchase/item" component={Home} />
+            <Route path="/purchase/method" component={Home} />
 
-          <Route path="/profile/orders" component={Orders} />
-          <Route path="/profile/details" component={Profile} />
+            <Route path="/profile/orders" component={Orders} />
+            <Route path="/profile/details" component={Profile} />
 
-          <Route path="/register" component={Register} />
-          <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
 
-          <Route path="/terms/use" component={TermsOfUse} />
-          <Route path="/terms/privacy" component={PrivacyTerms} />
+            <Route path="/terms/use" component={TermsOfUse} />
+            <Route path="/terms/privacy" component={PrivacyTerms} />
 
-          <Route path="/cart" component={Cart} />
+            <Route path="/cart" component={Cart} />
 
-          <Route path="/item/:id/edit" component={ItemEdit} />
-          <Route path="/item/:id" component={ItemPub} />
+            <Route path="/item/:id/edit" component={ItemEdit} />
+            <Route path="/item/:id" component={ItemPub} />
 
-          <Route path="/browse" component={Browse} />
+            <Route path="/browse" component={Browse} />
 
-          <Route path="/shop/apply/pending" component={ShopApplyPending} />
-          <Route path="/shop/apply/complete" component={ShopApplyComplete} />
-          <Route path="/shop/apply" component={ShopApply} />
-          <Route path="/shop/intro" component={ShopIntro} />
-          <Route path="/shop/admin/items" component={Items} />
-          <Route path="/shop/admin/orders" component={ShopOrders} />
-          <Route path="/shop/admin/transactions" component={ShopTransactions} />
-          <Route path="/shop/admin/messages" component={ShopSettings} />
-          <Route path="/shop/admin/settings" component={ShopSettings} />
-          <Route path="/shop" component={Shop} />
+            <Route path="/shop/apply/pending" component={ShopApplyPending} />
+            <Route path="/shop/apply/complete" component={ShopApplyComplete} />
+            <Route path="/shop/apply" component={ShopApply} />
+            <Route path="/shop/intro" component={ShopIntro} />
+            <Route path="/shop/admin/items" component={Items} />
+            <Route path="/shop/admin/orders" component={ShopOrders} />
+            <Route path="/shop/admin/transactions" component={ShopTransactions} />
+            <Route path="/shop/admin/messages" component={ShopSettings} />
+            <Route path="/shop/admin/settings" component={ShopSettings} />
+            <Route path="/shop" component={Shop} />
 
-          <Route path="/admin" component={Admin} />
-          
-          <Route exact path="/about" component={About} />
-          <Route exact path="/" component={Home} />
-        </Switch>
-      </DynamicContainer>
-      <ReduxAlert />
-      <Footer />
-    </Container>
-  </BrowserRouter>
-);
+            <Route path="/admin" component={Admin} />
+            
+            <Route exact path="/about" component={About} />
+            <Route exact path="/" component={Home} />
+          </Switch>
+        </DynamicContainer>
+        <ReduxAlert />
+        <Footer />
+      </Container>
+    </BrowserRouter>
+  )
+};
 
 export default AppRouter;

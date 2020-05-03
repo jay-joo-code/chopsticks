@@ -17,6 +17,7 @@ const Deliv = ({ order, updateOrder }) => {
     e.stopPropagation();
   }
 
+  const [tempInvoice, setTempInvoice] = useState(order.deliv.invoice);
   const handleChange = (value, type) => {
     let updatedData;
     if (type === 'code') {
@@ -27,10 +28,23 @@ const Deliv = ({ order, updateOrder }) => {
         company: filteredCompanies[0]["Name"],
         companyCode: code,
       }
+      const newOrder = {
+        ...order,
+        deliv: {
+          ...order.deliv,
+          ...updatedData,
+        }
+      }
+      updateOrder(newOrder);
     }
     else if (type === 'invoice') {
-      updatedData = { invoice: value };
+      setTempInvoice(value);
     }
+  }
+
+  // update order.deliv.invoice to tempInvoice on blur
+  const handleBlur = () => {
+    const updatedData = { invoice: tempInvoice };
     const newOrder = {
       ...order,
       deliv: {
@@ -44,6 +58,7 @@ const Deliv = ({ order, updateOrder }) => {
   // reset deliv data when state changed to exchangePending
   useEffect(() => {
     if (order.state === 'exchangePending') {
+      setTempInvoice('');
       const newOrder = {
         ...order,
         deliv: {
@@ -77,8 +92,9 @@ const Deliv = ({ order, updateOrder }) => {
       <OutlinedInput
         onClick={stopPropagation}
         width={100}
-        value={order.deliv.invoice}
+        value={tempInvoice}
         onChange={(e) => handleChange(e.target.value, 'invoice')}
+        onBlur={handleBlur}
         disabled={disabled}
         placeholder='송장번호'
       />

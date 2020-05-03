@@ -83,6 +83,10 @@ const itemSchema = Schema({
     type: Number,
     default: 0,
   },
+  sortIndex: {
+    type: Number,
+    default: 0, // new items are placed at the front
+  },
   createdAt: {
     type: Date,
     default: new Date,

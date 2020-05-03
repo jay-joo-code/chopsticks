@@ -4,11 +4,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-const config = require('./config');
 const mongoose = require('mongoose');
 
 // MONGODB
-mongoose.connect(config.dbUriDev, { useNewUrlParser: true, useUnifiedTopology: true });
+const DB_URI_DEV = 'mongodb+srv://admin:hGikw8WT7aqK6lpq@dev-5yrgx.mongodb.net/test?retryWrites=true&w=majority';
+const DB_URI_PROD = 'mongodb+srv://chopsticks:1Xsy8coh0v2uNNpC@chopsticks-dev-qtlao.mongodb.net/test?retryWrites=true&w=majority';
+const URI = process.env.NODE_ENV === 'development' ? DB_URI_DEV : DB_URI_PROD;
+mongoose.connect(DB_URI_PROD, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {

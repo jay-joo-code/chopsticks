@@ -1,7 +1,34 @@
 const itemRouter = require('express').Router();
-const Item = require('./../models/Item');
-const User = require('./../models/User');
-const sort = require('./../util/sort');
+const schedule = require('node-schedule');
+const Item = require('../models/Item');
+const User = require('../models/User');
+const sort = require('../util/sort');
+
+const scramble = async () => {
+  try {
+    console.log('scramble');
+    const allItems = await Item.find({});
+    const idx = [];
+    allItems.map((item) => {
+      const newIdx = Math.floor(Math.random() * allItems.length);
+      idx.push(newIdx);
+      item.sortIndex = newIdx;
+      item.save();
+    });
+  } catch (e) {
+    console.log('scramble error', e);
+  }
+}
+
+// scramble everyday at 06:00
+// '* 6 * * *'
+schedule.scheduleJob('* 6 * * *', async () => {
+  try {
+    
+  } catch (e) {
+    console.log('scramble error', e);
+  }
+});
 
 // GET ITEMS: FILTERED SORTED PAGINATED
 itemRouter.get('/', async (req, res) => {

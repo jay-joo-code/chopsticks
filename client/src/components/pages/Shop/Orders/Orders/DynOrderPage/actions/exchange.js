@@ -14,16 +14,8 @@ export const exchangeOrder= (order) => {
         })
       }
       
-      // create new order
-      const newOrderData = {
-        ...order,
-        _id: undefined,
-        state: 'delivering'
-      }
-      await api.post('/order/create', newOrderData);
-      
-      // set current order state: exchanged
-      await setOrderState(order._id, 'exchanged');
+      // set current order state: delivering
+      await setOrderState(order._id, 'delivering');
       resolve({
         success: true
       })

@@ -118,9 +118,6 @@ const OrderListCardIndex = ({
     stateText = '(취소건)'
   }
 
-  // deliv
-  const [invoice, setInvoice] = useState(order.deliv.invoice);
-
   if (!order) return <div />;
 
   return (
