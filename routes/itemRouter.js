@@ -8,23 +8,30 @@ const scramble = async () => {
   try {
     console.log('scramble');
     const allItems = await Item.find({});
-    const idx = [];
-    allItems.map((item) => {
-      const newIdx = Math.floor(Math.random() * allItems.length);
-      idx.push(newIdx);
-      item.sortIndex = newIdx;
-      item.save();
+    allItems.map(async (item) => {
+      try {
+        const newIdx = Math.floor(Math.random() * allItems.length);
+        item.sortIndex = newIdx;
+        item.optGrps.map((optGrp, i) => {
+          if (!optGrp.opts.length) {
+            item.optGrps[i].opts = [];
+          }
+        })
+        await item.save();
+      } catch (e) {
+        console.log('item save error :>> ', e);
+        console.log('item :>> ', item);
+      }
     });
   } catch (e) {
     console.log('scramble error', e);
   }
-}
+};
 
 // scramble everyday at 06:00
-// '* 6 * * *'
 schedule.scheduleJob('* 6 * * *', async () => {
   try {
-    
+    scramble();
   } catch (e) {
     console.log('scramble error', e);
   }
@@ -57,9 +64,10 @@ itemRouter.get('/', async (req, res) => {
         populate: 'owner',
         page,
         limit,
+        sort: { sortIndex: -1 },
       };
       result = await Item.paginate(filter, options);
-    } else result = await Item.find(filter).populate('owner');
+    } else result = await Item.find(filter).populate('owner').sort({ sortIndex: -1 });
     const data = result.docs;
     let filteredData = data;
 
@@ -76,7 +84,10 @@ itemRouter.get('/', async (req, res) => {
     if (sortCode === 'recent') sortedData = sort.sortRecent(filteredData);
     else if (sortCode === 'priceLow') sortedData = sort.sortPriceLow(filteredData);
     else if (sortCode === 'priceHigh') sortedData = sort.sortPriceHigh(filteredData);
-
+    // else sortedData = sort.sortRandom(filteredData);
+    // sortedData.map((doc) => {
+    //   console.log('doc.sortIndex :>> ', doc.sortIndex);
+    // })
     const mergedData = { ...result, docs: sortedData };
     res.send(mergedData);
   } catch (e) {
