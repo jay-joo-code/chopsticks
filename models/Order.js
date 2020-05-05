@@ -77,10 +77,9 @@ const orderSchema = Schema({
     required: true,
     default: false,
   },
-  createdAt: {
-    type: Date,
-    default: new Date,
-  },
+},
+{
+  timestamps: true,
 });
 
 orderSchema.plugin(mongoosePaginate);

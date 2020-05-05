@@ -16,7 +16,7 @@ const scramble = async () => {
           if (!optGrp.opts.length) {
             item.optGrps[i].opts = [];
           }
-        })
+        });
         await item.save();
       } catch (e) {
         console.log('item save error :>> ', e);

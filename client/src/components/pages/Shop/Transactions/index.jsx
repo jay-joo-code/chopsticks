@@ -28,7 +28,7 @@ const TransactionsIndex = () => {
   const [monthIndex, setMonthIndex] = useState(new Date().getMonth());
   useEffect(() => {
     if (user) {
-      api.get(`/order/seller/${user._id}?monthIndex=${monthIndex}&state=complete`)
+      api.get(`/order/seller/${user._id}?monthIndex=${monthIndex}`)
         .then((res) => setOrders(res.data))
         .catch((e) => log('ERROR fetch seller order data', e));
     }
