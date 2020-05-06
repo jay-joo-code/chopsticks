@@ -65,10 +65,10 @@ const Value = styled.p`
 const RevenueByMonth = ({ orders, monthIndex, setMonthIndex }) => {
   const [count, setCount] = useState();
   const [total, setTotal] = useState();
-  const completeStates = ['complete', 'exchanged', 'exchangeRejected', 'refundRejected', 'cancelRejected'];
+  const excludedStates = ['canceled', 'refunded'];
 
   const computeOrderData = (orders) => {
-    const completeOrders = orders.filter((order) => completeStates.includes(order.state));
+    const completeOrders = orders.filter((order) => !excludedStates.includes(order.state));
     const updatedTotal = completeOrders.reduce((acc, cur) => acc + Number(cur.cartObj.price), 0);
     const total = updatedTotal.toLocaleString();
     return {
