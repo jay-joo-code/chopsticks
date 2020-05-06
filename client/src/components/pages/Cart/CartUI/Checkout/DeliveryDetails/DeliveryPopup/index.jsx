@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import Popup from 'src/components/common/popups/Popup';
 import List from './List';
 import DeliveryForm from './DeliveryForm';
