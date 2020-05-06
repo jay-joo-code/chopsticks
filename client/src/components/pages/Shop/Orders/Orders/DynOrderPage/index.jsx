@@ -4,6 +4,7 @@ import api from 'src/util/api';
 import log from 'src/util/log';
 import ToolBar from './ToolBar';
 import OrdersList from './OrdersList';
+import { updateDelivState } from 'src/util/helpers';
 
 const Container = styled.div`
   margin-top: 2rem;
@@ -40,6 +41,20 @@ const DynOrderPageIndex = ({ user, state }) => {
     let filteredOrders = allOrders.filter((order) => order.state.includes(state));
     setOrders(filteredOrders);
   }, [allOrders, state])
+
+  // check if "deliving" -> "complete" updates available
+  useEffect(() => {
+    const checkForDelivCompletes = async () => {
+      try {
+        await updateDelivState(user._id, 'seller');
+        setV(v + 1);
+      }
+      catch (e) {
+        log('DynOrderpageIndex', e)
+      }
+    }
+    checkForDelivCompletes();
+  }, [])
 
   return (
     <Container>

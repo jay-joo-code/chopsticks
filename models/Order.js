@@ -59,6 +59,10 @@ const orderSchema = Schema({
     // 교환, 환불, 취소 사유 메세지
     type: String,
   },
+  stateText: {
+    // 교환주문건이 배송중으로 이동되도 (교환건) 텍스트 유지되게끔
+    type: String,
+  },
   linkedOrderId: {
     // 교환 시 관련 주문건 id 를 저장
     // 교환 주문건: 기존 주문건

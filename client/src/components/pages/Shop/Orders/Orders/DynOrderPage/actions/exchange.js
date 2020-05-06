@@ -15,7 +15,11 @@ export const exchangeOrder= (order) => {
       }
       
       // set current order state: delivering
-      await setOrderState(order._id, 'delivering');
+      await api.put(`/order/${order._id}/update`, {
+        state: 'delivering',
+        deliv: order.deliv,
+        stateText: '(교환건)'
+      })
       resolve({
         success: true
       })

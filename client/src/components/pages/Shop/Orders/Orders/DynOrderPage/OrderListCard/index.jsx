@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -118,6 +118,11 @@ const OrderListCardIndex = ({
     stateText = '(취소건)'
   }
 
+  const [stateTextLocal, setStateTextLocal] = useState('');
+  useEffect(() => {
+    if (order.stateText) setStateTextLocal(order.stateText);
+  }, [])
+
   if (!order) return <div />;
 
   return (
@@ -135,7 +140,7 @@ const OrderListCardIndex = ({
             />
           </Col>
           <Col width={colWidths[1]}>
-            {stateText && <Text color={stateText === '(취소건)' ? 'danger' : 'primary'}>{stateText}</Text>}
+            <Text color={stateText === '(취소건)' ? 'danger' : 'primary'}>{stateText || stateTextLocal}</Text>
             <Text size="sm">{order._id}</Text>
             <Text>{date}</Text>
           </Col>

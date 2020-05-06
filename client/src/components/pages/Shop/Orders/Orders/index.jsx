@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import TabbedPage from 'src/components/layout/TabbedPage';
 import DynOrderPage from './DynOrderPage';
-import { updateDelivState } from 'src/util/helpers';
 
 const Container = styled.div`
 
@@ -31,11 +30,6 @@ const Orders = ({ user }) => {
     name: '취소건',
     component: <DynOrderPage user={user} state="cancel" />,
   }];
-
-  // check if "deliving" -> "complete" updates available
-  useEffect(() => {
-    updateDelivState(user._id, 'seller');
-  }, [])
   
   return (
     <Container>
