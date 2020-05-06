@@ -2,11 +2,13 @@ const itemRouter = require('express').Router();
 const schedule = require('node-schedule');
 const Item = require('../models/Item');
 const User = require('../models/User');
+const ScrambleLog = require('../models/ScrambleLog');
 
 const scramble = async () => {
   try {
     console.log('**********SCRAMBLE**********');
     console.log('new Date() :>> ', new Date());
+    new ScrambleLog().save();
     const allItems = await Item.find({});
     allItems.map(async (item) => {
       try {
@@ -25,6 +27,16 @@ const scramble = async () => {
     });
   } catch (e) {
     console.log('scramble error', e);
+  }
+};
+
+const logScrambles = async () => {
+  try {
+    const logs = await ScrambleLog.find({});
+    console.log('logs :>> ', logs);
+  }
+  catch (e) {
+    console.log('e :>> ', e);
   }
 };
 
