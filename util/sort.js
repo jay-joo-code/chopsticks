@@ -4,8 +4,11 @@ const sortRandom = (data) => {
 
 const sortRecent = (data) => {
   const sortedData = data.sort((a, b) => {
-    return new Date(b.date) - new Date(a.date);
+    return new Date(b.createdAt) - new Date(a.createdAt);
   });
+  sortedData.map((item) => {
+    console.log('item.createdAt :>> ', item.createdAt);
+  })
   return sortedData;
 };
 

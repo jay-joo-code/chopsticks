@@ -2,11 +2,11 @@ const itemRouter = require('express').Router();
 const schedule = require('node-schedule');
 const Item = require('../models/Item');
 const User = require('../models/User');
-const sort = require('../util/sort');
 
 const scramble = async () => {
   try {
-    console.log('scramble');
+    console.log('**********SCRAMBLE**********');
+    console.log('new Date() :>> ', new Date());
     const allItems = await Item.find({});
     allItems.map(async (item) => {
       try {
@@ -29,8 +29,9 @@ const scramble = async () => {
 };
 
 // scramble everyday at 06:00
-schedule.scheduleJob('* 6 * * *', async () => {
+schedule.scheduleJob('00 00 21 * * *', async (fireDate) => {
   try {
+    console.log('fireDate :>> ', fireDate);
     scramble();
   } catch (e) {
     console.log('scramble error', e);
@@ -40,12 +41,15 @@ schedule.scheduleJob('* 6 * * *', async () => {
 // GET ITEMS: FILTERED SORTED PAGINATED
 itemRouter.get('/', async (req, res) => {
   try {
-    // CREATE FILTER: CATEGORY, OWNER, SEARCH
-    const { category, subcat, owner, search } = req.query;
+    const { page, limit, sort } = req.query;
+
+    // filter
+    const { category, subcat, owner, search, minPrice, maxPrice } = req.query;
     const categoryFilter = category ? { category } : {};
     const subcatFilter = subcat ? { subcat } : {};
     const ownerFilter = owner ? { owner } : {};
     const searchFilter = search ? { name: { $regex: search } } : {};
+    const priceFilter = minPrice && maxPrice ? { price: { $gte: Number(`${minPrice}0000`), $lte: Number(`${maxPrice}0000`) } } : {};
 
     const filter = {
       display: true,
@@ -53,43 +57,33 @@ itemRouter.get('/', async (req, res) => {
       ...subcatFilter,
       ...ownerFilter,
       ...searchFilter,
+      ...priceFilter,
     };
 
-    // QUERY WITH FILTER DEFINED ABOVE
-    // PAGINATION IF REQUESTED
+    // sort
+    const sortQueryMap = {
+      recent: { createdAt: -1 },
+      priceLow: { price: 1 },
+      priceHigh: { price: -1 },
+    };
+    const sortQuery = ['recent', 'priceLow', 'priceHigh'].includes(sort) ? sortQueryMap[sort] : { sortIndex: -1 };
+
+    // query
     let result;
-    const { page, limit } = req.query;
     if (page && limit) {
       const options = {
         populate: 'owner',
         page,
         limit,
-        sort: { sortIndex: -1 },
+        sort: sortQuery,
       };
       result = await Item.paginate(filter, options);
-    } else result = await Item.find(filter).populate('owner').sort({ sortIndex: -1 });
-    const data = result.docs;
-    let filteredData = data;
-
-    // FILTER BY: PRICE
-    if (req.query.minPrice && req.query.maxPrice) {
-      const minPrice = `${req.query.minPrice}0000`;
-      const maxPrice = `${req.query.maxPrice}0000`;
-      filteredData = data.filter((item) => item.price >= minPrice && item.price <= maxPrice);
+    } 
+    else {
+      result = await Item.find(filter).populate('owner').sort(sortQuery);
     }
 
-    // SORT
-    let sortedData = filteredData;
-    const sortCode = req.query.sort;
-    if (sortCode === 'recent') sortedData = sort.sortRecent(filteredData);
-    else if (sortCode === 'priceLow') sortedData = sort.sortPriceLow(filteredData);
-    else if (sortCode === 'priceHigh') sortedData = sort.sortPriceHigh(filteredData);
-    // else sortedData = sort.sortRandom(filteredData);
-    // sortedData.map((doc) => {
-    //   console.log('doc.sortIndex :>> ', doc.sortIndex);
-    // })
-    const mergedData = { ...result, docs: sortedData };
-    res.send(mergedData);
+    res.send(result);
   } catch (e) {
     console.log(e);
     res.status(500).send(e);

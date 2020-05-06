@@ -17,12 +17,8 @@ const CustomSelect = styled(Select)`
 const SortBy = () => {
   const [sortCode, setSortCode] = useState('');
   const sortList = [{
-    text: '정렬',
-    code: '',
-  },
-  {
-    text: '인기순',
-    code: 'popular',
+    text: '랜덤순',
+    code: 'random',
   },
   {
     text: '최신순',
