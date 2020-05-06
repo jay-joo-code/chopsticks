@@ -25,7 +25,15 @@ const CancelActionBtn = ({ order, v, setV}) => {
       e.stopPropagation();
       setLoading(true);
       if (newState === 'cancelRejected') {
-        await setOrderState(order._id, newState);
+        await setOrderState(order._id, 'pending');
+        dispatch({
+          type: 'ALERT_SET',
+          payload: {
+            show: true,
+            color: 'success',
+            msg: '취소거절 처리 되었습니다. 주문건은 배송전으로 옮겨집니다',
+          }
+        })
       }
       else if (newState === 'canceled') {
         await cancelOrder(order);

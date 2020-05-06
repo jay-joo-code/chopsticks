@@ -30,7 +30,9 @@ const Orders = () => {
     if (user) {
       // fetch orders
       api.get(`/order/buyer/${user._id}`)
-        .then((res) => setOrders(res.data.filter((order) => !order.hideToBuyer )))
+        .then((res) => {
+          setOrders(res.data.filter((order) => !order.hideToBuyer ))
+        })
         .catch((e) => {});
     }
   }, [v]);
