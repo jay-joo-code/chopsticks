@@ -16,7 +16,7 @@ import ErrMsg from 'src/components/common/fonts/ErrMsg';
 const FormComponent = styled.form`
   width: 100%;
   background: white;
-  padding: 2rem;
+  margin: 2rem 0;
 `;
 
 const Center = styled.div`
