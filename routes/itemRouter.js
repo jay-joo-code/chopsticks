@@ -44,7 +44,7 @@ const logScrambles = async () => {
 schedule.scheduleJob({ hour: 6, minute: 0 }, async (fireDate) => {
   try {
     console.log('fireDate :>> ', fireDate);
-    // scramble();
+    scramble();
   } catch (e) {
     console.log('scramble error', e);
   }
