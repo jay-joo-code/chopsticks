@@ -24,11 +24,13 @@ const Container = styled.div`
   background: white;
   margin: .5rem 0 0 0;
   cursor: pointer;
+  width: 90vw;
   
   @media (min-width: ${(props) => props.theme.desktopContentWidth}px) {
     flex-direction: row;
     align-items: center;
     padding: .5rem 0;
+    width: auto;
   }
 `;
 
@@ -74,7 +76,7 @@ const Text = styled.p`
   line-height: 1rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
+  max-width: 160px;
   
   // color
   color: ${props => props.color ? props.theme[props.color] : ''};
@@ -170,15 +172,15 @@ const OrderListCardIndex = ({
           <Text>{order.deliv.address}</Text>
           <Text>{order.deliv.addressDetail}</Text>
         </Col>
-        <Col width={colWidths[6]}>
-          <Deliv 
-            order={order}
-            v={v}
-            setV={setV}
-            updateOrder={updateOrder}
-          />
-        </Col>
         <DisplayGroup>
+          <Col width={colWidths[6]}>
+            <Deliv 
+              order={order}
+              v={v}
+              setV={setV}
+              updateOrder={updateOrder}
+            />
+          </Col>
           <Col width={colWidths[7]}>
             <ActionBtn
               order={order}
