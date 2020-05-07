@@ -15,6 +15,10 @@ const Container = styled.div`
   }
 `;
 
+const Input = styled.input`
+  margin: 0 .5rem 0 0 !important;
+`
+
 const SexInput = ({ formik }) => {
   const [sex, setSex] = useState(formik.values.sex);
   const [errMsg, setErrMsg] = useState('');
@@ -40,13 +44,13 @@ const SexInput = ({ formik }) => {
   return (
     <Wrapper>
       <Container>
-        <input
+        <Input
           type="checkbox"
           checked={sex === 'male'}
           onChange={() => toggleSex('male')}
         />
         <p>남자</p>
-        <input
+        <Input
           type="checkbox"
           checked={sex === 'female'}
           onChange={() => toggleSex('female')}
