@@ -41,10 +41,10 @@ const logScrambles = async () => {
 };
 
 // scramble everyday at 06:00
-schedule.scheduleJob('00 00 21 * * *', async (fireDate) => {
+schedule.scheduleJob({ hour: 6, minute: 0 }, async (fireDate) => {
   try {
     console.log('fireDate :>> ', fireDate);
-    scramble();
+    // scramble();
   } catch (e) {
     console.log('scramble error', e);
   }
