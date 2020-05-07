@@ -13,10 +13,6 @@ const Container = styled.div`
 
 const CartList = ({ cart }) => {
   const [selectedItemId, setSelectedItemId] = useState([]);
-  useEffect(() => {
-    const selectedInit = cart.map((cartObj) => cartObj._id);
-    setSelectedItemId(selectedInit);
-  }, []);
 
   return (
     <Container>

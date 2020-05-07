@@ -272,7 +272,7 @@ const Purchase = ({ item }) => {
   // 즉시구매
   const handlePurchase = () => {
     handleAddToCart();
-    history.push('/cart?checkout');
+    history.push('/cart?checkout=true');
   }
   
   // conditional rendering

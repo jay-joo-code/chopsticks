@@ -26,6 +26,7 @@ const CartUI = () => {
   useEffect(() => {
     if (router.query.checkout) {
       setExpanded(true);
+      router.updateQuery({ checkout: undefined });
     }
   }, [])
 
