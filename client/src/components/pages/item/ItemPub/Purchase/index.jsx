@@ -268,6 +268,12 @@ const Purchase = ({ item }) => {
         log('ERROR add item to cart');
       });
   };
+
+  // 즉시구매
+  const handlePurchase = () => {
+    handleAddToCart();
+    history.push('/cart?checkout=true');
+  }
   
   // conditional rendering
   if (!item) return <div />;
@@ -356,7 +362,7 @@ const Purchase = ({ item }) => {
           </Select>
         </SelectCont>
         <BuySect>
-          <BuyButton white rounded>즉시 구매</BuyButton>
+          <BuyButton onClick={handlePurchase} white rounded>즉시 구매</BuyButton>
           <BuyButton onClick={handleAddToCart} green rounded>장바구니에 담기</BuyButton>
           <Alert
             show={showAlert}
