@@ -68,7 +68,7 @@ const RevenueByMonth = ({ orders, monthIndex, setMonthIndex }) => {
   const excludedStates = ['canceled', 'refunded'];
 
   const computeOrderData = (orders) => {
-    const completeOrders = orders.filter((order) => !excludedStates.includes(order.state));
+    const completeOrders = orders.filter((order) => !excludedStates.includes(order.state) && order.stateText !== '(교환건)');
     const updatedTotal = completeOrders.reduce((acc, cur) => acc + Number(cur.cartObj.price), 0);
     const total = updatedTotal.toLocaleString();
     return {
