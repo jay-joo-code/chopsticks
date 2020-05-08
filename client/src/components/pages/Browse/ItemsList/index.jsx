@@ -7,7 +7,7 @@ import ItemsList from 'src/components/layout/ItemsList';
 import PageNav from 'src/components/layout/PageNav';
 
 const Container = styled.div`
-
+  
 `;
 
 const NavCont = styled.div`

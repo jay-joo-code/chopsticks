@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import RedButton from 'src/components/common/buttons/RedButton';
 import theme from 'src/theme';
-import axios from 'axios';
 import log from 'src/util/log';
+import api from 'src/util/api';
 import { useSelector } from 'react-redux';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 
@@ -51,8 +51,8 @@ const Toolbar = ({ cart, selectedItemId, setSelectedItemId }) => {
 
   const user = useSelector((state) => state.user);
   const removeSelected = () => {
-    const url = `/api/user/${user._id}/cart/delete-many/cartobj`;
-    axios.put(url, { removeIds: selectedItemId })
+    const url = `/user/${user._id}/cart/delete-many/cartobj`;
+    api.put(url, { removeIds: selectedItemId })
       .then((res) => {
         fetchSelfAndStore(user._id);
       })

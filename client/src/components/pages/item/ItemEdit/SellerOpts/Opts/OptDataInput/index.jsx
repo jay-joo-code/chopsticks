@@ -5,7 +5,7 @@ import OptDataElt from './OptDataElt';
 const Container = styled.div`
   max-height: 600px;
   max-width: 800px;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 const OptDataInput = ({ formik }) => {

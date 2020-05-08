@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import CartList from './CartList';
 import OrderDetails from './OrderDetails';
 import Checkout from './Checkout';
+import useRouter from 'src/util/hooks/useRouter';
 
 const Container = styled.div`
 
@@ -21,6 +22,13 @@ const CartUI = () => {
   
   const [expanded, setExpanded] = useState(false);
   const [method, setMethod] = useState();
+  const router = useRouter();
+  useEffect(() => {
+    if (router.query.checkout) {
+      setExpanded(true);
+      router.updateQuery({ checkout: undefined });
+    }
+  }, [])
 
   return (
     <Container>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import TabbedPage from 'src/components/layout/TabbedPage';
 import DynOrderPage from './DynOrderPage';

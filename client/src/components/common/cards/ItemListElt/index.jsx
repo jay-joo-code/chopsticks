@@ -17,6 +17,7 @@ const Container = styled.div`
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
   align-items: stretch;
+  overflow: hidden;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     padding: 1rem;
@@ -43,6 +44,7 @@ const ImgCont = styled.div`
   width: 150px;
   overflow: hidden;
   margin: 0 1rem;
+  flex-shrink: 0;
 `;
 
 const Img = styled.img`
@@ -55,7 +57,9 @@ const Img = styled.img`
 `;
 
 const InfoCont = styled.div`
-  flex-grow: 2;
+  overflow: hidden;
+  flex-grow: 1;
+  max-width: 610px;
 `;
 
 const ListElt = ({

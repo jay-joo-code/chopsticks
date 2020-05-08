@@ -21,7 +21,7 @@ const Col = styled.div`
   
   @media (min-width: ${props => props.theme.desktopContentWidth}px) {
     width: auto;
-    width: ${props => props.sidebar ? '300px' : ''};
+    width: ${props => props.sidebar ? '230px' : ''};
   }
 `
 

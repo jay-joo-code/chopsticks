@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import api from 'src/util/api';
 import log from 'src/util/log';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -84,7 +84,7 @@ const ItemEdit = ({ item }) => {
         ...values,
         created: true,
       };
-      axios.put(`/api/item/${item._id}/update`, mergedValues)
+      api.put(`/item/${item._id}/update`, mergedValues)
         .then(() => {
           history.push(`/item/${item._id}`);
         })

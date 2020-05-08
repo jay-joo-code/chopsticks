@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -24,11 +24,13 @@ const Container = styled.div`
   background: white;
   margin: .5rem 0 0 0;
   cursor: pointer;
+  width: 90vw;
   
   @media (min-width: ${(props) => props.theme.desktopContentWidth}px) {
     flex-direction: row;
     align-items: center;
     padding: .5rem 0;
+    width: auto;
   }
 `;
 
@@ -56,7 +58,7 @@ const Col = styled.div`
   
   @media (min-width: ${(props) => props.theme.desktopContentWidth}px) {
     width: ${(props) => props.width};
-    padding: 0;
+    padding: 0 .1rem;
   }
 `;
 
@@ -72,6 +74,9 @@ const DisplayGroup = styled.div`
 const Text = styled.p`
   font-size: ${(props) => (props.size === 'sm' ? '10px' : '12px')};
   line-height: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
   
   // color
   color: ${props => props.color ? props.theme[props.color] : ''};
@@ -84,7 +89,7 @@ const Img = styled.img`
 `;
 
 const OrderListCardIndex = ({
-  order, colWidths, v, setV, selected, setSelected,
+  order, updateOrder, colWidths, v, setV, selected, setSelected,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showPopup, setShowPopup] = useState(0);
@@ -115,6 +120,11 @@ const OrderListCardIndex = ({
     stateText = '(취소건)'
   }
 
+  const [stateTextLocal, setStateTextLocal] = useState('');
+  useEffect(() => {
+    if (order.stateText) setStateTextLocal(order.stateText);
+  }, [])
+
   if (!order) return <div />;
 
   return (
@@ -132,7 +142,7 @@ const OrderListCardIndex = ({
             />
           </Col>
           <Col width={colWidths[1]}>
-            {stateText && <Text color={stateText === '(취소건)' ? 'danger' : 'primary'}>{stateText}</Text>}
+            <Text color={stateText === '(취소건)' ? 'danger' : 'primary'}>{stateText || stateTextLocal}</Text>
             <Text size="sm">{order._id}</Text>
             <Text>{date}</Text>
           </Col>
@@ -162,14 +172,15 @@ const OrderListCardIndex = ({
           <Text>{order.deliv.address}</Text>
           <Text>{order.deliv.addressDetail}</Text>
         </Col>
-        <Col width={colWidths[6]}>
-          <Deliv 
-            order={order}
-            v={v}
-            setV={setV}
-          />
-        </Col>
         <DisplayGroup>
+          <Col width={colWidths[6]}>
+            <Deliv 
+              order={order}
+              v={v}
+              setV={setV}
+              updateOrder={updateOrder}
+            />
+          </Col>
           <Col width={colWidths[7]}>
             <ActionBtn
               order={order}

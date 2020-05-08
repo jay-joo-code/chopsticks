@@ -44,7 +44,7 @@ const BasicInfoForm = ({ user }) => {
       title: Yup.string()
         .required('필수'),
       intro: Yup.string()
-        .max(144, '최대 길이는 144자 입니다')
+        .max(200, '최대 길이는 200자 입니다')
         .required('필수'),
       image: Yup.string()
         .required('필수'),
@@ -91,7 +91,7 @@ const BasicInfoForm = ({ user }) => {
           name="intro"
           label="샵 소개"
           charCounter
-          maxChar={144}
+          maxChar={200}
         />
       </InputContainer>
       <Btn

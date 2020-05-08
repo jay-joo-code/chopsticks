@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import DeliveryDetailCard from 'src/components/common/cards/DeliveryDetailCard';
 import RedButton from 'src/components/common/buttons/RedButton';
-import axios from 'axios';
 import log from 'src/util/log';
+import api from 'src/util/api';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 
 const Container = styled.div`
@@ -26,7 +26,7 @@ const ListComp = ({
 
   const handleCardClick = (i) => {
     const data = { defaultIndex: i };
-    axios.put(`/api/user/${user._id}/delivery-info/default-index/update`, data)
+    api.put(`/user/${user._id}/delivery-info/default-index/update`, data)
       .then(() => fetchSelfAndStore(user._id))
       .catch((e) => {
         log('ERROR update defaultIndex', e);
@@ -34,7 +34,7 @@ const ListComp = ({
   };
 
   const handleCardDelete = (i) => {
-    axios.put(`/api/user/${user._id}/delivery-info/delete/${i}`)
+    api.put(`/user/${user._id}/delivery-info/delete/${i}`)
       .then(() => fetchSelfAndStore(user._id))
       .catch((e) => {
         log('ERROR update defaultIndex', e);

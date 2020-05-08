@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Select from 'src/components/common/form/Select';
 import RedButton from 'src/components/common/buttons/RedButton';
 import theme from 'src/theme';
+import api from 'src/util/api';
 import log from 'src/util/log';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
@@ -21,6 +21,7 @@ const DyncCont = styled.div`
   background-color: white;
   display: inline-block;
   z-index: 20;
+  padding: 0 6rem;
   
   @media (min-width: ${theme.desktopContentWidth}px) {
     background-color: inherit;
@@ -29,6 +30,7 @@ const DyncCont = styled.div`
     width: auto;
     cursor: default;
     position: static;
+    padding: 0;
   }
 `;
 const Container = styled.div`
@@ -37,15 +39,16 @@ const Container = styled.div`
   padding: 2rem 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+  text-align: center;
 `;
 
 const Name = styled.h3`
   font-size: 1.5rem;
   font-weight: bold;
-  max-width: 250px;
   opacity: .8;
   white-space: pre-line;
+  word-break: break-word;
   text-align: center;
 `;
 
@@ -53,15 +56,12 @@ const SelectCont = styled.div`
   margin: .5rem 0;
 `;
 
-const OptString = styled(Body)`
-  margin-top: 1rem;
-`
-
-const Price = styled.div`
+const Price = styled.p`
   font-size: 2rem;
   font-weight: bold;
   opacity: .6;
   margin: 2rem 0;
+  text-align: center;
 `;
 
 const BuySect = styled.div`
@@ -91,7 +91,6 @@ const CloseBtn = styled.div`
 const Purchase = ({ item }) => {
   // mobile 
   const [expanded, setExpanded] = useState(false);
-  const price = item && item.price && item.price.toLocaleString('en');
   const isDesktop = window.innerWidth >= theme.desktopContentWidth;
   const handleClick = () => {
     setExpanded(!expanded);
@@ -103,8 +102,11 @@ const Purchase = ({ item }) => {
   const [msg, setMsg] = useState('');
   
   // opts
-  const emptyOptionsIndex = Array(item.optGrps.length).fill(null);
-  const [optionsIndex, setOptionsIndex] = useState(emptyOptionsIndex);
+  const initOptionsIndex = item.optGrps.map((optGrp) => {
+    if (optGrp.optional) return 0;
+    else return null;
+  })
+  const [optionsIndex, setOptionsIndex] = useState(initOptionsIndex);
   const handleOptChange = (e, optGrpIndex) => {
     const selectedIndex = e.target.value;
     let newIndexArray = [...optionsIndex];
@@ -112,9 +114,10 @@ const Purchase = ({ item }) => {
     setOptionsIndex(newIndexArray);
   }
   
-  const formatOptStr = (opt) => {
+  const formatOptStr = (opt, optStr) => {
     if (!opt || !opt.optString) return '';
-    return `${opt.optString} (+ ${opt.diff}원) ${opt.qty}개`;
+    const qtyString = item.madeOnOrder ? '' : `${opt.qty}개`;
+    return `${optStr} (+ ${opt.diff}원) ${qtyString}`;
   }
   const findOptByIndex = (searchIndex) => {
     const foundOpt = optData.filter((opt, i) => {
@@ -126,13 +129,16 @@ const Purchase = ({ item }) => {
   // conditional render based on unset opt 
   const unsetOptCount = optionsIndex.filter((index) => index === null).length;
   const unsetOptIndex = optionsIndex.indexOf(null);
-  const { optData } = item;
+  const { optGrps, optData } = item;
   
   // selectedOpt
   // when all opts are selected, determine which opt combination was selected
   const [selectedOpt, setSelectedOpt] = useState();
   const dispatch = useDispatch();
   useEffect(() => {
+    // do nothing if the item does not have options
+    if (item.optData.length === 0) return;
+    
     if (!optionsIndex.includes(null)) {
       const selectedOpt = findOptByIndex(optionsIndex)
       if (selectedOpt) {
@@ -149,48 +155,109 @@ const Purchase = ({ item }) => {
             color: 'danger'
           }
         })
-        setOptionsIndex(emptyOptionsIndex);
+        setOptionsIndex(initOptionsIndex);
       }
     }
     else {
       setSelectedOpt(null)
     }
   }, [optionsIndex])
+
+  // price 
+  const priceWithDiff = selectedOpt ? item.price + selectedOpt.diff : item.price;
+  const price = priceWithDiff.toLocaleString('en');
+
+  // 수량
+  const [quantity, setQuantity] = useState();
+  let maxQty = 1;
+  if (item.madeOnOrder) maxQty = 99;
+  else if (item.optData.length === 0) maxQty = item.stock;
+  else if (selectedOpt) maxQty = selectedOpt.qty;
+  
+  const quantityOpts = Array(maxQty).fill(null).map((elt, i) => i + 1);
+  const handleQuantityChange = (e) => {
+    setQuantity(Number(e.target.value));
+  }
+  let helperText = '';
+  if (item.madeOnOrder) helperText = '주문 후 제작';
+  else if (selectedOpt) helperText = `${selectedOpt.qty}개 남음`;
+  else if (item.optData.length === 0) helperText = `${item.stock}개 남음`;
   
   // add to cart
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const handleAddToCart = () => {
-    // validation
+    // user validation
     if (!user) {
       history.push('/login');
       return;
     }
-    else if (optionsIndex.includes(null)) {
+
+    // 옵션 validation
+    if (item.optData.length !== 0) {
+      if (optionsIndex.includes(null)) {
+        // 선택안된 옵션이 optional 옵션일 경우, 자동으로 "선택안함" 옵션을 선택
+        const autoSelectedOptionsIndex = optionsIndex.map((index, i) => {
+          if (index !== null) return index;
+          if (optGrps[i].optional) return 0;  // 0 이 "선택안함" 옵션임
+          else return null;
+        })
+        if (autoSelectedOptionsIndex.includes(null)) {
+          setIsSuccess(false);
+          setMsg('옵션을 모두 선택해주세요')
+          setShowAlert(true);
+          return;
+        }
+      }
+    }
+
+    // 수량 validation
+    if (!quantity) {
       setIsSuccess(false);
-      setMsg('옵션을 모두 선택해주세요')
+      setMsg('수량을 선택해주세요')
       setShowAlert(true);
       return;
     }
-    else if (selectedOpt.qty === 0) {
-      setIsSuccess(false);
-      setMsg('선택하신 옵션이 재고가 없습니다. 다른 옵션을 선택해주세요')
-      setShowAlert(true);
-      return;
-    }
-    else {
-      setMsg('')
-      setShowAlert(false);
+
+    // 재고 validation
+    if (!item.madeOnOrder) {
+      if (item.optData.length !== 0) {
+        // 옵션 재고
+        if (selectedOpt.qty === 0) {
+          setIsSuccess(false);
+          setMsg('선택하신 옵션이 재고가 없습니다. 다른 옵션을 선택해주세요')
+          setShowAlert(true);
+          return;
+        } 
+        else if (selectedOpt.qty < quantity) {
+          setIsSuccess(false);
+          setMsg('선택하신 옵션의 재고가 부족합니다. 수량을 줄이거나 다른 옵션을 선택해주세요')
+          setShowAlert(true);
+          return;
+        }
+      }
+      else {
+        // 상품 재고
+        if (item.stock === 0) {
+          setIsSuccess(false);
+          setMsg('상품 재고가 없습니다')
+          setShowAlert(true);
+          return;
+        }
+      }
     }
     
+    setMsg('')
+    setShowAlert(false);
+    
     const cartObj = {
-      item: item._id,
+      item,
       optionsIndex,
-      quantity: 1,
-      optString: selectedOpt.optString,
-      diff: selectedOpt.diff
+      quantity,
+      optString: selectedOpt ? selectedOpt.optString : '옵션 없음',
+      diff: selectedOpt ? selectedOpt.diff : 0
     };
-    axios.post(`/api/user/${user._id}/cart/add`, { cartObj })
+    api.post(`/user/${user._id}/cart/add`, { cartObj })
       .then((res) => {
         setIsSuccess(true);
         setMsg('카트에 상품을 담았습니다')
@@ -201,6 +268,12 @@ const Purchase = ({ item }) => {
         log('ERROR add item to cart');
       });
   };
+
+  // 즉시구매
+  const handlePurchase = () => {
+    handleAddToCart();
+    history.push('/cart?checkout=true');
+  }
   
   // conditional rendering
   if (!item) return <div />;
@@ -218,16 +291,14 @@ const Purchase = ({ item }) => {
     <DyncCont>
       <Container>
         <Name>{item.name}</Name>
-        <Price>
-          {price}
-원
-        </Price>
+        <Price>{price}원</Price>
         {item.optGrps.map((optGrp, optGrpIndex) => (
           <SelectCont>
             <Select
               value={optionsIndex[optGrpIndex] || ''}
               onChange={(e) => handleOptChange(e, optGrpIndex)}
               placeholder={optGrp.title}
+              width='100%'
             >
               {optGrp.opts.map((opt, i) => {
                 let curIndex = [...optionsIndex];
@@ -238,15 +309,29 @@ const Purchase = ({ item }) => {
                 if (unsetOptCount === 1) {
                   // render optData only for last optGrp
                   if (unsetOptIndex === optGrpIndex) {
-                    dispStr = formatOptStr(curOpt);
+                    dispStr = formatOptStr(curOpt, opt);
                     
                     // don't render empty string
-                    // this means this opt combination was deleted by user
+                    // this means this opt combination was deleted by the seller
                     if (!dispStr) return null;
                   }
+                  // render opt for the other optGrps
                   else {
                     dispStr = opt;
                   }
+                }
+                else if (unsetOptCount === 0) {
+                  // render optData for all optGrps
+                  dispStr = formatOptStr(curOpt, opt);
+
+                  // render opt for the currently selected opt
+                  if (Number(optionsIndex[optGrpIndex]) === i) {
+                    dispStr = opt;
+                  }
+                    
+                  // don't render empty string
+                  // this means this opt combination was deleted by the seller
+                  if (!dispStr) return null;
                 }
                 else {
                   // render opt only for all optGrps
@@ -262,9 +347,22 @@ const Purchase = ({ item }) => {
             </Select>
           </SelectCont>
         ))}
-        <OptString>{selectedOpt && formatOptStr(selectedOpt)}</OptString>
+        <SelectCont>
+          <Select
+            value={quantity || ''}
+            onChange={handleQuantityChange}
+            placeholder='수량'
+            width='100%'
+            helperText={helperText}
+            maxSize={10}
+          >
+            {quantityOpts.map((quantity) => (
+              <option key={quantity} value={quantity}>{quantity}</option>
+            ))}
+          </Select>
+        </SelectCont>
         <BuySect>
-          <BuyButton white rounded>즉시 구매</BuyButton>
+          <BuyButton onClick={handlePurchase} white rounded>즉시 구매</BuyButton>
           <BuyButton onClick={handleAddToCart} green rounded>장바구니에 담기</BuyButton>
           <Alert
             show={showAlert}

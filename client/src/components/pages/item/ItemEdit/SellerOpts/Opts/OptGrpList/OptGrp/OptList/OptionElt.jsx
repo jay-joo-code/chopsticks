@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 
 const Container = styled.div`
   display: flex;
@@ -24,12 +25,25 @@ const Delete = styled.div`
 `;
 
 const Option = ({
-  opt, index, formik, grpIndex
+  opt, index, formik, grpIndex, optional
 }) => {
+  const dispatch = useDispatch();
   const handleDelete = () => {
-    const newOptGrps = [...formik.values.optGrps];
-    newOptGrps[grpIndex].opts.splice(index, 1);
-    formik.setFieldValue('optGrps', newOptGrps);
+    if (optional && index === 0 && opt === '선택안함') {
+      dispatch({
+        type: 'ALERT_SET',
+        payload: {
+          show: true,
+          color: 'danger',
+          msg: '선택 옵션의 선택안함 옵션은 필수 입니다'
+        }
+      })
+    }
+    else {
+      const newOptGrps = [...formik.values.optGrps];
+      newOptGrps[grpIndex].opts.splice(index, 1);
+      formik.setFieldValue('optGrps', newOptGrps);
+    }
   };
   
   return (

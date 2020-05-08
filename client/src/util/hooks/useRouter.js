@@ -19,9 +19,16 @@ export default function useRouter() {
     history.push(newPath);
   }
   
-  const updateQuery = (obj) => {
-    const newQuery = Object.assign({}, query, obj);
+  const updateQuery = (queryObj) => {
+    const newQuery = Object.assign({}, query, queryObj);
     setQuery(newQuery);
+  }
+
+  const updatePathAndQuery = (path, queryObj) => {
+    const newQuery = Object.assign({}, query, queryObj);
+    const queryStr = queryString.stringify(newQuery);
+    const newPath = `${path}?${queryStr}`;
+    history.push(newPath);
   }
 
   return useMemo(() => {
@@ -31,6 +38,7 @@ export default function useRouter() {
       pathname: location.pathname,
       query,
       updateQuery,
+      updatePathAndQuery,
       match,
       location,
       history

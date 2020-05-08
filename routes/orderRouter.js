@@ -25,7 +25,7 @@ orderRouter.get('/:usertype/:uid', async (req, res) => {
     // filter by user
     const filter = {};
     filter[usertype] = uid;
-    const results = await Order.find(filter).populate('seller').populate('buyer');
+    const results = await Order.find(filter).populate('seller').populate('buyer').sort({ createdAt: 1 });
 
     const filtered = results.filter((doc) => {
       let condition = true;
@@ -77,6 +77,7 @@ orderRouter.post('/create', async (req, res) => {
 });
 
 orderRouter.post('/:id/:type', async (req, res) => {
+  // handle cancel or refund
   // type: "cancel" or "refund"
   try {
     const { id } = req.params;
@@ -97,8 +98,7 @@ orderRouter.post('/:id/:type', async (req, res) => {
         // don't throw an error
       }
       else {
-        console.log('Bootpay cancel error', cancelRes);
-        throw new Error(cancelRes);
+        throw new Error('취소가 정상적으로 처리되지 않았습니다');
       }
     } 
     
@@ -107,8 +107,7 @@ orderRouter.post('/:id/:type', async (req, res) => {
     const dbRes = await order.save();
     res.send(dbRes);
   } catch (e) {
-    console.log(e);
-    res.status(500).send(e);
+    res.status(500).send({ message: e.toString() });
   }
 });
 

@@ -12,7 +12,7 @@ const OptGrp = ({ formik, optGrp, index }) => {
   return (
     <Container>
       <InputRow formik={formik} index={index} optGrp={optGrp} />
-      <OptList opts={optGrp.opts} formik={formik} grpIndex={index} />
+      <OptList optGrp={optGrp} formik={formik} grpIndex={index} />
     </Container>
   )
 };

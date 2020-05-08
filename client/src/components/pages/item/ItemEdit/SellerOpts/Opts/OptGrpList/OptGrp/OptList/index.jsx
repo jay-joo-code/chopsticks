@@ -12,7 +12,8 @@ const List = styled.div`
   margin-bottom: 1rem;
 `;
 
-const OptionsList = ({ opts, formik, grpIndex }) => {
+const OptionsList = ({ optGrp, formik, grpIndex }) => {
+  const { opts, optional } = optGrp;
 
   return (
     <Container>
@@ -24,6 +25,7 @@ const OptionsList = ({ opts, formik, grpIndex }) => {
             opt={opt}
             formik={formik}
             grpIndex={grpIndex}
+            optional={optional}
           />
         ))}
       </List>

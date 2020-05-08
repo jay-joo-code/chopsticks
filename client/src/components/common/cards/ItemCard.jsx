@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from 'src/theme';
 import { Link } from 'react-router-dom';
-import { ReactComponent as Star } from 'src/assets/svgs/star.svg';
+import { isSoldout } from 'src/util/helpers';
 
 const Cont = styled.div`
   width: 100%;
@@ -10,7 +10,7 @@ const Cont = styled.div`
   position: relative;
   margin: 1rem .5rem 0 .5rem;
   
-  @media (min-width: ${theme.desktopContentWidth}px) {
+  @media (min-width: ${theme.CARD_WIDTH}px) {
     width: ${theme.CARD_WIDTH}px;
   }
 `;
@@ -31,13 +31,34 @@ const StyleArea = styled.div`
   padding: .2rem .5rem;
 `;
 
+const SoldoutArea = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const Soldout = styled.p`
+  color: black;
+  font-size: 1.2rem;
+`
+
 const ImgSect = styled.div`
+  position: relative;
 `;
 
 const Img = styled.img`
   object-fit: cover;
   width: 100%;
   height: ${theme.CARD_HEIGHT}px;
+  
+  // soldout
+  opacity: ${props => props.soldout ? '.6' : ''};
 `;
 
 const TextSect = styled.div`
@@ -61,11 +82,18 @@ const Name = styled.p`
   text-overflow: ellipsis;
   overflow: hidden;
   font-size: .8rem;
+  word-break: break-word;
   
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 `;
+
+const SoldoutPublic = styled.p`
+  font-size: .8rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+`
 
 const Owner = styled.p`
   color: ${(props) => props.theme.red};
@@ -78,26 +106,35 @@ const Price = styled.p`
   flex-shrink: 0;
 `;
 
-const ItemCard = ({ onClickPath, item, ...rest }) => {
+const ItemCard = ({ onClickPath, item, seller, ...rest }) => {
   const path = onClickPath || `/item/${item._id}`;
   const src = item.image;
   const styledPrice = item.price.toLocaleString();
+  const soldout = isSoldout(item);
 
   return (
     <Cont>
       <Link to={path}>
         <ImgSect>
-          <Img src={src} />
+          <Img src={src} soldout={seller && soldout} />
           <StyleArea>
             <p>{item.style}</p>
           </StyleArea>
+          {(seller && soldout) &&
+            <SoldoutArea>
+              <Soldout>Sold Out</Soldout>
+            </SoldoutArea>
+          }
         </ImgSect>
         <TextSect>
           <Row>
             <Owner>{`@${item.owner.shop.title}`}</Owner>
             <Price>{`${styledPrice}원`}</Price>
           </Row>
-          <Name>{item.name}</Name>
+          <Row>
+            <Name>{item.name}</Name>
+            {(!seller && soldout) && <SoldoutPublic>Sold Out</SoldoutPublic>}
+          </Row>
         </TextSect>
       </Link>
     </Cont>

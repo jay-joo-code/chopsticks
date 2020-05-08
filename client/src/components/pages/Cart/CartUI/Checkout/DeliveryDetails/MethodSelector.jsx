@@ -32,17 +32,20 @@ const MethodSelector = ({ method, setMethod }) => {
         />
         <Body>신용카드 / 체크카드</Body>
       </Row>
-      <Row>
-        <Input
-          type='radio'
-          value='vbank'
-          checked={method === 'vbank'}
-          onChange={handleChange}
-        />
-        <Body>무통장 입금</Body>
-      </Row>
     </Container>
   )
 };
+
+/*
+<Row>
+    <Input
+      type='radio'
+      value='vbank'
+      checked={method === 'vbank'}
+      onChange={handleChange}
+    />
+    <Body>무통장 입금</Body>
+  </Row>
+*/
 
 export default MethodSelector;

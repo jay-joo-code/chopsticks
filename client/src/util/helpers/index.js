@@ -14,18 +14,30 @@ export const cartObjToOptsString = (cartObj) => {
 
 // if delivery is complete
 // automatically update state: delivering to complete
-export const updateDelivState = async (uid, userType) => {
-  try {
-    const { data: orders } = await api.get(`/order/${userType}/${uid}?state=delivering`)
-    orders.map( async (order) => {
-      const { data } = await axios.get(trackerUrl(order));
-      if (data.complete) {
-        await api.put(`/order/${order._id}/update`, { state: 'complete' })
-      }
-    })
-  } catch (e) {
-    log(`ERROR updateDelivState`, e)
-  }
+export const updateDelivState = (uid, userType) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data: orders } = await api.get(`/order/${userType}/${uid}?state=delivering`);
+      const promiseArr = orders.map((order) => {
+        return new Promise(async (resolve, reject) => {
+          try {
+          const { data } = await axios.get(trackerUrl(order));
+          if (data.complete) {
+            await api.put(`/order/${order._id}/update`, { state: 'complete' })
+          }
+          resolve();
+        }
+        catch (e) {
+          reject(e);
+        }})
+      })
+      Promise.all(promiseArr)
+        .then(() => resolve())
+        .catch((e) => reject(e))
+    } catch (e) {
+      reject(e);
+    }
+  })
 }
 
 export const setOrderState = (orderId, newState, stateMsg) => {
@@ -40,4 +52,19 @@ export const setOrderState = (orderId, newState, stateMsg) => {
       })
       .catch((e) => reject(e))
   })
+}
+
+export const isSoldout = (item) => {
+  if (item.madeOnOrder) return false;
+  
+  if (item.optData.length !== 0) {
+    let allItemsSoldOut = true;
+    item.optData.map((opt) => {
+      if (opt.qty !== 0) allItemsSoldOut = false;
+    })
+    return allItemsSoldOut;
+  }
+  else {
+    if (item.stock === 0) return true;
+  }
 }

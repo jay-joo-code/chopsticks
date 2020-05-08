@@ -1,29 +1,29 @@
 const mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var mongoosePaginate = require('mongoose-paginate-v2');
+const Schema = mongoose.Schema;
+const mongoosePaginate = require('mongoose-paginate-v2');
 
-var orderSchema = Schema({
+const orderSchema = Schema({
   deliv : {
     type: {
       recipient: {
         type: String,
-        required: true
+        required: true,
       },
       address: {
         type: String,
-        required: true
+        required: true,
       },
       addressDetail: {
         type: String,
-        required: true
+        required: true,
       },
       mobile: {
         type: String,
-        required: true
+        required: true,
       },
       company: String,
       companyCode: String,
-      invoice: String
+      invoice: String,
     },
     required: true,
   },
@@ -38,12 +38,12 @@ var orderSchema = Schema({
   buyer: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
   seller: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
   state: { 
     // new pending delivering complete 
@@ -53,11 +53,15 @@ var orderSchema = Schema({
     // error
     type: String,
     required: true,
-    default: 'new'
+    default: 'new',
   },
   stateMsg: {
     // 교환, 환불, 취소 사유 메세지
-    type: String
+    type: String,
+  },
+  stateText: {
+    // 교환주문건이 배송중으로 이동되도 (교환건) 텍스트 유지되게끔
+    type: String,
   },
   linkedOrderId: {
     // 교환 시 관련 주문건 id 를 저장
@@ -66,16 +70,20 @@ var orderSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'Order',
   },
+  hideToBuyer: {
+    // 교환 신청 시 기존 주문건은 구매자에게만 안보인다
+    type: Boolean,
+    default: false,
+  },
   seen: {
     // TODO: remove seen property
     type: Boolean,
     required: true,
-    default: false
+    default: false,
   },
-  createdAt: {
-    type: Date,
-    default: new Date
-  }
+},
+{
+  timestamps: true,
 });
 
 orderSchema.plugin(mongoosePaginate);

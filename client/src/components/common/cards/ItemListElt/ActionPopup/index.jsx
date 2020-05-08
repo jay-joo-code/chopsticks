@@ -81,9 +81,14 @@ const ActionPopup = ({
           _id: undefined,
           linkedOrderId: order._id,
           state: 'exchangeRequested',
-          stateMsg: msg
+          stateMsg: msg,
+          cartObj: {
+            ...order.cartObj,
+            price: 0,
+          }
         }
-        await api.post(`/order/create`, exchangeOrderData);
+        const orderData = { hideToBuyer: true }
+        await Promise.all([api.post(`/order/create`, exchangeOrderData), api.put(`/order/${order._id}/update`, orderData)]);
       }
       else {
         await setOrderState(order._id, newState, msg); 

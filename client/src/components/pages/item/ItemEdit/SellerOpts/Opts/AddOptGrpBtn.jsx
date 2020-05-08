@@ -11,8 +11,8 @@ const AddOptGrpBtn = ({ formik }) => {
     const newOptGrps = [...formik.values.optGrps];
     const initData = {
       title: '',
-      opts: []
-    }
+      opts: [],
+    };
     newOptGrps.push(initData);
     formik.setFieldValue('optGrps', newOptGrps);
   }

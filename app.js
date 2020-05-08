@@ -1,15 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const cors = require('cors');
-const config = require('./config');
 const mongoose = require('mongoose');
 
 // MONGODB
-mongoose.connect(config.dbUriDev, { useNewUrlParser: true, useUnifiedTopology: true });
-var db = mongoose.connection;
+const DB_URI_DEV = 'mongodb+srv://admin:hGikw8WT7aqK6lpq@dev-5yrgx.mongodb.net/test?retryWrites=true&w=majority';
+const DB_URI_PROD = 'mongodb+srv://chopsticks:1Xsy8coh0v2uNNpC@chopsticks-dev-qtlao.mongodb.net/test?retryWrites=true&w=majority';
+const URI = process.env.NODE_ENV === 'development' ? DB_URI_DEV : DB_URI_PROD;
+mongoose.connect(DB_URI_PROD, { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('db connection successful')
@@ -17,10 +19,10 @@ db.once('open', () => {
 
 // PORT
 const PORT = process.env.PORT || 8081;
-var app = express();
+const app = express();
 app.listen(PORT, () => {
   console.log(`listening at ${PORT}`)
-})
+});
 
 // VIEW ENGINE
 app.set('views', path.join(__dirname, 'views'));
@@ -87,7 +89,7 @@ passport.deserializeUser(function(id, done) {
 
 // ROUTING
 // applies in development or api servers
-if (process.env.NODE_ENV !== 'development' || process.env.REACT_APP_ENV === 'api') {
+if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_ENV === 'api') {
   app.use('/api', require('./routes'));
 }
 

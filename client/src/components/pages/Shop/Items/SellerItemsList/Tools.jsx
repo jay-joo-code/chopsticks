@@ -7,6 +7,8 @@ import { ReactComponent as Copy } from 'src/assets/svgs/duplicate.svg';
 import Popup from 'src/components/common/popups/Popup';
 import Title from 'src/components/common/fonts/Title';
 import Body from 'src/components/common/fonts/Body';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -26,8 +28,9 @@ const DispBtn = styled.div`
   padding: .3rem 1rem;
   cursor: pointer;
   
-  // highlight
-  background: ${props => props.highlight ? props.theme.primary : ''};
+  // highlight, background
+  background: ${props => props.highlight ? props.theme[props.background] : ''};
+  
 `;
 
 const RightSection = styled.div`
@@ -71,12 +74,23 @@ const BtnWrapper = styled.div`
 
 const Tools = ({ item, v, setV, hasMaxDisplayed }) => {
   // display
+  const dispatch = useDispatch();
   const setDisplay = (newState) => {
     const updatedItem = {
       ...item,
     };
     updatedItem.display = newState;
-    if (hasMaxDisplayed) updatedItem.display = false;
+    if (hasMaxDisplayed && newState === true) {
+      updatedItem.display = false;
+      dispatch({
+        type: 'ALERT_SET',
+        payload: {
+          show: true,
+          msg: '판매 가능한 상품의 개수는 최대 7개 입니다.',
+          color: 'danger'
+        }
+      })
+    }
     api.put(`/item/${item._id}/update`, updatedItem)
       .then(() => setV(v + 1))
       .catch(() => setV(v + 1));
@@ -103,10 +117,15 @@ const Tools = ({ item, v, setV, hasMaxDisplayed }) => {
   return (
     <Container>
       <DispBtnSection>
-        <DispBtn highlight={item.display} onClick={() => setDisplay(true)}>판매중</DispBtn>
-        <DispBtn highlight={!item.display} onClick={() => setDisplay(false)}>판매중지</DispBtn>
+        <DispBtn highlight={item.display} background='primary' onClick={() => setDisplay(true)}>판매중</DispBtn>
+        <DispBtn highlight={!item.display} background='danger' onClick={() => setDisplay(false)}>판매중지</DispBtn>
       </DispBtnSection>
       <RightSection>
+        {process.env.NODE_ENV === 'development' && (
+          <Link to={`/item/${item._id}`}>
+            View
+          </Link>
+        )}
         <SCopy onClick={handleCopy} />
         <STrash onClick={() => setShowPopup(1)} />
       </RightSection>

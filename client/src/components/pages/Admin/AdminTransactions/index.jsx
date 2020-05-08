@@ -3,6 +3,7 @@ import api from 'src/util/api';
 import log from 'src/util/log';
 import styled from 'styled-components';
 import TransactionsTable from './TransactionsTable';
+import Loading from 'src/components/common/displays/Loading';
 
 const Container = styled.div`
   margin: 2rem 0;
@@ -30,6 +31,7 @@ const Month = styled.p`
 const AdminTransactions = () => {
   const [monthIndex, setMonthIndex] = useState(new Date().getMonth());
   const [sellers, setSellers] = useState([]);
+  const [loading, setLoading] = useState(false);
   
   const embedRevenue = (sellers) => {
     return new Promise(async (resolve, reject) => {
@@ -57,14 +59,24 @@ const AdminTransactions = () => {
   }
   
   const reload = () => {
+    setLoading(true);
     api.get(`/user`)
       .then((res) => {
         const sellers = res.data.filter((user) => user.shop.applied && user.shop.accepted);
         embedRevenue(sellers)
-          .then((sellersWithRevenue) => setSellers(sellersWithRevenue))
-          .catch((e) => log('ERROR AdminTransactions', e))
+          .then((sellersWithRevenue) => {
+            setSellers(sellersWithRevenue);
+            setLoading(false);
+          })
+          .catch((e) => {
+            log('ERROR AdminTransactions', e)
+            setLoading(false);
+          })
       })
-      .catch((e) => log('ERROR AdminTransactions', e))
+      .catch((e) => {
+        log('ERROR AdminTransactions', e)
+        setLoading(false);
+      })
   }
   
   // seller initial load
@@ -74,9 +86,16 @@ const AdminTransactions = () => {
   
   // recompute revenue data for each seller on monthIndex change
   useEffect(() => {
+    setLoading(true);
     embedRevenue(sellers)
-      .then((sellersWithRevenue) => setSellers(sellersWithRevenue))
-      .catch((e) => log('ERROR AdminTransactions', e))
+      .then((sellersWithRevenue) => {
+        setSellers(sellersWithRevenue);
+        setLoading(false);
+      })
+      .catch((e) => {
+        log('ERROR AdminTransactions', e);
+        setLoading(false);
+      })
   }, [monthIndex])
   
   const changeMonth = (val) => {
@@ -103,12 +122,15 @@ const AdminTransactions = () => {
           {'>'}
         </Arrow>
       </MonthSection>
-      <TransactionsTable
-        sellers={sellers}
-        setSellers={setSellers}
-        reload={reload}
-        monthIndex={monthIndex}
-      />
+      {loading
+        ? <Loading />
+        : <TransactionsTable
+            sellers={sellers}
+            setSellers={setSellers}
+            reload={reload}
+            monthIndex={monthIndex}
+          />
+      }
     </Container>
   );
 };

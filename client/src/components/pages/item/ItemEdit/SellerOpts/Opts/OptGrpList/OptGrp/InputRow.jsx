@@ -41,6 +41,14 @@ const InputRow = ({ formik, index, optGrp }) => {
       setName(e.target.value);
     }
   }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleAddOpt();
+      setName('');
+    }
+  }
   
   const handleAddOpt = () => {
     let newOptGrps = [...formik.values.optGrps];
@@ -74,6 +82,7 @@ const InputRow = ({ formik, index, optGrp }) => {
             label='옵션값'
             value={name}
             onChange={(e) => handleChange(e, 'name')}
+            onKeyDown={handleKeyDown}
             placeholder='노란색, 파란색'
             width={300}
             sideButton={deleteBtn}

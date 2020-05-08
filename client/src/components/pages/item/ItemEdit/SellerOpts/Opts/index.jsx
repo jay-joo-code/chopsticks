@@ -8,16 +8,16 @@ import OptGrpList from './OptGrpList';
 import OptDataInput from './OptDataInput';
 
 const Container = styled.div`
-  
+  & > label {
+    margin-top: 2rem;
+  }
 `
 
 const Opts = ({ formik }) => {
-  
-  
+
   return (
     <Container>
       <Label>옵션 <Muted>Optional</Muted></Label>
-      <Body muted mb={1}>*크기, 색상 등 옵션이 있다면 옵션을 추가해 보세요.</Body>
       <AddOptGrpBtn formik={formik} />
       <OptGrpList formik={formik} />
       <OptDataInput formik={formik} />

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import log from 'src/util/log';
 import api from 'src/util/api';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import theme from 'src/theme';
 import { Link } from 'react-router-dom';
@@ -16,18 +16,32 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  overflow: hidden;
 `;
 
 const Top = styled.div`
   display: flex;
   justify-content: space-between;
+  overflow: hidden;
 `;
 
-const Name = styled.div`
+const TopData = styled.div`
+  overflow: hidden;
+  flex-grow: 0;
+  padding-right: 1rem;
+`
+
+const TopActionSection = styled.div`
+  flex-shrink: 0;
+`
+
+const Name = styled.p`
   font-size: 1.2rem;
   font-weight: bold;
   opacity: .9;
   margin-bottom: .5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Owner = styled.div`
@@ -99,11 +113,52 @@ const ItemInfo = ({
   cartObj, order, setV, v,
 }) => {
   const user = useSelector((state) => state.user);
-  const { item, quantity, optString, diff } = cartObj;
+  const { item, quantity, optString, diff, optionsIndex } = cartObj;
   const totalPrice = getTotalPrice(cartObj);
+  const dispatch = useDispatch();
+
+  const findOptByIndex = (searchIndex) => {
+    const foundOpt = item.optData.filter((opt, i) => {
+      return opt.index.join() === searchIndex.join();
+    });
+    return foundOpt.length !== 0 ? foundOpt[0] : null;
+  }
 
   const handleQtyChange = (e) => {
-    const data = { ...cartObj, quantity: e.target.value };
+    const quantity = Number(e.target.value);
+
+    // 재고 validation
+    let hasStockError = false;
+    if (!item.madeOnOrder) { 
+      if (item.optData.length !== 0) {
+        // 옵션 재고
+        const opt = findOptByIndex(optionsIndex);
+        console.log('opt', opt);
+        if (quantity > opt.qty) {
+          hasStockError = true;
+        }
+      }
+      else { 
+        // 상품 재고
+        if (quantity > item.stock) {
+          hasStockError = true;
+        }  
+      }
+    }
+
+    if (hasStockError) {
+      dispatch({
+        type: 'ALERT_SET',
+        payload: {
+          show: true,
+          color: 'danger',
+          msg: '상품 최대 재고입니다'
+        }
+      })
+      return;
+    }
+
+    const data = { ...cartObj, quantity, };
     api.put(`/user/${user._id}/cart/update/cartobj`, { cartObj: data })
       .then((res) => {
         fetchSelfAndStore(user._id);
@@ -116,26 +171,25 @@ const ItemInfo = ({
   return (
     <Container>
       <Top>
-        <div>
+        <TopData>
           <Link to={`/item/${item._id}`}>
             <Name>{item.name}</Name>
           </Link>
           <Owner>{`@${item.owner.shop.title}`}</Owner>
-        </div>
-        <ActionsSection
-          order={order}
-          user={user}
-          setV={setV}
-          v={v}
-          cartObj={cartObj}
-        />
+        </TopData>
+        <TopActionSection>
+          <ActionsSection
+            order={order}
+            user={user}
+            setV={setV}
+            v={v}
+            cartObj={cartObj}
+          />
+        </TopActionSection>
       </Top>
       <Bottom>
         <Options>
           {optString && <Body>{`${optString} (+ ${diff})`}</Body>}
-          {process.env.NODE_ENV === 'development' && <p>{order && order.createdAt.slice(0, 10)}</p>}
-          {process.env.NODE_ENV === 'development' && <p>id: {order && order._id}</p>}
-          {process.env.NODE_ENV === 'development' && <p>linked id: {order && order.linkedOrderId}</p>}
         </Options>
         <PriceCalc>
           <QtyCont>

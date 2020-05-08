@@ -40,10 +40,18 @@ const ColText = styled.p`
 `;
 
 const OrdersList = ({
-  orders, selected, setSelected, v, setV,
+  orders, setOrders, selected, setSelected, v, setV,
 }) => {
   const colWidths = ['2rem', '10rem', '5rem', '4rem', '8rem', '12rem', '10rem', '8rem', '2rem'];
   const colNames = ['', '주문번호', '이름', '', '상품', '주소', '택배사 / 송장번호', '상태변경', ''];
+
+  const updateOrder = (newOrder) => {
+    const newOrders = orders.map((order) => {
+      if (newOrder._id !== order._id) return order;
+      return newOrder;
+    });
+    setOrders(newOrders);
+  }
   
   return (
     <Container>
@@ -59,6 +67,7 @@ const OrdersList = ({
           <OrderListCard
             key={order._id}
             order={order}
+            updateOrder={updateOrder}
             colWidths={colWidths}
             selected={selected}
             setSelected={setSelected}

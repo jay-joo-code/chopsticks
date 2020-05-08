@@ -65,12 +65,22 @@ const Value = styled.p`
 const RevenueByMonth = ({ orders, monthIndex, setMonthIndex }) => {
   const [count, setCount] = useState();
   const [total, setTotal] = useState();
-  
+  const excludedStates = ['canceled', 'refunded'];
+
+  const computeOrderData = (orders) => {
+    const completeOrders = orders.filter((order) => !excludedStates.includes(order.state) && order.stateText !== '(교환건)');
+    const updatedTotal = completeOrders.reduce((acc, cur) => acc + Number(cur.cartObj.price), 0);
+    const total = updatedTotal.toLocaleString();
+    return {
+      total,
+      count: completeOrders.length,
+    }
+  }
+
   useEffect(() => {
-    setCount(orders.length);
-    const updatedTotal = orders.reduce((acc, cur) => acc + Number(cur.cartObj.price), 0);
-    const totalStr = updatedTotal.toLocaleString();
-    setTotal(totalStr);
+    const { total, count } = computeOrderData(orders);
+    setTotal(total);
+    setCount(count);
   }, [orders]);
   
   const changeMonth = (val) => {
@@ -109,16 +119,20 @@ const RevenueByMonth = ({ orders, monthIndex, setMonthIndex }) => {
               <Value>{`${total}원`}</Value>
             </Row>
             <HrLine />
-            <Label sm>총 매출에서 거래별 수수료, 카드수수료 등을 제외한 실 수령 금액</Label>
-            <Row primary>
-              <Label>정산 금액</Label>
-              <Value>{`${total}원`}</Value>
-            </Row>
+            <Label sm>정산금액은 총 매출에서 거래별 수수료, 카드수수료 등을 제외한 실 수령 금액이며,</Label>
+            <Label sm>추후에 표시될 예정입니다.</Label>
           </CardInner>
         </Card>
       </Container>
     </Wrapper>
   );
 };
+
+/*
+<Row primary>
+  <Label>정산 금액</Label>
+  <Value>{`${total}원`}</Value>
+</Row>
+*/
 
 export default RevenueByMonth;

@@ -58,7 +58,7 @@ const AppForm = () => {
         .required('필수'),
       mobileVerif: Yup.bool().oneOf([true], '휴대폰 인증은 필수입니다'),
       intro: Yup.string()
-        .max(144, '최대 길이는 144자 입니다')
+        .max(200, '최대 길이는 200자 입니다')
         .required('필수'),
     }),
     onSubmit: (values, { setFieldError }) => {
@@ -142,7 +142,7 @@ const AppForm = () => {
               guideline='*창작자, 브랜드, 스튜디오에 대한 소개를 해주세요. 해당 내용은 상품 상세 페이지에서 함께 노출됩니다.'
               formik={formik}
               charCounter
-              maxChar={144}
+              maxChar={200}
             />
           </li>
         </ul>

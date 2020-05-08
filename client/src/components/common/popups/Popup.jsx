@@ -22,11 +22,12 @@ const Container = styled.div`
   z-index: 998;
   background: white;
   padding: 1rem;
-  margin: 2rem;
+  margin: auto;
   position: fixed;
   transition: all 5s ease-in-out;
   display: inline-block;
   width: 90%;
+  overflow-x: hidden;
   
   @media (min-width: ${props => props.theme.desktopContentWidth}px) {
     width: auto;

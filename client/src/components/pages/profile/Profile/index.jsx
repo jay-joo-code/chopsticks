@@ -8,10 +8,18 @@ import TitledPage from 'src/components/layout/TitledPage';
 import { useSelector } from 'react-redux';
 import PwdForm from './PwdForm';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
+import Heading from 'src/components/common/fonts/Heading';
 
-const Container = styled.div`
+const Center = styled.div`
   display: flex;
   justify-content: center;
+  padding: 2rem 0;
+`
+
+const Container = styled.div`
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    max-width: 600px;
+  }
 `;
 
 const BtnContainer = styled.div`
@@ -36,11 +44,13 @@ const Profile = () => {
   if (!user) return <div />;
   
   return (
-    <Container>
-      <TitledPage title='회원정보'>
+    <Center>
+      <Container>
+        <Heading>회원정보</Heading>
         <Form
           user={user}
         />
+        <Heading>비밀번호 재설정</Heading>
         <PwdForm
           user={user}
         />
@@ -50,8 +60,8 @@ const Profile = () => {
             onClick={handleLogout}
           >로그아웃</Btn>
         </BtnContainer>
-      </TitledPage>
-    </Container>
+      </Container>
+    </Center>
   );
 };
 
