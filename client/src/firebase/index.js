@@ -1,6 +1,7 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/storage';
+import 'firebase/analytics';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBxy2wS4OBH_lgbonyUo4el02tw0E_05bc",
@@ -14,5 +15,9 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
+if (process.env.NODE_ENV === 'production' && process.env.REACT_APP_ENV !== 'release') {
+  firebase.analytics(); 
+}
 
 export default firebase;
