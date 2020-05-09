@@ -1,5 +1,5 @@
 import firebase from 'src/firebase';
-import axios from 'axios';
+import api from 'src/util/api';
 
 // REJECT: Upload error
 // RESOLVE: Img download url
@@ -30,7 +30,7 @@ const uploadFile = (file, directory) => new Promise((resolve, reject) => {
               src,
               path
             }
-            axios.post('/api/file/create', data)
+            api.post('/file/create', data)
               .then(() => resolve(src))
               .catch((e) => reject(e))
           });

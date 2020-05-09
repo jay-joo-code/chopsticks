@@ -47,6 +47,7 @@ const Form = ({ user }) => {
         .required('필수'),
     }),
     onSubmit: values => {
+      console.log('values :>> ', values);
       api.put(`/user/${user._id}/update`, values)
         .then((res) => {
           setShowAlert(true);
