@@ -6,8 +6,8 @@ import Button from 'src/components/common/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios';
 import log from 'src/util/log';
+import api from 'src/util/api';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Container = styled.div`
@@ -87,9 +87,9 @@ const Register = () => {
         .required('필수')
     }),
     onSubmit: (values) => {
-      axios.post('/api/user/create', values)
+      api.post('/user/create', values)
         .then(() => {
-          axios.post('/api/user/login', values)
+          api.post('/user/login', values)
             .then((res) => {
               dispatch({
                 type: 'USER_SET',
