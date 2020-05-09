@@ -63,6 +63,10 @@ const ItemEdit = ({ item }) => {
       stock: Yup.number()
         .typeError('숫자만 기입해주세요')
         .required('필수'),
+      optGrps: Yup.array().of(Yup.object().shape({
+        title: Yup.string().required('필수'),
+        opts: Yup.array().of(Yup.string()).min(1, '옵션을 최소 1개는 등록해주세요')
+      })),
       processingMin: Yup.number()
         .typeError('숫자만 기입해주세요')
         .required('필수'),

@@ -29,7 +29,7 @@ const Cross = styled.p`
   cursor: pointer;
 `
 
-const OptDataElt = ({ formik, i}) => {
+const OptDataElt = ({ formik, i }) => {
   const opt = formik.values.optData[i];
   const handleChange = (e, field) => {
     const { value } = e.target;

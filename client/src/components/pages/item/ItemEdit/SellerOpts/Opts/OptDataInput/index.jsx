@@ -1,12 +1,23 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import OptDataElt from './OptDataElt';
+import Body from 'src/components/common/fonts/Body';
 
 const Container = styled.div`
   max-height: 600px;
   max-width: 800px;
   overflow: auto;
 `;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10rem;
+
+  & > * {
+    margin-left: 9rem;
+  }
+`
 
 const OptDataInput = ({ formik }) => {
   useEffect(() => {
@@ -51,6 +62,12 @@ const OptDataInput = ({ formik }) => {
   
   return (
     <Container>
+      {formik.values.optData.length !== 0 && (
+        <Header>
+          <Body>추가금액</Body>
+          <Body>수량</Body>
+        </Header>
+      )}
       {formik.values.optData && formik.values.optData.map((opt, i) => (
         <OptDataElt i={i} formik={formik} />
       ))}

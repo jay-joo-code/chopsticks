@@ -52,6 +52,7 @@ const InputRow = ({ formik, index, optGrp }) => {
   
   const handleAddOpt = () => {
     let newOptGrps = [...formik.values.optGrps];
+    if (name === '') return;
     if (newOptGrps[index].opts.includes(name)) return;
     newOptGrps[index].opts.push(name)
     formik.setFieldValue('optGrps', newOptGrps);
@@ -64,6 +65,10 @@ const InputRow = ({ formik, index, optGrp }) => {
   }
   
   const deleteBtn = <RoundBtn onClick={handleDeleteOtpGrp}>x</RoundBtn>;
+
+  const titleErrMsg = (formik.errors.optGrps && formik.errors.optGrps[index]) ? formik.errors.optGrps[index].title : '';
+  const optsErrMsg = (formik.errors.optGrps && formik.errors.optGrps[index]) ? formik.errors.optGrps[index].opts : '';
+  console.log('formik.errors :>> ', formik.errors);
   
   return (
     <Container>
@@ -75,6 +80,7 @@ const InputRow = ({ formik, index, optGrp }) => {
             onChange={handleTitleChange}
             placeholder='옵션 종류 ex) 색상'
             width={300}
+            errMsg={titleErrMsg}
           />
         </Col>
         <Col>
@@ -86,6 +92,7 @@ const InputRow = ({ formik, index, optGrp }) => {
             placeholder='노란색, 파란색'
             width={300}
             sideButton={deleteBtn}
+            errMsg={optsErrMsg}
           />
           <Body muted>*각 옵션은 쉼표로 분리해주세요</Body>
         </Col>

@@ -54,7 +54,7 @@ const ButtonContainer = styled.div`
 `;
 
 const OutlinedInput = ({
-    formik, name, label, sideButton, type, sideText, disabled, grey, width, size, ...rest
+    formik, name, label, sideButton, type, sideText, disabled, grey, width, size, errMsg, ...rest
   }) => {
   const hasError = formik ? formik.touched[name] && formik.errors[name] : false;
   const formikProps = formik ? formik.getFieldProps(name) : [];
@@ -84,9 +84,7 @@ const OutlinedInput = ({
           </ButtonContainer>
         )}
       </InputArea>
-      {hasError
-        ? <ErrMsg>{formik.errors[name]}</ErrMsg>
-        : null}
+      {(hasError || errMsg) && <ErrMsg>{errMsg || formik.errors[name]}</ErrMsg>}
     </Container>
   );
 };
