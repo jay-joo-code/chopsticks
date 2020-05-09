@@ -8,7 +8,7 @@ const scramble = async () => {
   try {
     console.log('**********SCRAMBLE**********');
     console.log('new Date() :>> ', new Date());
-    new ScrambleLog().save();
+    new ScrambleLog({ env: 'prod' }).save();
     const allItems = await Item.find({});
     allItems.map(async (item) => {
       try {
@@ -30,6 +30,17 @@ const scramble = async () => {
   }
 };
 
+// scramble everyday at 06:00
+schedule.scheduleJob({ hour: 6, minute: 0 }, async () => {
+  try {
+    if (process.env.NODE_ENV === 'production' && process.env.REACT_APP_ENV !== 'release') {
+      scramble();
+    }
+  } catch (e) {
+    console.log('scramble error', e);
+  }
+});
+
 const logScrambles = async () => {
   try {
     const logs = await ScrambleLog.find({});
@@ -39,16 +50,6 @@ const logScrambles = async () => {
     console.log('e :>> ', e);
   }
 };
-
-// scramble everyday at 06:00
-schedule.scheduleJob({ hour: 6, minute: 0 }, async (fireDate) => {
-  try {
-    console.log('fireDate :>> ', fireDate);
-    scramble();
-  } catch (e) {
-    console.log('scramble error', e);
-  }
-});
 
 // GET ITEMS: FILTERED SORTED PAGINATED
 itemRouter.get('/', async (req, res) => {
