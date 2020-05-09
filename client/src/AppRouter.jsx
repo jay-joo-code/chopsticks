@@ -44,7 +44,8 @@ const Container = styled.div`
 
 const AppRouter = () => {
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+    console.log('window.location :>> ', window.location);
   }, [window.location])
   
   return (

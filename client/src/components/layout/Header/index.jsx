@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import DynamicContainer from 'src/components/layout/DynamicContainer';
 import SearchBox from 'src/components/common/form/SearchBox';
@@ -8,6 +8,7 @@ import Nav from './Nav';
 import ExtendedNav from './ExtendedNav';
 import MobileSearch from './MobileSearch';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import useRouter from 'src/util/hooks/useRouter';
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,6 +45,11 @@ const Header = () => {
     clearAllBodyScrollLocks();
     setExpandSearch(false);
   }
+
+  const router = useRouter();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [router.location])
   
   return (
     <Wrapper>
