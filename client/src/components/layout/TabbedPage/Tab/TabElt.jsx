@@ -9,6 +9,7 @@ const Container = styled.div`
   background-color: ${(props) => (props.on ? props.theme.greenLight : '#fff')};
   color: ${(props) => (props.on ? '#000' : '#7a8680')};
   cursor: pointer;
+  flex-grow: 1;
   
   // tabWidth
   width: ${props => props.tabWidth ? `${props.tabWidth}px` : ''};

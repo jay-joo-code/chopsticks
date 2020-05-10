@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   overflow: hidden;
   display: flex;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+  flex-wrap: wrap;
 `;
 
 const Tab = (props) => {

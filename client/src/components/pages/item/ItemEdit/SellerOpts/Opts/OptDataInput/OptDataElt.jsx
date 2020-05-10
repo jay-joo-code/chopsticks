@@ -13,13 +13,15 @@ const RightContainer = styled.div`
   display: flex;
   align-items: center;
   
-  & > * {
-    margin-right: 1rem;
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    & > * {
+      margin-right: 1rem;
+    }
   }
 `
 
-const Input = styled(OutlinedInput)`
-  
+const InputContainer = styled.div`
+  width: 80px;
 `
 
 const Cross = styled.p`
@@ -52,28 +54,31 @@ const OptDataElt = ({ formik, i }) => {
   
   return (
     <Container>
-      <OutlinedInput
-        value={opt.optString}
-        disabled
-        width={220}
-        center
-      />
-      <RightContainer>
-        <Input
-          value={opt.diff}
-          right
-          width={150}
-          onChange={(e) => handleChange(e, 'diff')}
+      <InputContainer type='combination'>
+        <OutlinedInput
+          value={opt.optString}
+          disabled
+          center
         />
+      </InputContainer>
+      <RightContainer>
+        <InputContainer>
+          <OutlinedInput
+            value={opt.diff}
+            right
+            onChange={(e) => handleChange(e, 'diff')}
+          />
+        </InputContainer>
         <Body>원</Body>
         <RightContainer>
-          <Input
-            value={opt.qty}
-            right
-            width={150}
-            disabled={formik.values.madeOnOrder}
-            onChange={(e) => handleChange(e, 'qty')}
-          />
+          <InputContainer>
+            <OutlinedInput
+              value={opt.qty}
+              right
+              disabled={formik.values.madeOnOrder}
+              onChange={(e) => handleChange(e, 'qty')}
+            />
+          </InputContainer>
           <Body>개</Body>
         </RightContainer>
         <Cross onClick={deleteOpt}>x</Cross>
