@@ -55,9 +55,6 @@ const ItemsListComp = () => {
 
   return (
     <Container>
-      <TitleSect>
-        <StyledHeading>Designer's Items</StyledHeading>
-      </TitleSect>
       <ItemsList items={items} />
       {metadata && <PageNav metadata={metadata} />}
     </Container>
