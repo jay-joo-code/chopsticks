@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import BannerImgBig from 'src/assets/images/main_visual_big.jpg';
 import BannerImgMo from 'src/assets/images/main_visual_mo.jpg';
+import BannerImg from 'src/assets/images/banner.png';
 import theme from 'src/theme';
 
 const Container = styled.div`
@@ -31,8 +32,7 @@ const ImgBig = styled(Img)`
 
 const Banner = () => (
   <Container>
-    <ImgMo src={BannerImgMo} alt="banner image" />
-    <ImgBig src={BannerImgBig} alt="banner image" />
+    <Img src={BannerImg} alt='banner' />
   </Container>
 );
 
