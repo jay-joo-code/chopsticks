@@ -2,12 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import Body from 'src/components/common/fonts/Body';
+import Subheading from 'src/components/common/fonts/Subheading';
 
 const Container = styled.div`
   margin: .5rem 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
+
+const Combination = styled(Subheading)`
+  max-width: 120px;
+  word-break: break-word;
+  white-space: pre-line;
+
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    max-width: 300px;
+  }
+`
 
 const RightContainer = styled.div`
   display: flex;
@@ -22,6 +34,15 @@ const RightContainer = styled.div`
 
 const InputContainer = styled.div`
   width: 80px;
+  margin-left: .5rem;
+
+  @media (min-width: ${props => props.theme.desktopContentWidth}px) {
+    width: 150px;
+  }
+`
+
+const SideText = styled(Body)`
+  margin-left: .5rem;
 `
 
 const Cross = styled.p`
@@ -29,6 +50,7 @@ const Cross = styled.p`
   font-weight: bold;
   opacity: .9;
   cursor: pointer;
+  margin-left: .5rem;
 `
 
 const OptDataElt = ({ formik, i }) => {
@@ -54,13 +76,7 @@ const OptDataElt = ({ formik, i }) => {
   
   return (
     <Container>
-      <InputContainer type='combination'>
-        <OutlinedInput
-          value={opt.optString}
-          disabled
-          center
-        />
-      </InputContainer>
+      <Combination>{opt.optString}</Combination>
       <RightContainer>
         <InputContainer>
           <OutlinedInput
@@ -69,18 +85,16 @@ const OptDataElt = ({ formik, i }) => {
             onChange={(e) => handleChange(e, 'diff')}
           />
         </InputContainer>
-        <Body>원</Body>
-        <RightContainer>
-          <InputContainer>
-            <OutlinedInput
-              value={opt.qty}
-              right
-              disabled={formik.values.madeOnOrder}
-              onChange={(e) => handleChange(e, 'qty')}
-            />
-          </InputContainer>
-          <Body>개</Body>
-        </RightContainer>
+        <SideText>원</SideText>
+        <InputContainer>
+          <OutlinedInput
+            value={opt.qty}
+            right
+            disabled={formik.values.madeOnOrder}
+            onChange={(e) => handleChange(e, 'qty')}
+          />
+        </InputContainer>
+        <SideText>개</SideText>
         <Cross onClick={deleteOpt}>x</Cross>
       </RightContainer>
     </Container>

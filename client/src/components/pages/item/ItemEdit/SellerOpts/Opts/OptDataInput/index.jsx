@@ -12,12 +12,18 @@ const Container = styled.div`
 const Header = styled.div`
   display: flex;
   justify-content: flex-end;
+
+  padding-right: 4rem;
+
+  & > * {
+    margin-left: 7rem;
+  }
   
   @media (min-width: ${props => props.theme.desktopContentWidth}px) {
     padding-right: 10rem;
 
     & > * {
-      margin-left: 9rem;
+      margin-left: 10rem;
     }
   }
 `
