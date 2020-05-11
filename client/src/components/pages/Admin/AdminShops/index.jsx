@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import log from 'src/util/log';
+import api from 'src/util/api';
 import styled from 'styled-components';
 
 import ShopPopup from './ShopPopup';
@@ -21,7 +21,7 @@ const AdminShops = () => {
   const [activeShops, setActiveShops] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/shop')
+    api.get('/shop')
       .then((res) => {
         const allShops = res.data;
         const activeShops = [];
@@ -44,7 +44,7 @@ const AdminShops = () => {
         accepted: state,
       },
     };
-    axios.put(`/api/shop/${id}/update`, data)
+    api.put(`/shop/${id}/update`, data)
       .then((res) => {
         setVersion(version + 1);
       })
