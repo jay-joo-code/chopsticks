@@ -4,6 +4,7 @@ import theme from 'src/theme';
 import Body from 'src/components/common/fonts/Body';
 import { ReactComponent as ArrowRaw } from 'src/assets/svgs/arrow.svg';
 import RenderOn from 'src/components/layout/RenderOn';
+import DefaultImg from 'src/assets/images/shop_default_img.png';
 
 const Container = styled.div`
   width: 100%;
@@ -125,14 +126,13 @@ const Arrow = styled(ArrowRaw)`
 
 const Owner = ({ item }) => {
   const src = item.owner.shop.image;
-  const defaultSrc = 'https://firebasestorage.googleapis.com/v0/b/chopsticks-248516.appspot.com/o/users%2F5e1eb49698c4320017334663%2F%ED%88%AC%EB%AA%85%20%EB%A1%9C%EA%B3%A0.png?alt=media&token=a1c77c2b-ec8d-4136-9e63-087dcb7a7315';
   const [expandIntro, setExpandIntro] = useState(false);
   
   return (
     <Container>
       <Wrapper>
         <ImgContainer>
-          <Img src={src || defaultSrc} default={!src} />
+          <Img src={src || DefaultImg} default={!src} />
         </ImgContainer>
         <TextCont>
           <Name>{`@${item.owner.shop.title}`}</Name>
