@@ -24,8 +24,8 @@ const BottomFooter = () => {
   return (
     <Container>
       <DynamicContainer>
-        <StyledBody>상호: 찹스틱스ㅣ대표: 서강석 ㅣ 개인정보관리책임자: 서강석ㅣ전화: 070-4879-3425ㅣ이메일: service@chopsticks.market</StyledBody>
-        <StyledBody>주소: 서울시 송파구 올림픽로 45길 11ㅣ사업자등록번호: 247-71-00273ㅣ통신판매: 2019-서울송파-2416</StyledBody>
+        <StyledBody>상호: (주) 클라이머스ㅣ대표: 서강석 ㅣ 개인정보관리책임자: 서강석ㅣ전화: 070-4879-3425ㅣ이메일: service@chopsticks.market</StyledBody>
+        <StyledBody>주소: 서울특별시 강남구 테헤란로128 성곡빌딩 3층 316호ㅣ사업자등록번호: 882-87-01829ㅣ통신판매: 2019-서울송파-2416</StyledBody>
         <Row>
           <div>
             <StyledBody>찹스틱스는 통신판매중개자이며 통신판매의 당사자가 아닙니다.</StyledBody>
@@ -37,5 +37,10 @@ const BottomFooter = () => {
     </Container>
   )
 };
+
+/*
+<StyledBody>상호: 찹스틱스ㅣ대표: 서강석 ㅣ 개인정보관리책임자: 서강석ㅣ전화: 070-4879-3425ㅣ이메일: service@chopsticks.market</StyledBody>
+<StyledBody>주소: 서울시 송파구 올림픽로 45길 11ㅣ사업자등록번호: 247-71-00273ㅣ통신판매: 2019-서울송파-2416</StyledBody>
+*/
 
 export default BottomFooter;
