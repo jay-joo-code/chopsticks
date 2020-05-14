@@ -8,10 +8,6 @@ const Order = require('../models/Order');
 const User = require('../models/User');
 const Item = require('../models/Item');
 
-const isDevEnv = process.env.REACT_APP_ENV === 'release' || process.env.NODE_ENV === 'development';
-const REST_ID = isDevEnv ? config.BOOTPAY_REST_ID_DEV : config.BOOTPAY_REST_ID;
-const PK = isDevEnv ? config.BOOTPAY_PK_DEV : config.BOOTPAY_PK;
-
 const decItemQty = async (itemId, targetIndex, decQty) => {
   const item = await Item.findById(itemId);
 
@@ -41,6 +37,10 @@ const decItemQty = async (itemId, targetIndex, decQty) => {
 // process transaction
 transactionRouter.post('/:rid/process', async (req, res) => {
   try {
+    const isDevEnv = process.env.REACT_APP_ENV === 'release' || process.env.NODE_ENV === 'development';
+    const REST_ID = isDevEnv ? config.BOOTPAY_REST_ID_DEV : config.BOOTPAY_REST_ID;
+    const PK = isDevEnv ? config.BOOTPAY_PK_DEV : config.BOOTPAY_PK;
+    console.log('isDevEnv :>> ', isDevEnv);
     BootpayRest.setConfig(REST_ID, PK);
     const { rid } = req.params;
     const response = await BootpayRest.getAccessToken();
@@ -88,9 +88,16 @@ transactionRouter.post('/:rid/process', async (req, res) => {
       data: e.errors,
     };
     console.log('handle transaction error', errData);
-    await new TransactionError(errData).save();
+    await new TransactionError({ data: errData }).save();
     res.status(500).send({ ...e, errData });
   }
 });
+
+const logErrors = async () => {
+  const errors = await TransactionError.find();
+  console.log(errors);
+}
+
+// logErrors();
 
 module.exports = transactionRouter;

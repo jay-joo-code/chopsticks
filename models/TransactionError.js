@@ -10,6 +10,9 @@ var transactionErrorSchema = Schema({
   createdAt: {
     type: Date,
     default: new Date
+  },
+  data: {
+    type: Object,
   }
 });
 
