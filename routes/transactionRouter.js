@@ -35,14 +35,14 @@ const decItemQty = async (itemId, targetIndex, decQty) => {
 };
 
 // process transaction
-transactionRouter.post('/:rid/process', async (req, res) => {
+transactionRouter.post('/:rid/process/:env', async (req, res) => {
   try {
-    const isDevEnv = process.env.REACT_APP_ENV === 'release' || process.env.NODE_ENV === 'development';
+    const { rid, env } = req.params;
+    const isDevEnv = env === 'dev';
     const REST_ID = isDevEnv ? config.BOOTPAY_REST_ID_DEV : config.BOOTPAY_REST_ID;
     const PK = isDevEnv ? config.BOOTPAY_PK_DEV : config.BOOTPAY_PK;
-    console.log('isDevEnv :>> ', isDevEnv);
+
     BootpayRest.setConfig(REST_ID, PK);
-    const { rid } = req.params;
     const response = await BootpayRest.getAccessToken();
     if (response.status !== 200 || response.data.token === undefined) {
       throw new Error('access token error');
@@ -98,6 +98,6 @@ const logErrors = async () => {
   console.log(errors);
 }
 
-// logErrors();
+logErrors();
 
 module.exports = transactionRouter;

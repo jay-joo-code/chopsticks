@@ -152,7 +152,8 @@ const cartTransaction = (userId, method) => {
         .close((data) => {
         })
         .done((data) => {
-          api.post(`/transaction/${data.receipt_id}/process`, { transaction })
+          const env = isDevEnv ? 'dev' : 'prod';
+          api.post(`/transaction/${data.receipt_id}/process/${env}`, { transaction })
             .then((res) => {
               fetchSelfAndStore(user._id);
               
