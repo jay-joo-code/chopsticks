@@ -53,7 +53,7 @@ const AdminOrders = () => {
 
   useEffect(() => {
     setOrders(allOrders.filter((order) => new Date(order.createdAt).getMonth() === monthIndex).reverse())
-  }, [allOrders])
+  }, [allOrders, monthIndex])
   
   return (
     <Container>
