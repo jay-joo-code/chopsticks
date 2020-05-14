@@ -44,7 +44,6 @@ const AdminOrders = () => {
   useEffect(() => {
     api.get('/order')
       .then(({ data }) => {
-        console.log('data :>> ', data);
         setAllOrders(data);
         setSelected(data.map((order) => order._id))
       })
