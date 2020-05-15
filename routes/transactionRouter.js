@@ -93,11 +93,4 @@ transactionRouter.post('/:rid/process/:env', async (req, res) => {
   }
 });
 
-const logErrors = async () => {
-  const errors = await TransactionError.find();
-  console.log(errors);
-}
-
-logErrors();
-
 module.exports = transactionRouter;
