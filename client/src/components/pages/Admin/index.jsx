@@ -6,6 +6,7 @@ import AdminUsers from './AdminUsers';
 import AdminTransactions from './AdminTransactions';
 import AdminShops from './AdminShops';
 import AdminOrders from './AdminOrders';
+import AdminPWReset from './AdminPWReset';
 
 const Container = styled.div`
 
@@ -24,6 +25,9 @@ const Admin = () => {
   }, {
     name: '정산관리',
     component: <AdminTransactions />
+  }, {
+    name: '비밀번호 재설정',
+    component: <AdminPWReset />
   }, ]
   
   return (
