@@ -51,8 +51,6 @@ const logScrambles = async () => {
   }
 };
 
-logScrambles();
-
 // GET ITEMS: FILTERED SORTED PAGINATED
 itemRouter.get('/', async (req, res) => {
   try {

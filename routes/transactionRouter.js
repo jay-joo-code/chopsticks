@@ -89,4 +89,35 @@ transactionRouter.post('/:rid/process', async (req, res) => {
   }
 });
 
+// bootpay feedback endpoint
+transactionRouter.post('/feedback', async (req, res) => {
+  try {
+    const { status, receipt_id: rid } = req.body;
+    console.log('req.body :>> ', req.body);
+    if (status === '20') {
+      console.log('status is 20')
+      const orders = await Order.find();
+      const filteredOrder = orders.filter((order) => order.bootpay.receipt_id === rid);
+      console.log('filteredOrder :>> ', filteredOrder);
+      
+      if (filteredOrder.length === 1) {
+        console.log('filteredOrder has length 1')
+        const order = filteredOrder[0];
+        order.state = 'canceled';
+        await order.save();
+      }
+    }
+
+    res.send('OK');
+  } catch (e) {
+    const errData = {
+      message: e.toString(),
+      data: e.errors,
+    };
+    console.log('handle transaction error', errData);
+    await new TransactionError(errData).save();
+    res.status(500).send({ ...e, errData });
+  }
+});
+
 module.exports = transactionRouter;
