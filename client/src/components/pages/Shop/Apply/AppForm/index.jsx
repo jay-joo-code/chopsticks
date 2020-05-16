@@ -67,7 +67,7 @@ const AppForm = () => {
       } else {
         api.post('/shop/apply', values)
           .then((res) => {
-            history.push('/shop/admin/items');
+            history.push('/shop/apply/pending');
           })
           .catch((e) => {
             log('ERROR submit apply shop form', e);
