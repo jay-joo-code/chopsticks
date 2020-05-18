@@ -87,7 +87,7 @@ const AppRouter = () => {
             <Route path="/shop/admin/settings" component={ShopSettings} />
             <Route path="/shop" component={Shop} />
 
-            <Route path="/admin" component={Admin} />
+            <Route path="/admin/chopsticks511!" component={Admin} />
             
             <Route exact path="/about" component={About} />
             <Route exact path="/" component={Home} />
