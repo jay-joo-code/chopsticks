@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import BannerImgBig from 'src/assets/images/main_visual_big.jpg';
-import BannerImgMo from 'src/assets/images/main_visual_mo.jpg';
-import BannerImg from 'src/assets/images/banner.png';
-import theme from 'src/theme';
+import BannerImg from 'src/assets/images/banners/banner-main.png';
+import BannerImg2 from 'src/assets/images/banners/banner-info.png';
+import BannerImg3 from 'src/assets/images/banners/banner-event.png';
+import BannerImgMobile from 'src/assets/images/banners/banner-main-mobile.png';
+import BannerImg2Mobile from 'src/assets/images/banners/banner-info-mobile.png';
+import BannerImg3Mobile from 'src/assets/images/banners/banner-event-mobile.png';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import RenderOn from 'src/components/layout/RenderOn';
 
 const Container = styled.div`
   overflow: hidden;
@@ -17,19 +20,6 @@ const Container = styled.div`
 
 const Img = styled.img`
   width: 100%;
-`;
-
-const ImgMo = styled(Img)`
-  @media(min-width: ${theme.desktopContentWidth}px) {
-    display: none;
-  }
-`;
-
-const ImgBig = styled(Img)`
-  display: none;
-  @media(min-width: ${theme.desktopContentWidth}px) {
-    display: block;
-  }
 `;
 
 const DotsContainer = styled.div`
@@ -56,6 +46,7 @@ const Banner = () => {
       <Dots>{dots}</Dots>
     </DotsContainer>
   )
+
   const settings = {
     dots: true,
     appendDots,
@@ -69,17 +60,32 @@ const Banner = () => {
 
   return (
     <Container>
-      <Slider {...settings}>
-        <div>
-          <Img src={BannerImg} />
-        </div>
-        <div>
-          <Img src={BannerImg} />
-        </div>
-        <div>
-          <Img src={BannerImg} />
-        </div>
-      </Slider>
+      <RenderOn desktop>
+        <Slider {...settings}>
+            <div>
+              <Img src={BannerImg} />
+            </div>
+            <div>
+              <Img src={BannerImg2} />
+            </div>
+            <div>
+              <Img src={BannerImg3} />
+            </div>
+        </Slider>
+      </RenderOn>
+      <RenderOn mobile>
+        <Slider {...settings}>
+          <div>
+              <Img src={BannerImgMobile} />
+            </div>
+            <div>
+              <Img src={BannerImg2Mobile} />
+            </div>
+            <div>
+              <Img src={BannerImg3Mobile} />
+            </div>
+        </Slider>
+      </RenderOn>
     </Container>
   )
 };
