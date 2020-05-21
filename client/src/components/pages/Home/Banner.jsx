@@ -1,39 +1,93 @@
 import React from 'react';
 import styled from 'styled-components';
-import BannerImgBig from 'src/assets/images/main_visual_big.jpg';
-import BannerImgMo from 'src/assets/images/main_visual_mo.jpg';
-import BannerImg from 'src/assets/images/banner.png';
-import theme from 'src/theme';
+import BannerImg from 'src/assets/images/banners/banner-main.png';
+import BannerImg2 from 'src/assets/images/banners/banner-info.png';
+import BannerImg3 from 'src/assets/images/banners/banner-event.png';
+import BannerImgMobile from 'src/assets/images/banners/banner-main-mobile.png';
+import BannerImg2Mobile from 'src/assets/images/banners/banner-info-mobile.png';
+import BannerImg3Mobile from 'src/assets/images/banners/banner-event-mobile.png';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import RenderOn from 'src/components/layout/RenderOn';
 
 const Container = styled.div`
   overflow: hidden;
   border-radius: 10px;
   margin-top: 1rem;
+  position: relative;
 `;
 
 const Img = styled.img`
   width: 100%;
-  height: auto
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
 `;
 
-const ImgMo = styled(Img)`
-  @media(min-width: ${theme.desktopContentWidth}px) {
-    display: none;
+const DotsContainer = styled.div`
+  position: absolute;
+  bottom: 20px;
+`
+
+const Dots = styled.ul`
+  & > li {
+    margin: 0;
   }
-`;
-
-const ImgBig = styled(Img)`
-  display: none;
-  @media(min-width: ${theme.desktopContentWidth}px) {
-    display: block;
+  & > li > button::before {
+    font-size: 12px;
+    width: 15px;
   }
-`;
+  & > li.slick-active button::before {
+    color: white;
+  }
+`
 
-const Banner = () => (
-  <Container>
-    <Img src={BannerImg} alt='banner' />
-  </Container>
-);
+const Banner = () => {
+  const appendDots = (dots) => (
+    <DotsContainer>
+      <Dots>{dots}</Dots>
+    </DotsContainer>
+  )
+
+  const settings = {
+    dots: true,
+    appendDots,
+    infinite: true,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
+
+  return (
+    <Container>
+      <RenderOn desktop>
+        <Slider {...settings}>
+            <div>
+              <Img src={BannerImg} />
+            </div>
+            <div>
+              <Img src={BannerImg2} />
+            </div>
+            <div>
+              <Img src={BannerImg3} />
+            </div>
+        </Slider>
+      </RenderOn>
+      <RenderOn mobile>
+        <Slider {...settings}>
+          <div>
+              <Img src={BannerImgMobile} />
+            </div>
+            <div>
+              <Img src={BannerImg2Mobile} />
+            </div>
+            <div>
+              <Img src={BannerImg3Mobile} />
+            </div>
+        </Slider>
+      </RenderOn>
+    </Container>
+  )
+};
 
 export default Banner;

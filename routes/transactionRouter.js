@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const transactionRouter = require('express').Router();
 const BootpayRest = require('bootpay-rest-client');
 const config = require('../config');
@@ -6,8 +7,6 @@ const TransactionError = require('../models/TransactionError');
 const Order = require('../models/Order');
 const User = require('../models/User');
 const Item = require('../models/Item');
-
-BootpayRest.setConfig(config.BOOTPAY_REST_ID, config.BOOTPAY_PK);
 
 const decItemQty = async (itemId, targetIndex, decQty) => {
   const item = await Item.findById(itemId);
@@ -36,9 +35,14 @@ const decItemQty = async (itemId, targetIndex, decQty) => {
 };
 
 // process transaction
-transactionRouter.post('/:rid/process', async (req, res) => {
+transactionRouter.post('/:rid/process/:env', async (req, res) => {
   try {
-    const { rid } = req.params;
+    const { rid, env } = req.params;
+    const isDevEnv = env === 'dev';
+    const REST_ID = isDevEnv ? config.BOOTPAY_REST_ID_DEV : config.BOOTPAY_REST_ID;
+    const PK = isDevEnv ? config.BOOTPAY_PK_DEV : config.BOOTPAY_PK;
+
+    BootpayRest.setConfig(REST_ID, PK);
     const response = await BootpayRest.getAccessToken();
     if (response.status !== 200 || response.data.token === undefined) {
       throw new Error('access token error');
@@ -84,7 +88,7 @@ transactionRouter.post('/:rid/process', async (req, res) => {
       data: e.errors,
     };
     console.log('handle transaction error', errData);
-    await new TransactionError(errData).save();
+    await new TransactionError({ data: errData }).save();
     res.status(500).send({ ...e, errData });
   }
 });

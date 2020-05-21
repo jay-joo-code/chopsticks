@@ -6,6 +6,11 @@ import { sendAlertOnEvent } from 'src/util/bizm';
 import api from 'src/util/api';
 import store from 'src/redux/store';
 
+const isDevEnv = process.env.REACT_APP_ENV === 'release' || process.env.NODE_ENV === 'development';
+const BOOTPAY_APP_ID =  '5e293e0602f57e00366eebe1';
+const BOOTPAY_APP_ID_DEV = '5ebcbe0e02f57e001f1ee4b4';
+const APP_ID = isDevEnv ? BOOTPAY_APP_ID_DEV : BOOTPAY_APP_ID;
+
 const cartTransaction = (userId, method) => {
   return new Promise(async(resolve, reject) => {
     try {
@@ -67,7 +72,7 @@ const cartTransaction = (userId, method) => {
       // TRANSACTION REQUEST DATA
       const reqData = {
         price: grandTotalAcc,
-        application_id: '5e293e0602f57e00366eebe1',
+        application_id: APP_ID,
         name: transactionName,
         pg: 'danal',
         method,
@@ -147,7 +152,8 @@ const cartTransaction = (userId, method) => {
         .close((data) => {
         })
         .done((data) => {
-          api.post(`/transaction/${data.receipt_id}/process`, { transaction })
+          const env = isDevEnv ? 'dev' : 'prod';
+          api.post(`/transaction/${data.receipt_id}/process/${env}`, { transaction })
             .then((res) => {
               fetchSelfAndStore(user._id);
               
@@ -164,7 +170,6 @@ const cartTransaction = (userId, method) => {
                 }
                 sendAlertOnEvent(number, 'NEW_ORDER', data);  
               })
-              
               resolve(res);
             })
             .catch((e) => {
