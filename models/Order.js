@@ -45,9 +45,9 @@ const orderSchema = Schema({
     ref: 'User',
     required: true,
   },
-  state: { 
-    // new pending delivering complete 
-    // exchangeRequested exchangePending exchanged exchangeRejected 
+  state: {
+    // new pending delivering complete confirmed
+    // exchangeRequested exchangePending exchanged exchangeRejected
     // refundRequested refundPending refunded refundRejected
     // cancelRequested canceled cancelRejected
     // error
@@ -80,6 +80,9 @@ const orderSchema = Schema({
     type: Boolean,
     required: true,
     default: false,
+  },
+  completeAt: {
+    type: Date,
   },
 },
 {

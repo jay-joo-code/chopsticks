@@ -100,7 +100,7 @@ orderRouter.post('/:id/:type', async (req, res) => {
       else {
         throw new Error('취소가 정상적으로 처리되지 않았습니다');
       }
-    } 
+    }
     
     order.state = req.params.type + 'ed';
     order.bootpay = cancelRes.data || {};
@@ -119,6 +119,7 @@ orderRouter.post('/:id/state-change/:state', async (req, res) => {
     const order = await Order.findById(id);
     order.state = state;
     if (stateMsg) order.stateMsg = stateMsg;
+    if (state === 'complete' && !order.completeAt) order.completeAt = new Date();
     const result = await order.save();
 
     res.send(result);

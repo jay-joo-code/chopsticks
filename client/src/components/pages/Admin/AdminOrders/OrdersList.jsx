@@ -52,6 +52,8 @@ const OrdersList = ({
     });
     setOrders(newOrders);
   }
+
+  console.log('orders :>> ', orders);
   
   return (
     <Container>

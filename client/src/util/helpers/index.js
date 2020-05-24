@@ -22,8 +22,9 @@ export const updateDelivState = (uid, userType) => {
         return new Promise(async (resolve, reject) => {
           try {
           const { data } = await axios.get(trackerUrl(order));
+          console.log('data :>> ', data);
           if (data.complete) {
-            await api.put(`/order/${order._id}/update`, { state: 'complete' })
+            await api.put(`/order/${order._id}/state-change/complete`)
           }
           resolve();
         }
