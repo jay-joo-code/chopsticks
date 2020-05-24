@@ -68,9 +68,6 @@ const Banner = () => {
             <div>
               <Img src={BannerImg2} />
             </div>
-            <div>
-              <Img src={BannerImg3} />
-            </div>
         </Slider>
       </RenderOn>
       <RenderOn mobile>
@@ -80,9 +77,6 @@ const Banner = () => {
             </div>
             <div>
               <Img src={BannerImg2Mobile} />
-            </div>
-            <div>
-              <Img src={BannerImg3Mobile} />
             </div>
         </Slider>
       </RenderOn>
