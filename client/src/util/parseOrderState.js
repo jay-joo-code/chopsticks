@@ -5,6 +5,7 @@ const orderStateToString = (state) => {
     'pending': '배송전',
     'delivering': '배송중',
     'complete': '배송완료',
+    'confirmed': '구매확정',
     'exchangeRequested': '교환대기',
     'exchangePending': '교환대기',
     'exchangeRejected': '교환거부',
@@ -26,7 +27,8 @@ const orderStateToActions = (state) => {
     'new': ['취소문의'],
     'pending': ['취소문의'],
     'delivering': ['배송추적'],
-    'complete': ['배송추적', '교환문의', '환불문의']
+    'complete': ['배송추적', '교환문의', '환불문의'],
+    'confirmed': ['배송추적']
   }
   return actionsMap[state];
 }

@@ -4,6 +4,7 @@ import log from 'src/util/log';
 import styled from 'styled-components';
 import TransactionsTable from './TransactionsTable';
 import Loading from 'src/components/common/displays/Loading';
+import ordersToEarnings from 'src/util/helpers/ordersToEarnings';
 
 const Container = styled.div`
   margin: 2rem 0;
@@ -45,9 +46,11 @@ const AdminTransactions = () => {
           });
           const accumulator = (acc = 0, order) => acc + order.cartObj.price;
           const monthlyRevenue = monthlyOrders.reduce(accumulator, 0);
+          const monthlyEarnings = ordersToEarnings(monthlyOrders);
           return {
             ...seller,
-            monthlyRevenue
+            monthlyRevenue,
+            monthlyEarnings,
           }
         });
         resolve(sellersWithRevenue)

@@ -1,55 +1,6 @@
 const itemRouter = require('express').Router();
-const schedule = require('node-schedule');
 const Item = require('../models/Item');
 const User = require('../models/User');
-const ScrambleLog = require('../models/ScrambleLog');
-
-const scramble = async () => {
-  try {
-    console.log('**********SCRAMBLE**********');
-    console.log('new Date() :>> ', new Date());
-    new ScrambleLog({ env: 'prod' }).save();
-    const allItems = await Item.find({});
-    allItems.map(async (item) => {
-      try {
-        const newIdx = Math.floor(Math.random() * allItems.length);
-        item.sortIndex = newIdx;
-        item.optGrps.map((optGrp, i) => {
-          if (!optGrp.opts.length) {
-            item.optGrps[i].opts = [];
-          }
-        });
-        await item.save();
-      } catch (e) {
-        console.log('item save error :>> ', e);
-        console.log('item :>> ', item);
-      }
-    });
-  } catch (e) {
-    console.log('scramble error', e);
-  }
-};
-
-// scramble everyday at 06:00
-schedule.scheduleJob({ hour: 6, minute: 0 }, async () => {
-  try {
-    if (process.env.NODE_ENV === 'production' && process.env.REACT_APP_ENV !== 'release') {
-      scramble();
-    }
-  } catch (e) {
-    console.log('scramble error', e);
-  }
-});
-
-const logScrambles = async () => {
-  try {
-    const logs = await ScrambleLog.find({});
-    console.log('logs :>> ', logs);
-  }
-  catch (e) {
-    console.log('e :>> ', e);
-  }
-};
 
 // GET ITEMS: FILTERED SORTED PAGINATED
 itemRouter.get('/', async (req, res) => {

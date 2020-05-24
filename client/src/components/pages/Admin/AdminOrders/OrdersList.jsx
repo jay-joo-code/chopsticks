@@ -53,7 +53,7 @@ const OrdersList = ({
     setOrders(newOrders);
   }
 
-  console.log('orders :>> ', orders);
+  // console.log('orders :>> ', orders.filter((order) => order.cartObj.price === 0));
   
   return (
     <Container>

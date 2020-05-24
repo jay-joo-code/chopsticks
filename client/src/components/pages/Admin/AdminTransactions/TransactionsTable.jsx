@@ -73,11 +73,11 @@ const TransactionsTable = ({ sellers, setSellers, reload, monthIndex }) => {
           <TableRow>
             <TableCell align="center">Shop Name</TableCell>
             <TableCell align="center">이름</TableCell>
-            <TableCell align="center">이메일</TableCell>
             <TableCell align="center">휴대폰번호</TableCell>
             <TableCell align="center">은행명</TableCell>
             <TableCell align="center">계좌번호</TableCell>
             <TableCell align="center">매출금액</TableCell>
+            <TableCell align="center">정산금액</TableCell>
             <TableCell align="center">확인</TableCell>
           </TableRow>
         </TableHead>
@@ -86,7 +86,6 @@ const TransactionsTable = ({ sellers, setSellers, reload, monthIndex }) => {
             <TableRow key={seller._id}>
               <TableCell align="center">{seller.shop.title}</TableCell>
               <TableCell align="center">{seller.name}</TableCell>
-              <TableCell align="center">{seller.email}</TableCell>
               <TableCell align="center">{seller.mobile}</TableCell>
               <TableCell align="center">
                 {(seller.shop.account && seller.shop.account.bank )
@@ -101,6 +100,7 @@ const TransactionsTable = ({ sellers, setSellers, reload, monthIndex }) => {
                 }
               </TableCell>
               <TableCell align="right">{seller.monthlyRevenue.toLocaleString()}</TableCell>
+              <TableCell align="right">{seller.monthlyEarnings.toLocaleString()}</TableCell>
               <TableCell align="center">
                 {seller.shop.paidByMonth[monthIndex]
                   ? (

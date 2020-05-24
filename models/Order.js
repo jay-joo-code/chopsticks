@@ -47,7 +47,7 @@ const orderSchema = Schema({
   },
   state: {
     // new pending delivering complete confirmed
-    // exchangeRequested exchangePending exchanged exchangeRejected
+    // (복제 주문건) exchangeRequested exchangePending exchangeRejected
     // refundRequested refundPending refunded refundRejected
     // cancelRequested canceled cancelRejected
     // error
@@ -71,7 +71,7 @@ const orderSchema = Schema({
     ref: 'Order',
   },
   hideToBuyer: {
-    // 교환 신청 시 기존 주문건은 구매자에게만 안보인다
+    // 교환 신청 시 기존 주문건은 구매자에게 안보인다
     type: Boolean,
     default: false,
   },
@@ -80,10 +80,7 @@ const orderSchema = Schema({
     type: Boolean,
     required: true,
     default: false,
-  },
-  completeAt: {
-    type: Date,
-  },
+  }
 },
 {
   timestamps: true,
