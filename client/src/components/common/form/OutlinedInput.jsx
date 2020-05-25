@@ -21,23 +21,25 @@ const InputArea = styled.div`
 `;
 
 const Input = styled.input`
-  border-radius: 8px;
   font-size: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
   height: 3rem;
   line-height: 3rem;
   padding: .5rem;
   flex-grow: 2;
   width: 100%;
-  background: white !;
-  border: 1px solid rgba(0, 0, 0, .2);
+  background: inherit;
+  border-bottom: 2px solid rgba(0, 0, 0, .2);
+
+  &:focus {
+    border-bottom: 2px solid grey;
+  }
   
   // align
   text-align: ${(props) => (props.right ? 'right' : '')};
   text-align: ${(props) => (props.center ? 'center' : '')};
   
   // hasError
-  border: ${(props) => (props.hasError ? 'solid 1px #de6362' : '')};
+  border-bottom: ${(props) => (props.hasError ? `solid 2px #de6362` : '')};
   
   // sideButton
   flex-shrink: ${props => props.sideButton ? '2' : ''};

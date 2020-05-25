@@ -14,7 +14,7 @@ const StyledBody = styled.p`
   color: ${props => props.color ? props.theme[props.color] : ''};
 `;
 
-const Body = ({ children, muted, mb, color, ...rest }) => (
+const Body = ({ children, muted, mb, color, sm, ...rest }) => (
   <StyledBody 
     {...rest}
     mb={mb}

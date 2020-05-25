@@ -9,6 +9,7 @@ import { Link, useHistory } from 'react-router-dom';
 import log from 'src/util/log';
 import api from 'src/util/api';
 import { useSelector, useDispatch } from 'react-redux';
+import Body from 'src/components/common/fonts/Body';
 
 const Container = styled.div`
 
@@ -39,11 +40,9 @@ const InfoContainer = styled.div`
   }
 `
 
-const InfoText = styled.p`
-  opacity: .8;
-  font-size: .7rem;
-  text-decoration: underline;
-`
+export const UnderlinedLink = styled(Link)`
+  text-decoration: underline !important;
+`;
 
 const Input = styled(OutlinedInput)`
   margin: .5rem 0;
@@ -104,7 +103,7 @@ const Register = () => {
         })
         .catch((e) => {
           log('register failed', e);
-          window.alert('회원가입 실패. 다시 시도 해주세요');
+          window.alert('이미 사용중인 이메일입니다');
         });
     },
   });
@@ -121,7 +120,7 @@ const Register = () => {
         </form>
         <InfoContainer>
           <Link to='/terms/use'>
-            <InfoText>본인은 만 14세 이상이며, chopsticks 이용약관, 개인정보 처리방침 내용을 확인 하였으며, 동의합니다.</InfoText>
+            <Body muted>본인은 만 14세 이상이며, chopsticks <UnderlinedLink to='/terms/use'>이용약관</UnderlinedLink>, <UnderlinedLink to='/terms/privacy'>개인정보 처리방침</UnderlinedLink> 내용을 확인 하였으며, 동의합니다.</Body>
           </Link>
         </InfoContainer>
         <RegisterBtnContainer>
