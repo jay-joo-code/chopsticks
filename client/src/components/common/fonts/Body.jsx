@@ -12,14 +12,16 @@ const StyledBody = styled.p`
   font-size: ${props => props.muted ? '.8rem' : ''};
   margin-bottom: ${props => props.mb ? `${props.mb}rem`: ''};
   color: ${props => props.color ? props.theme[props.color] : ''};
+  font-weight: ${props => props.bold ? 'bold' : ''};
 `;
 
-const Body = ({ children, muted, mb, color, sm, ...rest }) => (
+const Body = ({ children, muted, mb, color, sm, bold, ...rest }) => (
   <StyledBody 
     {...rest}
     mb={mb}
     muted={muted}  
     color={color}
+    bold={bold}
   >
     {children}
   </StyledBody>

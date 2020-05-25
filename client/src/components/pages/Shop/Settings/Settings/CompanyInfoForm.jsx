@@ -9,6 +9,7 @@ import Btn from 'src/components/common/buttons/Btn';
 import api from 'src/util/api';
 import fetchSelfAndStore from 'src/util/auth/fetchSelfAndStore';
 import log from 'src/util/log';
+import Body from 'src/components/common/fonts/Body';
 
 const Form = styled.form`
   display: flex;
@@ -21,6 +22,15 @@ const InputContainer = styled.div`
   width: 100%;
   margin: 1rem 0;
 `;
+
+const LabelRow = styled.div`
+  display: flex;
+  justify-content: flex-start;
+
+  & > p:first-child {
+    margin-right: 3rem;
+  }
+`
 
 const CompanyInfoForm = ({ user }) => {
   const { shop } = user;
@@ -52,11 +62,14 @@ const CompanyInfoForm = ({ user }) => {
   return (
     <Form onSubmit={formik.handleSubmit}>
       <InputContainer>
+        <LabelRow>
+          <Body bold>사업자 등록증</Body>
+          <Body>*개인 판매자의 경우 '신분증 사본'을 등록해 주세요.</Body>
+        </LabelRow>
         <ImageInput
           formik={formik}
           path={`/users/${user._id}`}
           name="certification"
-          label="사업자 등록증"
           square
         />
       </InputContainer>
