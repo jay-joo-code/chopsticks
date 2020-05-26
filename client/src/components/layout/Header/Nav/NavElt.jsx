@@ -16,11 +16,6 @@ const Container = styled.div`
   }
 `;
 
-const Icon = styled.div`
-  height: 1.5rem !important;
-  width: 1.5rem !important;
-`
-
 const Label = styled.p`
   font-size: .7rem;
   opacity: .8;
@@ -33,9 +28,7 @@ const NavElt = ({ icon, label, notification, to, top, right, mobile }) => {
   return (
     <Link to={to}>
       <Container mobile={mobile}>
-        <Icon>
-          {icon}
-        </Icon>
+        {icon}
         <Label>{label}</Label>
         {notification && notification !== '0' && (<Notification text={notification} top={top} right={right} />)}
       </Container>

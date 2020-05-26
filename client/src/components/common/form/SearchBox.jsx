@@ -23,6 +23,7 @@ const StyledIcon = styled(Icon)`
   margin-bottom: auto;
   height: 25px;
   right: 1rem;
+  cursor: pointer;
 `;
 
 const SearchBox = ({ autoFocus, onSubmit }) => {
@@ -50,7 +51,7 @@ const SearchBox = ({ autoFocus, onSubmit }) => {
           width={300}
           autoFocus={autoFocus}
         />
-        <StyledIcon />
+        <StyledIcon onClick={handleSubmit}/>
       </Form>
     </Container>
   );
