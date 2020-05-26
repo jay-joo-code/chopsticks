@@ -9,6 +9,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   background: inherit;
+  margin-top: 1rem;
   
   // width
   width: ${props => props.width ? `${props.width}px` : ''};
@@ -22,17 +23,13 @@ const InputArea = styled.div`
 
 const Input = styled.input`
   font-size: 16px;
-  height: 3rem;
-  line-height: 3rem;
-  padding: .5rem;
+  height: 2rem;
+  line-height: 2rem;
+  padding: 0 .5rem;
   flex-grow: 2;
   width: 100%;
   background: inherit;
-  border-bottom: 2px solid rgba(0, 0, 0, .2);
-
-  &:focus {
-    border-bottom: 2px solid grey;
-  }
+  border-bottom: 2px solid grey;
   
   // align
   text-align: ${(props) => (props.right ? 'right' : '')};
@@ -63,7 +60,7 @@ const OutlinedInput = ({
 
   return (
     <Container {...rest} width={width}>
-      {label && <Label htmlFor={name}>{label}</Label>}
+      <Label htmlFor={name}>{label}</Label>
       <InputArea>
         <Input
           type={type || 'text'}

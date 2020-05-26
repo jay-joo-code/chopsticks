@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.label`
-  margin-bottom: .5rem;
   font-weight: bold;
   opacity: .9;
 `;

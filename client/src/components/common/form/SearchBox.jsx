@@ -17,12 +17,9 @@ const Form = styled.form`
 
 const StyledIcon = styled(Icon)`
   position: absolute;
-  top: 0;
-  bottom: 0;
-  margin-top: auto;
-  margin-bottom: auto;
-  height: 25px;
+  top: 2;
   right: 1rem;
+  height: 1.2rem;
   cursor: pointer;
 `;
 

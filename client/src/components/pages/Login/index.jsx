@@ -15,10 +15,6 @@ const Container = styled.div`
   
 `;
 
-const Input = styled(OutlinedInput)`
-  margin: .2rem 0;
-`
-
 const BtnCont = styled.div`
   display: flex;
   flex-direction: column;
@@ -71,13 +67,13 @@ const Login = () => {
     <AuthPanel title="로그인">
       <Container>
         <form onSubmit={formik.handleSubmit}>
-          <Input 
+          <OutlinedInput 
             name="email" 
             placeholder="이메일" 
             formik={formik} 
             grey 
           />
-          <Input 
+          <OutlinedInput 
             name="password" 
             type="password" 
             placeholder="비밀번호" 
