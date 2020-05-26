@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import { ReactComponent as Icon } from 'src/assets/svgs/magnifier.svg';
-import { useHistory } from 'react-router-dom';
 import useRouter from 'src/util/hooks/useRouter';
 
 const Container = styled.div`

@@ -9,6 +9,9 @@ const itemSchema = Schema({
     ref: 'User',
     required: true,
   },
+  shopTitle: {
+    type: String,
+  },
   display: {
     type: Boolean,
     default: false,

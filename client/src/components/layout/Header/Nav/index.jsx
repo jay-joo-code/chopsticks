@@ -41,7 +41,6 @@ const HoriMargin = styled.div`
 const Nav = ({ enableSearch }) => {
   const user = useSelector((state) => state.user);
   const userText = user ? 'My Page' : 'Log In';
-  const shopText = user && user.shop && user.shop.accepted ? 'Shop Manager' : 'Open a Shop';
   const shopIcon = user && user.shop && user.shop.accepted ? <ShopManager /> : <OpenAShop />;
   const userIcon = <ProfileSVG />;
   const cartIcon = <CartSVG />;

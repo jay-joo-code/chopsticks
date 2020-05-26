@@ -2,6 +2,23 @@ const itemRouter = require('express').Router();
 const Item = require('../models/Item');
 const User = require('../models/User');
 
+const populateShopTitle = async () => {
+  const items = await Item.find({});
+  items.map(async (item) => {
+    const owner = await User.findById(item.owner)
+    item.shopTitle = owner.shop.title;
+    item.optGrps.map((optGrp, i) => {
+      if (!optGrp.opts.length) {
+        item.optGrps[i].opts = [];
+      }
+    });
+    // item.save();
+  })
+  console.log('items', items)
+}
+
+// populateShopTitle();
+
 // GET ITEMS: FILTERED SORTED PAGINATED
 itemRouter.get('/', async (req, res) => {
   try {
@@ -12,7 +29,7 @@ itemRouter.get('/', async (req, res) => {
     const categoryFilter = category ? { category } : {};
     const subcatFilter = subcat ? { subcat } : {};
     const ownerFilter = owner ? { owner } : {};
-    const searchFilter = search ? { name: { $regex: search } } : {};
+    const searchFilter = search ? { $or: [{ name: { $regex: new RegExp(search, 'i') } }, { shopTitle: { $regex: new RegExp(search, 'i') } }] } : {};
     const priceFilter = minPrice && maxPrice ? { price: { $gte: Number(`${minPrice}0000`), $lte: Number(`${maxPrice}0000`) } } : {};
 
     const filter = {
@@ -79,7 +96,7 @@ itemRouter.post('/create', async (req, res) => {
   try {
     const owner = await User.findById(req.body.owner);
     if (!owner) throw new Error('owner is not a valid user');
-    const doc = new Item(req.body);
+    const doc = new Item({ ...req.body, shopTitle: owner.shop.title });
     const result = await doc.save();
     res.send(result);
   } catch (e) {
