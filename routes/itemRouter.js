@@ -2,23 +2,6 @@ const itemRouter = require('express').Router();
 const Item = require('../models/Item');
 const User = require('../models/User');
 
-const populateShopTitle = async () => {
-  const items = await Item.find({});
-  items.map(async (item) => {
-    const owner = await User.findById(item.owner)
-    item.shopTitle = owner.shop.title;
-    item.optGrps.map((optGrp, i) => {
-      if (!optGrp.opts.length) {
-        item.optGrps[i].opts = [];
-      }
-    });
-    // item.save();
-  })
-  console.log('items', items)
-}
-
-// populateShopTitle();
-
 // GET ITEMS: FILTERED SORTED PAGINATED
 itemRouter.get('/', async (req, res) => {
   try {
