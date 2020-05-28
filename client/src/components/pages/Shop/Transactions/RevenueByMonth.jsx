@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Card from 'src/components/common/cards/Card';
+import ordersToRevenue from 'src/util/helpers/ordersToRevenue';
 
 const Wrapper = styled.div`
   display: flex;
@@ -64,22 +65,20 @@ const Value = styled.p`
 
 const RevenueByMonth = ({ orders, monthIndex, setMonthIndex }) => {
   const [count, setCount] = useState();
-  const [total, setTotal] = useState();
-  const excludedStates = ['canceled', 'refunded'];
+  const [revenue, setRevenue] = useState();
 
   const computeOrderData = (orders) => {
-    const revenueOrders = orders.filter((order) => !excludedStates.includes(order.state) && !order.hideToBuyer);
-    const updatedTotal = revenueOrders.reduce((acc, cur) => acc + Number(cur.cartObj.price), 0);
-    const total = updatedTotal.toLocaleString();
+    const [revenue, count] = ordersToRevenue(orders);
+    console.log('revenue', revenue)
     return {
-      total,
-      count: revenueOrders.length,
+      revenue: revenue.toLocaleString(),
+      count,
     }
   }
 
   useEffect(() => {
-    const { total, count } = computeOrderData(orders);
-    setTotal(total);
+    const { revenue, count } = computeOrderData(orders);
+    setRevenue(revenue);
     setCount(count);
   }, [orders]);
   
@@ -116,7 +115,7 @@ const RevenueByMonth = ({ orders, monthIndex, setMonthIndex }) => {
             </Row>
             <Row>
               <Label>총 매출</Label>
-              <Value>{`${total}원`}</Value>
+              <Value>{`${revenue}원`}</Value>
             </Row>
             <HrLine />
             <Label sm>정산금액은 총 매출에서 거래별 수수료, 카드수수료 등을 제외한 실 수령 금액이며,</Label>

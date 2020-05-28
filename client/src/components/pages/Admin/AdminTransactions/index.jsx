@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import TransactionsTable from './TransactionsTable';
 import Loading from 'src/components/common/displays/Loading';
 import ordersToEarnings from 'src/util/helpers/ordersToEarnings';
+import ordersToRevenue from 'src/util/helpers/ordersToRevenue';
 
 const Container = styled.div`
   margin: 2rem 0;
@@ -44,8 +45,7 @@ const AdminTransactions = () => {
             const isTargetMonthsOrder = new Date(order.createdAt).getMonth() === monthIndex;
             return isSellersOrder && isTargetMonthsOrder;
           });
-          const accumulator = (acc = 0, order) => acc + order.cartObj.price;
-          const monthlyRevenue = monthlyOrders.reduce(accumulator, 0);
+          const [monthlyRevenue] = ordersToRevenue(monthlyOrders);
           const monthlyEarnings = ordersToEarnings(monthlyOrders);
           return {
             ...seller,
