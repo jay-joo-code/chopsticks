@@ -5,7 +5,6 @@ import RepImage from './RepImage';
 import OutlinedInput from 'src/components/common/form/OutlinedInput';
 import RadioGroup from 'src/components/common/form/RadioGroup';
 import useCategories from 'src/util/hooks/useCategories';
-import useStyles from 'src/util/hooks/useStyles';
 import Select from 'src/components/common/form/Select';
 import InputCont from './../InputCont';
 import Body from 'src/components/common/fonts/Body';
@@ -23,12 +22,16 @@ const Row = styled.div`
 
 const ProdInfo = ({formik, _id }) => {
   // category
-  const cat = useCategories();
-  const styles = useStyles();
-  const hasCat = formik.values.category && cat && cat.length !== 0;
+  const categories = useCategories();
+  const hasCat = formik.values.category && categories && categories.length !== 0;
   const currentCat = hasCat
-    ? cat.filter((category) => category.name === formik.values.category)
+    ? categories.filter((category) => category.name === formik.values.category)
     : []
+  if (formik.values.category && currentCat.length === 0) {
+    // old category, reset to null
+    formik.setFieldValue('category', 'Product');
+    formik.setFieldValue('subcat', '');
+  }
   const subcats = currentCat && currentCat.length > 0 
     ? currentCat[0].sub
     : []
@@ -70,8 +73,8 @@ const ProdInfo = ({formik, _id }) => {
             name="category"
             formik={formik}
           >
-            {cat.map((opt) => (
-              <option key={opt.name} value={opt.name}>{opt.korean}</option>
+            {categories.map((opt) => (
+              <option key={opt.name} value={opt.name}>{opt.name}</option>
             ))}
           </Select>
           {formik.values.category && subcats && subcats.length > 0 &&

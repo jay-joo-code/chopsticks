@@ -58,7 +58,7 @@ const Categories = () => {
           onClick={resetSubcatQuery}
           on={curCat.name === query.category && !query.subcat ? 1 : 0}
         >
-          {curCat.korean}
+          {curCat.name}
         </Cat>
       }
       <VertLine />

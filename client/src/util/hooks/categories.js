@@ -1,3 +1,4 @@
+/*
 const categories = [{
     korean: 'Home',
     name: 'home',
@@ -22,5 +23,22 @@ const categories = [{
     name: 'limited',
     sub: []
   }]
+*/
+
+const categories = [{
+  name: 'Product',
+  sub: ['Interior Goods', 'Tableware', 'Furniture', 'etc']
+}, {
+  name: 'Fashion',
+  sub: ['Accessories', 'Bags']
+},
+{
+  name: 'Fine Art',
+  sub: []
+},
+{
+  name: 'One & Only',
+  sub: []
+}]
 
 export default categories;

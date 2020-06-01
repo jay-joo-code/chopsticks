@@ -25,7 +25,7 @@ const profileNav = [{
 ];
 
 const categoryNav = tempCat.map((cat) => ({
-  name: cat.korean,
+  name: cat.name,
   path: `/browse?category=${cat.name}`
 }))
 
